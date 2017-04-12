@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 //import Immutable from 'immutable';
 import {connect} from 'react-redux';
+import Frame from './basicfront.js';
 
 //--------add actions here------------
 
@@ -46,6 +47,7 @@ class App extends Component {
 				<div className="container-fluid ">
 					<p> hello again from react-redux </p>
 					<p> ready to set-up single page app... with internal navigation between map info and sites</p>
+					<Frame />
 					{/*<Components go here! />*/}
 				</div>
 			</div>
