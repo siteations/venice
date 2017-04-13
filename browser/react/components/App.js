@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import Immutable from 'immutable';
 import {connect} from 'react-redux';
-import Frame from './basicfront.js';
+import Frame from './FrontFrame.js';
 
 //--------add actions here------------
 
@@ -31,7 +31,6 @@ class App extends Component {
 		super(props);
 		this.state= {}
 		this.localAction=this.localAction.bind(this);
-
 	}
 
 	localAction (e){
@@ -43,14 +42,9 @@ class App extends Component {
 	render(){
 
 		return (
-			<div className="">
 				<div className="container-fluid ">
-					<p> hello again from react-redux </p>
-					<p> ready to set-up single page app... with internal navigation between map info and sites</p>
 					<Frame />
-					{/*<Components go here! />*/}
 				</div>
-			</div>
 		)
 	}
 }

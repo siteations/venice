@@ -1,20 +1,12 @@
 /**
  * @license
- * MyFonts Webfont Build ID 3343697, 2017-02-12T18:27:11-0500
+ * MyFonts Webfont Build ID 3373824, 2017-04-12T19:58:45-0400
  *
  * The fonts listed in this notice are subject to the End User License
  * Agreement(s) entered into by the website owner. All other parties are
- * explicitly restricted from using the Licensed ../webfonts(s).
+ * explicitly restricted from using the Licensed Webfonts(s).
  *
  * You may obtain a valid license at the URLs below.
- *
- * Webfont: 1786GLCFournierNormal by GLC
- * URL: http://www.myfonts.com/fonts/glc/1786-glc-fournier/normal/
- * Copyright: Copyright (c) 2009 by Gilles Le Corre. All rights reserved.
- *
- * Webfont: 1786GLCFournierItalic by GLC
- * URL: http://www.myfonts.com/fonts/glc/1786-glc-fournier/italic/
- * Copyright: Copyright (c) 2009 by Gilles Le Corre. All rights reserved.
  *
  * Webfont: BornholmSandvig by Trine Rask
  * URL: http://www.myfonts.com/fonts/trinerask/bornholm-sandvig/regular/
@@ -37,7 +29,7 @@
  * Copyright: Copyright &#x00A9; 2016 by Daniel Hernandez &amp; Paula Nazal. All rights reserved.
  *
  *
- * License: http://www.myfonts.com/viewlicense?type=web&buildid=3343697
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=3373824
  * Licensed pageviews: 10,000
  *
  * © 2017 MyFonts Inc
@@ -45,68 +37,79 @@
 
 
 /* @import must be at top of file, otherwise CSS will not work */
-@import url("//hello.myfonts.net/count/330557");
+@import url("//hello.myfonts.net/count/337b00");
 
 
-@font-face {font-family: 'GLCFournierNormal1786';src: url('../webfonts/330557_0_0.eot');src: url('../webfonts/330557_0_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/330557_0_0.woff2') format('woff2'),url('../webfonts/330557_0_0.woff') format('woff'),url('../webfonts/330557_0_0.ttf') format('truetype');}
+@font-face {font-family: 'BornholmSandvig';src: url('../webfonts/337B00_0_0.eot');src: url('../webfonts/337B00_0_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/337B00_0_0.woff2') format('woff2'),url('../webfonts/337B00_0_0.woff') format('woff'),url('../webfonts/337B00_0_0.ttf') format('truetype');}
 
 
-@font-face {font-family: 'GLCFournierItalic1786';src: url('../webfonts/330557_1_0.eot');src: url('../webfonts/330557_1_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/330557_1_0.woff2') format('woff2'),url('../webfonts/330557_1_0.woff') format('woff'),url('../webfonts/330557_1_0.ttf') format('truetype');}
+@font-face {font-family: 'Trenda-Regular';src: url('../webfonts/337B00_1_0.eot');src: url('../webfonts/337B00_1_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/337B00_1_0.woff2') format('woff2'),url('../webfonts/337B00_1_0.woff') format('woff'),url('../webfonts/337B00_1_0.ttf') format('truetype');}
 
 
-@font-face {font-family: 'Saltpetre';src: url('../webfonts/330557_2_0.eot');src: url('../webfonts/330557_2_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/330557_2_0.woff2') format('woff2'),url('../webfonts/330557_2_0.woff') format('woff'),url('../webfonts/330557_2_0.ttf') format('truetype');}
+@font-face {font-family: 'Trenda-RegularIt';src: url('../webfonts/337B00_2_0.eot');src: url('../webfonts/337B00_2_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/337B00_2_0.woff2') format('woff2'),url('../webfonts/337B00_2_0.woff') format('woff'),url('../webfonts/337B00_2_0.ttf') format('truetype');}
 
 
-@font-face {font-family: 'Trenda-Regular';src: url('../webfonts/330557_3_0.eot');src: url('../webfonts/330557_3_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/330557_3_0.woff2') format('woff2'),url('../webfonts/330557_3_0.woff') format('woff'),url('../webfonts/330557_3_0.ttf') format('truetype');}
+@font-face {font-family: 'Trenda-Semibold';src: url('../webfonts/337B00_3_0.eot');src: url('../webfonts/337B00_3_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/337B00_3_0.woff2') format('woff2'),url('../webfonts/337B00_3_0.woff') format('woff'),url('../webfonts/337B00_3_0.ttf') format('truetype');}
 
 
-@font-face {font-family: 'Trenda-RegularIt';src: url('../webfonts/330557_4_0.eot');src: url('../webfonts/330557_4_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/330557_4_0.woff2') format('woff2'),url('../webfonts/330557_4_0.woff') format('woff'),url('../webfonts/330557_4_0.ttf') format('truetype');}
-
-
-@font-face {font-family: 'Trenda-Semibold';src: url('../webfonts/330557_5_0.eot');src: url('../webfonts/330557_5_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/330557_5_0.woff2') format('woff2'),url('../webfonts/330557_5_0.woff') format('woff'),url('../webfonts/330557_5_0.ttf') format('truetype');}
-
-
-@font-face {font-family: 'Trenda-SemiboldIt';src: url('../webfonts/330557_6_0.eot');src: url('../webfonts/330557_6_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/330557_6_0.woff2') format('woff2'),url('../webfonts/330557_6_0.woff') format('woff'),url('../webfonts/330557_6_0.ttf') format('truetype');}
+@font-face {font-family: 'Trenda-SemiboldIt';src: url('../webfonts/337B00_4_0.eot');src: url('../webfonts/337B00_4_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/337B00_4_0.woff2') format('woff2'),url('../webfonts/337B00_4_0.woff') format('woff'),url('../webfonts/337B00_4_0.ttf') format('truetype');}
 
 
 /* web fonts above, basic useage below */
 
-.GLCFournierNormal1786 {
-	font-family: GLCFournierNormal1786;
-	font-weight: normal;
-	font-style: normal;
-}
-.GLCFournierItalic1786 {
-	font-family: GLCFournierItalic1786;
-	font-weight: normal;
-	font-style: normal;
-}
-.Saltpetre {
-	font-family: Saltpetre;
+.BornholmSandvig {
+	font-family: BornholmSandvig;
 	font-weight: normal;
 	font-style: normal;
 }
 .Trenda-Regular {
-	font-family: Trenda-Regular;
+	font-family: Trenda;
 	font-weight: normal;
 	font-style: normal;
 }
-.Trenda-RegularIt {
-	font-family: Trenda-RegularIt;
+.Trenda-It{
+	font-family: Trenda-It;
 	font-weight: normal;
 	font-style: normal;
 }
-.Trenda-Semibold {
-	font-family: Trenda-Semibold;
+.Trenda-Bold {
+	font-family: Trenda-Bold;
 	font-weight: normal;
 	font-style: normal;
 }
-.Trenda-SemiboldIt {
-	font-family: Trenda-SemiboldIt;
+.Trenda-BoldIt {
+	font-family: Trenda-BoldIt;
 	font-weight: normal;
 	font-style: normal;
 }
 
+body {
+	font-family: Trenda;
+	color: #2a220a;
+	font-size: 14px;
+}
+
+h1, h2, h3, {
+	font-family: BornholmSandvig;
+	color: #2a220a;
+}
+
+h4, h5, h6, {
+	font-family: Trenda-Bold;
+	color: #2a220a;
+}
+
+p {
+	text-align: left;
+}
+
+a {
+	color:#2a220a;
+}
+
+a:hover {
+	color:#4d7a7a;
+}
 
 /* The animation code */
 @keyframes bk-over{
@@ -159,6 +162,86 @@
     height: 100vh;
     padding: 20px;
     overflow: hidden;
+    background-color: #f4f2ec;
+}
+
+.flex {
+	display: flex;
+}
+
+.flexcol {
+	flex-direction: column;
+}
+
+.between {
+	justify-content: space-between;
+}
+
+.bottom {
+	align-items: flex-end;
+}
+
+.center {
+	align-items: center;
+}
+
+.middle {
+	justify-content: center;
+}
+
+.header {
+	border:double 3px #ffffff;
+	background-color: #e6e1d3;
+	padding-bottom: 10px;
+	box-shadow: 0 0 3px #808080;
+}
+
+.mFull {
+	border:double 3px #ffffff;
+	padding:10px;
+	background-color: #e6e1d3;
+	margin-top: 10px;
+	height: 600px;
+	min-width: 94.75%;
+	box-shadow: 0 0 3px #808080;
+}
+
+.mPart {
+
+}
+
+.mtypeFull {
+	border:double 3px #ffffff;
+	padding:5px;
+	background-color: #e6e1d3;
+	margin-top: 10px;
+	height: 600px;
+	width: 4.5%;
+	box-shadow: 0 0 3px #808080;
+}
+
+.nIcon {
+	background-color: #f4f2ec;
+	width: 30px;
+	height: 30px;
+	margin:8px 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 1px #808080;
+}
+
+.nIcon:hover {
+	background-color: #ffffff;
+	box-shadow: 0 0 3px #808080;
+}
+
+.nSpc {
+	width: 40px;
+	height: 10px;
+}
+
+.nSpcSm {
+	width: 40px;
+	height: 5px;
 }
 
 .fadein {
@@ -167,7 +250,7 @@
 }
 
 .masterWindow {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     padding: 0px;
     position: fixed;
@@ -360,31 +443,6 @@
 	font-family: Saltpetre;
 	font-size: 10;
 	text-anchor: middle;
-}
-
-body {
-	font-family: Trenda-Regular;
-	color: #2a220a;
-	font-size: 14px;
-}
-
-h1, h2, h3, h4, h5 {
-	font-family: Trenda-Regular;
-	font-weight: normal;
-	font-style: normal;
-	color: #2a220a;
-}
-
-p {
-	text-align: : left;
-}
-
-a {
-	color:#2a220a;
-}
-
-a:hover {
-	color:#4d7a7a;
 }
 
 .h5L{
