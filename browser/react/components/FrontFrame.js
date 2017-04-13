@@ -13,7 +13,19 @@ class Frame extends Component {
 			geo: false,
 			button: 'navigate'
 		};
-		//this.state.action=this.state.action.bind(this);
+		this.hoverName=this.hoverName.bind(this);
+		this.nav=this.nav.bind(this);
+	}
+
+	hoverName(e){
+		e.preventDefault();
+		let val=e.target.attributes.value.value;
+		this.setState({button: val});
+	}
+
+	nav(e){
+		e.preventDefault();
+		this.setState({button: 'navigate'});
 	}
 
 
@@ -29,7 +41,7 @@ class Frame extends Component {
 				        	<div className="mFull">
 				        		map goes here
 				        	</div>
-				        	<MapBar text={this.state.button} />
+				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.hoverName}/>
 			        	</div>
 			        }
 			        </div>
