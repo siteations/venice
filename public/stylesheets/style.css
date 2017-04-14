@@ -112,48 +112,24 @@ a:hover {
 }
 
 /* The animation code */
-@keyframes bk-over{
-    0%   {opacity: 0;}
-    50%  {opacity: 1;}
-    100% {opacity: 0;}
+@keyframes openingP{
+    0%   {width: 0%;}
+    100% {width: 23%;}
 }
 
-@keyframes bk-on{
-    0%   {opacity: 0;}
-    100%  {opacity: 1;}
+@keyframes closingP{
+    0%   {width: 23%;}
+    100% {width: 0%;}
 }
 
-@keyframes bk-whale{
-    0%   {opacity: 0;}
-    50%  {opacity: .75;}
-    100%  {opacity: 1;}
+@keyframes openingM{
+    0%   {width: 94.75%;}
+    100% {width: 73%;}
 }
 
-@keyframes bk-whale0{
-    0%   {left: 120%; top: 60%; transform: rotate(-10deg);}
-    20%   {left: 75%; top: 50%; transform: rotate(10deg);}
-    40%   {left: 55%; top: 60%; transform: rotate(-10deg);}
-    60%   {left: 30%; top: 55%; transform: rotate(10deg);}
-    80%   {left: 15%; top: 50%; transform: rotate(-10deg);}
-    100%  {left: -20%; top: 60%; transform: rotate(10deg);}
-}
-
-@keyframes bk-whale2{
-    0%   {left: 120%; top: 80%; transform: rotate(-5deg);}
-    20%   {left: 75%; top: 70%; transform: rotate(10deg);}
-    40%   {left: 55%; top: 85%; transform: rotate(-10deg);}
-    60%   {left: 30%; top: 95%; transform: rotate(5deg);}
-    80%   {left: 15%; top: 80%; transform: rotate(-5deg);}
-    100%  {left: -20%; top: 90%; transform: rotate(5deg);}
-}
-
-@keyframes bk-whale1{
-    0%   {right: 120%; top: 30%; transform: rotate(-10deg);}
-    20%   {right: 75%; top: 40%; transform: rotate(5deg);}
-    40%   {right: 55%; top: 35%; transform: rotate(-10deg);}
-    60%   {right: 30%; top: 45%; transform: rotate(10deg);}
-    80%   {right: 15%; top: 55%; transform: rotate(-10deg);}
-    100%  {right: -20%; top: 60%; transform: rotate(5deg);}
+@keyframes closingM{
+    0%   {width: 73%;}
+    100% {width: 94.75%;}
 }
 
 /* The element to apply the animation to */
@@ -196,18 +172,91 @@ a:hover {
 	box-shadow: 0 0 3px #808080;
 }
 
-.mFull {
+.footer {
 	border:double 3px #ffffff;
-	padding:10px;
 	background-color: #e6e1d3;
+	padding: 10px 20px;
 	margin-top: 10px;
-	height: 600px;
+	box-shadow: 0 0 3px #808080;
+}
+
+.mFullO {
+	border:double 3px #e6e1d3;
+	padding:10px;
+	background-color: #ffffff;
+	margin-top: 10px;
+	height: 640px;
 	min-width: 94.75%;
 	box-shadow: 0 0 3px #808080;
 }
 
-.mPart {
+.mFull {
+	border:double 3px #e6e1d3;
+	padding:10px;
+	background-color: #ffffff;
+	margin-top: 10px;
+	height: 640px;
+	width: 73%;
+	box-shadow: 0 0 3px #808080;
+	overflow: hidden;
+	animation-name: closingM;
+    animation-duration: .25s;
+    animation-fill-mode: forwards;
+}
 
+.mPart {
+	border:double 3px #e6e1d3;
+	padding:10px;
+	background-color: #ffffff;
+	margin-top: 10px;
+	height: 640px;
+	width: 73%;
+	box-shadow: 0 0 3px #808080;
+	overflow: hidden;
+	animation-name: openingM;
+    animation-duration: .25s;
+    animation-fill-mode: forwards;
+}
+
+.panelHidden {
+	border:double 3px #e6e1d3;
+	padding:10px;
+	/*background-color: #e6e1d3;*/
+	background-color: #ffffff;
+	margin-top: 10px;
+	height: 640px;
+	width: 0%;
+	visibility: hidden;
+}
+
+.panelOpen {
+	border:double 3px #e6e1d3;
+	padding:10px;
+	/*background-color: #e6e1d3;*/
+	background-color: #ffffff;
+	margin-top: 10px;
+	height: 640px;
+	width: 0%;
+	overflow: hidden;
+	box-shadow: 0 0 3px #808080;
+	animation-name: openingP;
+    animation-duration: .25s;
+    animation-fill-mode: forwards;
+}
+
+.panelClose {
+	border:double 3px #e6e1d3;
+	/*background-color: #e6e1d3;*/
+	background-color: #ffffff;
+	margin-top: 10px;
+	height: 640px;
+	width: 23%;
+	overflow: hidden;
+	visibility: visible;
+	box-shadow: 0 0 3px #808080;
+	animation-name: closingP;
+    animation-duration: .25s;
+    animation-fill-mode: forwards;
 }
 
 .mtypeFull {
@@ -215,7 +264,7 @@ a:hover {
 	padding:5px;
 	background-color: #e6e1d3;
 	margin-top: 10px;
-	height: 600px;
+	height: 640px;
 	width: 4.5%;
 	box-shadow: 0 0 3px #808080;
 }
@@ -230,6 +279,20 @@ a:hover {
 }
 
 .nIcon:hover {
+	background-color: #ffffff;
+	box-shadow: 0 0 3px #808080;
+}
+
+.bIcon {
+	background-color: #f4f2ec;
+	width: 40px;
+	height: 40px;
+	margin:8px 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 1px #808080;
+}
+
+.bIcon:active {
 	background-color: #ffffff;
 	box-shadow: 0 0 3px #808080;
 }
@@ -462,11 +525,15 @@ a:hover {
 }
 
 .sButtons {
-	font-size: .75em;
+	font-size: .65em;
 }
 
 .p20 {
 	padding-top:20px;
+}
+
+.l20 {
+	padding-left:20px;
 }
 
 .p15 {

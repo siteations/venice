@@ -30589,6 +30589,10 @@ var _Header = __webpack_require__(140);
 
 var _Header2 = _interopRequireDefault(_Header);
 
+var _Footer = __webpack_require__(298);
+
+var _Footer2 = _interopRequireDefault(_Footer);
+
 var _MapBar = __webpack_require__(141);
 
 var _MapBar2 = _interopRequireDefault(_MapBar);
@@ -30612,13 +30616,17 @@ var Frame = function (_Component) {
 		var _this = _possibleConstructorReturn(this, (Frame.__proto__ || Object.getPrototypeOf(Frame)).call(this, props));
 
 		_this.state = {
-			full: true,
-			side: false,
+			start: true,
+			full: false,
+			panel: false,
 			intro: false,
 			geo: false,
-			button: 'navigate'
+			button: 'navigate',
+			select: false,
+			selected: []
 		};
 		_this.hoverName = _this.hoverName.bind(_this);
+		_this.selectName = _this.selectName.bind(_this);
 		_this.nav = _this.nav.bind(_this);
 		return _this;
 	}
@@ -30634,7 +30642,36 @@ var Frame = function (_Component) {
 		key: 'nav',
 		value: function nav(e) {
 			e.preventDefault();
-			this.setState({ button: 'navigate' });
+			if (this.state.select === true && this.state.selected.length === 1) {
+				this.setState({ button: this.state.selected[0] });
+			} else if (this.state.select === true && this.state.selected.length > 1) {
+				this.setState({ button: 'multiple' });
+			} else if (this.state.select === false) {
+				this.setState({ button: 'navigate' });
+			}
+		}
+	}, {
+		key: 'selectName',
+		value: function selectName(e) {
+			//rework local for all buttons to work with multiple selected
+			e.preventDefault();
+			var val = e.target.attributes.value.value;
+			this.setState({ button: val });
+			var arr = this.state.selected;
+			arr = arr.concat(val);
+			this.setState({ selected: arr });
+			this.setState({ select: true });
+
+			//open and close sides
+			if (val === 'panel' && this.state.start === true || val === 'panel' && this.state.full === true) {
+				this.setState({ full: false });
+				this.setState({ panel: true });
+				this.setState({ start: false });
+			} else if (val === 'panel' && this.state.full === false) {
+				this.setState({ full: true });
+				this.setState({ panel: false });
+				this.setState({ start: false });
+			}
 		}
 	}, {
 		key: 'render',
@@ -30648,17 +30685,45 @@ var Frame = function (_Component) {
 				_react2.default.createElement(
 					'div',
 					{ className: 'row ' },
+					this.state.start && _react2.default.createElement(
+						'div',
+						{ className: 'flex between' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'mFullO' },
+							'full map goes here'
+						),
+						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.selectName, open: false }),
+						_react2.default.createElement('div', { className: 'panelClose' })
+					),
 					this.state.full && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
 						_react2.default.createElement(
 							'div',
 							{ className: 'mFull' },
-							'map goes here'
+							'half map goes here'
 						),
-						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.hoverName })
+						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.selectName, open: false }),
+						_react2.default.createElement('div', { className: 'panelClose' })
+					),
+					this.state.panel && _react2.default.createElement(
+						'div',
+						{ className: 'flex between' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'mPart' },
+							'half map goes here'
+						),
+						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.selectName, open: true }),
+						_react2.default.createElement(
+							'div',
+							{ className: 'panelOpen' },
+							'panel here'
+						)
 					)
-				)
+				),
+				_react2.default.createElement(_Footer2.default, null)
 			);
 		}
 	}]);
@@ -30781,9 +30846,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //connect later?
 
-var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", s: "fa fa-info" }, { cn: "nIcon flex center middle", v: "geography", s: "fa fa-map-o" }, { cn: "nSpc", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "panel", s: "fa fa-plus" }, { cn: "nSpcSm", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "all-layers", s: "" }, { cn: "nSpc", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "parishes", s: "" }, { cn: "nIcon flex center middle", v: "bascilica", s: "" }, { cn: "nIcon flex center middle", v: "convents", s: "" }, { cn: "nIcon flex center middle", v: "monestary", s: "" }, { cn: "nIcon flex center middle", v: "nonCatholic", s: "" }, { cn: "nIcon flex center middle", v: "ritual", s: "" }, { cn: "nSpcSm", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "printers", s: "glyphicon glyphicon-book" }, { cn: "nIcon flex center middle", v: "patrons", s: "" }, { cn: "nIcon flex center middle", v: "other", s: "" }];
+var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", s: "fa fa-info" }, { cn: "nIcon flex center middle", v: "cartography", s: "fa fa-map-o" }, { cn: "nSpc", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "panel", s: "fa fa-chevron-left" }, { cn: "nSpcSm", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "all-layers", s: "" }, { cn: "nIcon flex center middle", v: "parishes", s: "" }, { cn: "nIcon flex center middle", v: "bascilica", s: "" }, { cn: "nIcon flex center middle", v: "convents", s: "" }, { cn: "nIcon flex center middle", v: "monestary", s: "" }, { cn: "nIcon flex center middle", v: "other relig.", s: "" }, { cn: "nIcon flex center middle", v: "processions", s: "" }, { cn: "nSpcSm", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "printers", s: "glyphicon glyphicon-book" }, { cn: "nIcon flex center middle", v: "patrons", s: "" }, { cn: "nIcon flex center middle", v: "biblio", s: "fa fa-list-ul" }, { cn: "nIcon flex center middle", v: "other", s: "fa fa-ellipsis-h" }];
 
 var MapBar = function MapBar(props) {
+
+	if (props.open) {
+		mapButtons = mapButtons.map(function (each) {
+			if (each.v === 'panel') {
+				return { cn: "nIcon flex center middle", v: "panel", s: "fa fa-chevron-right" };
+			} else {
+				return each;
+			}
+		});
+	} else {
+		mapButtons = mapButtons.map(function (each) {
+			if (each.v === 'panel') {
+				return { cn: "nIcon flex center middle", v: "panel", s: "fa fa-chevron-left" };
+			} else {
+				return each;
+			}
+		});
+	}
 
 	return _react2.default.createElement(
 		"div",
@@ -30793,11 +30876,11 @@ var MapBar = function MapBar(props) {
 			{ className: "sButtons text-center" },
 			props.text
 		),
-		mapButtons.map(function (each) {
+		mapButtons.map(function (each, i) {
 			return _react2.default.createElement(
 				"div",
-				{ className: each.cn, value: each.v, onMouseOver: props.hover, on: true, MouseOut: props.out, onClick: props.hover },
-				_react2.default.createElement("span", { className: each.s })
+				{ className: each.cn, key: i + 'navbutton', value: each.v, onMouseOver: props.hover, onMouseOut: props.out, onClick: props.click },
+				_react2.default.createElement("span", { value: each.v, className: each.s })
 			);
 		})
 	);
@@ -47184,6 +47267,90 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+/* 298 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+      value: true
+});
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//connect later?
+
+var Footer = function Footer(props) {
+
+      return _react2.default.createElement(
+            "div",
+            { className: "row footer" },
+            _react2.default.createElement(
+                  "div",
+                  { className: "row flex center" },
+                  _react2.default.createElement(
+                        "div",
+                        { value: "" },
+                        _react2.default.createElement("span", { value: "", className: "fa fa-chevron-left fa-2x white" })
+                  ),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement("div", { className: "bIcon" }),
+                  _react2.default.createElement(
+                        "div",
+                        { value: "" },
+                        _react2.default.createElement("span", { value: "", className: "fa fa-chevron-right fa-2x white" })
+                  ),
+                  _react2.default.createElement(
+                        "div",
+                        { className: "l20" },
+                        _react2.default.createElement(
+                              "h4",
+                              { className: "BornholmSandvig closerT" },
+                              "tour of venice religious experience"
+                        ),
+                        _react2.default.createElement(
+                              "p",
+                              { className: "closerB" },
+                              "click thumbnails for a guided sites & narratives"
+                        ),
+                        _react2.default.createElement(
+                              "p",
+                              { className: "sButtons" },
+                              "secondary options and images for fullscreen tablet view"
+                        )
+                  )
+            ),
+            _react2.default.createElement(
+                  "p",
+                  { className: "closerB" },
+                  "copyright and institutional information here"
+            )
+      );
+};
+
+exports.default = Footer;
 
 /***/ })
 /******/ ]);
