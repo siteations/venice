@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Header from './Header.js';
 import Footer from './Footer.js';
 import MapBar from './MapBar.js';
+//import Panel from './Panel.js';
 //connect later?
 
 class Frame extends Component {
