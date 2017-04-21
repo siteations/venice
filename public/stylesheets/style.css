@@ -117,13 +117,33 @@ a:hover {
     100% {width: 23%;}
 }
 
+@keyframes openingPL{
+    0%   {width: 23%;}
+    100% {width: 73%;}
+}
+
 @keyframes closingP{
     0%   {width: 23%;}
     100% {width: 0%;}
 }
 
+@keyframes closingPL{
+    0%   {width: 73%;}
+    100% {width: 23%;}
+}
+
 @keyframes openingM{
     0%   {width: 94.75%;}
+    100% {width: 73%;}
+}
+
+@keyframes openingMQ{
+    0%   {width: 73%;}
+    100% {width: 27%;}
+}
+
+@keyframes closingMQ{
+    0%   {width: 27%;}
     100% {width: 73%;}
 }
 
@@ -218,6 +238,20 @@ a:hover {
     animation-fill-mode: forwards;
 }
 
+.mQuarter {
+	border:double 3px #e6e1d3;
+	padding:10px;
+	background-color: #ffffff;
+	margin-top: 10px;
+	height: 640px;
+	width: 73%;
+	box-shadow: 0 0 3px #808080;
+	overflow: hidden;
+	animation-name: openingMQ;
+    animation-duration: .25s;
+    animation-fill-mode: forwards;
+}
+
 .panelHidden {
 	border:double 3px #e6e1d3;
 	padding:10px;
@@ -240,6 +274,21 @@ a:hover {
 	overflow: hidden;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingP;
+    animation-duration: .25s;
+    animation-fill-mode: forwards;
+}
+
+.panelLarge {
+	border:double 3px #e6e1d3;
+	padding:10px;
+	/*background-color: #e6e1d3;*/
+	background-color: #ffffff;
+	margin-top: 10px;
+	height: 640px;
+	width: 23%;
+	overflow: hidden;
+	box-shadow: 0 0 3px #808080;
+	animation-name: openingPL;
     animation-duration: .25s;
     animation-fill-mode: forwards;
 }

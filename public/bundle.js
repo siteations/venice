@@ -30704,6 +30704,7 @@ var Frame = function (_Component) {
 			start: true,
 			full: false,
 			panel: false,
+			panelLarge: false,
 			intro: false,
 			geo: false,
 			button: 'navigate',
@@ -30748,13 +30749,27 @@ var Frame = function (_Component) {
 			this.setState({ select: true });
 
 			//open and close sides
-			if (val === 'panel' && this.state.start === true || val === 'panel' && this.state.full === true) {
+			if (val === 'panel' && (this.state.start === true || this.state.full === true)) {
 				this.setState({ full: false });
 				this.setState({ panel: true });
+				this.setState({ panelLarge: false });
 				this.setState({ start: false });
-			} else if (val === 'panel' && this.state.full === false) {
+			} else if (val === 'panel' && this.state.panel === true) {
 				this.setState({ full: true });
+				this.setState({ panelLarge: false });
 				this.setState({ panel: false });
+				this.setState({ start: false });
+			}
+
+			if (val === 'panel large' && (this.state.start === true || this.state.full === true || this.state.panel === true)) {
+				this.setState({ full: false });
+				this.setState({ panel: false });
+				this.setState({ panelLarge: true });
+				this.setState({ start: false });
+			} else if (val === 'panel large' && this.state.panelLarge === true) {
+				this.setState({ full: false });
+				this.setState({ panelLarge: false });
+				this.setState({ panel: true });
 				this.setState({ start: false });
 			}
 		}
@@ -30804,6 +30819,21 @@ var Frame = function (_Component) {
 						_react2.default.createElement(
 							'div',
 							{ className: 'panelOpen' },
+							'panel here'
+						)
+					),
+					this.state.panelLarge && _react2.default.createElement(
+						'div',
+						{ className: 'flex between' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'mQuarter' },
+							'quarter map goes here'
+						),
+						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.selectName, large: true }),
+						_react2.default.createElement(
+							'div',
+							{ className: 'panelLarge' },
 							'panel here'
 						)
 					)
@@ -30931,14 +30961,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //connect later?
 
-var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", s: "fa fa-info" }, { cn: "nIcon flex center middle", v: "cartography", s: "fa fa-map-o" }, { cn: "nSpc", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "panel", s: "fa fa-chevron-left" }, { cn: "nSpcSm", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "all-layers", s: "" }, { cn: "nIcon flex center middle", v: "parishes", s: "" }, { cn: "nIcon flex center middle", v: "bascilica", s: "" }, { cn: "nIcon flex center middle", v: "convents", s: "" }, { cn: "nIcon flex center middle", v: "monestary", s: "" }, { cn: "nIcon flex center middle", v: "other relig.", s: "" }, { cn: "nIcon flex center middle", v: "processions", s: "" }, { cn: "nSpcSm", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "printers", s: "glyphicon glyphicon-book" }, { cn: "nIcon flex center middle", v: "patrons", s: "" }, { cn: "nIcon flex center middle", v: "biblio", s: "fa fa-list-ul" }, { cn: "nIcon flex center middle", v: "other", s: "fa fa-ellipsis-h" }];
+var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", s: "fa fa-info" }, { cn: "nIcon flex center middle", v: "all layers", s: "" }, { cn: "nSpc", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "panel", s: "fa fa-chevron-left" }, { cn: "nIcon flex center middle", v: "panel large", s: "fa fa-angle-double-left" }, { cn: "nSpcSm", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "parishes", s: "" }, { cn: "nIcon flex center middle", v: "bascilica", s: "" }, { cn: "nIcon flex center middle", v: "convents", s: "" }, { cn: "nIcon flex center middle", v: "monestary", s: "" }, { cn: "nIcon flex center middle", v: "other relig.", s: "" }, { cn: "nIcon flex center middle", v: "processions", s: "" }, { cn: "nIcon flex center middle", v: "cultural", s: "fa fa-map-o" }, { cn: "nIcon flex center middle", v: "symbolic views", s: "fa fa-map-o" }, { cn: "nIcon flex center middle", v: "relig. prints", s: "glyphicon glyphicon-book" }, { cn: "nIcon flex center middle", v: "relig. ephemera", s: "" }, { cn: "nSpcSm", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "biblio", s: "fa fa-list-ul" }];
 
 var MapBar = function MapBar(props) {
 
-	if (props.open) {
+	if (props.open || props.large) {
 		mapButtons = mapButtons.map(function (each) {
 			if (each.v === 'panel') {
 				return { cn: "nIcon flex center middle", v: "panel", s: "fa fa-chevron-right" };
+			} else {
+				return each;
+			}
+		});
+	} else if (props.large) {
+		mapButtons = mapButtons.map(function (each) {
+			if (each.v === 'panel large') {
+				return { cn: "nIcon flex center middle", v: "panel", s: "fa fa-angle-double-right" };
 			} else {
 				return each;
 			}

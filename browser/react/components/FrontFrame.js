@@ -12,6 +12,7 @@ class Frame extends Component {
 			start: true,
 			full: false,
 			panel: false,
+			panelLarge : false,
 			intro: false,
 			geo: false,
 			button: 'navigate',
@@ -51,13 +52,27 @@ class Frame extends Component {
 		this.setState({select: true});
 
 		//open and close sides
-		if ((val==='panel' && this.state.start===true) ||(val==='panel' && this.state.full===true)){
+		if (val==='panel' && (this.state.start===true || this.state.full===true)){
 			this.setState({full: false});
 			this.setState({panel: true});
+			this.setState({panelLarge: false});
 			this.setState({start: false});
-		} else if (val==='panel' && this.state.full===false){
+		} else if (val==='panel' && this.state.panel===true){
 			this.setState({full: true});
+			this.setState({panelLarge: false});
 			this.setState({panel: false});
+			this.setState({start: false});
+		}
+
+		if (val==='panel large' && (this.state.start===true || this.state.full===true || this.state.panel=== true)){
+			this.setState({full: false});
+			this.setState({panel: false });
+			this.setState({panelLarge: true});
+			this.setState({start: false});
+		} else if (val==='panel large' && this.state.panelLarge===true){
+			this.setState({full: false});
+			this.setState({panelLarge: false});
+			this.setState({panel: true});
 			this.setState({start: false});
 		}
 	}
@@ -98,6 +113,17 @@ class Frame extends Component {
 				        	</div>
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={true}/>
 				        	<div className="panelOpen">
+				        		panel here
+				        	</div>
+			        	</div>
+			        }
+			        {this.state.panelLarge &&
+			        	<div className="flex between">
+				        	<div className="mQuarter">
+				        		quarter map goes here
+				        	</div>
+				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} large={true}/>
+				        	<div className="panelLarge">
 				        		panel here
 				        	</div>
 			        	</div>
