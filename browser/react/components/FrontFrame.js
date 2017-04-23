@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Header from './Header.js';
 import Footer from './Footer.js';
 import MapBar from './MapBar.js';
+import Maptest from './Map.js';
 //import Panel from './Panel.js';
 //connect later?
 
@@ -70,9 +71,9 @@ class Frame extends Component {
 			this.setState({panelLarge: true});
 			this.setState({start: false});
 		} else if (val==='panel large' && this.state.panelLarge===true){
-			this.setState({full: false});
+			this.setState({full: true});
 			this.setState({panelLarge: false});
-			this.setState({panel: true});
+			this.setState({panel: false});
 			this.setState({start: false});
 		}
 	}
@@ -85,10 +86,12 @@ class Frame extends Component {
 		        <div>
 			        <Header />
 			        <div className="row ">
+			        <div id="container">
+			        </div>
 			        {this.state.start &&
 			        	<div className="flex between">
 				        	<div className="mFullO">
-				        		full map goes here
+				        		<Maptest />
 				        	</div>
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={false}/>
 				        	<div className="panelClose">
@@ -98,7 +101,7 @@ class Frame extends Component {
 			        {this.state.full &&
 			        	<div className="flex between">
 				        	<div className="mFull">
-				        		half map goes here
+				        		<Maptest />
 				        	</div>
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={false}/>
 				        	<div className="panelClose">
@@ -109,7 +112,7 @@ class Frame extends Component {
 			        {this.state.panel &&
 			        	<div className="flex between">
 				        	<div className="mPart">
-				        		half map goes here
+				        		<Maptest />
 				        	</div>
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={true}/>
 				        	<div className="panelOpen">
@@ -120,7 +123,7 @@ class Frame extends Component {
 			        {this.state.panelLarge &&
 			        	<div className="flex between">
 				        	<div className="mQuarter">
-				        		quarter map goes here
+				        		<Maptest />
 				        	</div>
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} large={true}/>
 				        	<div className="panelLarge">
