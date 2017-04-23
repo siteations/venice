@@ -47393,7 +47393,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var stamenTonerTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 var stamenTonerAttr = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 var mapCenter = [39.9528, -75.1638];
-var zoomLevel = 12;
+var zoomLevel = 4;
 
 var Maptest = function (_Component) {
     _inherits(Maptest, _Component);
@@ -47461,6 +47461,7 @@ var Maptest = function (_Component) {
             var _this3 = this;
 
             window.console.log('this.state.currentZoomLevel ->', this.state.currentZoomLevel);
+            window.console.log('map props: ', _reactLeaflet.Map);
 
             return _react2.default.createElement(
                 'div',
@@ -47479,53 +47480,9 @@ var Maptest = function (_Component) {
                         },
                         _react2.default.createElement(_reactLeaflet.TileLayer, {
                             attribution: stamenTonerAttr,
-                            url: stamenTonerTiles
-                        }),
-                        _react2.default.createElement(
-                            _reactLeafletControl2.default,
-                            { position: 'topright' },
-                            _react2.default.createElement(
-                                'div',
-                                {
-                                    style: {
-                                        backgroundColor: 'black',
-                                        padding: '5px'
-                                    }
-                                },
-                                _react2.default.createElement(
-                                    'div',
-                                    { style: { marginLeft: '37px' } },
-                                    _react2.default.createElement(
-                                        'button',
-                                        { onClick: this.handleUpPanClick },
-                                        'Pan up'
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    null,
-                                    _react2.default.createElement(
-                                        'button',
-                                        { onClick: this.handleLeftPanClick },
-                                        'Pan left'
-                                    ),
-                                    _react2.default.createElement(
-                                        'button',
-                                        { onClick: this.handleRightPanClick },
-                                        'Pan right'
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { style: { marginLeft: '30px' } },
-                                    _react2.default.createElement(
-                                        'button',
-                                        { onClick: this.handleDownPanClick },
-                                        'Pan down'
-                                    )
-                                )
-                            )
-                        )
+                            url: stamenTonerTiles,
+                            opacity: '.5'
+                        })
                     )
                 )
             );

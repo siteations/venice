@@ -6,7 +6,7 @@ import Control from 'react-leaflet-control';
 const stamenTonerTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 const stamenTonerAttr = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 const mapCenter = [39.9528, -75.1638];
-const zoomLevel = 12;
+const zoomLevel = 4;
 
 export default class Maptest extends Component {
     constructor(props) {
@@ -56,6 +56,7 @@ export default class Maptest extends Component {
 
     render() {
         window.console.log('this.state.currentZoomLevel ->', this.state.currentZoomLevel);
+        window.console.log('map props: ', Map);
 
         return (
             <div className="offset">
@@ -68,8 +69,9 @@ export default class Maptest extends Component {
                     <TileLayer
                         attribution={stamenTonerAttr}
                         url={stamenTonerTiles}
+                        opacity='.5'
                     />
-                    <Control position="topright">
+                    {/*<Control position="topright">
                         <div
                             style={{
                                 backgroundColor: 'black',
@@ -95,7 +97,7 @@ export default class Maptest extends Component {
                                 </button>
                             </div>
                         </div>
-                    </Control>
+                    </Control>*/}
                 </Map>
             </div>
             </div>
