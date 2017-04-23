@@ -47382,6 +47382,10 @@ var _reactLeafletControl = __webpack_require__(440);
 
 var _reactLeafletControl2 = _interopRequireDefault(_reactLeafletControl);
 
+var _leaflet = __webpack_require__(6);
+
+var _leaflet2 = _interopRequireDefault(_leaflet);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -47390,10 +47394,17 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var stamenTonerTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
+var stamenTonerTiles = '../../../layouts/tiles/{z}/map_{x}_{y}.jpg';
 var stamenTonerAttr = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
-var mapCenter = [39.9528, -75.1638];
-var zoomLevel = 4;
+var mapCenter = [-85, 160];
+var zoomLevel = 2;
+var minZoom = 2;
+var maxZoom = 6;
+
+//currently window is 10% of total map size, so points are based on that conversion -85 = 850 pixels from upper left, 160 = 1600 pixels from left
+
+//bounds set in css 16384 to 1638.4
+
 
 var Maptest = function (_Component) {
     _inherits(Maptest, _Component);
@@ -47404,10 +47415,10 @@ var Maptest = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Maptest.__proto__ || Object.getPrototypeOf(Maptest)).call(this, props));
 
         _this.state = { currentZoomLevel: zoomLevel };
-        _this.handleUpPanClick = _this.handleUpPanClick.bind(_this);
-        _this.handleRightPanClick = _this.handleRightPanClick.bind(_this);
-        _this.handleLeftPanClick = _this.handleLeftPanClick.bind(_this);
-        _this.handleDownPanClick = _this.handleDownPanClick.bind(_this);
+        // this.handleUpPanClick = this.handleUpPanClick.bind(this);
+        // this.handleRightPanClick = this.handleRightPanClick.bind(this);
+        // this.handleLeftPanClick = this.handleLeftPanClick.bind(this);
+        // this.handleDownPanClick = this.handleDownPanClick.bind(this);
         return _this;
     }
 
@@ -47417,6 +47428,7 @@ var Maptest = function (_Component) {
             var _this2 = this;
 
             var leafletMap = this.leafletMap.leafletElement;
+            window.console.log('map props ', leafletMap);
             leafletMap.on('zoomend', function () {
                 var updatedZoomLevel = leafletMap.getZoom();
                 _this2.handleZoomLevelChange(updatedZoomLevel);
@@ -47427,41 +47439,37 @@ var Maptest = function (_Component) {
         value: function handleZoomLevelChange(newZoomLevel) {
             this.setState({ currentZoomLevel: newZoomLevel });
         }
-    }, {
-        key: 'handleUpPanClick',
-        value: function handleUpPanClick() {
-            var leafletMap = this.leafletMap.leafletElement;
-            leafletMap.panBy([0, -100]);
-            window.console.log('Panning up');
-        }
-    }, {
-        key: 'handleRightPanClick',
-        value: function handleRightPanClick() {
-            var leafletMap = this.leafletMap.leafletElement;
-            leafletMap.panBy([100, 0]);
-            window.console.log('Panning right');
-        }
-    }, {
-        key: 'handleLeftPanClick',
-        value: function handleLeftPanClick() {
-            var leafletMap = this.leafletMap.leafletElement;
-            leafletMap.panBy([-100, 0]);
-            window.console.log('Panning left');
-        }
-    }, {
-        key: 'handleDownPanClick',
-        value: function handleDownPanClick() {
-            var leafletMap = this.leafletMap.leafletElement;
-            leafletMap.panBy([0, 100]);
-            window.console.log('Panning down');
-        }
+
+        // handleUpPanClick() {
+        //     const leafletMap = this.leafletMap.leafletElement;
+        //     leafletMap.panBy([0, -100]);
+        //     window.console.log('Panning up');
+        // }
+
+        // handleRightPanClick() {
+        //     const leafletMap = this.leafletMap.leafletElement;
+        //     leafletMap.panBy([100, 0]);
+        //     window.console.log('Panning right');
+        // }
+
+        // handleLeftPanClick() {
+        //     const leafletMap = this.leafletMap.leafletElement;
+        //     leafletMap.panBy([-100, 0]);
+        //     window.console.log('Panning left');
+        // }
+
+        // handleDownPanClick() {
+        //     const leafletMap = this.leafletMap.leafletElement;
+        //     leafletMap.panBy([0, 100]);
+        //     window.console.log('Panning down');
+        // }
+
     }, {
         key: 'render',
         value: function render() {
             var _this3 = this;
 
             window.console.log('this.state.currentZoomLevel ->', this.state.currentZoomLevel);
-            window.console.log('map props: ', _reactLeaflet.Map);
 
             return _react2.default.createElement(
                 'div',
@@ -47472,16 +47480,19 @@ var Maptest = function (_Component) {
                     _react2.default.createElement(
                         _reactLeaflet.Map,
                         {
+                            crs: _leaflet2.default.CRS.Simple,
                             ref: function ref(m) {
                                 _this3.leafletMap = m;
                             },
                             center: mapCenter,
-                            zoom: zoomLevel
+                            zoom: zoomLevel,
+                            minZoom: minZoom,
+                            maxZoom: maxZoom
                         },
                         _react2.default.createElement(_reactLeaflet.TileLayer, {
                             attribution: stamenTonerAttr,
                             url: stamenTonerTiles,
-                            opacity: '.5'
+                            opacity: '1'
                         })
                     )
                 )

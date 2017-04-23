@@ -162,8 +162,9 @@ a:hover {
 }
 
 .leaflet-container {
-    height: 800px;
-    width: 1500px;
+    height: 819.2px;
+    width: 1638.4px;
+    background-color: #fff;
 }
 
 .flex {
