@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { Map, TileLayer } from 'react-leaflet';
+import { Map, TileLayer, ImageOverlay } from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import Leaflet from 'leaflet';
 
-const stamenTonerTiles = '../../../layouts/tiles/{z}/map_{x}_{y}.jpg';
+const TonerTiles = '../../../layouts/color/{z}/map_{x}_{y}.jpg';
+const GreyTiles = '../../../layouts/grey/{z}/map_{x}_{y}.jpg';
 const stamenTonerAttr = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 const mapCenter = [-85,160];
 const zoomLevel = 2;
@@ -20,7 +21,12 @@ const maxZoom = 6;
 export default class Maptest extends Component {
     constructor(props) {
         super(props);
-        this.state = { currentZoomLevel: zoomLevel };
+        this.state = {
+            currentZoomLevel: zoomLevel,
+            currentCenter: mapCenter,
+
+        };
+
         // this.handleUpPanClick = this.handleUpPanClick.bind(this);
         // this.handleRightPanClick = this.handleRightPanClick.bind(this);
         // this.handleLeftPanClick = this.handleLeftPanClick.bind(this);
@@ -33,12 +39,19 @@ export default class Maptest extends Component {
         leafletMap.on('zoomend', () => {
             const updatedZoomLevel = leafletMap.getZoom();
             this.handleZoomLevelChange(updatedZoomLevel);
-
+        });
+        leafletMap.on('moveend', () => {
+            const updatedCenter = leafletMap.getCenter();
+            this.handleCenterChange(updatedCenter);
         });
     }
 
     handleZoomLevelChange(newZoomLevel) {
         this.setState({ currentZoomLevel: newZoomLevel });
+    }
+
+    handleCenterChange(newCenter){
+        this.setState({ currentCenter: newCenter });
     }
 
     // handleUpPanClick() {
@@ -66,7 +79,7 @@ export default class Maptest extends Component {
     // }
 
     render() {
-        window.console.log('this.state.currentZoomLevel ->', this.state.currentZoomLevel);
+        window.console.log('this.state ->', this.state);
 
         return (
             <div className="offset">
@@ -78,10 +91,18 @@ export default class Maptest extends Component {
                     zoom={zoomLevel}
                     minZoom={minZoom}
                     maxZoom={maxZoom}
+                    layers =""
                 >
                     <TileLayer
+                        id="underlay"
                         attribution={stamenTonerAttr}
-                        url={stamenTonerTiles}
+                        url={GreyTiles}
+                        opacity='.5'
+                    />
+                    <TileLayer
+                        id="color"
+                        attribution={stamenTonerAttr}
+                        url={TonerTiles}
                         opacity='1'
                     />
                     {/*<Control position="topright">

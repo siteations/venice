@@ -47394,7 +47394,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var stamenTonerTiles = '../../../layouts/tiles/{z}/map_{x}_{y}.jpg';
+var TonerTiles = '../../../layouts/color/{z}/map_{x}_{y}.jpg';
+var GreyTiles = '../../../layouts/grey/{z}/map_{x}_{y}.jpg';
 var stamenTonerAttr = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 var mapCenter = [-85, 160];
 var zoomLevel = 2;
@@ -47414,7 +47415,12 @@ var Maptest = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Maptest.__proto__ || Object.getPrototypeOf(Maptest)).call(this, props));
 
-        _this.state = { currentZoomLevel: zoomLevel };
+        _this.state = {
+            currentZoomLevel: zoomLevel,
+            currentCenter: mapCenter
+
+        };
+
         // this.handleUpPanClick = this.handleUpPanClick.bind(this);
         // this.handleRightPanClick = this.handleRightPanClick.bind(this);
         // this.handleLeftPanClick = this.handleLeftPanClick.bind(this);
@@ -47433,11 +47439,20 @@ var Maptest = function (_Component) {
                 var updatedZoomLevel = leafletMap.getZoom();
                 _this2.handleZoomLevelChange(updatedZoomLevel);
             });
+            leafletMap.on('moveend', function () {
+                var updatedCenter = leafletMap.getCenter();
+                _this2.handleCenterChange(updatedCenter);
+            });
         }
     }, {
         key: 'handleZoomLevelChange',
         value: function handleZoomLevelChange(newZoomLevel) {
             this.setState({ currentZoomLevel: newZoomLevel });
+        }
+    }, {
+        key: 'handleCenterChange',
+        value: function handleCenterChange(newCenter) {
+            this.setState({ currentCenter: newCenter });
         }
 
         // handleUpPanClick() {
@@ -47469,7 +47484,7 @@ var Maptest = function (_Component) {
         value: function render() {
             var _this3 = this;
 
-            window.console.log('this.state.currentZoomLevel ->', this.state.currentZoomLevel);
+            window.console.log('this.state ->', this.state);
 
             return _react2.default.createElement(
                 'div',
@@ -47487,11 +47502,19 @@ var Maptest = function (_Component) {
                             center: mapCenter,
                             zoom: zoomLevel,
                             minZoom: minZoom,
-                            maxZoom: maxZoom
+                            maxZoom: maxZoom,
+                            layers: ''
                         },
                         _react2.default.createElement(_reactLeaflet.TileLayer, {
+                            id: 'underlay',
                             attribution: stamenTonerAttr,
-                            url: stamenTonerTiles,
+                            url: GreyTiles,
+                            opacity: '.5'
+                        }),
+                        _react2.default.createElement(_reactLeaflet.TileLayer, {
+                            id: 'color',
+                            attribution: stamenTonerAttr,
+                            url: TonerTiles,
                             opacity: '1'
                         })
                     )
