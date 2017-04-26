@@ -6,7 +6,6 @@ let mapButtons=[
 	{cn:"nIcon flex center middle", v:"all layers", s:"" },
 	{cn:"nSpc", v:'navigate', s:"" },
 	{cn:"nIcon flex center middle", v:"panel", s:"fa fa-chevron-left" },
-	{cn:"nIcon flex center middle", v:"panel large", s:"fa fa-angle-double-left" },
 	{cn:"nSpcSm", v:'navigate', s:"" },
 	{cn:"nIcon flex center middle", v:"parishes", s:"" },
 	{cn:"nIcon flex center middle", v:"bascilica", s:"" },

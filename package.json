@@ -28,6 +28,7 @@
     "mysql": "^2.13.0",
     "normalize.css": "^5.0.0",
     "openseadragon": "^2.2.1",
+    "prop-types": "^15.5.8",
     "react": "^15.5.3",
     "react-addons-shallow-compare": "^15.5.2",
     "react-dom": "^15.5.3",

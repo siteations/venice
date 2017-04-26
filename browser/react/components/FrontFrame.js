@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import Header from './Header.js';
 import Footer from './Footer.js';
 import MapBar from './MapBar.js';
-import Maptest from './Map.js';
+//import Maptest from './Map.js';
+import Mapd3 from './Mapd3.js';
 //import Panel from './Panel.js';
 //connect later?
 
@@ -85,14 +86,12 @@ class Frame extends Component {
 		return (
 		        <div>
 			        <Header />
-			        <div className="row ">
+			        <div className="row">
 			        <div id="container">
 			        </div>
 			        {this.state.start &&
 			        	<div className="flex between">
-				        	<div className="mFullO">
-				        		<Maptest />
-				        	</div>
+				        	<Mapd3 />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={false}/>
 				        	<div className="panelClose">
 				        	</div>
@@ -100,7 +99,7 @@ class Frame extends Component {
 			        }
 			        {this.state.full &&
 			        	<div className="flex between">
-				        	<div className="mFull">
+				        	<div className="mFull mainMaps">
 				        		<Maptest />
 				        	</div>
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={false}/>
@@ -111,7 +110,7 @@ class Frame extends Component {
 
 			        {this.state.panel &&
 			        	<div className="flex between">
-				        	<div className="mPart">
+				        	<div className="mPart mainMaps">
 				        		<Maptest />
 				        	</div>
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={true}/>
@@ -122,7 +121,7 @@ class Frame extends Component {
 			        }
 			        {this.state.panelLarge &&
 			        	<div className="flex between">
-				        	<div className="mQuarter">
+				        	<div className="mQuarter mainMaps">
 				        		<Maptest />
 				        	</div>
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} large={true}/>

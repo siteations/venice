@@ -161,9 +161,15 @@ a:hover {
     background-color: #f4f2ec;
 }
 
-.leaflet-container {
+/*.leaflet-container {
     height: 819.2px;
     width: 1638.4px;
+    background-color: #ffffff;
+}*/
+
+.leaflet-container {
+    height: 1024px;
+    width: 2048px;
     background-color: #ffffff;
 }
 
@@ -206,11 +212,27 @@ a:hover {
 	box-shadow: 0 0 3px #808080;
 }
 
+@media (max-width: 1440px) {
+	.mainMaps {
+		height: 645px;
+	}
+}
+@media (min-width: 1441px) {
+	.mainMaps {
+		height: 77vh;
+	}
+}
+
+.controlTrans {
+	position: absolute;
+	top: 300px;
+	left: 50px;
+}
+
 .mFullO {
 	border:double 3px #e6e1d3;
 	background-color: #ffffff;
 	margin-top: 10px;
-	height: 640px;
 	min-width: 94.75%;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
@@ -220,7 +242,6 @@ a:hover {
 	border:double 3px #e6e1d3;
 	background-color: #ffffff;
 	margin-top: 10px;
-	height: 640px;
 	width: 70%;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
@@ -233,7 +254,6 @@ a:hover {
 	border:double 3px #e6e1d3;
 	background-color: #ffffff;
 	margin-top: 10px;
-	height: 640px;
 	width: 70%;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
@@ -247,7 +267,6 @@ a:hover {
 	padding:10px;
 	background-color: #ffffff;
 	margin-top: 10px;
-	height: 640px;
 	width: 70%;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
@@ -262,7 +281,6 @@ a:hover {
 	/*background-color: #e6e1d3;*/
 	background-color: #ffffff;
 	margin-top: 10px;
-	height: 640px;
 	width: 0%;
 	visibility: hidden;
 }
@@ -273,7 +291,6 @@ a:hover {
 	/*background-color: #e6e1d3;*/
 	background-color: #ffffff;
 	margin-top: 10px;
-	height: 640px;
 	width: 0%;
 	overflow: hidden;
 	box-shadow: 0 0 3px #808080;
@@ -288,7 +305,6 @@ a:hover {
 	/*background-color: #e6e1d3;*/
 	background-color: #ffffff;
 	margin-top: 10px;
-	height: 640px;
 	width: 70%;
 	overflow: hidden;
 	box-shadow: 0 0 3px #808080;
@@ -302,7 +318,6 @@ a:hover {
 	/*background-color: #e6e1d3;*/
 	background-color: #ffffff;
 	margin-top: 10px;
-	height: 640px;
 	width: 30%;
 	overflow: hidden;
 	visibility: visible;
@@ -317,7 +332,6 @@ a:hover {
 	padding:5px;
 	background-color: #e6e1d3;
 	margin-top: 10px;
-	height: 640px;
 	width: 4.5%;
 	box-shadow: 0 0 3px #808080;
 }
