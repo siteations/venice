@@ -28,6 +28,8 @@ export default class MapSVG extends Component {
             drag: '',
             xOff:0,
             yOff:0,
+            xOffR:0,
+            yOffR:0,
             trig: false,
             currentCenter: mapCenter,
             mouseCenter: [0,0],
@@ -57,29 +59,32 @@ export default class MapSVG extends Component {
 
     mouseLoc(e) {
     	e.preventDefault;
+
     	let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
     	let mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
     	this.setState({mouseDivloc: mousePos});
     	console.log('mouse position ', this.state.mouseDivloc, e.type);
     	(e.type === 'mousedown')? this.setState({drag: 'start'}) : this.setState({drag: ''})
-    	if (e.type === 'mouseup') {this.setState({mouseLast: mousePos})};
+    	if (e.type === 'mouseup') {this.setState({mouseLast: mousePos, xOffR : this.state.xOff, yOffR: this.state.yOff })};
     }
 
     drag(e) {
     	e.preventDefault;
     	console.log(e.type);
+    	let lastX = this.state.xOffR, lastY = this.state.yOffR;
     	let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
     	let mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
-    	let xJump = this.state.mouseLast[0];
-    	let yJump = this.state.mouseLast[1];
-    	let offX = this.state.mouseDivloc[0] - mousePos[0];
-    	let offY = this.state.mouseDivloc[1] - mousePos[1];
+    	// let xJump = this.state.mouseDivloc[0] - mousePos[0] + this.state.mouseLast[0]-lastX;
+    	// let yJump = this.state.mouseDivloc[1] - mousePos[1] + this.state.mouseLast[0]-lastX;
+    	let offX = this.state.mouseDivloc[0] - mousePos[0] + lastX;
+    	let offY = this.state.mouseDivloc[1] - mousePos[1] + lastY;
     	if (this.state.drag === 'start') {
-    		this.setState({xOff: offX + xJump, yOff: offY + yJump, drag:'drag'}) ;
+    		this.setState({xOff: lastX, yOff: lastY, drag:'drag'}) ;
+    		console.log('offsets start', offX, offY, lastX, lastY);
     	}	else if (this.state.drag === 'drag'){
     		this.setState({xOff: offX, yOff: offY }) ;
+    		console.log('offsets norm', offX, offY, lastX, lastY);
     	}
-    	console.log('offsets ', offX, offY, xJump, yJump);
     }
 
     tempZoom(e) {
