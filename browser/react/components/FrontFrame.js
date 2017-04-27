@@ -2,10 +2,17 @@ import React, {Component} from 'react';
 import Header from './Header.js';
 import Footer from './Footer.js';
 import MapBar from './MapBar.js';
+import {Preload} from 'react-preload';
+import {tilepreload} from '../plug-ins/rawTiles.js';
 //import Maptest from './Map.js';
 import Mapd3 from './Mapd3.js';
 //import Panel from './Panel.js';
 //connect later?
+
+var images = tilepreload();
+console.log(images);
+
+var loadingIndicator = (<div>Loading...</div>);
 
 class Frame extends Component {
 	constructor(props){
@@ -91,7 +98,7 @@ class Frame extends Component {
 			        </div>
 			        {this.state.start &&
 			        	<div className="flex between">
-				        	<Mapd3 />
+				        		<Mapd3 />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={false}/>
 				        	<div className="panelClose">
 				        	</div>

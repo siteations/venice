@@ -30711,6 +30711,10 @@ var _MapBar = __webpack_require__(143);
 
 var _MapBar2 = _interopRequireDefault(_MapBar);
 
+var _reactPreload = __webpack_require__(307);
+
+var _rawTiles = __webpack_require__(147);
+
 var _Mapd = __webpack_require__(144);
 
 var _Mapd2 = _interopRequireDefault(_Mapd);
@@ -30727,6 +30731,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 //import Panel from './Panel.js';
 //connect later?
+
+var images = (0, _rawTiles.tilepreload)();
+console.log(images);
+
+var loadingIndicator = _react2.default.createElement(
+	'div',
+	null,
+	'Loading...'
+);
 
 var Frame = function (_Component) {
 	_inherits(Frame, _Component);
@@ -31095,8 +31108,16 @@ var contain = { // to match css for map container
     width: 2048
 };
 
-//const tiles = tilingRaw(3, );
+var cirTest = [// this should be akin to json entries, minus name, etc.
+{ cx: 9335, cy: 5672, r: 1380 / 2, name: 'test1' }, { cx: 200, cy: 250, r: 75, name: 'test2' }, { cx: 450, cy: 600, r: 75, name: 'test3' }, { cx: 450, cy: 100, r: 40, name: 'test4' }, { cx: 900, cy: 400, r: 75, name: 'test5' }, { cx: 60, cy: 100, r: 75, name: 'test6' }];
 
+var scaleOps = {
+    '2': [3, 1], //max in each set
+    '3': [7, 3],
+    '4': [15, 7],
+    '5': [31, 15],
+    '6': [63, 31]
+};
 
 var MapSVG = function (_Component) {
     _inherits(MapSVG, _Component);
@@ -31109,6 +31130,8 @@ var MapSVG = function (_Component) {
         _this.state = {
             mouseDivloc: [0, 0],
             mouseLast: [0, 0],
+            mousePast: [0, 0],
+            mousePos: [0, 0],
             currentZoomLevel: 3,
             tilesize: 128,
             drag: '',
@@ -31179,40 +31202,66 @@ var MapSVG = function (_Component) {
             } else if (this.state.drag === 'drag') {
                 this.setState({ xOff: offX, yOff: offY });
                 console.log('offsets norm', offX, offY, lastX, lastY);
+            } else if (this.state.drag === '') {
+                this.tempZoom(e, mousePos);
             }
         }
     }, {
         key: 'tempZoom',
-        value: function tempZoom(e) {
+        value: function tempZoom(e, mousePos) {
             e.preventDefault;
-            console.log(e.deltaY);
+            /*
+            mouseposition + offsets => location on map
+            tile position = Math.floor(location/tilesize)
+            */
+            var curX = this.state.mousePos[0] + this.state.xOff,
+                curY = this.state.mousePos[1] + this.state.yOff;
+            var resX = curX / this.state.tilesize,
+                resY = curY / this.state.tilesize;
+
+            var mosPos = this.state.mousePos;
+
+            var xDif = Math.abs(mousePos[0] - this.state.mousePast[0]);
 
             var curr = void 0,
-                pix = void 0;
+                pix = void 0,
+                oX = void 0,
+                oY = void 0;
 
-            if (e.deltaY > 1) {
+            if (mousePos[1] > this.state.mousePast[1] && xDif < 3) {
                 //zoom in
                 curr = this.state.currentZoomLevel;
                 pix = this.state.tilesize + 2;
-                if (pix >= 256) {
+                oX = this.state.xOff + 2 * resX;
+                oY = this.state.yOff + 2 * resY;
+                if (pix === 256) {
                     curr++;pix = 128;
                 }
                 if (curr > 6) {
-                    curr = 6;pix = 256;
+                    curr = 6;pix = 256;oX = this.state.xOff;oY = this.state.yOff;
                 };
-            } else if (e.deltaY < 1) {
+            } else if (mousePos[1] < this.state.mousePast[1] && xDif < 3) {
                 //zoom out
                 curr = this.state.currentZoomLevel;
                 pix = this.state.tilesize - 2;
-                if (pix <= 128) {
+                oX = this.state.xOff - 2 * resX;
+                oY = this.state.yOff - 2 * resY;
+                if (pix === 128) {
                     curr--;pix = 256;
                 }
                 if (curr < 2) {
-                    curr = 2;pix = 256;
+                    curr = 2;pix = 128;oX = this.state.xOff;oY = this.state.yOff;
                 };
+            } else {
+                curr = this.state.currentZoomLevel;
+                pix = this.state.tilesize;
+                oX = this.state.xOff;
+                oY = this.state.yOff;
+                mosPos = mousePos;
             }
 
-            this.setState({ currentZoomLevel: curr, tilesize: pix });
+            console.log({ currentZoomLevel: curr, tilesize: pix, xOff: oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos: mosPos });
+            this.setState({ currentZoomLevel: curr, tilesize: pix, xOff: oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos: mosPos });
         }
     }, {
         key: 'render',
@@ -31220,6 +31269,17 @@ var MapSVG = function (_Component) {
             var _this2 = this;
 
             var tiles = (0, _rawTiles2.default)(this.state.currentZoomLevel, this.state.tilesize, [this.state.initialWidth, this.state.initialHeight], this.state.xOff, this.state.yOff);
+            var percent = tiles[0].percent;
+
+            var cirNew = cirTest.map(function (circle) {
+                var newCir = Object.assign({}, circle);
+                newCir.cx = circle.cx * percent - _this2.state.xOff;
+                newCir.cy = circle.cy * percent - _this2.state.yOff;
+                newCir.r = circle.r * percent;
+                return newCir;
+            });
+
+            console.log('current scale', cirNew, percent);
 
             return _react2.default.createElement(
                 'div',
@@ -31237,20 +31297,16 @@ var MapSVG = function (_Component) {
                         } },
                     _react2.default.createElement(
                         'svg',
-                        { width: this.state.initialWidth, height: this.state.initialHeight, onWheel: function onWheel(e) {
-                                return _this2.tempZoom(e);
-                            } },
+                        { width: this.state.initialWidth, height: this.state.initialHeight + 300 },
                         _react2.default.createElement(
                             'defs',
                             null,
                             _react2.default.createElement(
                                 'clipPath',
                                 { id: 'myClip' },
-                                _react2.default.createElement('circle', { stroke: '#000000', cx: '50', cy: '50', r: '40' }),
-                                _react2.default.createElement('circle', { stroke: '#000000', cx: '193.949', cy: '235', r: '74.576' }),
-                                _react2.default.createElement('circle', { stroke: '#000000', cx: '426.576', cy: '108.305', r: '47.034' }),
-                                _react2.default.createElement('circle', { stroke: '#000000', cx: '346.915', cy: '255.763', r: '43.644' }),
-                                _react2.default.createElement('circle', { stroke: '#000000', cx: '255.39', cy: '82.882', r: '35.17' })
+                                cirNew && cirNew.map(function (d) {
+                                    return _react2.default.createElement('circle', { stroke: '#000000', cx: d.cx, cy: d.cy, r: d.r });
+                                })
                             )
                         ),
                         tiles && tiles.map(function (tile) {
@@ -31283,11 +31339,9 @@ var MapSVG = function (_Component) {
                                 });
                             }
                         }),
-                        _react2.default.createElement('circle', { stroke: '#ffffff', fill: 'none', cx: '50', cy: '50', r: '40', strokeWidth: '4' }),
-                        _react2.default.createElement('circle', { stroke: '#ffffff', fill: 'none', cx: '193.949', cy: '235', r: '74.576', strokeWidth: '4' }),
-                        _react2.default.createElement('circle', { stroke: '#ffffff', fill: 'none', cx: '426.576', cy: '108.305', r: '47.034', strokeWidth: '4' }),
-                        _react2.default.createElement('circle', { stroke: '#ffffff', fill: 'none', cx: '346.915', cy: '255.763', r: '43.644', strokeWidth: '4' }),
-                        _react2.default.createElement('circle', { stroke: '#ffffff', fill: 'none', cx: '255.39', cy: '82.882', r: '35.17', strokeWidth: '4' })
+                        cirNew && cirNew.map(function (d) {
+                            return _react2.default.createElement('circle', { stroke: '#ffffff', fill: 'none', cx: d.cx, cy: d.cy, r: d.r, strokeWidth: '4' });
+                        })
                     )
                 )
             );
@@ -31500,7 +31554,52 @@ exports.default = d3tiling;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-//const tiling = function(scale, tilesize, boundArr, center, mouse, mouseTrig) {
+var scaleOps = {
+  '2': [3, 1], //max in each set
+  '3': [7, 3],
+  '4': [15, 7],
+  '5': [31, 15],
+  '6': [63, 31]
+};
+
+var tilepreload = exports.tilepreload = function tilepreload() {
+
+  var tileArr = [];
+
+  for (var key in scaleOps) {
+    var limits = scaleOps[key];
+    var x = 0,
+        y = 0,
+        xMax = limits[0],
+        yMax = limits[1];
+
+    var tiles = [];
+    var tile1 = void 0,
+        tile2 = void 0;
+
+    for (var i = 0; i <= xMax; i++) {
+      for (var j = 0; j <= yMax; j++) {
+        tile1 = '../../../layouts/color/' + key + '/map_' + i + '_' + j + '.jpg';
+        tile2 = '\'../../../layouts/grey/' + key + '/map_' + i + '_' + j + '.jpg\';';
+        //   z:scale,
+        //   percent:(xMax+1)*tileSize/(64*256),
+        //   xpos:i*tileSize - xOff,
+        //   x: i,
+        //   //yO: yOff,
+        //   ypos:j*tileSize - yOff,
+        //   y: j,
+        // };
+
+        tiles.push(tile1, tile2);
+      }
+    }
+
+    tileArr.push.apply(tileArr, tiles);
+  }
+
+  return tileArr;
+};
+
 var tiling = function tiling(scale, tileSize, boundArr, xOff, yOff) {
   // const scaleOps = {
   //   '2': [3 , 1, 1024, 16], //max in each set
@@ -31510,35 +31609,9 @@ var tiling = function tiling(scale, tileSize, boundArr, xOff, yOff) {
   //   '6': [63 , 31, 16384, 1],
   // };
 
-  var scaleOps = {
-    '2': [3, 1], //max in each set
-    '3': [7, 3],
-    '4': [15, 7],
-    '5': [31, 15],
-    '6': [63, 31]
-  };
 
   var wide = boundArr[0];
   var high = boundArr[1];
-
-  // console.log('centerDiv ', wide/2, high/2);
-  // console.log('centerScaled ', center[0]/scaleOps[scale][3], center[1]/scaleOps[scale][3]);
-  // console.log('mouseClicked', mouse[0], mouse[1]);
-
-  // let xOrig = (wide/2 - mouse[0])*scaleOps[scale][3];
-  // let yOrig = (high/2 - mouse[1])*scaleOps[scale][3];
-
-  // let xOffsetC = wide/2 - center[0]/scaleOps[scale][3];
-  // let yOffsetC = high/2 - center[1]/scaleOps[scale][3];
-
-  // let xOffsetM = mouse[0] - xOrig/scaleOps[scale][3];
-  // let yOffsetM = mouse[1] - yOrig/scaleOps[scale][3];
-
-  // console.log(xOffsetC, yOffsetC, xOffsetM, yOffsetM);
-  // let xOff, yOff;
-  // (mouseTrig)? xOff = xOffsetM : xOff =  xOffsetC;
-  // (mouseTrig)? yOff = yOffsetM : yOff =  yOffsetC;
-
 
   var tileArr = [];
 
@@ -31558,7 +31631,7 @@ var tiling = function tiling(scale, tileSize, boundArr, xOff, yOff) {
       for (var j = 0; j <= yMax; j++) {
         tile = {
           z: scale,
-          //xO:xOff,
+          percent: (xMax + 1) * tileSize / (64 * 256),
           xpos: i * tileSize - xOff,
           x: i,
           //yO: yOff,
@@ -47902,6 +47975,321 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+/* 304 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var hash = {};
+var cache = [];
+
+var add = function add(url) {
+    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+    if (!hash[url]) {
+        hash[url] = new Image();
+
+        if (options.crossOrigin) {
+            hash[url].crossOrigin = options.crossOrigin;
+        }
+
+        hash[url].src = url;
+
+        cache.push(hash[url]);
+    }
+    return hash[url];
+};
+
+var get = function get(url, options) {
+    return add(url, options);
+};
+
+var stuff = function stuff(urls, options) {
+    if (urls.length > 0) {
+        urls.map(function (url) {
+            return add(url, options);
+        });
+    }
+};
+
+var ImageCache = {
+    add: add,
+    stuff: stuff,
+    get: get,
+    hash: hash,
+    cache: cache
+};
+
+exports.default = ImageCache;
+
+/***/ }),
+/* 305 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _ImageCache = __webpack_require__(304);
+
+var _ImageCache2 = _interopRequireDefault(_ImageCache);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ImageHelper = {
+    loadImage: function loadImage(url, options) {
+        var image = _ImageCache2.default.get(url, options);
+
+        return new Promise(function (resolve, reject) {
+            var handleSuccess = function handleSuccess() {
+                resolve(image);
+            };
+            var handleError = function handleError() {
+                reject(image);
+            };
+
+            if (image.complete) {
+                // image is loaded, go ahead and change the state
+
+                if (image.naturalWidth && image.naturalHeight) {
+                    // successful load
+                    handleSuccess();
+                } else {
+                    handleError();
+                }
+            } else {
+                image.addEventListener('load', handleSuccess, false);
+                image.addEventListener('error', handleError, false);
+            }
+        });
+    },
+    loadImages: function loadImages(urls, options) {
+        var _this = this;
+
+        var promises = urls.map(function (url) {
+            return _this.loadImage(url, options);
+        });
+        return Promise.all(promises);
+    },
+
+
+    // preload without caring about the result
+    stuffImages: function stuffImages(urls, options) {
+        _ImageCache2.default.stuff(urls, options);
+    }
+};
+
+exports.default = ImageHelper;
+
+/***/ }),
+/* 306 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _ImageHelper = __webpack_require__(305);
+
+var _ImageHelper2 = _interopRequireDefault(_ImageHelper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var propTypes = {
+    // Rendered on success
+    children: _react.PropTypes.element.isRequired,
+
+    // Rendered during load
+    loadingIndicator: _react.PropTypes.node.isRequired,
+
+    // Array of image urls to be preloaded
+    images: _react.PropTypes.array,
+
+    // If set, the preloader will automatically show
+    // the children content after this amount of time
+    autoResolveDelay: _react.PropTypes.number,
+
+    // Error callback. Is passed the error
+    onError: _react.PropTypes.func,
+
+    // Success callback
+    onSuccess: _react.PropTypes.func,
+
+    // Whether or not we should still show the content
+    // even if there is a preloading error
+    resolveOnError: _react.PropTypes.bool,
+
+    // Whether or not we should mount the child content after
+    // images have finished loading (or after autoResolveDelay)
+    mountChildren: _react.PropTypes.bool
+};
+
+var defaultProps = {
+    images: [],
+    resolveOnError: true,
+    mountChildren: true,
+    loadingIndicator: null
+};
+
+var Preload = function (_Component) {
+    _inherits(Preload, _Component);
+
+    function Preload(props) {
+        _classCallCheck(this, Preload);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Preload).call(this, props));
+
+        _this.state = {
+            ready: false
+        };
+
+        _this._handleSuccess = _this._handleSuccess.bind(_this);
+        _this._handleError = _this._handleError.bind(_this);
+        _this._mounted = false;
+        return _this;
+    }
+
+    _createClass(Preload, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            if (!this.props.images || this.props.images.length === 0) {
+                this._handleSuccess();
+            }
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this._mounted = true;
+            if (!this.state.ready) {
+                _ImageHelper2.default.loadImages(this.props.images).then(this._handleSuccess, this._handleError);
+
+                if (this.props.autoResolveDelay && this.props.autoResolveDelay > 0) {
+                    this.autoResolveTimeout = setTimeout(this._handleSuccess, this.props.autoResolveDelay);
+                }
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            this._mounted = false;
+            if (this.autoResolveTimeout) {
+                clearTimeout(this.autoResolveTimeout);
+            }
+        }
+    }, {
+        key: '_handleSuccess',
+        value: function _handleSuccess() {
+            if (this.autoResolveTimeout) {
+                clearTimeout(this.autoResolveTimeout);
+                console.warn('images failed to preload, auto resolving');
+            }
+
+            if (this.state.ready || !this._mounted) {
+                return;
+            }
+
+            this.setState({
+                ready: true
+            });
+
+            if (this.props.onSuccess) {
+                this.props.onSuccess();
+            }
+        }
+    }, {
+        key: '_handleError',
+        value: function _handleError(err) {
+
+            if (!this._mounted) {
+                return;
+            }
+
+            if (this.props.resolveOnError) {
+                this._handleSuccess();
+            }
+
+            if (this.props.onError) {
+                this.props.onError(err);
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return this.state.ready && this.props.mountChildren ? this.props.children : this.props.loadingIndicator;
+        }
+    }]);
+
+    return Preload;
+}(_react.Component);
+
+Preload.propTypes = propTypes;
+Preload.defaultProps = defaultProps;
+
+exports.default = Preload;
+
+/***/ }),
+/* 307 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Preload = exports.ImageHelper = exports.ImageCache = undefined;
+
+var _ImageCache = __webpack_require__(304);
+
+Object.defineProperty(exports, 'ImageCache', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_ImageCache).default;
+  }
+});
+
+var _ImageHelper = __webpack_require__(305);
+
+Object.defineProperty(exports, 'ImageHelper', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_ImageHelper).default;
+  }
+});
+
+var _Preload2 = __webpack_require__(306);
+
+var _Preload3 = _interopRequireDefault(_Preload2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Preload = exports.Preload = _Preload3.default;
+
+exports.default = Preload;
 
 /***/ })
 /******/ ]);

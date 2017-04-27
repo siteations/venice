@@ -14,8 +14,22 @@ const contain = { // to match css for map container
     width: 2048,
 }
 
-//const tiles = tilingRaw(3, );
+const cirTest = [ // this should be akin to json entries, minus name, etc.
+	{ cx:9335, cy:5672, r:1380/2, name: 'test1' },
+	{ cx:200, cy:250, r:75, name: 'test2'  },
+	{ cx:450, cy:600, r:75, name: 'test3'  },
+	{ cx:450, cy:100, r:40, name: 'test4'  },
+	{ cx:900, cy:400, r:75, name: 'test5'  },
+	{ cx:60, cy:100, r:75, name: 'test6'  },
+];
 
+const scaleOps = {
+    '2': [3 , 1], //max in each set
+    '3': [7 , 3],
+    '4': [15 , 7],
+    '5': [31 , 15],
+    '6': [63 , 31],
+  };
 
 export default class MapSVG extends Component {
 	constructor(props) {
@@ -23,6 +37,8 @@ export default class MapSVG extends Component {
         this.state = {
         	mouseDivloc: [0,0],
         	mouseLast: [0,0],
+        	mousePast: [0,0],
+        	mousePos: [0,0],
             currentZoomLevel: 3,
             tilesize: 128,
             drag: '',
@@ -48,6 +64,7 @@ export default class MapSVG extends Component {
     componentDidMount() {
         window.addEventListener("resize", this.refSize);
         this.refSize();
+
     }
 
     refSize(){
@@ -72,8 +89,8 @@ export default class MapSVG extends Component {
     	e.preventDefault;
     	console.log(e.type);
     	let lastX = this.state.xOffR, lastY = this.state.yOffR;
-    	let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-    	let mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
+    	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+    	var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
     	// let xJump = this.state.mouseDivloc[0] - mousePos[0] + this.state.mouseLast[0]-lastX;
     	// let yJump = this.state.mouseDivloc[1] - mousePos[1] + this.state.mouseLast[0]-lastX;
     	let offX = this.state.mouseDivloc[0] - mousePos[0] + lastX;
@@ -84,46 +101,82 @@ export default class MapSVG extends Component {
     	}	else if (this.state.drag === 'drag'){
     		this.setState({xOff: offX, yOff: offY }) ;
     		console.log('offsets norm', offX, offY, lastX, lastY);
+    	} else if (this.state.drag === ''){
+    		this.tempZoom(e, mousePos);
     	}
     }
 
-    tempZoom(e) {
+    tempZoom(e, mousePos) {
     	e.preventDefault;
-    	console.log(e.deltaY);
+    	/*
+    	mouseposition + offsets => location on map
+    	tile position = Math.floor(location/tilesize)
+    	*/
+    	let curX = this.state.mousePos[0]+this.state.xOff, curY =  this.state.mousePos[1]+this.state.yOff;
+    	let resX = curX/this.state.tilesize, resY = curY/this.state.tilesize;
 
-    	let curr, pix;
+    	let mosPos = this.state.mousePos;
 
-    	if (e.deltaY>1) { //zoom in
+    	let xDif = Math.abs(mousePos[0]-this.state.mousePast[0]);
+
+    	let curr, pix, oX, oY;
+
+    	if (mousePos[1]>this.state.mousePast[1] && xDif <3) { //zoom in
     		curr = this.state.currentZoomLevel;
     		pix = this.state.tilesize + 2;
-    	if (pix>=256){ curr++; pix=128 }
-    	if (curr>6){ curr=6; pix=256};
+    		oX = this.state.xOff + 2*resX;
+    		oY = this.state.yOff + 2*resY;
+    	if (pix===256){ curr++; pix=128 }
+    	if (curr>6){ curr=6; pix=256; oX = this.state.xOff; oY = this.state.yOff };
 
-    	} else if (e.deltaY<1) { //zoom out
+    	} else if (mousePos[1]<this.state.mousePast[1] && xDif <3) { //zoom out
     		curr = this.state.currentZoomLevel;
     		pix = this.state.tilesize - 2;
-    	if (pix<=128){ curr--; pix=256 }
-    	if (curr<2){ curr=2; pix=256};
+    		oX = this.state.xOff - 2*resX;
+    		oY = this.state.yOff - 2*resY;
+    	if (pix===128){ curr--; pix=256 }
+    	if (curr<2){ curr=2; pix=128; oX = this.state.xOff; oY = this.state.yOff };
+    	} else {
+    		curr = this.state.currentZoomLevel;
+    		pix = this.state.tilesize;
+    		oX = this.state.xOff;
+    		oY = this.state.yOff;
+    		mosPos = mousePos;
     	}
 
-    	this.setState({currentZoomLevel: curr, tilesize: pix });
+    	console.log({currentZoomLevel: curr, tilesize: pix, xOff : oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos:mosPos });
+    	this.setState({currentZoomLevel: curr, tilesize: pix, xOff : oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos:mosPos });
+
     }
 
     render(){
 
     	const tiles = tilingRaw(this.state.currentZoomLevel, this.state.tilesize, [this.state.initialWidth, this.state.initialHeight], this.state.xOff, this.state.yOff );
+    	const percent = tiles[0].percent;
+
+    	let cirNew = cirTest.map(circle=>{
+    		let newCir = Object.assign({},circle);
+    		newCir.cx = circle.cx*percent - this.state.xOff;
+    		newCir.cy = circle.cy*percent - this.state.yOff;
+    		newCir.r = circle.r*percent;
+    		return newCir;
+    	})
+
+    	console.log('current scale', cirNew, percent);
 
     	return (
     	   <div className="mFullO mainMaps" ref="size" id="mapWin"  >
     	   <div className="offset" onDrag={e=> console.log('being dragged')} onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} >
-	    	   <svg width={this.state.initialWidth} height={this.state.initialHeight} onWheel ={e=>this.tempZoom(e)}  >
+	    	   <svg width={this.state.initialWidth} height={this.state.initialHeight+300}  >
 	    	   		<defs>
 	    	   			<clipPath id="myClip">
-					      	<circle stroke="#000000" cx="50" cy="50" r="40" />
-				            <circle stroke="#000000" cx="193.949" cy="235" r="74.576"/>
-				            <circle stroke="#000000" cx="426.576" cy="108.305" r="47.034"/>
-				            <circle stroke="#000000" cx="346.915" cy="255.763" r="43.644"/>
-				            <circle stroke="#000000" cx="255.39" cy="82.882" r="35.17"/>
+	    	   				{cirNew &&
+	    	   					cirNew.map(d=>{
+	    	   						return (
+	    	   						   <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} />
+	    	   						        )
+	    	   					})
+	    	   				}
 					    </clipPath>
 	    	   		</defs>
 	    	   		{tiles &&
@@ -163,11 +216,13 @@ export default class MapSVG extends Component {
 	    	   				}
 	    	   			})
 	    	   		}
-	    	   		<circle stroke="#ffffff" fill="none" cx="50" cy="50" r="40" strokeWidth="4" />
-		            <circle stroke="#ffffff" fill="none" cx="193.949" cy="235" r="74.576" strokeWidth="4" />
-		            <circle stroke="#ffffff" fill="none" cx="426.576" cy="108.305" r="47.034" strokeWidth="4" />
-		            <circle stroke="#ffffff"  fill="none" cx="346.915" cy="255.763" r="43.644" strokeWidth="4" />
-		            <circle stroke="#ffffff"  fill="none" cx="255.39" cy="82.882" r="35.17"  strokeWidth="4" />
+	    	   		{cirNew &&
+	   					cirNew.map(d=>{
+	   						return (
+	   						   <circle stroke="#ffffff" fill="none" cx={d.cx} cy={d.cy} r={d.r} strokeWidth="4" />
+	   						        )
+	   					})
+	   				}
 
 	    	   </svg>
     	   </div>
