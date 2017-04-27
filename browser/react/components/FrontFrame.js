@@ -5,7 +5,7 @@ import MapBar from './MapBar.js';
 import {Preload} from 'react-preload';
 import {tilepreload} from '../plug-ins/rawTiles.js';
 //import Maptest from './Map.js';
-import Mapd3 from './Mapd3.js';
+import MapSVG from './Mapd3.js';
 //import Panel from './Panel.js';
 //connect later?
 
@@ -98,7 +98,7 @@ class Frame extends Component {
 			        </div>
 			        {this.state.start &&
 			        	<div className="flex between">
-				        		<Mapd3 />
+				        	<MapSVG />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={false}/>
 				        	<div className="panelClose">
 				        	</div>

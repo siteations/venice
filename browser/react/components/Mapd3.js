@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import * as d3 from 'd3';
-import tiling from '../plug-ins/d3geotile.js';
+
+//---------------------------MAP OPTIONS---------------------------
+//import * as d3 from 'd3';
+//import { Map, TileLayer, ImageOverlay } from 'react-leaflet';
 import tilingRaw from '../plug-ins/rawTiles.js';
 
+//---------------------------PRE DB / REDUX PLACEHOLDERS---------------------------
+import {cirTest, clusterTest, narrativeTest} from '../pre-db/cirTest.js';
+
+
+//---------------------------PRE DB / REDUX PLACEHOLDERS---------------------------
 const TonerTiles = '../../../layouts/color/{z}/map_{x}_{y}.jpg';
 const GreyTiles = '../../../layouts/grey/{z}/map_{x}_{y}.jpg';
-const Attr = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
-const mapCenter = [16384/2,16384/4]; //locations should be in largest-scale, raw x,y... not projection
 
-const contain = { // to match css for map container
+
+const contain = { // to match css for initial map container
     height: 1024,
     width: 2048,
 }
-
-const cirTest = [ // this should be akin to json entries, minus name, etc.
-	{ cx:9335, cy:5672, r:1380/2, name: 'test1' },
-	{ cx:200, cy:250, r:75, name: 'test2'  },
-	{ cx:450, cy:600, r:75, name: 'test3'  },
-	{ cx:450, cy:100, r:40, name: 'test4'  },
-	{ cx:900, cy:400, r:75, name: 'test5'  },
-	{ cx:60, cy:100, r:75, name: 'test6'  },
-];
 
 const scaleOps = {
     '2': [3 , 1], //max in each set
@@ -47,14 +44,14 @@ export default class MapSVG extends Component {
             xOffR:0,
             yOffR:0,
             trig: false,
-            currentCenter: mapCenter,
-            mouseCenter: [0,0],
             initialWidth: contain.width,
             initialHeight: contain.height,
             partWidth: 0,
             quarterWidth:0,
             greyOp: 1,
             colorOp: 1,
+            labelT:'',
+            labelS:'',
 
         };
         this.mouseLoc=this.mouseLoc.bind(this);
@@ -101,9 +98,9 @@ export default class MapSVG extends Component {
     	}	else if (this.state.drag === 'drag'){
     		this.setState({xOff: offX, yOff: offY }) ;
     		console.log('offsets norm', offX, offY, lastX, lastY);
-    	} else if (this.state.drag === ''){
-    		this.tempZoom(e, mousePos);
-    	}
+    	} //else if (this.state.drag === ''){
+    	// 	this.tempZoom(e, mousePos);
+    	// }
     }
 
     tempZoom(e, mousePos) {
@@ -149,10 +146,69 @@ export default class MapSVG extends Component {
 
     }
 
+    tempZoomScroll(e) {
+    	e.preventDefault;
+    	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+    	var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
+    	/*
+    	mouseposition + offsets => location on map
+    	tile position = Math.floor(location/tilesize)
+    	*/
+    	let curX = mousePos[0]+this.state.xOff, curY = mousePos[1]+this.state.yOff;
+    	let resX = curX/this.state.tilesize, resY = curY/this.state.tilesize;
+
+    	let mosPos = mousePos;
+
+    	console.log('scroll');
+
+    	let curr, pix, oX, oY;
+
+    	if (e.deltaY>1) { //zoom in
+    		curr = this.state.currentZoomLevel;
+    		pix = this.state.tilesize + 4;
+    		oX = this.state.xOff + 4*resX;
+    		oY = this.state.yOff + 4*resY;
+    	if (pix===256){ curr++; pix=128 }
+    	if (curr>6){ curr=6; pix=256; oX = this.state.xOff; oY = this.state.yOff };
+
+    	} else if (e.deltaY<1) { //zoom out
+    		curr = this.state.currentZoomLevel;
+    		pix = this.state.tilesize - 4;
+    		oX = this.state.xOff - 4*resX;
+    		oY = this.state.yOff - 4*resY;
+    	if (pix===128){ curr--; pix=256 }
+    	if (curr<2){ curr=2; pix=128; oX = this.state.xOff; oY = this.state.yOff };
+
+    	} else {
+    		curr = this.state.currentZoomLevel;
+    		pix = this.state.tilesize;
+    		oX = this.state.xOff;
+    		oY = this.state.yOff;
+    		mosPos = mousePos;
+    	}
+
+    	console.log({currentZoomLevel: curr, tilesize: pix, xOff : oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos:mosPos  });
+    	this.setState({currentZoomLevel: curr, tilesize: pix, xOff : oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos:mosPos });
+
+    }
+
+    showLabel(e){
+    	e.preventDefault;
+    	let name = e.target.attributes.value.value.split('.');
+    	this.setState({labelT:name[0], labelS: name[1]});
+    }
+
+    hideLabel(e){
+    	e.preventDefault;
+    	this.setState({labelT:'', labelS: ''});
+    }
+
     render(){
 
     	const tiles = tilingRaw(this.state.currentZoomLevel, this.state.tilesize, [this.state.initialWidth, this.state.initialHeight], this.state.xOff, this.state.yOff );
     	const percent = tiles[0].percent;
+
+    	console.log( typeof cirTest);
 
     	let cirNew = cirTest.map(circle=>{
     		let newCir = Object.assign({},circle);
@@ -166,8 +222,8 @@ export default class MapSVG extends Component {
 
     	return (
     	   <div className="mFullO mainMaps" ref="size" id="mapWin"  >
-    	   <div className="offset" onDrag={e=> console.log('being dragged')} onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} >
-	    	   <svg width={this.state.initialWidth} height={this.state.initialHeight+300}  >
+    	   <div className="offset" onDrag={e=> console.log('being dragged')} onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} onWheel = {e=>this.tempZoomScroll(e) } >
+	    	   <svg width={this.state.initialWidth} height={this.state.initialHeight}  >
 	    	   		<defs>
 	    	   			<clipPath id="myClip">
 	    	   				{cirNew &&
@@ -179,11 +235,19 @@ export default class MapSVG extends Component {
 	    	   				}
 					    </clipPath>
 	    	   		</defs>
+	    	   		{/*<image
+	      						xlinkHref = {`../../../layouts/novacco_grey_0402.jpg`}
+	     						width={this.state.tilesize*(scaleOps[this.state.currentZoomLevel][0] + 1)}
+								height={this.state.tilesize*(scaleOps[this.state.currentZoomLevel][1] + 1)}
+								x = { -1 *this.state.xOff}
+								y = { -1 *this.state.yOff }
+								opacity = {.5}
+	      						/>*/}
 	    	   		{tiles &&
 	    	   			tiles.map(tile=>{
 	    	   			//this will become <Greyraster tiles={tiles} opacity={this.state.bkOpacity}/>
 
-	    	   				if (tile.xpos<this.state.initialWidth && tile.xpos+256>=0 && tile.ypos<this.state.initialHeight && tile.ypos+256>=0 ){ // only show those on screen
+	    	   				if (tile.xpos<this.state.initialWidth && tile.xpos+512>=0 && tile.ypos<this.state.initialHeight && tile.ypos+512>=0 ){ // only show those on screen
 	    	   				return (
 	    	   					<image
 	      						xlinkHref = {`../../../layouts/grey/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
@@ -201,7 +265,7 @@ export default class MapSVG extends Component {
 	    	   		{tiles &&
 	    	   			tiles.map(tile=>{
 
-	    	   				if (tile.xpos<this.state.initialWidth && tile.xpos+256>=0 && tile.ypos<this.state.initialHeight && tile.ypos+256>=0 ){ // only show those on screen
+	    	   				if (tile.xpos<this.state.initialWidth && tile.xpos+512>=0 && tile.ypos<this.state.initialHeight && tile.ypos+512>=0 ){ // only show those on screen
 
 	    	   				return (
 	    	   					<image
@@ -219,7 +283,11 @@ export default class MapSVG extends Component {
 	    	   		{cirNew &&
 	   					cirNew.map(d=>{
 	   						return (
-	   						   <circle stroke="#ffffff" fill="none" cx={d.cx} cy={d.cy} r={d.r} strokeWidth="4" />
+	   						   <g>
+	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} strokeWidth={this.state.currentZoomLevel*2} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} />
+	   						   		<text x={d.cx+d.r+10} y={d.cy} className="textHL" fontSize={`${this.state.currentZoomLevel/1.5} em`} >{this.state.labelT}</text>
+	   						   		<text x={d.cx+d.r+10} y={d.cy+20} className="textSHL" fontSize={`${this.state.currentZoomLevel/2} em`} >{this.state.labelS}</text>
+	   						   	</g>
 	   						        )
 	   					})
 	   				}

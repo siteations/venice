@@ -223,6 +223,28 @@ a:hover {
 	}
 }
 
+.circHL {
+	stroke: #ffffff;
+	fill: #000000;
+	fill-opacity:.05;
+	stroke-opacity: 1;
+	text-shadow: 0px 0px 4px #000000;
+}
+
+.textHL {
+	text-anchor: start;
+	fill: #ffffff;
+	font-family: 'BornholmSandvig';
+	text-shadow: 0px 0px 4px #000000;
+}
+
+.textSHL {
+	text-anchor: start;
+	fill: #ffffff;
+	font-family: 'Trenda';
+	text-shadow: 0px 0px 4px #000000;
+}
+
 .controlTrans {
 	position: absolute;
 	top: 300px;
