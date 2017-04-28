@@ -231,6 +231,13 @@ a:hover {
 	text-shadow: 0px 0px 4px #000000;
 }
 
+.circHLMin {
+	stroke: #ffffff;
+	fill: #ffffff;
+	fill-opacity:.75;
+	stroke-opacity: 1;
+}
+
 .textHL {
 	text-anchor: start;
 	fill: #000000;

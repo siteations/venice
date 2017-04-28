@@ -31044,29 +31044,21 @@ var Frame = function (_Component) {
 					this.state.start && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
-						_react2.default.createElement(_Mapd2.default, null),
+						_react2.default.createElement(_Mapd2.default, { baseClass: 'mFullO mainMaps' }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.selectName, open: false }),
 						_react2.default.createElement('div', { className: 'panelClose' })
 					),
 					this.state.full && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'mFull mainMaps' },
-							_react2.default.createElement(Maptest, null)
-						),
+						_react2.default.createElement(_Mapd2.default, { baseClass: 'mFull mainMaps' }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.selectName, open: false }),
 						_react2.default.createElement('div', { className: 'panelClose' })
 					),
 					this.state.panel && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'mPart mainMaps' },
-							_react2.default.createElement(Maptest, null)
-						),
+						_react2.default.createElement(_Mapd2.default, { baseClass: 'mPart mainMaps' }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.selectName, open: true }),
 						_react2.default.createElement(
 							'div',
@@ -31077,11 +31069,7 @@ var Frame = function (_Component) {
 					this.state.panelLarge && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'mQuarter mainMaps' },
-							_react2.default.createElement(Maptest, null)
-						),
+						_react2.default.createElement(_Mapd2.default, { baseClass: 'mQuarter mainMaps' }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.selectName, large: true }),
 						_react2.default.createElement(
 							'div',
@@ -31546,7 +31534,7 @@ var MapSVG = function (_Component) {
 
             return _react2.default.createElement(
                 'div',
-                { className: 'mFullO mainMaps', ref: 'size', id: 'mapWin' },
+                { className: this.props.baseClass, ref: 'size', id: 'mapWin' },
                 _react2.default.createElement(
                     'div',
                     { className: 'offset', onDrag: function onDrag(e) {

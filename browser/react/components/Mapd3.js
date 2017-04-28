@@ -207,7 +207,7 @@ export default class MapSVG extends Component {
     	})
 
     	return (
-    	   <div className="mFullO mainMaps" ref="size" id="mapWin"  >
+    	   <div className={this.props.baseClass} ref="size" id="mapWin"  >
     	   <div className="offset" onDrag={e=> console.log('being dragged')} onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} onWheel = {e=>this.tempZoomScroll(e) } >
 	    	   <svg width={this.state.initialWidth} height={this.state.initialHeight}  >
 	    	   		<defs>
