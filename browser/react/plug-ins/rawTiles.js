@@ -1,4 +1,4 @@
-    const scaleOps = {
+export const scaleOps = {
     '2': [3 , 1], //max in each set
     '3': [7 , 3],
     '4': [15 , 7],
@@ -20,42 +20,21 @@ export const tilepreload = function (){
     for (let i=0; i<=xMax; i++){
       for (let j=0; j<=yMax; j++){
         tile1= `../../../layouts/color/${key}/map_${i}_${j}.jpg`;
-        tile2= `'../../../layouts/grey/${key}/map_${i}_${j}.jpg';`
-        //   z:scale,
-        //   percent:(xMax+1)*tileSize/(64*256),
-        //   xpos:i*tileSize - xOff,
-        //   x: i,
-        //   //yO: yOff,
-        //   ypos:j*tileSize - yOff,
-        //   y: j,
-        // };
-
+        tile2= `'../../../layouts/grey/${key}/map_${i}_${j}.jpg`;
         tiles.push(tile1, tile2);
-
       }
     }
 
     tileArr.push(...tiles);
 
-
   }
 
   return tileArr;
-
-
 
 }
 
 
 const tiling = function(scale, tileSize, boundArr, xOff, yOff) {
-  // const scaleOps = {
-  //   '2': [3 , 1, 1024, 16], //max in each set
-  //   '3': [7 , 3, 2048, 8],
-  //   '4': [15 , 7, 4096, 4],
-  //   '5': [31 , 15, 8192, 2],
-  //   '6': [63 , 31, 16384, 1],
-  // };
-
 
   let wide = boundArr[0];
   let high = boundArr[1];

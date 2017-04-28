@@ -4,10 +4,10 @@ import { render } from 'react-dom';
 //---------------------------MAP OPTIONS---------------------------
 //import * as d3 from 'd3';
 //import { Map, TileLayer, ImageOverlay } from 'react-leaflet';
-import tilingRaw from '../plug-ins/rawTiles.js';
+import tilingRaw, { scaleOps } from '../plug-ins/rawTiles.js';
 
-//---------------------------PRE DB / REDUX PLACEHOLDERS---------------------------
-import {cirTest, clusterTest, narrativeTest} from '../pre-db/cirTest.js';
+//---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
+import {cirMain, clusterTest, narrativeTest} from '../pre-db/cirTest.js';
 
 
 //---------------------------PRE DB / REDUX PLACEHOLDERS---------------------------
@@ -20,13 +20,6 @@ const contain = { // to match css for initial map container
     width: 2048,
 }
 
-const scaleOps = {
-    '2': [3 , 1], //max in each set
-    '3': [7 , 3],
-    '4': [15 , 7],
-    '5': [31 , 15],
-    '6': [63 , 31],
-  };
 
 export default class MapSVG extends Component {
 	constructor(props) {
@@ -77,14 +70,14 @@ export default class MapSVG extends Component {
     	let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
     	let mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
     	this.setState({mouseDivloc: mousePos});
-    	console.log('mouse position ', this.state.mouseDivloc, e.type);
+
     	(e.type === 'mousedown')? this.setState({drag: 'start'}) : this.setState({drag: ''})
     	if (e.type === 'mouseup') {this.setState({mouseLast: mousePos, xOffR : this.state.xOff, yOffR: this.state.yOff })};
     }
 
     drag(e) {
     	e.preventDefault;
-    	console.log(e.type);
+
     	let lastX = this.state.xOffR, lastY = this.state.yOffR;
     	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
     	var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
@@ -111,11 +104,9 @@ export default class MapSVG extends Component {
     	*/
     	let curX = this.state.mousePos[0]+this.state.xOff, curY =  this.state.mousePos[1]+this.state.yOff;
     	let resX = curX/this.state.tilesize, resY = curY/this.state.tilesize;
-
     	let mosPos = this.state.mousePos;
 
     	let xDif = Math.abs(mousePos[0]-this.state.mousePast[0]);
-
     	let curr, pix, oX, oY;
 
     	if (mousePos[1]>this.state.mousePast[1] && xDif <3) { //zoom in
@@ -141,7 +132,6 @@ export default class MapSVG extends Component {
     		mosPos = mousePos;
     	}
 
-    	console.log({currentZoomLevel: curr, tilesize: pix, xOff : oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos:mosPos });
     	this.setState({currentZoomLevel: curr, tilesize: pix, xOff : oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos:mosPos });
 
     }
@@ -156,10 +146,7 @@ export default class MapSVG extends Component {
     	*/
     	let curX = mousePos[0]+this.state.xOff, curY = mousePos[1]+this.state.yOff;
     	let resX = curX/this.state.tilesize, resY = curY/this.state.tilesize;
-
     	let mosPos = mousePos;
-
-    	console.log('scroll');
 
     	let curr, pix, oX, oY;
 
@@ -168,7 +155,7 @@ export default class MapSVG extends Component {
     		pix = this.state.tilesize + 4;
     		oX = this.state.xOff + 4*resX;
     		oY = this.state.yOff + 4*resY;
-    	if (pix===256){ curr++; pix=128 }
+    	if (pix>=256){ curr++; pix=128 }
     	if (curr>6){ curr=6; pix=256; oX = this.state.xOff; oY = this.state.yOff };
 
     	} else if (e.deltaY<1) { //zoom out
@@ -176,7 +163,7 @@ export default class MapSVG extends Component {
     		pix = this.state.tilesize - 4;
     		oX = this.state.xOff - 4*resX;
     		oY = this.state.yOff - 4*resY;
-    	if (pix===128){ curr--; pix=256 }
+    	if (pix<=128){ curr--; pix=256 }
     	if (curr<2){ curr=2; pix=128; oX = this.state.xOff; oY = this.state.yOff };
 
     	} else {
@@ -187,7 +174,6 @@ export default class MapSVG extends Component {
     		mosPos = mousePos;
     	}
 
-    	console.log({currentZoomLevel: curr, tilesize: pix, xOff : oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos:mosPos  });
     	this.setState({currentZoomLevel: curr, tilesize: pix, xOff : oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos:mosPos });
 
     }
@@ -208,17 +194,17 @@ export default class MapSVG extends Component {
     	const tiles = tilingRaw(this.state.currentZoomLevel, this.state.tilesize, [this.state.initialWidth, this.state.initialHeight], this.state.xOff, this.state.yOff );
     	const percent = tiles[0].percent;
 
-    	console.log( typeof cirTest);
+    	let cirLayers = [];
 
-    	let cirNew = cirTest.map(circle=>{
+    	let cirNew = cirMain.map(circle=>{
     		let newCir = Object.assign({},circle);
-    		newCir.cx = circle.cx*percent - this.state.xOff;
-    		newCir.cy = circle.cy*percent - this.state.yOff;
-    		newCir.r = circle.r*percent;
+	    		newCir.cx = circle.cx*percent - this.state.xOff;
+	    		newCir.cy = circle.cy*percent - this.state.yOff;
+	    		newCir.r = circle.r*percent;
+    		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
+
     		return newCir;
     	})
-
-    	console.log('current scale', cirNew, percent);
 
     	return (
     	   <div className="mFullO mainMaps" ref="size" id="mapWin"  >
@@ -243,25 +229,28 @@ export default class MapSVG extends Component {
 								y = { -1 *this.state.yOff }
 								opacity = {.5}
 	      						/>*/}
+	      			<g className="grayscaleTiles">
 	    	   		{tiles &&
 	    	   			tiles.map(tile=>{
 	    	   			//this will become <Greyraster tiles={tiles} opacity={this.state.bkOpacity}/>
 
 	    	   				if (tile.xpos<this.state.initialWidth && tile.xpos+512>=0 && tile.ypos<this.state.initialHeight && tile.ypos+512>=0 ){ // only show those on screen
 	    	   				return (
-	    	   					<image
-	      						xlinkHref = {`../../../layouts/grey/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
-	     						width={this.state.tilesize}
-								height={this.state.tilesize}
-								x = { tile.xpos }
-								y = { tile.ypos }
-								opacity = {.5}
+			    	   			<image
+			      				xlinkHref = {`../../../layouts/grey/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
+			     					width={this.state.tilesize}
+										height={this.state.tilesize}
+										x = { tile.xpos }
+										y = { tile.ypos }
+										opacity = {.5}
 	      						/>
 
 	    	   				        )
 	    	   				}
 	    	   			})
 	    	   		}
+	    	   		</g>
+	    	   		<g className="allColorTiles">
 	    	   		{tiles &&
 	    	   			tiles.map(tile=>{
 
@@ -270,27 +259,38 @@ export default class MapSVG extends Component {
 	    	   				return (
 	    	   					<image
 	      						xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
-	     						width={this.state.tilesize}
-								height={this.state.tilesize}
-								x = { tile.xpos }
-								y = { tile.ypos }
-								clipPath = "url(#myClip)"
+			     					width={this.state.tilesize}
+										height={this.state.tilesize}
+										x = { tile.xpos }
+										y = { tile.ypos }
+										clipPath = "url(#myClip)"
 	      						/>
 	    	   				        )
 	    	   				}
 	    	   			})
 	    	   		}
+	    	   		</g>
+	    	   		<g className="allLabelCircs">
 	    	   		{cirNew &&
 	   					cirNew.map(d=>{
 	   						return (
-	   						   <g>
 	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} strokeWidth={this.state.currentZoomLevel*2} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} />
-	   						   		<text x={d.cx+d.r+10} y={d.cy} className="textHL" fontSize={`${this.state.currentZoomLevel/1.5} em`} >{this.state.labelT}</text>
-	   						   		<text x={d.cx+d.r+10} y={d.cy+20} className="textSHL" fontSize={`${this.state.currentZoomLevel/2} em`} >{this.state.labelS}</text>
-	   						   	</g>
-	   						        )
+	   						    )
 	   					})
 	   				}
+	   				{cirNew &&
+	   					cirNew.map(d=>{
+	   						if (d.name.split('.')[1] === this.state.labelS){
+	   						return (
+	   						   			<g>
+			   						   		<text x={d.cx+d.r+10} y={d.cy} className="textHL" fontSize={`${this.state.currentZoomLevel} em`} >{this.state.labelT}</text>
+			   						   		<text x={d.cx+d.r+10} y={d.cy+20} className="textSHL" fontSize={`${this.state.currentZoomLevel/2} em`} >{this.state.labelS}</text>
+		   						   		</g>
+	   						    )
+	   						}
+	   					})
+	   				}
+	   				</g>
 
 	    	   </svg>
     	   </div>
