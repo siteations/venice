@@ -31604,7 +31604,7 @@ var MapSVG = function (_Component) {
                             'g',
                             { className: 'allLabelCircs' },
                             cirNew && cirNew.map(function (d) {
-                                return _react2.default.createElement('circle', { className: 'circHL', cx: d.cx, cy: d.cy, r: d.r, strokeWidth: _this2.state.currentZoomLevel * 2, value: d.name, onMouseOver: function onMouseOver(e) {
+                                return _react2.default.createElement('circle', { className: 'circHL', cx: d.cx, cy: d.cy, r: d.r, strokeWidth: Math.pow(_this2.state.currentZoomLevel, 2) / 2, value: d.name, onMouseOver: function onMouseOver(e) {
                                         return _this2.showLabel(e);
                                     }, onMouseOut: function onMouseOut(e) {
                                         return _this2.hideLabel(e);
@@ -31617,12 +31617,12 @@ var MapSVG = function (_Component) {
                                         null,
                                         _react2.default.createElement(
                                             'text',
-                                            { x: d.cx + d.r + 10, y: d.cy, className: 'textHL', fontSize: _this2.state.currentZoomLevel + ' em' },
+                                            { x: d.cx + d.r + 14, y: d.cy, className: 'textHL', fontSize: Math.pow(_this2.state.currentZoomLevel, 2) + 6 },
                                             _this2.state.labelT
                                         ),
                                         _react2.default.createElement(
                                             'text',
-                                            { x: d.cx + d.r + 10, y: d.cy + 20, className: 'textSHL', fontSize: _this2.state.currentZoomLevel / 2 + ' em' },
+                                            { x: d.cx + d.r + 14, y: d.cy + Math.pow(_this2.state.currentZoomLevel, 2) * 1.25, className: 'textSHL', fontSize: Math.pow(_this2.state.currentZoomLevel, 2) },
                                             _this2.state.labelS
                                         )
                                     );

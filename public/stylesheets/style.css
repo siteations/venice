@@ -240,16 +240,16 @@ a:hover {
 
 .textHL {
 	text-anchor: start;
-	fill: #000000;
+	fill: #ffffff;
 	font-family: 'BornholmSandvig';
-	text-shadow: 0px 0px 8px #ffffff;
+	text-shadow: 0px 0px 8px #000000;
 }
 
 .textSHL {
 	text-anchor: start;
-	fill: #000000;
+	fill: #ffffff;
 	font-family: 'Trenda';
-	text-shadow: 0px 0px 8px #ffffff;
+	text-shadow: 0px 0px 8px #000000;
 }
 
 .controlTrans {

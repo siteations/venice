@@ -245,7 +245,7 @@ export default class MapSVG extends Component {
 										opacity = {.5}
 	      						/>
 
-	    	   				        )
+	    	   				)
 	    	   				}
 	    	   			})
 	    	   		}
@@ -274,7 +274,7 @@ export default class MapSVG extends Component {
 	    	   		{cirNew &&
 	   					cirNew.map(d=>{
 	   						return (
-	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} strokeWidth={this.state.currentZoomLevel*2} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} />
+	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} />
 	   						    )
 	   					})
 	   				}
@@ -283,8 +283,8 @@ export default class MapSVG extends Component {
 	   						if (d.name.split('.')[1] === this.state.labelS){
 	   						return (
 	   						   			<g>
-			   						   		<text x={d.cx+d.r+10} y={d.cy} className="textHL" fontSize={`${this.state.currentZoomLevel} em`} >{this.state.labelT}</text>
-			   						   		<text x={d.cx+d.r+10} y={d.cy+20} className="textSHL" fontSize={`${this.state.currentZoomLevel/2} em`} >{this.state.labelS}</text>
+			   						   		<text x={d.cx+d.r+14} y={d.cy} className="textHL" fontSize={Math.pow(this.state.currentZoomLevel,2)+ 6} >{this.state.labelT}</text>
+			   						   		<text x={d.cx+d.r+14} y={d.cy+Math.pow(this.state.currentZoomLevel,2)*1.25} className="textSHL" fontSize={Math.pow(this.state.currentZoomLevel,2)} >{this.state.labelS}</text>
 		   						   		</g>
 	   						    )
 	   						}
