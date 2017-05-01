@@ -27,6 +27,9 @@ class Frame extends Component {
 			button: 'navigate',
 			select: false,
 			selected: [],
+			layers: ["monastery", "convent", "non-catholic"], // just for testing purposes, hook into actions
+			//["ritual", "monastery", "convent", "bascilica", "non-catholic", "plague", "parish"]
+			// need to set up redux and link layers together...
 		};
 		this.hoverName=this.hoverName.bind(this);
 		this.selectName=this.selectName.bind(this);
@@ -55,6 +58,7 @@ class Frame extends Component {
 		e.preventDefault();
 		let val=e.target.attributes.value.value;
 		this.setState({button: val});
+		//if layer, add to layers series...
 		let arr= this.state.selected;
 		arr=arr.concat(val);
 		this.setState({selected: arr});
@@ -98,7 +102,7 @@ class Frame extends Component {
 			        </div>
 			        {this.state.start &&
 			        	<div className="flex between">
-				        	<MapSVG baseClass="mFullO mainMaps" />
+				        	<MapSVG baseClass="mFullO mainMaps" layers={this.state.layers} />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={false}/>
 				        	<div className="panelClose">
 				        	</div>
@@ -106,7 +110,7 @@ class Frame extends Component {
 			        }
 			        {this.state.full &&
 			        	<div className="flex between">
-				        	<MapSVG baseClass="mFull mainMaps" />
+				        	<MapSVG baseClass="mFull mainMaps" layers={this.state.layers} />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={false}/>
 				        	<div className="panelClose">
 				        	</div>
@@ -115,7 +119,7 @@ class Frame extends Component {
 
 			        {this.state.panel &&
 			        	<div className="flex between">
-				        	<MapSVG baseClass="mPart mainMaps" />
+				        	<MapSVG baseClass="mPart mainMaps" layers={this.state.layers} />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={true}/>
 				        	<div className="panelOpen">
 				        		panel here
@@ -124,7 +128,7 @@ class Frame extends Component {
 			        }
 			        {this.state.panelLarge &&
 			        	<div className="flex between">
-				        	<MapSVG baseClass="mQuarter mainMaps" />
+				        	<MapSVG baseClass="mQuarter mainMaps" layers={this.state.layers} />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} large={true}/>
 				        	<div className="panelLarge">
 				        		panel here

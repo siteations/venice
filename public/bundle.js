@@ -44686,8 +44686,8 @@ var Frame = function (_Component) {
 			geo: false,
 			button: 'navigate',
 			select: false,
-			selected: []
-		};
+			selected: [],
+			layers: ["monastery", "convent", "non-catholic"] };
 		_this.hoverName = _this.hoverName.bind(_this);
 		_this.selectName = _this.selectName.bind(_this);
 		_this.nav = _this.nav.bind(_this);
@@ -44720,6 +44720,7 @@ var Frame = function (_Component) {
 			e.preventDefault();
 			var val = e.target.attributes.value.value;
 			this.setState({ button: val });
+			//if layer, add to layers series...
 			var arr = this.state.selected;
 			arr = arr.concat(val);
 			this.setState({ selected: arr });
@@ -44766,21 +44767,21 @@ var Frame = function (_Component) {
 					this.state.start && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
-						_react2.default.createElement(_Mapd2.default, { baseClass: 'mFullO mainMaps' }),
+						_react2.default.createElement(_Mapd2.default, { baseClass: 'mFullO mainMaps', layers: this.state.layers }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.selectName, open: false }),
 						_react2.default.createElement('div', { className: 'panelClose' })
 					),
 					this.state.full && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
-						_react2.default.createElement(_Mapd2.default, { baseClass: 'mFull mainMaps' }),
+						_react2.default.createElement(_Mapd2.default, { baseClass: 'mFull mainMaps', layers: this.state.layers }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.selectName, open: false }),
 						_react2.default.createElement('div', { className: 'panelClose' })
 					),
 					this.state.panel && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
-						_react2.default.createElement(_Mapd2.default, { baseClass: 'mPart mainMaps' }),
+						_react2.default.createElement(_Mapd2.default, { baseClass: 'mPart mainMaps', layers: this.state.layers }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.selectName, open: true }),
 						_react2.default.createElement(
 							'div',
@@ -44791,7 +44792,7 @@ var Frame = function (_Component) {
 					this.state.panelLarge && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
-						_react2.default.createElement(_Mapd2.default, { baseClass: 'mQuarter mainMaps' }),
+						_react2.default.createElement(_Mapd2.default, { baseClass: 'mQuarter mainMaps', layers: this.state.layers }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav, click: this.selectName, large: true }),
 						_react2.default.createElement(
 							'div',
@@ -44927,7 +44928,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //connect later?
 
-var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", s: "fa fa-info" }, { cn: "nIcon flex center middle", v: "all layers", s: "" }, { cn: "nSpc", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "panel", s: "fa fa-chevron-left" }, { cn: "nSpcSm", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "parishes", s: "" }, { cn: "nIcon flex center middle", v: "bascilica", s: "" }, { cn: "nIcon flex center middle", v: "convents", s: "" }, { cn: "nIcon flex center middle", v: "monestary", s: "" }, { cn: "nIcon flex center middle", v: "other relig.", s: "" }, { cn: "nIcon flex center middle", v: "processions", s: "" }, { cn: "nIcon flex center middle", v: "cultural", s: "fa fa-map-o" }, { cn: "nIcon flex center middle", v: "symbolic views", s: "fa fa-map-o" }, { cn: "nIcon flex center middle", v: "relig. prints", s: "glyphicon glyphicon-book" }, { cn: "nIcon flex center middle", v: "relig. ephemera", s: "" }, { cn: "nSpcSm", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "biblio", s: "fa fa-list-ul" }];
+var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", s: "fa fa-info" }, { cn: "nIcon flex center middle", v: "all layers", s: "" }, { cn: "nSpc", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "panel", s: "fa fa-chevron-left" }, { cn: "nIcon flex center middle", v: "panel large", s: "fa fa-angle-double-left" }, { cn: "nSpcSm", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "parishes", s: "" }, { cn: "nIcon flex center middle", v: "bascilica", s: "" }, { cn: "nIcon flex center middle", v: "convents", s: "" }, { cn: "nIcon flex center middle", v: "monestary", s: "" }, { cn: "nIcon flex center middle", v: "other relig.", s: "" }, { cn: "nIcon flex center middle", v: "processions", s: "" }, { cn: "nIcon flex center middle", v: "cultural", s: "fa fa-map-o" }, { cn: "nIcon flex center middle", v: "symbolic views", s: "fa fa-map-o" }, { cn: "nIcon flex center middle", v: "relig. prints", s: "glyphicon glyphicon-book" }, { cn: "nIcon flex center middle", v: "relig. ephemera", s: "" }, { cn: "nSpcSm", v: 'navigate', s: "" }, { cn: "nIcon flex center middle", v: "biblio", s: "fa fa-list-ul" }];
 
 var MapBar = function MapBar(props) {
 
@@ -44990,6 +44991,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(1);
@@ -45041,7 +45044,6 @@ var contain = { // to match css for initial map container
 var styles = {
     root: {
         display: 'flex',
-        margin: 5,
         height: 20,
         flexDirection: 'row',
         justifyContent: 'space-around'
@@ -45065,20 +45067,15 @@ var MapSVG = function (_Component) {
             mouseLast: [0, 0],
             mousePast: [0, 0],
             mousePos: [0, 0],
+            xyOff: [0, 0],
+            xyOffR: [0, 0],
             currentZoomLevel: 3,
             tilesize: 128,
             drag: '',
-            xOff: 0,
-            yOff: 0,
-            xOffR: 0,
-            yOffR: 0,
             trig: false,
-            winTop: 0,
-            winLeft: 0,
+            winTopLeft: [0, 0],
             initialWidth: contain.width,
             initialHeight: contain.height,
-            partWidth: 0,
-            quarterWidth: 0,
             colorOp: false,
             layerOp: true,
             labelT: '',
@@ -45103,7 +45100,12 @@ var MapSVG = function (_Component) {
             var sele = window.document.getElementById("mapWin");
             var width = sele.attributes[0].ownerElement.clientWidth;
             var height = sele.attributes[0].ownerElement.clientHeight;
-            this.setState({ initialWidth: width, initialHeight: height, partWidth: Math.floor(width * 0.7388), quarterWidth: Math.floor(width * 0.4222), winTop: sele.offsetTop, winLeft: sele.offsetLeft });
+            this.setState({ initialWidth: width, initialHeight: height, winTopLeft: [sele.offsetTop, sele.offsetLeft] });
+            if (this.state.xyOff[0] === 0) {
+                var w = this.state.tilesize * (_rawTiles.scaleOps[this.state.currentZoomLevel][0] + 1),
+                    h = this.state.tilesize * (_rawTiles.scaleOps[this.state.currentZoomLevel][1] + 1);
+                this.setState({ xyOff: [(width - w) / -2, (height - h) / -2] });
+            }
         }
     }, {
         key: 'mouseLoc',
@@ -45116,7 +45118,7 @@ var MapSVG = function (_Component) {
 
             e.type === 'mousedown' ? this.setState({ drag: 'start' }) : this.setState({ drag: '' });
             if (e.type === 'mouseup') {
-                this.setState({ mouseLast: mousePos, xOffR: this.state.xOff, yOffR: this.state.yOff });
+                this.setState({ mouseLast: mousePos, xyOffR: [this.state.xyOff[0], this.state.xyOff[1]] });
             };
         }
     }, {
@@ -45124,20 +45126,19 @@ var MapSVG = function (_Component) {
         value: function drag(e) {
             e.preventDefault;
 
-            var lastX = this.state.xOffR,
-                lastY = this.state.yOffR;
+            var _state$xyOffR = _slicedToArray(this.state.xyOffR, 2),
+                lastX = _state$xyOffR[0],
+                lastY = _state$xyOffR[1];
+
             var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
             var mousePos = [e.screenX - sele.offsetLeft, e.screenY - sele.offsetTop];
-            // let xJump = this.state.mouseDivloc[0] - mousePos[0] + this.state.mouseLast[0]-lastX;
-            // let yJump = this.state.mouseDivloc[1] - mousePos[1] + this.state.mouseLast[0]-lastX;
             var offX = this.state.mouseDivloc[0] - mousePos[0] + lastX;
             var offY = this.state.mouseDivloc[1] - mousePos[1] + lastY;
+
             if (this.state.drag === 'start') {
-                this.setState({ xOff: lastX, yOff: lastY, drag: 'drag' });
-                //console.log('offsets start', offX, offY, lastX, lastY);
+                this.setState({ xyOff: [lastX, lastY], drag: 'drag' });
             } else if (this.state.drag === 'drag') {
-                this.setState({ xOff: offX, yOff: offY });
-                //console.log('offsets norm', offX, offY, lastX, lastY);
+                this.setState({ xyOff: [offX, offY] });
             }
         }
     }, {
@@ -45150,8 +45151,8 @@ var MapSVG = function (_Component) {
             mouseposition + offsets => location on map
             tile position = Math.floor(location/tilesize)
             */
-            var curX = mousePos[0] + this.state.xOff,
-                curY = mousePos[1] + this.state.yOff;
+            var curX = mousePos[0] + this.state.xyOff[0],
+                curY = mousePos[1] + this.state.xyOff[1];
             var resX = curX / this.state.tilesize,
                 resY = curY / this.state.tilesize;
             var mosPos = mousePos;
@@ -45165,35 +45166,35 @@ var MapSVG = function (_Component) {
                 //zoom in
                 curr = this.state.currentZoomLevel;
                 pix = this.state.tilesize + 4;
-                oX = this.state.xOff + 4 * resX;
-                oY = this.state.yOff + 4 * resY;
+                oX = this.state.xyOff[0] + 4 * resX;
+                oY = this.state.xyOff[1] + 4 * resY;
                 if (pix >= 256) {
                     curr++;pix = 128;
                 }
                 if (curr > 6) {
-                    curr = 6;pix = 256;oX = this.state.xOff;oY = this.state.yOff;
+                    curr = 6;pix = 256;oX = this.state.xyOff[0];oY = this.state.xyOff[1];
                 };
             } else if (e.deltaY < 1) {
                 //zoom out
                 curr = this.state.currentZoomLevel;
                 pix = this.state.tilesize - 4;
-                oX = this.state.xOff - 4 * resX;
-                oY = this.state.yOff - 4 * resY;
+                oX = this.state.xyOff[0] - 4 * resX;
+                oY = this.state.xyOff[1] - 4 * resY;
                 if (pix <= 128) {
                     curr--;pix = 256;
                 }
                 if (curr < 2) {
-                    curr = 2;pix = 128;oX = this.state.xOff;oY = this.state.yOff;
+                    curr = 2;pix = 128;oX = this.state.xyOff[0];oY = this.state.xyOff[1];
                 };
             } else {
                 curr = this.state.currentZoomLevel;
                 pix = this.state.tilesize;
-                oX = this.state.xOff;
-                oY = this.state.yOff;
+                oX = this.state.xyOff[0];
+                oY = this.state.xyOff[1];
                 mosPos = mousePos;
             }
 
-            this.setState({ currentZoomLevel: curr, tilesize: pix, xOff: oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos: mosPos });
+            this.setState({ currentZoomLevel: curr, tilesize: pix, xyOff: [oX, oY], xyOffR: [oX, oY], mousePast: mousePos, mousePos: mosPos });
         }
     }, {
         key: 'showLabel',
@@ -45237,25 +45238,28 @@ var MapSVG = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            var tiles = (0, _rawTiles2.default)(this.state.currentZoomLevel, this.state.tilesize, [this.state.initialWidth, this.state.initialHeight], this.state.xOff, this.state.yOff);
+            var tiles = (0, _rawTiles2.default)(this.state.currentZoomLevel, this.state.tilesize, [this.state.initialWidth, this.state.initialHeight], this.state.xyOff[0], this.state.xyOff[1]);
             var percent = tiles[0].percent;
 
             var cirLayers = [];
+            //["ritual", "monastery", "convent", "bascilica", "non-catholic", "plague", "parish"]
+            //["monastery", "convent", "non-catholic"]
+
 
             var cirNew = _cirTest.cirMain.map(function (circle) {
                 var newCir = Object.assign({}, circle);
-                newCir.cx = circle.cx * percent - _this2.state.xOff;
-                newCir.cy = circle.cy * percent - _this2.state.yOff;
+                newCir.cx = circle.cx * percent - _this2.state.xyOff[0];
+                newCir.cy = circle.cy * percent - _this2.state.xyOff[1];
                 newCir.r = circle.r * percent;
                 if (cirLayers.indexOf(circle.type) === -1) {
                     cirLayers.push(circle.type);
                 };
 
                 return newCir;
+            }).filter(function (circle) {
+                return _this2.props.layers.indexOf(circle.type) > -1;
             });
 
-            console.log(cirLayers);
-            // 1) segment into circle layers by type
             // 2) refactor to be particular components for import - rework state to have props/dispatch compatibility with zoom level & offsets or centers
             // 3) brainstorm a sample of overlay circles - each triggering panel interactions
 
@@ -45301,9 +45305,9 @@ var MapSVG = function (_Component) {
                                 xlinkHref: '../../../layouts/novacco_color_0804.jpg',
                                 width: this.state.tilesize * (_rawTiles.scaleOps[this.state.currentZoomLevel][0] + 1),
                                 height: this.state.tilesize * (_rawTiles.scaleOps[this.state.currentZoomLevel][1] + 1),
-                                x: -1 * this.state.xOff,
-                                y: -1 * this.state.yOff,
-                                opacity: 0.75,
+                                x: -1 * this.state.xyOff[0],
+                                y: -1 * this.state.xyOff[1],
+                                opacity: this.state.colorOp === false ? .5 : 1,
                                 filter: this.state.colorOp === false ? "url(#greyscale)" : ""
                             })
                         ),
@@ -45396,11 +45400,9 @@ var MapSVG = function (_Component) {
                             } })
                     ),
                     _react2.default.createElement(
-                        'p',
+                        'h5',
                         null,
-                        'color',
-                        _react2.default.createElement('br', null),
-                        'underlay'
+                        'color'
                     ),
                     _react2.default.createElement(
                         'div',
@@ -45410,10 +45412,8 @@ var MapSVG = function (_Component) {
                             } })
                     ),
                     _react2.default.createElement(
-                        'p',
+                        'h5',
                         null,
-                        'highlight',
-                        _react2.default.createElement('br', null),
                         'layers'
                     ),
                     _react2.default.createElement('br', null),

@@ -246,9 +246,9 @@ a:hover {
 .intPanel {
 	position: absolute;
 	top: 120px;
-	background-color: rgba(216, 208, 186, .75);
+	background-color: rgba(230, 225, 211, .75);
 	padding: 5px;
-	margin: 5px;
+	margin: 2px;
 	border:double 3px #ffffff;
 }
 

@@ -28,7 +28,6 @@ const contain = { // to match css for initial map container
 const styles = {
   root: {
     display: 'flex',
-    margin: 5,
     height: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -47,20 +46,15 @@ export default class MapSVG extends Component {
         	mouseLast: [0,0],
         	mousePast: [0,0],
         	mousePos: [0,0],
+            xyOff: [0,0],
+            xyOffR: [0,0],
             currentZoomLevel: 3,
             tilesize: 128,
             drag: '',
-            xOff:0,
-            yOff:0,
-            xOffR:0,
-            yOffR:0,
             trig: false,
-            winTop:0,
-            winLeft:0,
+            winTopLeft:[0,0],
             initialWidth: contain.width,
             initialHeight: contain.height,
-            partWidth: 0,
-            quarterWidth:0,
             colorOp: false,
             layerOp: true,
             labelT:'',
@@ -82,7 +76,11 @@ export default class MapSVG extends Component {
         let sele = window.document.getElementById("mapWin");
         let width = sele.attributes[0].ownerElement.clientWidth;
         let height = sele.attributes[0].ownerElement.clientHeight;
-        this.setState({ initialWidth: width, initialHeight: height, partWidth: Math.floor(width*0.7388), quarterWidth: Math.floor(width*0.4222), winTop:sele.offsetTop, winLeft: sele.offsetLeft });
+        this.setState({ initialWidth: width, initialHeight: height, winTopLeft: [sele.offsetTop, sele.offsetLeft] });
+        if (this.state.xyOff[0]===0){
+            let w=this.state.tilesize*(scaleOps[this.state.currentZoomLevel][0]+1), h =this.state.tilesize*(scaleOps[this.state.currentZoomLevel][1]+1);
+            this.setState({xyOff: [(width-w)/-2,(height-h)/-2] });
+        }
     }
 
     mouseLoc(e) {
@@ -93,25 +91,22 @@ export default class MapSVG extends Component {
     	this.setState({mouseDivloc: mousePos});
 
     	(e.type === 'mousedown')? this.setState({drag: 'start'}) : this.setState({drag: ''})
-    	if (e.type === 'mouseup') {this.setState({mouseLast: mousePos, xOffR : this.state.xOff, yOffR: this.state.yOff })};
+    	if (e.type === 'mouseup') {this.setState({mouseLast: mousePos, xyOffR : [ this.state.xyOff[0], this.state.xyOff[1] ] })};
     }
 
     drag(e) {
     	e.preventDefault;
 
-    	let lastX = this.state.xOffR, lastY = this.state.yOffR;
+    	let [lastX, lastY] = this.state.xyOffR;
     	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
     	var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
-    	// let xJump = this.state.mouseDivloc[0] - mousePos[0] + this.state.mouseLast[0]-lastX;
-    	// let yJump = this.state.mouseDivloc[1] - mousePos[1] + this.state.mouseLast[0]-lastX;
     	let offX = this.state.mouseDivloc[0] - mousePos[0] + lastX;
     	let offY = this.state.mouseDivloc[1] - mousePos[1] + lastY;
+
     	if (this.state.drag === 'start') {
-    		this.setState({xOff: lastX, yOff: lastY, drag:'drag'}) ;
-    		//console.log('offsets start', offX, offY, lastX, lastY);
+    		this.setState({xyOff: [lastX, lastY], drag:'drag'}) ;
     	}	else if (this.state.drag === 'drag'){
-    		this.setState({xOff: offX, yOff: offY }) ;
-    		//console.log('offsets norm', offX, offY, lastX, lastY);
+    		this.setState({xyOff: [offX, offY] });
     	}
     }
 
@@ -123,7 +118,7 @@ export default class MapSVG extends Component {
     	mouseposition + offsets => location on map
     	tile position = Math.floor(location/tilesize)
     	*/
-    	let curX = mousePos[0]+this.state.xOff, curY = mousePos[1]+this.state.yOff;
+    	let curX = mousePos[0]+this.state.xyOff[0], curY = mousePos[1]+this.state.xyOff[1];
     	let resX = curX/this.state.tilesize, resY = curY/this.state.tilesize;
     	let mosPos = mousePos;
 
@@ -132,28 +127,28 @@ export default class MapSVG extends Component {
     	if (e.deltaY>1) { //zoom in
     		curr = this.state.currentZoomLevel;
     		pix = this.state.tilesize + 4;
-    		oX = this.state.xOff + 4*resX;
-    		oY = this.state.yOff + 4*resY;
+    		oX = this.state.xyOff[0] + 4*resX;
+    		oY = this.state.xyOff[1] + 4*resY;
     	if (pix>=256){ curr++; pix=128 }
-    	if (curr>6){ curr=6; pix=256; oX = this.state.xOff; oY = this.state.yOff };
+    	if (curr>6){ curr=6; pix=256; oX = this.state.xyOff[0]; oY = this.state.xyOff[1] };
 
     	} else if (e.deltaY<1) { //zoom out
     		curr = this.state.currentZoomLevel;
     		pix = this.state.tilesize - 4;
-    		oX = this.state.xOff - 4*resX;
-    		oY = this.state.yOff - 4*resY;
+    		oX = this.state.xyOff[0] - 4*resX;
+    		oY = this.state.xyOff[1] - 4*resY;
     	if (pix<=128){ curr--; pix=256 }
-    	if (curr<2){ curr=2; pix=128; oX = this.state.xOff; oY = this.state.yOff };
+    	if (curr<2){ curr=2; pix=128; oX = this.state.xyOff[0]; oY = this.state.xyOff[1] };
 
     	} else {
     		curr = this.state.currentZoomLevel;
     		pix = this.state.tilesize;
-    		oX = this.state.xOff;
-    		oY = this.state.yOff;
+    		oX = this.state.xyOff[0];
+    		oY = this.state.xyOff[1];
     		mosPos = mousePos;
     	}
 
-    	this.setState({currentZoomLevel: curr, tilesize: pix, xOff : oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos:mosPos });
+    	this.setState({currentZoomLevel: curr, tilesize: pix, xyOff : [oX,oY], xyOffR: [oX,oY], mousePast: mousePos, mousePos:mosPos });
 
     }
 
@@ -190,23 +185,26 @@ export default class MapSVG extends Component {
 
     render(){
 
-    	const tiles = tilingRaw(this.state.currentZoomLevel, this.state.tilesize, [this.state.initialWidth, this.state.initialHeight], this.state.xOff, this.state.yOff );
+    	const tiles = tilingRaw(this.state.currentZoomLevel, this.state.tilesize, [this.state.initialWidth, this.state.initialHeight], this.state.xyOff[0], this.state.xyOff[1] );
     	const percent = tiles[0].percent;
 
     	let cirLayers = [];
+        //["ritual", "monastery", "convent", "bascilica", "non-catholic", "plague", "parish"]
+        //["monastery", "convent", "non-catholic"]
+
+
 
     	let cirNew = cirMain.map(circle=>{
     		let newCir = Object.assign({},circle);
-	    		newCir.cx = circle.cx*percent - this.state.xOff;
-	    		newCir.cy = circle.cy*percent - this.state.yOff;
+	    		newCir.cx = circle.cx*percent - this.state.xyOff[0];
+	    		newCir.cy = circle.cy*percent - this.state.xyOff[1];
 	    		newCir.r = circle.r*percent;
     		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
 
-    		return newCir;
-    	})
+                return newCir;
+            })
+        .filter(circle=> (this.props.layers.indexOf(circle.type)>-1));
 
-        console.log(cirLayers);
-        // 1) segment into circle layers by type
         // 2) refactor to be particular components for import - rework state to have props/dispatch compatibility with zoom level & offsets or centers
         // 3) brainstorm a sample of overlay circles - each triggering panel interactions
 
@@ -234,9 +232,9 @@ export default class MapSVG extends Component {
                                     xlinkHref = {`../../../layouts/novacco_color_0804.jpg`}
                                         width={this.state.tilesize*(scaleOps[this.state.currentZoomLevel][0]+1)}
                                             height={this.state.tilesize*(scaleOps[this.state.currentZoomLevel][1]+1)}
-                                            x = { -1 * this.state.xOff }
-                                            y = { -1 * this.state.yOff }
-                                            opacity = {0.75}
+                                            x = { -1 * this.state.xyOff[0] }
+                                            y = { -1 * this.state.xyOff[1] }
+                                            opacity = {(this.state.colorOp===false)? .5 : 1 }
                                             filter={(this.state.colorOp===false)? "url(#greyscale)" : "" }
                         />
 
@@ -310,12 +308,12 @@ export default class MapSVG extends Component {
                 <div style={styles.root}>
                     <Toggle onToggle={(e,isInputChecked)=>this.opacityAlt(e,isInputChecked)}/>
                 </div>
-                <p>color<br/>underlay</p>
+                <h5>color</h5>
                 <div style={styles.root}>
                     <Toggle defaultToggled="true" onToggle={(e,isInputChecked)=>this.opacityLayers(e,isInputChecked)}/>
                     {/*<Slider style={{height: 60}} axis="y-reverse" defaultValue={1} onChange={(e,newValue)=>this.opacityLayers(e,newValue)}/>*/}
                 </div>
-                <p>highlight<br/>layers</p>
+                <h5>layers</h5>
                 <br/>
                 <p>keys<br/>here</p>
 
