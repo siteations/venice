@@ -28,7 +28,8 @@ const contain = { // to match css for initial map container
 const styles = {
   root: {
     display: 'flex',
-    height: 100,
+    margin: 5,
+    height: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
@@ -60,8 +61,8 @@ export default class MapSVG extends Component {
             initialHeight: contain.height,
             partWidth: 0,
             quarterWidth:0,
-            colorOp: 0,
-            layerOp: 1,
+            colorOp: false,
+            layerOp: true,
             labelT:'',
             labelS:'',
 
@@ -167,14 +168,24 @@ export default class MapSVG extends Component {
     	this.setState({labelT:'', labelS: ''});
     }
 
-    opacityAlt(e,newValue){
+    // opacityAlt(e,newValue){
+    //     e.preventDefault;
+    //     this.setState({colorOp:newValue});
+    // }
+
+    opacityAlt(e,isInputChecked){
         e.preventDefault;
-        this.setState({colorOp:newValue});
+        this.setState({colorOp:isInputChecked});
     }
 
-    opacityLayers(e,newValue){
+    // opacityLayers(e,newValue){
+    //     e.preventDefault;
+    //     this.setState({layerOp:newValue});
+    // }
+
+    opacityLayers(e,isInputChecked){
         e.preventDefault;
-        this.setState({layerOp:newValue});
+        this.setState({layerOp:isInputChecked});
     }
 
     render(){
@@ -223,10 +234,11 @@ export default class MapSVG extends Component {
 	    	   		{tiles &&
 	    	   			tiles.map(tile=>{
 
-	    	   				if (tile.xpos<this.state.initialWidth && tile.xpos+512>=0 && tile.ypos<this.state.initialHeight && tile.ypos+512>=0 ){ // only show those on screen
+	    	   				if (tile.xpos<this.state.initialWidth && tile.xpos+256>=0 && tile.ypos<this.state.initialHeight && tile.ypos+256>=0 ){ // only show those on screen
 
 	    	   				return (
                                 <g>
+                                    {this.state.colorOp===false &&
                                     <image
                                     xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
                                         width={this.state.tilesize}
@@ -236,14 +248,18 @@ export default class MapSVG extends Component {
                                             opacity = {0.5}
                                             filter="url(#greyscale)"
                                     />
+                                    }
+                                    {this.state.colorOp &&
                                     <image
                                     xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
                                         width={this.state.tilesize}
                                             height={this.state.tilesize}
                                             x = { tile.xpos }
                                             y = { tile.ypos }
-                                            opacity = {this.state.colorOp}
+                                            opacity = {1}
                                     />
+                                    }
+                                    {this.state.layerOp &&
     	    	   					<image
     	      						xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
     			     					width={this.state.tilesize}
@@ -251,15 +267,17 @@ export default class MapSVG extends Component {
     										x = { tile.xpos }
     										y = { tile.ypos }
     										clipPath = "url(#myClip)"
-                                            opacity={this.state.layerOp}
+                                            opacity={1}
     	      						/>
+                                    }
                                 </g>
 	    	   				        )
 	    	   				}
 	    	   			})
 	    	   		}
 	    	   		</g>
-	    	   		<g className="allLabelCircs" opacity={this.state.layerOp}>
+                    {this.state.layerOp &&
+	    	   		<g className="allLabelCircs" >
 	    	   		{cirNew &&
 	   					cirNew.map(d=>{
                             //strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2}
@@ -281,6 +299,7 @@ export default class MapSVG extends Component {
 	   					})
 	   				}
 	   				</g>
+                    }
 	    	   </svg>
     	   </div>
            <div className="intPanel center-block text-center">
@@ -290,16 +309,16 @@ export default class MapSVG extends Component {
                 <button className="btn btn-default btn-sm bIconSm"><span className="glyphicon glyphicon-minus"></span></button>
                 <br/>
                 <div style={styles.root}>
-                    <Slider style={{height: 80}} axis="y-reverse" defaultValue={0} onChange={(e,newValue)=>this.opacityAlt(e,newValue)}/>
+                    <Toggle onToggle={(e,isInputChecked)=>this.opacityAlt(e,isInputChecked)}/>
                 </div>
-                <h5>color<br/>underlay</h5>
-                <br/>
+                <p>color<br/>underlay</p>
                 <div style={styles.root}>
-                    <Slider style={{height: 80}} axis="y-reverse" defaultValue={1} onChange={(e,newValue)=>this.opacityLayers(e,newValue)}/>
+                    <Toggle defaultToggled="true" onToggle={(e,isInputChecked)=>this.opacityLayers(e,isInputChecked)}/>
+                    {/*<Slider style={{height: 60}} axis="y-reverse" defaultValue={1} onChange={(e,newValue)=>this.opacityLayers(e,newValue)}/>*/}
                 </div>
-                <h5>highlight<br/>layers</h5>
+                <p>highlight<br/>layers</p>
                 <br/>
-                <h5>keys<br/>here</h5>
+                <p>keys<br/>here</p>
 
            </div>
     	 </div>

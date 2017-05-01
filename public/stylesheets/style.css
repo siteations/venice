@@ -246,10 +246,10 @@ a:hover {
 .intPanel {
 	position: absolute;
 	top: 120px;
-	background-color: rgba(244, 242, 236, .75);
+	background-color: rgba(216, 208, 186, .75);
 	padding: 5px;
 	margin: 5px;
-	border-radius: 5px;
+	border:double 3px #ffffff;
 }
 
 .grey {
