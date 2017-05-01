@@ -126,17 +126,17 @@ export default class MapSVG extends Component {
 
     	if (e.deltaY>1) { //zoom in
     		curr = this.state.currentZoomLevel;
-    		pix = this.state.tilesize + 4;
-    		oX = this.state.xyOff[0] + 4*resX;
-    		oY = this.state.xyOff[1] + 4*resY;
+    		pix = this.state.tilesize + 2;
+    		oX = this.state.xyOff[0] + 2*resX;
+    		oY = this.state.xyOff[1] + 2*resY;
     	if (pix>=256){ curr++; pix=128 }
     	if (curr>6){ curr=6; pix=256; oX = this.state.xyOff[0]; oY = this.state.xyOff[1] };
 
     	} else if (e.deltaY<1) { //zoom out
     		curr = this.state.currentZoomLevel;
-    		pix = this.state.tilesize - 4;
-    		oX = this.state.xyOff[0] - 4*resX;
-    		oY = this.state.xyOff[1] - 4*resY;
+    		pix = this.state.tilesize - 2;
+    		oX = this.state.xyOff[0] - 2*resX;
+    		oY = this.state.xyOff[1] - 2*resY;
     	if (pix<=128){ curr--; pix=256 }
     	if (curr<2){ curr=2; pix=128; oX = this.state.xyOff[0]; oY = this.state.xyOff[1] };
 
@@ -239,14 +239,13 @@ export default class MapSVG extends Component {
                         />
 
                     </g>
-	    	   		<g className="allActiveTiles" >
+	    	   		<g className="underlayTiles" >
 	    	   		{tiles &&
 	    	   			tiles.map(tile=>{
 
 	    	   				if (tile.xpos<this.state.initialWidth && tile.xpos+256>=0 && tile.ypos<this.state.initialHeight && tile.ypos+256>=0 ){ // only show those on screen
 
 	    	   				return (
-                                <g>
                                     <image
                                     xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
                                         width={this.state.tilesize}
@@ -256,7 +255,26 @@ export default class MapSVG extends Component {
                                             opacity = {(this.state.colorOp===false)? .75 : 1 }
                                             filter={(this.state.colorOp===false)? "url(#greyscale)" : "" }
                                     />
-                                    {this.state.layerOp &&
+                            )}
+                        })
+                    }
+                    {this.state.layerOp && //black masking below
+
+                                    <rect
+                                        width={this.state.initialWidth}
+                                        height={this.state.initialHeight}
+                                            x = { 0 }
+                                            y = { 0}
+                                            fill="#21160b"
+                                            opacity={(this.state.colorOp===false)? .65 : .35 }
+                                    />
+                    }
+                    {tiles && this.state.layerOp &&
+                        tiles.map(tile=>{
+
+                            if (tile.xpos<this.state.initialWidth && tile.xpos+256>=0 && tile.ypos<this.state.initialHeight && tile.ypos+256>=0 ){ // only show those on screen
+
+                            return (
     	    	   					<image
     	      						xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
     			     					width={this.state.tilesize}
@@ -266,8 +284,6 @@ export default class MapSVG extends Component {
     										clipPath = "url(#myClip)"
                                             opacity={1}
     	      						/>
-                                    }
-                                </g>
 	    	   				        )
 	    	   				}
 	    	   			})

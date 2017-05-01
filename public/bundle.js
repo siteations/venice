@@ -45165,9 +45165,9 @@ var MapSVG = function (_Component) {
             if (e.deltaY > 1) {
                 //zoom in
                 curr = this.state.currentZoomLevel;
-                pix = this.state.tilesize + 4;
-                oX = this.state.xyOff[0] + 4 * resX;
-                oY = this.state.xyOff[1] + 4 * resY;
+                pix = this.state.tilesize + 2;
+                oX = this.state.xyOff[0] + 2 * resX;
+                oY = this.state.xyOff[1] + 2 * resY;
                 if (pix >= 256) {
                     curr++;pix = 128;
                 }
@@ -45177,9 +45177,9 @@ var MapSVG = function (_Component) {
             } else if (e.deltaY < 1) {
                 //zoom out
                 curr = this.state.currentZoomLevel;
-                pix = this.state.tilesize - 4;
-                oX = this.state.xyOff[0] - 4 * resX;
-                oY = this.state.xyOff[1] - 4 * resY;
+                pix = this.state.tilesize - 2;
+                oX = this.state.xyOff[0] - 2 * resX;
+                oY = this.state.xyOff[1] - 2 * resY;
                 if (pix <= 128) {
                     curr--;pix = 256;
                 }
@@ -45313,34 +45313,47 @@ var MapSVG = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'g',
-                            { className: 'allActiveTiles' },
+                            { className: 'underlayTiles' },
                             tiles && tiles.map(function (tile) {
 
                                 if (tile.xpos < _this2.state.initialWidth && tile.xpos + 256 >= 0 && tile.ypos < _this2.state.initialHeight && tile.ypos + 256 >= 0) {
                                     // only show those on screen
 
-                                    return _react2.default.createElement(
-                                        'g',
-                                        null,
-                                        _react2.default.createElement('image', {
-                                            xlinkHref: '../../../layouts/color/' + tile.z + '/map_' + tile.x + '_' + tile.y + '.jpg',
-                                            width: _this2.state.tilesize,
-                                            height: _this2.state.tilesize,
-                                            x: tile.xpos,
-                                            y: tile.ypos,
-                                            opacity: _this2.state.colorOp === false ? .75 : 1,
-                                            filter: _this2.state.colorOp === false ? "url(#greyscale)" : ""
-                                        }),
-                                        _this2.state.layerOp && _react2.default.createElement('image', {
-                                            xlinkHref: '../../../layouts/color/' + tile.z + '/map_' + tile.x + '_' + tile.y + '.jpg',
-                                            width: _this2.state.tilesize,
-                                            height: _this2.state.tilesize,
-                                            x: tile.xpos,
-                                            y: tile.ypos,
-                                            clipPath: 'url(#myClip)',
-                                            opacity: 1
-                                        })
-                                    );
+                                    return _react2.default.createElement('image', {
+                                        xlinkHref: '../../../layouts/color/' + tile.z + '/map_' + tile.x + '_' + tile.y + '.jpg',
+                                        width: _this2.state.tilesize,
+                                        height: _this2.state.tilesize,
+                                        x: tile.xpos,
+                                        y: tile.ypos,
+                                        opacity: _this2.state.colorOp === false ? .75 : 1,
+                                        filter: _this2.state.colorOp === false ? "url(#greyscale)" : ""
+                                    });
+                                }
+                            }),
+                            this.state.layerOp && //black masking below
+
+                            _react2.default.createElement('rect', {
+                                width: this.state.initialWidth,
+                                height: this.state.initialHeight,
+                                x: 0,
+                                y: 0,
+                                fill: '#21160b',
+                                opacity: this.state.colorOp === false ? .65 : .35
+                            }),
+                            tiles && this.state.layerOp && tiles.map(function (tile) {
+
+                                if (tile.xpos < _this2.state.initialWidth && tile.xpos + 256 >= 0 && tile.ypos < _this2.state.initialHeight && tile.ypos + 256 >= 0) {
+                                    // only show those on screen
+
+                                    return _react2.default.createElement('image', {
+                                        xlinkHref: '../../../layouts/color/' + tile.z + '/map_' + tile.x + '_' + tile.y + '.jpg',
+                                        width: _this2.state.tilesize,
+                                        height: _this2.state.tilesize,
+                                        x: tile.xpos,
+                                        y: tile.ypos,
+                                        clipPath: 'url(#myClip)',
+                                        opacity: 1
+                                    });
                                 }
                             })
                         ),
