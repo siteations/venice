@@ -26538,8 +26538,8 @@ const mapDispatchToProps = (dispatch) => {
 
 var muiTheme = (0, _getMuiTheme2.default)({
 	palette: {
-		primary1Color: _colors.grey900,
-		primary2Color: _colors.grey600,
+		primary1Color: _colors.grey600,
+		primary2Color: _colors.grey900,
 		primary3Color: _colors.grey300
 	}
 });
@@ -45164,9 +45164,9 @@ var MapSVG = function (_Component) {
             if (e.deltaY > 1) {
                 //zoom in
                 curr = this.state.currentZoomLevel;
-                pix = this.state.tilesize + 2;
-                oX = this.state.xOff + 2 * resX;
-                oY = this.state.yOff + 2 * resY;
+                pix = this.state.tilesize + 4;
+                oX = this.state.xOff + 4 * resX;
+                oY = this.state.yOff + 4 * resY;
                 if (pix >= 256) {
                     curr++;pix = 128;
                 }
@@ -45176,9 +45176,9 @@ var MapSVG = function (_Component) {
             } else if (e.deltaY < 1) {
                 //zoom out
                 curr = this.state.currentZoomLevel;
-                pix = this.state.tilesize - 2;
-                oX = this.state.xOff - 2 * resX;
-                oY = this.state.yOff - 2 * resY;
+                pix = this.state.tilesize - 4;
+                oX = this.state.xOff - 4 * resX;
+                oY = this.state.yOff - 4 * resY;
                 if (pix <= 128) {
                     curr--;pix = 256;
                 }
@@ -45296,7 +45296,20 @@ var MapSVG = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'g',
-                            { className: 'allTiles' },
+                            { className: 'lowResUnderlay' },
+                            _react2.default.createElement('image', {
+                                xlinkHref: '../../../layouts/novacco_color_0804.jpg',
+                                width: this.state.tilesize * (_rawTiles.scaleOps[this.state.currentZoomLevel][0] + 1),
+                                height: this.state.tilesize * (_rawTiles.scaleOps[this.state.currentZoomLevel][1] + 1),
+                                x: -1 * this.state.xOff,
+                                y: -1 * this.state.yOff,
+                                opacity: 0.75,
+                                filter: this.state.colorOp === false ? "url(#greyscale)" : ""
+                            })
+                        ),
+                        _react2.default.createElement(
+                            'g',
+                            { className: 'allActiveTiles' },
                             tiles && tiles.map(function (tile) {
 
                                 if (tile.xpos < _this2.state.initialWidth && tile.xpos + 256 >= 0 && tile.ypos < _this2.state.initialHeight && tile.ypos + 256 >= 0) {
@@ -45305,22 +45318,14 @@ var MapSVG = function (_Component) {
                                     return _react2.default.createElement(
                                         'g',
                                         null,
-                                        _this2.state.colorOp === false && _react2.default.createElement('image', {
+                                        _react2.default.createElement('image', {
                                             xlinkHref: '../../../layouts/color/' + tile.z + '/map_' + tile.x + '_' + tile.y + '.jpg',
                                             width: _this2.state.tilesize,
                                             height: _this2.state.tilesize,
                                             x: tile.xpos,
                                             y: tile.ypos,
-                                            opacity: 0.5,
-                                            filter: 'url(#greyscale)'
-                                        }),
-                                        _this2.state.colorOp && _react2.default.createElement('image', {
-                                            xlinkHref: '../../../layouts/color/' + tile.z + '/map_' + tile.x + '_' + tile.y + '.jpg',
-                                            width: _this2.state.tilesize,
-                                            height: _this2.state.tilesize,
-                                            x: tile.xpos,
-                                            y: tile.ypos,
-                                            opacity: 1
+                                            opacity: _this2.state.colorOp === false ? .75 : 1,
+                                            filter: _this2.state.colorOp === false ? "url(#greyscale)" : ""
                                         }),
                                         _this2.state.layerOp && _react2.default.createElement('image', {
                                             xlinkHref: '../../../layouts/color/' + tile.z + '/map_' + tile.x + '_' + tile.y + '.jpg',

@@ -131,17 +131,17 @@ export default class MapSVG extends Component {
 
     	if (e.deltaY>1) { //zoom in
     		curr = this.state.currentZoomLevel;
-    		pix = this.state.tilesize + 2;
-    		oX = this.state.xOff + 2*resX;
-    		oY = this.state.yOff + 2*resY;
+    		pix = this.state.tilesize + 4;
+    		oX = this.state.xOff + 4*resX;
+    		oY = this.state.yOff + 4*resY;
     	if (pix>=256){ curr++; pix=128 }
     	if (curr>6){ curr=6; pix=256; oX = this.state.xOff; oY = this.state.yOff };
 
     	} else if (e.deltaY<1) { //zoom out
     		curr = this.state.currentZoomLevel;
-    		pix = this.state.tilesize - 2;
-    		oX = this.state.xOff - 2*resX;
-    		oY = this.state.yOff - 2*resY;
+    		pix = this.state.tilesize - 4;
+    		oX = this.state.xOff - 4*resX;
+    		oY = this.state.yOff - 4*resY;
     	if (pix<=128){ curr--; pix=256 }
     	if (curr<2){ curr=2; pix=128; oX = this.state.xOff; oY = this.state.yOff };
 
@@ -229,8 +229,19 @@ export default class MapSVG extends Component {
 	    	   				}
 					    </clipPath>
 	    	   		</defs>
+                    <g className="lowResUnderlay">
+                        <image
+                                    xlinkHref = {`../../../layouts/novacco_color_0804.jpg`}
+                                        width={this.state.tilesize*(scaleOps[this.state.currentZoomLevel][0]+1)}
+                                            height={this.state.tilesize*(scaleOps[this.state.currentZoomLevel][1]+1)}
+                                            x = { -1 * this.state.xOff }
+                                            y = { -1 * this.state.yOff }
+                                            opacity = {0.75}
+                                            filter={(this.state.colorOp===false)? "url(#greyscale)" : "" }
+                        />
 
-	    	   		<g className="allTiles" >
+                    </g>
+	    	   		<g className="allActiveTiles" >
 	    	   		{tiles &&
 	    	   			tiles.map(tile=>{
 
@@ -238,27 +249,15 @@ export default class MapSVG extends Component {
 
 	    	   				return (
                                 <g>
-                                    {this.state.colorOp===false &&
                                     <image
                                     xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
                                         width={this.state.tilesize}
                                             height={this.state.tilesize}
                                             x = { tile.xpos }
                                             y = { tile.ypos }
-                                            opacity = {0.5}
-                                            filter="url(#greyscale)"
+                                            opacity = {(this.state.colorOp===false)? .75 : 1 }
+                                            filter={(this.state.colorOp===false)? "url(#greyscale)" : "" }
                                     />
-                                    }
-                                    {this.state.colorOp &&
-                                    <image
-                                    xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
-                                        width={this.state.tilesize}
-                                            height={this.state.tilesize}
-                                            x = { tile.xpos }
-                                            y = { tile.ypos }
-                                            opacity = {1}
-                                    />
-                                    }
                                     {this.state.layerOp &&
     	    	   					<image
     	      						xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
