@@ -10,7 +10,7 @@ import MapSVG from './Mapd3.js';
 //connect later?
 
 var images = tilepreload();
-console.log(images);
+//console.log(images);
 
 var loadingIndicator = (<div>Loading...</div>);
 

@@ -225,10 +225,35 @@ a:hover {
 
 .circHL {
 	stroke: #ffffff;
-	fill: #000000;
-	fill-opacity:.05;
+	stroke-width: calc(attr(r)/50);
+	fill: #ffffff;
+	fill-opacity:.25;
 	stroke-opacity: 1;
-	text-shadow: 0px 0px 4px #000000;
+	text-shadow: 0px 0px 8px #000000;
+  filter: drop-shadow( 0px 0px 8px #000 );
+}
+
+.circHL:hover {
+	stroke: #ffffff;
+	stroke-width: calc(attr(r)/100);
+	fill: #ffffff;
+	fill-opacity:.01;
+	stroke-opacity: 1;
+	text-shadow: 0px 0px 10px #000000;
+	filter: drop-shadow( 0px 0px 10px #000 );
+}
+
+.intPanel {
+	position: absolute;
+	top: 120px;
+	background-color: rgba(244, 242, 236, .75);
+	padding: 5px;
+	margin: 5px;
+	border-radius: 5px;
+}
+
+.grey {
+	filter: url('#greyscale');
 }
 
 .circHLMin {
@@ -389,6 +414,18 @@ a:hover {
 }
 
 .bIcon:active {
+	background-color: #ffffff;
+	box-shadow: 0 0 3px #808080;
+}
+
+.bIconSm {
+	background-color: #f4f2ec;
+	margin:4px 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 1px #808080;
+}
+
+.bIconSm:active {
 	background-color: #ffffff;
 	box-shadow: 0 0 3px #808080;
 }

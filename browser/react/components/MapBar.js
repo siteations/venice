@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import IconButton from 'material-ui/IconButton';
 //connect later?
 
 let mapButtons=[
@@ -54,7 +55,11 @@ const MapBar =((props)=>{
         	<div className="mtypeFull flexcol center">
         		<p className="sButtons text-center">{props.text}</p>
         		{mapButtons.map((each,i)=>{
-        			return <div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={props.hover} onMouseOut={props.out} onClick={props.click}><span value={each.v} className={each.s}></span></div>
+        			//<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={props.hover} onMouseOut={props.out} onClick={props.click}><span value={each.v} className={each.s}></span></div>
+
+        			return (
+								<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={props.hover} onMouseOut={props.out} onClick={props.click}><span value={each.v} className={each.s}></span></div>
+        			)
         		})
         		}
         	</div>

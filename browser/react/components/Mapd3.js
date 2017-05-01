@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
+//---------------------------MATERIAL UI---------------------------
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import { Toggle, Slider, Chip } from 'material-ui';
+
+
 //---------------------------MAP OPTIONS---------------------------
 //import * as d3 from 'd3';
 //import { Map, TileLayer, ImageOverlay } from 'react-leaflet';
@@ -20,6 +25,18 @@ const contain = { // to match css for initial map container
     width: 2048,
 }
 
+const styles = {
+  root: {
+    display: 'flex',
+    height: 100,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  chip: {
+    margin: 2,
+
+  },
+};
 
 export default class MapSVG extends Component {
 	constructor(props) {
@@ -37,17 +54,20 @@ export default class MapSVG extends Component {
             xOffR:0,
             yOffR:0,
             trig: false,
+            winTop:0,
+            winLeft:0,
             initialWidth: contain.width,
             initialHeight: contain.height,
             partWidth: 0,
             quarterWidth:0,
-            greyOp: 1,
-            colorOp: 1,
+            colorOp: 0,
+            layerOp: 1,
             labelT:'',
             labelS:'',
 
         };
         this.mouseLoc=this.mouseLoc.bind(this);
+        this.refSize=this.refSize.bind(this);
 
     }
 
@@ -61,7 +81,7 @@ export default class MapSVG extends Component {
         let sele = window.document.getElementById("mapWin");
         let width = sele.attributes[0].ownerElement.clientWidth;
         let height = sele.attributes[0].ownerElement.clientHeight;
-        this.setState({ initialWidth: width, initialHeight: height, partWidth: Math.floor(width*0.7388), quarterWidth: Math.floor(width*0.4222) });
+        this.setState({ initialWidth: width, initialHeight: height, partWidth: Math.floor(width*0.7388), quarterWidth: Math.floor(width*0.4222), winTop:sele.offsetTop, winLeft: sele.offsetLeft });
     }
 
     mouseLoc(e) {
@@ -87,56 +107,14 @@ export default class MapSVG extends Component {
     	let offY = this.state.mouseDivloc[1] - mousePos[1] + lastY;
     	if (this.state.drag === 'start') {
     		this.setState({xOff: lastX, yOff: lastY, drag:'drag'}) ;
-    		console.log('offsets start', offX, offY, lastX, lastY);
+    		//console.log('offsets start', offX, offY, lastX, lastY);
     	}	else if (this.state.drag === 'drag'){
     		this.setState({xOff: offX, yOff: offY }) ;
-    		console.log('offsets norm', offX, offY, lastX, lastY);
-    	} //else if (this.state.drag === ''){
-    	// 	this.tempZoom(e, mousePos);
-    	// }
-    }
-
-    tempZoom(e, mousePos) {
-    	e.preventDefault;
-    	/*
-    	mouseposition + offsets => location on map
-    	tile position = Math.floor(location/tilesize)
-    	*/
-    	let curX = this.state.mousePos[0]+this.state.xOff, curY =  this.state.mousePos[1]+this.state.yOff;
-    	let resX = curX/this.state.tilesize, resY = curY/this.state.tilesize;
-    	let mosPos = this.state.mousePos;
-
-    	let xDif = Math.abs(mousePos[0]-this.state.mousePast[0]);
-    	let curr, pix, oX, oY;
-
-    	if (mousePos[1]>this.state.mousePast[1] && xDif <3) { //zoom in
-    		curr = this.state.currentZoomLevel;
-    		pix = this.state.tilesize + 2;
-    		oX = this.state.xOff + 2*resX;
-    		oY = this.state.yOff + 2*resY;
-    	if (pix===256){ curr++; pix=128 }
-    	if (curr>6){ curr=6; pix=256; oX = this.state.xOff; oY = this.state.yOff };
-
-    	} else if (mousePos[1]<this.state.mousePast[1] && xDif <3) { //zoom out
-    		curr = this.state.currentZoomLevel;
-    		pix = this.state.tilesize - 2;
-    		oX = this.state.xOff - 2*resX;
-    		oY = this.state.yOff - 2*resY;
-    	if (pix===128){ curr--; pix=256 }
-    	if (curr<2){ curr=2; pix=128; oX = this.state.xOff; oY = this.state.yOff };
-    	} else {
-    		curr = this.state.currentZoomLevel;
-    		pix = this.state.tilesize;
-    		oX = this.state.xOff;
-    		oY = this.state.yOff;
-    		mosPos = mousePos;
+    		//console.log('offsets norm', offX, offY, lastX, lastY);
     	}
-
-    	this.setState({currentZoomLevel: curr, tilesize: pix, xOff : oX, xOffR: oX, yOff: oY, yOffR: oY, mousePast: mousePos, mousePos:mosPos });
-
     }
 
-    tempZoomScroll(e) {
+    zoomScroll(e) {
     	e.preventDefault;
     	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
     	var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
@@ -152,17 +130,17 @@ export default class MapSVG extends Component {
 
     	if (e.deltaY>1) { //zoom in
     		curr = this.state.currentZoomLevel;
-    		pix = this.state.tilesize + 4;
-    		oX = this.state.xOff + 4*resX;
-    		oY = this.state.yOff + 4*resY;
+    		pix = this.state.tilesize + 2;
+    		oX = this.state.xOff + 2*resX;
+    		oY = this.state.yOff + 2*resY;
     	if (pix>=256){ curr++; pix=128 }
     	if (curr>6){ curr=6; pix=256; oX = this.state.xOff; oY = this.state.yOff };
 
     	} else if (e.deltaY<1) { //zoom out
     		curr = this.state.currentZoomLevel;
-    		pix = this.state.tilesize - 4;
-    		oX = this.state.xOff - 4*resX;
-    		oY = this.state.yOff - 4*resY;
+    		pix = this.state.tilesize - 2;
+    		oX = this.state.xOff - 2*resX;
+    		oY = this.state.yOff - 2*resY;
     	if (pix<=128){ curr--; pix=256 }
     	if (curr<2){ curr=2; pix=128; oX = this.state.xOff; oY = this.state.yOff };
 
@@ -189,6 +167,16 @@ export default class MapSVG extends Component {
     	this.setState({labelT:'', labelS: ''});
     }
 
+    opacityAlt(e,newValue){
+        e.preventDefault;
+        this.setState({colorOp:newValue});
+    }
+
+    opacityLayers(e,newValue){
+        e.preventDefault;
+        this.setState({layerOp:newValue});
+    }
+
     render(){
 
     	const tiles = tilingRaw(this.state.currentZoomLevel, this.state.tilesize, [this.state.initialWidth, this.state.initialHeight], this.state.xOff, this.state.yOff );
@@ -206,11 +194,20 @@ export default class MapSVG extends Component {
     		return newCir;
     	})
 
+        console.log(cirLayers);
+        // 1) segment into circle layers by type
+        // 2) refactor to be particular components for import - rework state to have props/dispatch compatibility with zoom level & offsets or centers
+        // 3) brainstorm a sample of overlay circles - each triggering panel interactions
+
     	return (
-    	   <div className={this.props.baseClass} ref="size" id="mapWin"  >
-    	   <div className="offset" onDrag={e=> console.log('being dragged')} onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} onWheel = {e=>this.tempZoomScroll(e) } >
+
+    	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
+    	   <div className="offset" onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} onWheel = {e=>this.zoomScroll(e) } >
 	    	   <svg width={this.state.initialWidth} height={this.state.initialHeight}  >
 	    	   		<defs>
+                        <filter id="greyscale">
+                            <feColorMatrix type="saturate" values="0" />
+                        </filter>
 	    	   			<clipPath id="myClip">
 	    	   				{cirNew &&
 	    	   					cirNew.map(d=>{
@@ -221,60 +218,53 @@ export default class MapSVG extends Component {
 	    	   				}
 					    </clipPath>
 	    	   		</defs>
-	    	   		{/*<image
-	      						xlinkHref = {`../../../layouts/novacco_grey_0402.jpg`}
-	     						width={this.state.tilesize*(scaleOps[this.state.currentZoomLevel][0] + 1)}
-								height={this.state.tilesize*(scaleOps[this.state.currentZoomLevel][1] + 1)}
-								x = { -1 *this.state.xOff}
-								y = { -1 *this.state.yOff }
-								opacity = {.5}
-	      						/>*/}
-	      			<g className="grayscaleTiles">
-	    	   		{tiles &&
-	    	   			tiles.map(tile=>{
-	    	   			//this will become <Greyraster tiles={tiles} opacity={this.state.bkOpacity}/>
 
-	    	   				if (tile.xpos<this.state.initialWidth && tile.xpos+512>=0 && tile.ypos<this.state.initialHeight && tile.ypos+512>=0 ){ // only show those on screen
-	    	   				return (
-			    	   			<image
-			      				xlinkHref = {`../../../layouts/grey/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
-			     					width={this.state.tilesize}
-										height={this.state.tilesize}
-										x = { tile.xpos }
-										y = { tile.ypos }
-										opacity = {.5}
-	      						/>
-
-	    	   				)
-	    	   				}
-	    	   			})
-	    	   		}
-	    	   		</g>
-	    	   		<g className="allColorTiles">
+	    	   		<g className="allTiles" >
 	    	   		{tiles &&
 	    	   			tiles.map(tile=>{
 
 	    	   				if (tile.xpos<this.state.initialWidth && tile.xpos+512>=0 && tile.ypos<this.state.initialHeight && tile.ypos+512>=0 ){ // only show those on screen
 
 	    	   				return (
-	    	   					<image
-	      						xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
-			     					width={this.state.tilesize}
-										height={this.state.tilesize}
-										x = { tile.xpos }
-										y = { tile.ypos }
-										clipPath = "url(#myClip)"
-	      						/>
+                                <g>
+                                    <image
+                                    xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
+                                        width={this.state.tilesize}
+                                            height={this.state.tilesize}
+                                            x = { tile.xpos }
+                                            y = { tile.ypos }
+                                            opacity = {0.5}
+                                            filter="url(#greyscale)"
+                                    />
+                                    <image
+                                    xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
+                                        width={this.state.tilesize}
+                                            height={this.state.tilesize}
+                                            x = { tile.xpos }
+                                            y = { tile.ypos }
+                                            opacity = {this.state.colorOp}
+                                    />
+    	    	   					<image
+    	      						xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
+    			     					width={this.state.tilesize}
+    										height={this.state.tilesize}
+    										x = { tile.xpos }
+    										y = { tile.ypos }
+    										clipPath = "url(#myClip)"
+                                            opacity={this.state.layerOp}
+    	      						/>
+                                </g>
 	    	   				        )
 	    	   				}
 	    	   			})
 	    	   		}
 	    	   		</g>
-	    	   		<g className="allLabelCircs">
+	    	   		<g className="allLabelCircs" opacity={this.state.layerOp}>
 	    	   		{cirNew &&
 	   					cirNew.map(d=>{
+                            //strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2}
 	   						return (
-	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} />
+	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} strokeWidth={Math.pow(this.state.currentZoomLevel,2)/3} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} />
 	   						    )
 	   					})
 	   				}
@@ -291,10 +281,29 @@ export default class MapSVG extends Component {
 	   					})
 	   				}
 	   				</g>
-
 	    	   </svg>
     	   </div>
+           <div className="intPanel center-block text-center">
+                <br/>
+                <button className="btn btn-default btn-sm bIconSm"><span className="glyphicon glyphicon-plus"></span></button>
+                <br/>
+                <button className="btn btn-default btn-sm bIconSm"><span className="glyphicon glyphicon-minus"></span></button>
+                <br/>
+                <div style={styles.root}>
+                    <Slider style={{height: 80}} axis="y-reverse" defaultValue={0} onChange={(e,newValue)=>this.opacityAlt(e,newValue)}/>
+                </div>
+                <h5>color<br/>underlay</h5>
+                <br/>
+                <div style={styles.root}>
+                    <Slider style={{height: 80}} axis="y-reverse" defaultValue={1} onChange={(e,newValue)=>this.opacityLayers(e,newValue)}/>
+                </div>
+                <h5>highlight<br/>layers</h5>
+                <br/>
+                <h5>keys<br/>here</h5>
+
+           </div>
     	 </div>
+
     	)
     }
 }

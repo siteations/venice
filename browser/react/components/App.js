@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 //import Immutable from 'immutable';
 import {connect} from 'react-redux';
 import Frame from './FrontFrame.js';
+import {deepOrange400, deepOrange600, deepOrange800, deepOrange900, brown800, blueGrey800, grey600, grey300, grey900, darkBlack, white, fullBlack} from 'material-ui/styles/colors';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 //--------add actions here------------
 
@@ -25,6 +28,14 @@ const mapDispatchToProps = (dispatch) => {
 }
 */
 
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: grey900,
+    primary2Color: grey600,
+    primary3Color: grey300,
+  },
+});
+
 
 class App extends Component {
 	constructor(props){
@@ -42,9 +53,11 @@ class App extends Component {
 	render(){
 
 		return (
+		    <MuiThemeProvider muiTheme={muiTheme} >
 				<div className="container-fluid ">
 					<Frame />
 				</div>
+				</MuiThemeProvider>
 		)
 	}
 }
