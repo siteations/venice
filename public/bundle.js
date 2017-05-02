@@ -2112,24 +2112,25 @@ module.exports = { debugTool: debugTool };
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MemoryRouter__ = __webpack_require__(625);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_0__MemoryRouter__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__MemoryRouter__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Prompt__ = __webpack_require__(626);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_1__Prompt__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_1__Prompt__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Redirect__ = __webpack_require__(627);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_2__Redirect__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_2__Redirect__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(252);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_3__Route__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_3__Route__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(151);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_4__Router__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_4__Router__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__StaticRouter__ = __webpack_require__(628);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_5__StaticRouter__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return __WEBPACK_IMPORTED_MODULE_5__StaticRouter__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Switch__ = __webpack_require__(629);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_6__Switch__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return __WEBPACK_IMPORTED_MODULE_6__Switch__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__matchPath__ = __webpack_require__(152);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_7__matchPath__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return __WEBPACK_IMPORTED_MODULE_7__matchPath__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__withRouter__ = __webpack_require__(630);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_8__withRouter__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return __WEBPACK_IMPORTED_MODULE_8__withRouter__["a"]; });
 
 
 
@@ -44080,430 +44081,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 287 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-//format example only - write new reducers
-
-//constants
-var LOAD_VOYAGES = exports.LOAD_VOYAGES = 'LOAD_VOYAGES';
-var SET_GEO = exports.SET_GEO = 'SET_GEO';
-var SELECT_VOYAGE = exports.SELECT_VOYAGE = 'SELECT_VOYAGE';
-var GENERAL_VOYAGE = exports.GENERAL_VOYAGE = 'GENERAL_VOYAGE';
-var EXTEND_VOYAGES = exports.EXTEND_VOYAGES = 'EXTEND_VOYAGES';
-var SELECT_CONTACTS = exports.SELECT_CONTACTS = 'SELECT_CONTACTS';
-var SELECT_CREW = exports.SELECT_CREW = 'SELECT_CREW';
-var OTHER_CREW = exports.OTHER_CREW = 'OTHER_CREW';
-var SELECT_ANIMALS = exports.SELECT_ANIMALS = 'SELECT_ANIMALS';
-var SELECT_ALL_ANIMALS = exports.SELECT_ALL_ANIMALS = 'SELECT_ALL_ANIMALS';
-var SELECT_SORT_ANIMALS = exports.SELECT_SORT_ANIMALS = 'SELECT_SORT_ANIMALS';
-var SELECT_YEAR_ANIMALS = exports.SELECT_YEAR_ANIMALS = 'SELECT_YEAR_ANIMALS';
-var SELECT_MTH_ANIMALS = exports.SELECT_MTH_ANIMALS = 'SELECT_MTH_ANIMALS';
-var SELECT_PLACES = exports.SELECT_PLACES = 'SELECT_PLACES';
-var SELECT_YEAR_PLACES = exports.SELECT_YEAR_PLACES = 'SELECT_YEAR_PLACES';
-var SELECT_MTH_PLACES = exports.SELECT_MTH_PLACES = 'SELECT_MTH_PLACES';
-
-//action-creators
-var loadVoyages = exports.loadVoyages = function loadVoyages(voyages) {
-	return {
-		type: LOAD_VOYAGES,
-		voyages: voyages
-	};
-};
-
-var selectVoyage = exports.selectVoyage = function selectVoyage(voyage) {
-	return {
-		type: SELECT_VOYAGE,
-		voyage: voyage
-	};
-};
-
-var setbaseGeo = exports.setbaseGeo = function setbaseGeo(geography) {
-	return {
-		type: SET_GEO,
-		geography: geography
-	};
-};
-
-var detailVoyage = exports.detailVoyage = function detailVoyage(voyage) {
-
-	var start = voyage.Start;
-	var end = voyage.End;
-	var dates = [];
-	for (var i = +start; i <= +end + 1; i++) {
-		dates.push(i);
-	};
-
-	voyage.Dates = dates;
-	voyage.Length = dates.length;
-
-	return function (dispatch) {
-		dispatch(selectVoyage(voyage));
-	};
-};
-
-var generalVoyage = exports.generalVoyage = function generalVoyage(general) {
-	return {
-		type: GENERAL_VOYAGE,
-		general: general
-	};
-};
-
-var selectContacts = exports.selectContacts = function selectContacts(contacts) {
-	return {
-		type: SELECT_CONTACTS,
-		contacts: contacts
-	};
-};
-
-var selectAnimals = exports.selectAnimals = function selectAnimals(animals) {
-	return {
-		type: SELECT_ANIMALS,
-		animals: animals
-	};
-};
-
-var selectAllAnimals = exports.selectAllAnimals = function selectAllAnimals(animals) {
-	return {
-		type: SELECT_ALL_ANIMALS,
-		animals: animals
-	};
-};
-
-var selectSortAnimals = exports.selectSortAnimals = function selectSortAnimals(animals) {
-	return {
-		type: SELECT_SORT_ANIMALS,
-		animals: animals
-	};
-};
-
-var selectSortYrAnimals = exports.selectSortYrAnimals = function selectSortYrAnimals(animals) {
-	return {
-		type: SELECT_YEAR_ANIMALS,
-		animals: animals
-	};
-};
-
-var selectSortMthAnimals = exports.selectSortMthAnimals = function selectSortMthAnimals(animals) {
-	return {
-		type: SELECT_MTH_ANIMALS,
-		animals: animals
-	};
-};
-
-var selectPlaces = exports.selectPlaces = function selectPlaces(places) {
-	//later correct for the lat/long issues
-
-	return {
-		type: SELECT_PLACES,
-		places: places
-	};
-};
-
-var selectSortMthPlaces = exports.selectSortMthPlaces = function selectSortMthPlaces(places) {
-	return {
-		type: SELECT_MTH_PLACES,
-		places: places
-	};
-};
-
-var selectSortYrPlaces = exports.selectSortYrPlaces = function selectSortYrPlaces(places) {
-	return {
-		type: SELECT_YEAR_PLACES,
-		places: places
-	};
-};
-
-var extendVoyages = exports.extendVoyages = function extendVoyages(voyagesEx) {
-	return {
-		type: EXTEND_VOYAGES,
-		voyagesEx: voyagesEx
-	};
-};
-
-var selectCrew = exports.selectCrew = function selectCrew(crew) {
-	return {
-		type: SELECT_CREW,
-		crew: crew
-	};
-};
-
-var otherCrews = exports.otherCrews = function otherCrews(crew) {
-	return {
-		type: OTHER_CREW,
-		crew: crew
-	};
-};
-
-var filterCrew = exports.filterCrew = function filterCrew(crew) {
-	//filters crew into this voyage and other voyages
-
-	//insert into selectCrew...
-	var currentCnt = 0;
-	var years = [];
-
-	crew.forEach(function (member) {
-		if (+member.Fstart === +member.Dyear) {
-			member.voyage = 'current';
-			currentCnt++;
-		} else {
-			if (years.indexOf(+member.Dyear) === -1) {
-				years.push(+member.Dyear);
-			};
-			member.voyage = 'other';
-		}
-	});
-
-	console.log(years, crew[0].Fstart);
-	var diff;
-	if (currentCnt === 0 && years.length === 1) {
-		crew.forEach(function (member) {
-			member.voyage = 'current';
-		});
-	} else if (currentCnt === 0 && years.length > 1) {
-		diff = years.map(function (year) {
-			return Math.abs(+year - +crew[0].Fstart);
-		});
-		var year = years[diff.indexOf(Math.min.apply(Math, _toConsumableArray(diff)))];
-
-		crew.forEach(function (member) {
-			if (year === +member.Dyear) {
-				member.voyage = 'current';
-				//console.log(member.Fstart, member.Dyear);
-			};
-		});
-	};
-
-	var crewC = crew.filter(function (member) {
-		return member.voyage === 'current';
-	});
-	var crewOther = crew.filter(function (member) {
-		return member.voyage !== 'current';
-	});
-
-	return function (dispatch) {
-		dispatch(selectCrew(crewC));
-		dispatch(otherCrews(crewOther));
-		dispatch(extendVoyages(years));
-	};
-};
-
-var filterAnimals = exports.filterAnimals = function filterAnimals(allanimals, duration) {
-	//filters all selected animals into monthly sums and dates out of 365
-
-	var searchDate = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-	var years = [];
-	for (var i = duration[0]; i <= duration[1]; i++) {
-		years.push(i);
-	}
-
-	var animalsSort = {};
-	var animalsByYear = [];
-	var animalsByMonth = [];
-
-	years.forEach(function (year) {
-		animalsSort[year] = allanimals.filter(function (animal) {
-			return +animal.Year === year;
-		});
-
-		var months = [];
-		for (var _i = 0; _i < 12; _i++) {
-			months.push([]);
-		}
-
-		animalsSort[year].forEach(function (animal) {
-
-			for (var _i2 = 0; _i2 < 12; _i2++) {
-				if (searchDate[_i2] === animal.Month) {
-					animal.Date = +animal.Day + _i2 * 30;
-					months[_i2].push(animal);
-				}
-			}
-		});
-
-		animalsByYear.push(animalsSort[year]);
-		animalsSort[year] = months;
-		animalsByMonth = animalsByMonth.concat(months);
-	});
-
-	return function (dispatch) {
-		dispatch(selectSortYrAnimals(animalsByYear));
-		dispatch(selectSortMthAnimals(animalsByMonth));
-		dispatch(selectSortAnimals(animalsSort));
-	};
-};
-
-var filterPlaces = exports.filterPlaces = function filterPlaces(allanimals, duration) {
-	//filters all selected animals into monthly sums and dates out of 365
-
-	var searchDate = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-	var years = [];
-	for (var i = duration[0]; i <= duration[1]; i++) {
-		years.push(i);
-	}
-
-	var animalsSort = {};
-	var animalsByYear = [];
-	var animalsByMonth = [];
-
-	years.forEach(function (year) {
-		animalsSort[year] = allanimals.filter(function (animal) {
-			return +animal.Year === year;
-		});
-
-		var months = [];
-		for (var _i3 = 0; _i3 < 12; _i3++) {
-			months.push([]);
-		}
-
-		animalsSort[year].forEach(function (animal) {
-
-			for (var _i4 = 0; _i4 < 12; _i4++) {
-				if (searchDate[_i4] === animal.Month) {
-					animal.Date = +animal.Day + _i4 * 30;
-					months[_i4].push(animal);
-				}
-			}
-		});
-
-		animalsByYear.push(animalsSort[year]);
-		animalsSort[year] = months;
-		animalsByMonth = animalsByMonth.concat(months);
-	});
-
-	return function (dispatch) {
-		dispatch(selectSortYrPlaces(animalsByYear));
-		dispatch(selectSortMthPlaces(animalsByMonth));
-	};
-};
-
-//reducers && initial info
-
-var start = [[1, "KWM 13", "Alfred Gibbs", "Ship", 1851, 1854, "2017-02-21 17:09:40.829-06", "2017-02-21 17:09:40.829-06"], [2, "ODHS 450", "Adeline", "Ship", 1850, 1853, "2017-02-21 17:09:40.828-06", "2017-02-21 17:09:40.828-06"], [3, "KWM 370", "Betsey Williams", "Ship", 1851, 1854, "2017-02-21 17:09:40.829-06", "2017-02-21 17:09:40.829-06"], [4, "ODHS 698", "California", "Ship", 1849, 1851, "2017-02-21 17:09:40.829-06", "2017-02-21 17:09:40.829-06"], [5, "KWM 51B", "Cicero", "Ship", 1853, 1856, "2017-02-21 17:09:40.829-06", "2017-02-21 17:09:40.829-06"], [6, "ODHS 413", "Cleone", "Bark", 1858, 1862, "2017-02-21 17:09:40.829-06", "2017-02-21 17:09:40.829-06"], [7, "ODHS 928", "Corinthian", "Ship", 1851, 1854, "2017-02-21 17:09:40.83-06", "2017-02-21 17:09:40.83-06"], [8, "ODHS 515", "Daniel Webster", "Ship", 1848, 1852, "2017-02-21 17:09:40.83-06", "2017-02-21 17:09:40.83-06"], [9, "KWM 319A", "Eliza Adams", "Ship", 1852, 1853, "2017-02-21 17:09:40.83-06", "2017-02-21 17:09:40.83-06"], [10, "ODHS 995", "Eliza F. Mason", "Ship", 1853, 1857, "2017-02-21 17:09:40.83-06", "2017-02-21 17:09:40.83-06"], [11, "ODHS 385A", "Fortune", "Ship", 1847, 1850, "2017-02-21 17:09:40.83-06", "2017-02-21 17:09:40.83-06"], [12, "ODHS 994", "Frances", "Ship", 1850, 1852, "2017-02-21 17:09:40.83-06", "2017-02-21 17:09:40.83-06"], [13, "ODHS 669", "Gay Head", "Ship", 1856, 1860, "2017-02-21 17:09:40.831-06", "2017-02-21 17:09:40.831-06"], [14, "KWM 105", "Hudson", "Ship", 1855, 1859, "2017-02-21 17:09:40.831-06", "2017-02-21 17:09:40.831-06"], [15, "KWM 122A", "Josephine", "Ship", 1856, 1859, "2017-02-21 17:09:40.831-06", "2017-02-21 17:09:40.831-06"], [16, "KWM 130B", "Louisa", "Bark", 1850, 1853, "2017-02-21 17:09:40.831-06", "2017-02-21 17:09:40.831-06"], [17, "ODHS 392", "Marcia", "Ship", 1857, 1861, "2017-02-21 17:09:40.831-06", "2017-02-21 17:09:40.831-06"], [18, "ODHS 395", "Milo", "Ship", 1849, 1851, "2017-02-21 17:09:40.832-06", "2017-02-21 17:09:40.832-06"], [19, "ODHS 922", "Moctezuma", "Ship", 1857, 1861, "2017-02-21 17:09:40.832-06", "2017-02-21 17:09:40.832-06"], [20, "KWM 149", "Mount Vernon", "Ship", 1849, 1852, "2017-02-21 17:09:40.832-06", "2017-02-21 17:09:40.832-06"], [21, "ODHS 614", "Nassau", "Ship", 1850, 1853, "2017-02-21 17:09:40.832-06", "2017-02-21 17:09:40.832-06"], [22, "KWM 155", "Navy", "Ship", 1859, 1864, "2017-02-21 17:09:40.832-06", "2017-02-21 17:09:40.832-06"], [23, "ODHS 399", "Niagara", "Ship", 1851, 1854, "2017-02-21 17:09:40.832-06", "2017-02-21 17:09:40.832-06"], [24, "ODHS 946", "Nimrod", "Ship", 1857, 1861, "2017-02-21 17:09:40.832-06", "2017-02-21 17:09:40.832-06"], [25, "KWM 51A", "Phillipe De La Noye", "Ship", 1852, 1855, "2017-02-21 17:09:40.832-06", "2017-02-21 17:09:40.832-06"], [26, "KWM 319B", "Roman", "Ship", 1851, 1855, "2017-02-21 17:09:40.832-06", "2017-02-21 17:09:40.832-06"], [27, "KWM 176", "Roman II", "Ship", 1850, 1854, "2017-02-21 17:09:40.832-06", "2017-02-21 17:09:40.832-06"], [28, "KWM 178", "Rousseau", "Bark", 1849, 1853, "2017-02-21 17:09:40.832-06", "2017-02-21 17:09:40.832-06"], [29, "KWM 180", "Saratoga", "Ship", 1856, 1860, "2017-02-21 17:09:40.833-06", "2017-02-21 17:09:40.833-06"], [30, "KWM 130A", "Stephania", "Ship", 1847, 1850, "2017-02-21 17:09:40.833-06", "2017-02-21 17:09:40.833-06"]];
-
-var startingArr = exports.startingArr = start.map(function (entry) {
-	return {
-		End: entry[5],
-		Start: entry[4],
-		id: entry[0],
-		createdAt: entry[6],
-		updatedAt: entry[7],
-		LogId: entry[1],
-		Vessel: entry[2],
-		Rig: entry[3]
-	};
-});
-
-var initState = {
-	voyages: startingArr,
-	currentVoyage: {},
-	baseGeography: {},
-	generalVoyage: false,
-	otherVoyages: [],
-	currentContacts: [],
-	currentCrew: [],
-	otherCrews: [],
-	currentAnimals: [],
-	currentAllAnimals: [],
-	currentSortYrAnimals: [],
-	currentSortMthAnimals: [],
-	currentSortAnimals: {},
-	currentPlaces: [],
-	currentSortYrPlaces: [],
-	currentSortMthPlaces: []
-};
-
-var oldReducer = exports.oldReducer = function oldReducer() {
-	var prevState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initState;
-	var action = arguments[1];
-
-	var newState = Object.assign({}, prevState);
-
-	switch (action.type) {
-
-		case LOAD_VOYAGES:
-			newState.voyages = action.voyages;
-			break;
-
-		case SELECT_VOYAGE:
-			newState.currentVoyage = action.voyage;
-			break;
-
-		case SET_GEO:
-			newState.baseGeography = action.geography;
-			break;
-
-		case GENERAL_VOYAGE:
-			newState.generalVoyage = action.general;
-			break;
-
-		case EXTEND_VOYAGES:
-			newState.otherVoyages = action.voyagesEx;
-			break;
-
-		case SELECT_CONTACTS:
-			newState.currentContacts = action.contacts;
-			break;
-
-		case SELECT_CREW:
-			newState.currentCrew = action.crew;
-			break;
-
-		case OTHER_CREW:
-			newState.otherCrews = action.crew;
-			break;
-
-		case SELECT_ANIMALS:
-			newState.currentAnimals = action.animals;
-			break;
-
-		case SELECT_ALL_ANIMALS:
-			newState.currentAllAnimals = action.animals;
-			break;
-
-		case SELECT_SORT_ANIMALS:
-			newState.currentSortAnimals = action.animals;
-			break;
-
-		case SELECT_YEAR_ANIMALS:
-			newState.currentSortYrAnimals = action.animals;
-			break;
-
-		case SELECT_MTH_ANIMALS:
-			newState.currentSortMthAnimals = action.animals;
-			break;
-
-		case SELECT_PLACES:
-			newState.currentPlaces = action.places;
-			break;
-
-		case SELECT_YEAR_PLACES:
-			newState.currentSortYrPlaces = action.places;
-			break;
-
-		case SELECT_MTH_PLACES:
-			newState.currentSortMthPlaces = action.places;
-			break;
-
-		default:
-			return prevState;
-	}
-
-	return newState;
-};
-
-/***/ }),
+/* 287 */,
 /* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -44516,15 +44094,23 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(96);
 
-var _actions = __webpack_require__(287);
+var _mapActions = __webpack_require__(673);
+
+var _optionActions = __webpack_require__(675);
+
+var _siteActions = __webpack_require__(674);
+
+var _adminActions = __webpack_require__(676);
 
 //just prepping for files, may or may not need immutable with db complexity
 
 
-//import { combineReducers } from 'redux-immutable';
 exports.default = (0, _redux.combineReducers)({
-  oldReducer: _actions.oldReducer
-});
+  sites: _siteActions.siteReducer,
+  map: _mapActions.mapReducer,
+  options: _optionActions.optionReducer,
+  admin: _adminActions.adminReducer
+}); //import { combineReducers } from 'redux-immutable';
 
 /***/ }),
 /* 289 */
@@ -45362,7 +44948,7 @@ var MapSVG = function (_Component) {
                             { className: 'allLabelCircs' },
                             cirNew && cirNew.map(function (d) {
                                 //strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2}
-                                return _react2.default.createElement('circle', { className: 'circHL', cx: d.cx, cy: d.cy, r: d.r, strokeWidth: Math.pow(_this2.state.currentZoomLevel, 2) / 3, value: d.name, onMouseOver: function onMouseOver(e) {
+                                return _react2.default.createElement('circle', { className: 'circHL', cx: d.cx, cy: d.cy, r: d.r, value: d.name, onMouseOver: function onMouseOver(e) {
                                         return _this2.showLabel(e);
                                     }, onMouseOut: function onMouseOut(e) {
                                         return _this2.hideLabel(e);
@@ -84977,7 +84563,7 @@ var BrowserRouter = function (_React$Component) {
   }
 
   BrowserRouter.prototype.render = function render() {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router__["e" /* Router */], { history: this.history, children: this.props.children });
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router__["Router"], { history: this.history, children: this.props.children });
   };
 
   return BrowserRouter;
@@ -85034,7 +84620,7 @@ var HashRouter = function (_React$Component) {
   }
 
   HashRouter.prototype.render = function render() {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router__["e" /* Router */], { history: this.history, children: this.props.children });
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router__["Router"], { history: this.history, children: this.props.children });
   };
 
   return HashRouter;
@@ -85056,7 +84642,7 @@ HashRouter.propTypes = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router__ = __webpack_require__(30);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["i"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["MemoryRouter"]; });
 
 
 /***/ }),
@@ -85092,7 +84678,7 @@ var NavLink = function NavLink(_ref) {
       getIsActive = _ref.isActive,
       rest = _objectWithoutProperties(_ref, ['to', 'exact', 'strict', 'activeClassName', 'className', 'activeStyle', 'style', 'isActive']);
 
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["f" /* Route */], {
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Route"], {
     path: (typeof to === 'undefined' ? 'undefined' : _typeof(to)) === 'object' ? to.pathname : to,
     exact: exact,
     strict: strict,
@@ -85134,7 +84720,7 @@ NavLink.defaultProps = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router__ = __webpack_require__(30);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["h"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["Prompt"]; });
 
 
 /***/ }),
@@ -85143,7 +84729,7 @@ NavLink.defaultProps = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router__ = __webpack_require__(30);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["g"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["Redirect"]; });
 
 
 /***/ }),
@@ -85152,7 +84738,7 @@ NavLink.defaultProps = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router__ = __webpack_require__(30);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["f"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["Route"]; });
 
 
 /***/ }),
@@ -85161,7 +84747,7 @@ NavLink.defaultProps = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router__ = __webpack_require__(30);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["e"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["Router"]; });
 
 
 /***/ }),
@@ -85170,7 +84756,7 @@ NavLink.defaultProps = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router__ = __webpack_require__(30);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["d"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["StaticRouter"]; });
 
 
 /***/ }),
@@ -85179,7 +84765,7 @@ NavLink.defaultProps = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router__ = __webpack_require__(30);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["c"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["Switch"]; });
 
 
 /***/ }),
@@ -85188,7 +84774,7 @@ NavLink.defaultProps = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router__ = __webpack_require__(30);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["b"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["matchPath"]; });
 
 
 /***/ }),
@@ -85197,7 +84783,7 @@ NavLink.defaultProps = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router__ = __webpack_require__(30);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["withRouter"]; });
 
 
 /***/ }),
@@ -89521,6 +89107,569 @@ module.exports = function() {
 	throw new Error("define cannot be used indirect");
 };
 
+
+/***/ }),
+/* 673 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+
+// //-------------------CONSTANTS
+
+//MAP REDUCER
+
+//responding to resizing
+var GET_WINDOW = exports.GET_WINDOW = 'GET_WINDOW';
+var GET_WINOFFSET = exports.GET_WINOFFSET = 'GET_OFFSETS';
+
+//local up to global on mapbar clicks
+var GET_ZOOM = exports.GET_ZOOM = 'GET_ZOOM';
+var GET_TILESIZE = exports.GET_TILESIZE = 'GET_TILESIZE';
+var GET_OFFSETS = exports.GET_OFFSETS = 'GET_OFFSETS';
+var GET_CENTER = exports.GET_CENTER = 'GET_CENTER'; // need to write
+
+//navigate to site
+var SET_CENTER_ZOOM = exports.SET_CENTER_ZOOM = 'SET_CENTER_ZOOM';
+var SET_CENTER = exports.SET_CENTER = 'SET_CENTER';
+
+//PANEL REDUCER ? FOR OPEN/CLOSED
+
+//NAVIGATION REDUCER ? FOR BOTTOM THUMBNAILS
+
+//-------------------ACTION CREATORS - vanilla loading of information
+var getWindowSize = exports.getWindowSize = function getWindowSize(windowSize) {
+	return {
+		type: GET_WINDOW,
+		windowSize: windowSize
+	};
+};
+
+var getWindowOffset = exports.getWindowOffset = function getWindowOffset(windowOff) {
+	return {
+		type: GET_WINOFFSET,
+		windowOff: windowOff
+	};
+};
+
+var getZoom = exports.getZoom = function getZoom(zoom) {
+	return {
+		type: GET_ZOOM,
+		zoom: zoom
+	};
+};
+
+var getTile = exports.getTile = function getTile(tilesize) {
+	return {
+		type: GET_TILESIZE,
+		tilesize: tilesize
+	};
+};
+
+var getOffsets = exports.getOffsets = function getOffsets(offsets) {
+	return {
+		type: GET_OFFSETS,
+		offsets: offsets
+	};
+};
+
+var getCenter = exports.getCenter = function getCenter(center) {
+	return {
+		type: GET_CENTER,
+		center: center
+	};
+};
+
+var setCenterZoom = exports.setCenterZoom = function setCenterZoom() {
+	return {
+		type: SET_CENTER_ZOOM,
+		zoom: 5
+	};
+};
+
+var setCenter = exports.setCenter = function setCenter(newCent) {
+	return {
+		type: SET_CENTER,
+		newCent: newCent
+	};
+};
+
+//-------------------reducers && initial info
+
+var initMap = {
+	windowSize: [0, 0], //width, height
+	windowOffsets: [0, 0], //x, y
+
+	currZoom: 3, //map zoom value
+	tileSize: 256, //px size
+	xyOffset: [0, 0], //x, y
+	xyCenter: [0, 0], //x, y
+	focusCenter: [0, 0] };
+
+var mapReducer = exports.mapReducer = function mapReducer() {
+	var prevState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initMap;
+	var action = arguments[1];
+
+	var newState = Object.assign({}, prevState);
+
+	switch (action.type) {
+
+		case GET_WINDOW:
+			newState.windowSize = action.windowSize;
+			break;
+
+		case GET_WINOFFSET:
+			newState.windowOffsets = action.windowOff;
+			break;
+
+		case GET_ZOOM:
+			newState.currZoom = action.zoom;
+			break;
+
+		case GET_TILESIZE:
+			newState.tileSize = action.tilesize;
+			break;
+
+		case GET_OFFSETS:
+			newState.xyOffset = action.offsets;
+			break;
+
+		case GET_CENTER:
+			newState.xyCenter = action.center;
+			break;
+
+		case SET_CENTER_ZOOM:
+			newState.currZoom = action.zoom;
+			break;
+
+		case SET_CENTER:
+			newState.focusCenter = action.newCent;
+			break;
+
+		default:
+			return prevState;
+	}
+
+	return newState;
+};
+
+//-------------------COMPLEX ACTION CALLS AND AXIOS INFO...
+
+// export const detailVoyage = (voyage) => {
+
+// 	  let start = voyage.Start;
+// 	  let end = voyage.End;
+// 	  var dates =[];
+// 	  for (let i=+start; i<=+end+1; i++){dates.push(i);};
+
+// 	voyage.Dates = dates;
+// 	voyage.Length = dates.length;
+
+// 	return dispatch => {
+// 		//dispatch(selectVoyage(voyage));
+// 	};
+// };
+
+
+// export const filterCrew = (crew) => { //filters crew into this voyage and other voyages
+
+// 	//insert into selectCrew...
+// 	let currentCnt=0;
+// 	let years =[];
+
+// 	crew.forEach(member=>{
+// 		if (+member.Fstart === +member.Dyear){
+// 			member.voyage = 'current';
+// 			currentCnt++;
+// 		} else {
+// 		if (years.indexOf(+member.Dyear)===-1){
+// 				years.push(+member.Dyear);
+// 			};
+// 			member.voyage = 'other';
+// 		}
+
+// 	})
+
+// 	console.log(years, crew[0].Fstart);
+// 	var diff;
+// 	if (currentCnt===0 && years.length===1){
+// 		crew.forEach(member=> { member.voyage = 'current'; });
+// 	} else if (currentCnt===0 && years.length > 1){
+// 		diff = years.map(year=> {
+// 			return Math.abs(+year - +crew[0].Fstart);
+// 		});
+// 		var year = years[diff.indexOf(Math.min(...diff))];
+
+// 		crew.forEach(member=>{ if (year === +member.Dyear){
+// 			member.voyage = 'current';
+// 			//console.log(member.Fstart, member.Dyear);
+// 			};
+// 		});
+// 	};
+
+// 	var crewC = crew.filter(member=> {return member.voyage === 'current';});
+// 	var crewr = crew.filter(member=> {return member.voyage !== 'current';});
+
+// 	return dispatch => {
+// 		// dispatch(selectCrew(crewC));
+// 		// dispatch(otherCrews(crewOther));
+// 		// dispatch(extendVoyages(years));
+// 	};
+// };
+
+/***/ }),
+/* 674 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+//-------------------CONSTANTS
+
+//SITE REDUCER
+
+//layers all & selected, sites all & selected
+var GET_ALL_SITES = exports.GET_ALL_SITES = 'GET_ALL_SITES';
+
+var GET_CURR_SITE = exports.GET_CURR_SITE = 'GET_CURR_SITE';
+var GET_CURR_SITEZOOM = exports.GET_CURR_SITEZOOM = 'GET_CURR_SITEZOOM';
+var GET_CURR_DETAIL = exports.GET_CURR_DETAIL = 'GET_CURR_DETAIL';
+var GET_CURR_NARR = exports.GET_CURR_NARR = 'GET_CURR_NARR';
+var GET_CURR_IMGS = exports.GET_CURR_IMGS = 'GET_CURR_IMGS';
+
+//layers all & selected for filteration
+var GET_All_LAYERS = exports.GET_All_LAYERS = 'GET_All_LAYERS';
+var GET_CURR_LAYERS = exports.GET_CURR_LAYERS = 'GET_CURR_LAYERS';
+
+//-------------------ACTION CREATORS - vanilla loading of information
+var getAllSites = exports.getAllSites = function getAllSites(sites) {
+	return {
+		type: GET_All_SITES,
+		sites: sites
+	};
+};
+
+var getCurrSite = exports.getCurrSite = function getCurrSite(site) {
+	return {
+		type: GET_CURR_SITE,
+		site: site
+	};
+};
+
+var getCurrSiteZoom = exports.getCurrSiteZoom = function getCurrSiteZoom(sites) {
+	return {
+		type: GET_CURR_SITEZOOM,
+		sites: sites
+	};
+};
+
+var getCurrDetail = exports.getCurrDetail = function getCurrDetail(detailId) {
+	return {
+		type: GET_CURR_DETAIL,
+		detail: detailId
+	};
+};
+
+var getCurrNarr = exports.getCurrNarr = function getCurrNarr(narrative) {
+	return {
+		type: GET_CURR_NARR,
+		narrative: narrative
+	};
+};
+
+var getCurrImgs = exports.getCurrImgs = function getCurrImgs(images) {
+	return {
+		type: GET_CURR_IMGS,
+		imgs: images
+	};
+};
+
+var getAllLayers = exports.getAllLayers = function getAllLayers(layers) {
+	return {
+		type: GET_All_LAYERS,
+		layers: layers
+	};
+};
+
+var getCurrLayers = exports.getCurrLayers = function getCurrLayers(layers) {
+	return {
+		type: GET_CURR_LAYERS,
+		layers: layers
+	};
+};
+
+//-------------------reducers && initial info
+var initSites = {
+	allSites: [], //array of objects
+
+	currSite: {}, //row of data
+	currSiteZoom: [], //secondary object arrays
+	currDetail: 0, //main vs. peripheral detail for panel (id of site)
+	currNarrative: {}, //narratives & captions
+	currImages: {}, //links for panel images
+
+	allLayers: [], //arr of strings
+	currLayers: [] };
+
+var siteReducer = exports.siteReducer = function siteReducer() {
+	var prevState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initSites;
+	var action = arguments[1];
+
+	var newState = Object.assign({}, prevState);
+
+	switch (action.type) {
+
+		case GET_ALL_SITES:
+			newState.allSites = action.sites;
+			break;
+
+		case GET_CURR_SITE:
+			newState.currSite = action.site;
+			break;
+
+		case GET_CURR_SITEZOOM:
+			newState.currSiteZoom = action.sites;
+			break;
+
+		case GET_CURR_DETAIL:
+			newState.currDetail = action.detail;
+			break;
+
+		case GET_CURR_NARR:
+			newState.currNarrative = action.narrative;
+			break;
+
+		case GET_CURR_IMGS:
+			newState.currImages = action.imgs;
+			break;
+
+		case GET_All_LAYERS:
+			newState.allLayers = action.layers;
+			break;
+
+		case GET_CURR_LAYERS:
+			newState.currLayers = action.layers;
+			break;
+
+		default:
+			return prevState;
+	}
+
+	return newState;
+};
+
+//-------------------COMPLEX ACTION CALLS AND AXIOS INFO...
+
+/***/ }),
+/* 675 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+//OPTIONS REDUCER
+
+//layer view options
+var GET_COLOR = exports.GET_COLOR = "GET_COLOR";
+var GET_ANNO = exports.GET_ANNO = "GET_ANNO";
+var GET_ANNO_ZOOM = exports.GET_ANNO_ZOOM = "GET_ANNO_ZOOM";
+var GET_KEY_LIST = exports.GET_KEY_LIST = "GET_KEY_LIST";
+var GET_KEY_FOCUS = exports.GET_KEY_FOCUS = "GET_KEY_FOCUS";
+
+// //-------------------ACTION CREATORS - vanilla loading of information
+var getColor = exports.getColor = function getColor(bool) {
+	return {
+		type: GET_COLOR,
+		color: bool
+	};
+};
+
+var getAnno = exports.getAnno = function getAnno(bool) {
+	return {
+		type: GET_ANNO,
+		anno: bool
+	};
+};
+
+var getAnnoZoom = exports.getAnnoZoom = function getAnnoZoom(bool) {
+	return {
+		type: GET_ANNO_ZOOM,
+		annoZoom: bool
+	};
+};
+
+var getKeyList = exports.getKeyList = function getKeyList(keys) {
+	return {
+		type: GET_KEY_LIST,
+		keys: keys
+	};
+};
+
+var getKeyFocus = exports.getKeyFocus = function getKeyFocus(keyId) {
+	return {
+		type: GET_KEY_FOCUS,
+		keyId: keyId
+	};
+};
+
+var initOptions = {
+	color: false,
+	anno: true,
+	annoZoom: true,
+	currKeyList: [],
+	currKeyFocus: 0 };
+
+var optionReducer = exports.optionReducer = function optionReducer() {
+	var prevState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initOptions;
+	var action = arguments[1];
+
+	var newState = Object.assign({}, prevState);
+
+	switch (action.type) {
+
+		case GET_COLOR:
+			newState.color = action.color;
+			break;
+
+		case GET_ANNO:
+			newState.anno = action.anno;
+			break;
+
+		case GET_ANNO_ZOOM:
+			newState.annoZoom = action.annoZoom;
+			break;
+
+		case GET_KEY_LIST:
+			newState.currKeyList = action.keys;
+			break;
+
+		case GET_KEY_FOCUS:
+			newState.currKeyFocus = action.keyId;
+			break;
+
+		default:
+			return prevState;
+	}
+
+	return newState;
+};
+
+//-------------------COMPLEX ACTION CALLS AND AXIOS INFO...
+
+/***/ }),
+/* 676 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.logout = exports.retrieveLoggedInUser = exports.loginAndGoToHome = exports.login = exports.adminReducer = undefined;
+
+var _axios = __webpack_require__(265);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _reactRouter = __webpack_require__(30);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* ------------------    ACTIONS    --------------------- */
+
+var SET = 'SET_CURRENT_USER';
+//import { create as createUser } from './users';
+
+var REMOVE = 'REMOVE_CURRENT_USER';
+
+/* --------------    ACTION CREATORS    ----------------- */
+
+var set = function set(user) {
+  return { type: SET, user: user };
+};
+var remove = function remove() {
+  return { type: REMOVE };
+};
+
+/* ------------------    REDUCER    --------------------- */
+
+var adminReducer = exports.adminReducer = function adminReducer() {
+  var currentUser = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments[1];
+
+  switch (action.type) {
+
+    case SET:
+      return action.user;
+
+    case REMOVE:
+      return null;
+
+    default:
+      return currentUser;
+  }
+};
+
+// ------------       utility    ------------------
+
+var resToData = function resToData(res) {
+  return res.data;
+};
+
+// ------------       dispatch    ------------------
+
+// a "simple" dispatcher which uses API, changes state, and returns a promise.
+var login = exports.login = function login(credentials) {
+  return function (dispatch) {
+    return _axios2.default.put('/api/auth', credentials).then(resToData).then(function (user) {
+      dispatch(set(user));
+      return user;
+    });
+  };
+};
+
+// a "composed" dispatcher which uses the "simple" one, then routes to a page.
+var loginAndGoToHome = exports.loginAndGoToHome = function loginAndGoToHome(credentials) {
+  return function (dispatch) {
+    dispatch(login(credentials)).then(function (user) {
+      return _reactRouter.browserHistory.push('/');
+    }).catch(function (err) {
+      return console.error('Problem logging in:', err);
+    });
+  };
+};
+
+var retrieveLoggedInUser = exports.retrieveLoggedInUser = function retrieveLoggedInUser() {
+  return function (dispatch) {
+    _axios2.default.get('/api/auth').then(function (res) {
+      return dispatch(set(res.data));
+    }).catch(function (err) {
+      return console.error('Problem fetching current user', err);
+    });
+  };
+};
+
+// optimistic
+var logout = exports.logout = function logout() {
+  return function (dispatch) {
+    dispatch(remove());
+    _axios2.default.delete('/api/auth').catch(function (err) {
+      return console.error('logout unsuccessful', err);
+    });
+  };
+};
 
 /***/ })
 /******/ ]);

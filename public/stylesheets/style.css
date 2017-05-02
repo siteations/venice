@@ -156,7 +156,7 @@ a:hover {
 .container-fluid {
     width: 100%;
     height: 100vh;
-    padding: 20px;
+    padding: 10px 20px 20px 20px;
     overflow: hidden;
     background-color: #f4f2ec;
 }
@@ -225,9 +225,9 @@ a:hover {
 
 .circHL {
 	stroke: #ffffff;
-	stroke-width: calc(attr(r)/50);
+	stroke-width: 3;
 	fill: #ffffff;
-	fill-opacity:.25;
+	fill-opacity:.05;
 	stroke-opacity: 1;
 	text-shadow: 0px 0px 8px #000000;
   filter: drop-shadow( 0px 0px 8px #000 );
@@ -235,7 +235,7 @@ a:hover {
 
 .circHL:hover {
 	stroke: #ffffff;
-	stroke-width: calc(attr(r)/100);
+	stroke-width: 7;
 	fill: #ffffff;
 	fill-opacity:.01;
 	stroke-opacity: 1;
@@ -245,7 +245,7 @@ a:hover {
 
 .intPanel {
 	position: absolute;
-	top: 120px;
+	top: 108px;
 	background-color: rgba(230, 225, 211, .75);
 	padding: 5px;
 	margin: 2px;

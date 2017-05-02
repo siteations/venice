@@ -295,7 +295,7 @@ export default class MapSVG extends Component {
 	   					cirNew.map(d=>{
                             //strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2}
 	   						return (
-	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} strokeWidth={Math.pow(this.state.currentZoomLevel,2)/3} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} />
+	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} />
 	   						    )
 	   					})
 	   				}
