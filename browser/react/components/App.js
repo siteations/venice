@@ -30,9 +30,12 @@ const mapDispatchToProps = (dispatch) => {
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: grey600,
+    primary1Color: '#352c1a',
     primary2Color: grey900,
-    primary3Color: grey300,
+    primary3Color: '#d8d0ba',
+    accent1Color:'#d8d0ba',
+    accent2Color:'#f4f2ec',
+    accent3Color:'#d8d0ba',
   },
 });
 

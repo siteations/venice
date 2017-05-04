@@ -5,18 +5,19 @@
 //MAP REDUCER
 
 //responding to resizing
-export const GET_WINDOW = 'GET_WINDOW';
-export const GET_WINOFFSET = 'GET_OFFSETS';
+export const SET_WINDOW = 'SET_WINDOW';
+export const SET_WINOFFSET = 'SET_WINOFFSET';
 
 //local up to global on mapbar clicks
-export const GET_ZOOM = 'GET_ZOOM';
-export const GET_TILESIZE = 'GET_TILESIZE';
-export const GET_OFFSETS = 'GET_OFFSETS';
-export const GET_CENTER = 'GET_CENTER'; // need to write
+export const SET_ZOOM = 'SET_ZOOM';
+export const SET_TILESIZE = 'SET_TILESIZE';
+export const SET_OFFSETS = 'SET_OFFSETS';
+export const SET_OFFSETS_RESIDUAL ='SET_OFFSETS_RESIDUAL';
+export const SET_CENTER = 'SET_CENTER'; // need to write
 
 //navigate to site
-export const SET_CENTER_ZOOM = 'SET_CENTER_ZOOM';
-export const SET_CENTER = 'SET_CENTER';
+//export const SET_CENTER_ZOOM = 'SET_CENTER_ZOOM';
+export const SET_CENTER_SCREEN = 'SET_CENTER_SCREEN';
 
 
 //PANEL REDUCER ? FOR OPEN/CLOSED
@@ -24,59 +25,59 @@ export const SET_CENTER = 'SET_CENTER';
 //NAVIGATION REDUCER ? FOR BOTTOM THUMBNAILS
 
 //-------------------ACTION CREATORS - vanilla loading of information
-export const getWindowSize = (windowSize) => {
+export const setWindowSize = (windowSize) => {
 	return {
-		type: GET_WINDOW,
+		type: SET_WINDOW,
 		windowSize
 	};
 };
 
-export const getWindowOffset = (windowOff) => {
+export const setWindowOffsets = (windowOff) => {
 	return {
-		type: GET_WINOFFSET,
+		type: SET_WINOFFSET,
 		windowOff
 	};
 };
 
-export const getZoom = (zoom) => {
+export const setZoom = (zoom) => {
 	return {
-		type: GET_ZOOM,
+		type: SET_ZOOM,
 		zoom
 	};
 };
 
-export const getTile = (tilesize) => {
+export const setTile = (tilesize) => {
 	return {
-		type: GET_TILESIZE,
+		type: SET_TILESIZE,
 		tilesize
 	};
 };
 
-export const getOffsets = (offsets) => {
+export const setOffsets = (offsets) => {
 	return {
-		type: GET_OFFSETS,
+		type: SET_OFFSETS,
 		offsets
 	};
 };
 
-export const getCenter = (center) => {
+export const setOffsetsR = (offsets) => {
 	return {
-		type: GET_CENTER,
+		type: SET_OFFSETS_RESIDUAL,
+		offsets
+	};
+};
+
+export const setCenter = (center) => {
+	return {
+		type: SET_CENTER,
 		center
 	};
 };
 
-export const setCenterZoom = () => {
+export const setCenterScreen = (centerScr) => {
 	return {
-		type: SET_CENTER_ZOOM,
-		zoom: 5
-	};
-};
-
-export const setCenter = (newCent) => {
-	return {
-		type: SET_CENTER,
-		newCent
+		type: SET_CENTER_SCREEN,
+		centerScr
 	};
 };
 
@@ -84,12 +85,13 @@ export const setCenter = (newCent) => {
 //-------------------reducers && initial info
 
 const initMap = {
-	windowSize:[0,0], //width, height
+	windowSize: [2048,1024], //width, height
 	windowOffsets: [0,0], //x, y
 
 	currZoom: 3, //map zoom value
-	tileSize: 256, //px size
-	xyOffset: [0,0], //x, y
+	tileSize: 128, //px size
+	xyOffsets: [0,0], //x, y
+	xyOffsetsR: [0,0], //x, y
 	xyCenter: [0,0], //x, y
 	focusCenter: [0,0], //x, y
 
@@ -102,36 +104,36 @@ export const mapReducer = (prevState = initMap, action) => {
 
 	switch(action.type){
 
-	case GET_WINDOW:
+	case SET_WINDOW:
 		newState.windowSize = action.windowSize;
 		break;
 
-	case GET_WINOFFSET:
+	case SET_WINOFFSET:
 		newState.windowOffsets = action.windowOff;
 		break;
 
-	case GET_ZOOM:
+	case SET_ZOOM:
 		newState.currZoom = action.zoom;
 		break;
 
-	case GET_TILESIZE:
+	case SET_TILESIZE:
 		newState.tileSize = action.tilesize;
 		break;
 
-	case GET_OFFSETS:
-		newState.xyOffset = action.offsets;
+	case SET_OFFSETS:
+		newState.xyOffsets = action.offsets ;
 		break;
 
-	case GET_CENTER:
-		newState.xyCenter = action.center;
-		break;
-
-	case SET_CENTER_ZOOM:
-		newState.currZoom = action.zoom;
+	case SET_OFFSETS_RESIDUAL:
+		newState.xyOffsetsR = action.offsets ;
 		break;
 
 	case SET_CENTER:
-		newState.focusCenter = action.newCent;
+		newState.focusCenter = action.center;
+		break;
+
+	case SET_CENTER_SCREEN:
+		newState.xyCenter = action.centerScr;
 		break;
 
 	default:
@@ -143,7 +145,40 @@ export const mapReducer = (prevState = initMap, action) => {
 };
 
 
-//-------------------COMPLEX ACTION CALLS AND AXIOS INFO...
+/* ------------       DISPATCHERS     ------------------ */
+
+// optimistic
+export const updateZoom = zoom => dispatch => {
+  dispatch(setZoom(zoom));
+};
+
+export const updateOffsets = offsets => dispatch => {
+  dispatch(setOffsets(offsets));
+};
+
+export const updateOffsetsResidual = offsets => dispatch => {
+  dispatch(setOffsetsR(offsets));
+};
+
+export const updateTile = tiles => dispatch => {
+  dispatch(setTile(tiles));
+};
+
+export const updateCenter = cent => dispatch => {
+  dispatch(setCenter(cent));
+};
+
+export const updateCenterScreen = centScr => dispatch => {
+  dispatch(setCenterScreen(centScr));
+};
+
+export const updateWindow = size => dispatch => {
+  dispatch(setWindowSize(size));
+};
+
+export const updateWindowOffsets = offsets => dispatch => {
+  dispatch(setWindowOffsets(offsets));
+};
 
 // export const detailVoyage = (voyage) => {
 
