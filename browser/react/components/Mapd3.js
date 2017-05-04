@@ -20,7 +20,11 @@ import {cirMain, clusterTest, narrativeTest} from '../pre-db/cirTest.js';
 
 //---------------------------ACTION for DISPATCH---------------------------
 import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual} from '../action-creators/mapActions.js';
+
 import {updateColor, updateAnno, updateDetail} from '../action-creators/optionActions.js';
+
+import {loadLayers, loadSites} from '../action-creators/siteActions.js';
+
 
 
 
@@ -50,30 +54,25 @@ class MapSVG extends Component {
         	mouseLast: [0,0],
         	mousePast: [0,0],
         	mousePos: [0,0],
-            xyOffR: [0,0],
             drag: '',
             trig: false,
-            colorOp: false,
-            layerOp: true,
-            detailOp: true,
             labelT:'',
             labelS:'',
-            //xyOff: this.props.map.xyOffsets,
-            //currentZoomLevel: this.props.map.currZoom,
-            //tilesize: this.props.map.tileSize,
-            //winTopLeft: this.props.map.windowOffsets,
-            //initialSize: this.props.map.windowSize,
 
         };
         this.mouseLoc=this.mouseLoc.bind(this);
         this.refSize=this.refSize.bind(this);
-        this.zoomIn = this.zoomIn.bind(this);
-        this.zoomOut = this.zoomOut.bind(this);
+        this.zoom = this.zoom.bind(this);
+        this.zoomTo = this.zoomTo.bind(this);
+        //this.flyTo
+        //this.other
+
     }
 
     componentDidMount() {
         window.addEventListener("resize", this.refSize);
         this.refSize();
+        this.props.getLayers();
 
     }
 
@@ -166,15 +165,52 @@ class MapSVG extends Component {
 
     }
 
-    zoomIn(e){
+    zoom(e, type){
         e.preventDefault;
+        let multiplier;
+        if (type==='in'){
+            multiplier=2;
+        } else if (type==='out'){
+            multiplier=0.5;
+        }
 
         let [mouseX, mouseY]=this.props.map.xyCenter;
         let curX = (mouseX+this.props.map.xyOffsets[0]), curY = (mouseY+this.props.map.xyOffsets[1]);
 
-        let resX = curX*2, resY = curY*2;
+        let resX = curX*multiplier, resY = curY*multiplier;
         let newOx = resX-mouseX, newOy = resY-mouseY;
 
+        let curr = this.props.map.currZoom, pix = this.props.map.tileSize, oX =this.props.map.xyOffsets[0], oY=this.props.map.xyOffsets[1];
+
+        if (curr<6 && type==='in') { //zoom in
+            curr++, oX = newOx, oY = newOy;
+        } else if (curr>2 && type==='out'){
+            curr--, oX = newOx, oY = newOy;
+        }
+
+        this.props.setOffsetsR([oX, oY]);
+        this.props.setCurrOffsets([oX, oY]);
+        this.props.setCurrZoom(curr);
+        this.props.setCurrTilesize(pix);
+
+    }
+
+    zoomTo(e,site){ // rework to parallel basic scroll zoom...
+        e.preventDefault;
+        if (site.length===2){ //double click on circle with x,y array center passed in
+            var [mouseX, mouseY] = site; //in scaled screen coordinates
+
+        } else if (site ==='none') { //double click on general area, use mouse to center zoom
+            var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+            var [mouseX, mouseY] = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop]; //in scaled screen coordinates
+        }
+
+        //rework here
+        let curX = (mouseX+this.props.map.xyOffsets[0]), curY = (mouseY+this.props.map.xyOffsets[1]); //location on map
+        let resX = curX*2, resY = curY*2; // zoom in one level
+        let newOx = resX-this.props.map.windowSize[0]/2, newOy = resY-this.props.map.windowSize[1]/2;
+
+        //back to basics here
         let curr = this.props.map.currZoom, pix = this.props.map.tileSize, oX =this.props.map.xyOffsets[0], oY=this.props.map.xyOffsets[1];
 
         if (curr<6) { //zoom in
@@ -185,28 +221,10 @@ class MapSVG extends Component {
         this.props.setCurrOffsets([oX, oY]);
         this.props.setCurrZoom(curr);
         this.props.setCurrTilesize(pix);
-
     }
 
-    zoomOut(e){
+    flyTo(e){
         e.preventDefault;
-
-        let [mouseX, mouseY]=this.props.map.xyCenter;
-        let curX = (mouseX+this.props.map.xyOffsets[0]), curY = (mouseY+this.props.map.xyOffsets[1]);
-
-        let resX = curX/2, resY = curY/2;
-        let newOx = resX-mouseX, newOy = resY-mouseY;
-
-        let curr = this.props.map.currZoom, pix = this.props.map.tileSize, oX =this.props.map.xyOffsets[0], oY=this.props.map.xyOffsets[1];
-
-        if (curr>2) { //zoom in
-            curr--, oX = newOx, oY = newOy;
-        }
-
-        this.props.setOffsetsR([oX, oY]);
-        this.props.setCurrOffsets([oX, oY]);
-        this.props.setCurrZoom(curr);
-        this.props.setCurrTilesize(pix);
     }
 
     showLabel(e){
@@ -222,15 +240,16 @@ class MapSVG extends Component {
 
     render(){
 
-        //console.log('store to props', this.props);
+        console.log('store to props', this.props.sites);
 
     	const tiles = tilingRaw(this.props.map.currZoom, this.props.map.tileSize, [this.props.map.windowSize[0], this.props.map.windowSize[1]], this.props.map.xyOffsets[0], this.props.map.xyOffsets[1] );
     	const percent = tiles[0].percent;
 
-    	let cirLayers = [];
+    	let cirLayers = this.props.sites.allLayers;
         //["ritual", "monastery", "convent", "bascilica", "non-catholic", "plague", "parish"]
         //["monastery", "convent", "non-catholic"]
 
+        let cirMain = this.props.sites.allSites;
 
 
     	let cirNew = cirMain.map(circle=>{
@@ -238,19 +257,16 @@ class MapSVG extends Component {
 	    		newCir.cx = circle.cx*percent - this.props.map.xyOffsets[0];
 	    		newCir.cy = circle.cy*percent - this.props.map.xyOffsets[1];
 	    		newCir.r = circle.r*percent;
-    		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
-
                 return newCir;
             })
-        .filter(circle=> (this.props.layers.indexOf(circle.type)>-1));
+        //.filter(circle=> (this.props.sites.layers.indexOf(circle.type)>-1));
 
-        // 2) refactor to be particular components for import - rework state to have props/dispatch compatibility with zoom level & offsets or centers
         // 3) brainstorm a sample of overlay circles - each triggering panel interactions
 
     	return (
 
     	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
-    	   <div className="offset" onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} onWheel = {e=>this.zoomScroll(e) } >
+    	   <div className="offset" onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} onWheel = {e=>this.zoomScroll(e)} onDoubleClick={e=>this.zoomTo(e, 'none')} >
 	    	   <svg width={this.props.map.windowSize[0]} height={this.props.map.windowSize[1]}  >
 	    	   		<defs>
                         <filter id="greyscale">
@@ -354,33 +370,7 @@ class MapSVG extends Component {
                     }
 	    	   </svg>
     	   </div>
-           <MapOptions actions={{opacity:this.opacityAlt, layers: this.opacityLayers, details: this.detailLayers, in: this.zoomIn, out:this.zoomOut}} layerOp={this.state.layerOp} />
-           {/*<div className="intPanel center-block text-center">
-                <br/>
-                <button className="btn btn-default btn-sm bIconSm"><span className="glyphicon glyphicon-plus"></span></button>
-                <br/>
-                <button className="btn btn-default btn-sm bIconSm"><span className="glyphicon glyphicon-minus"></span></button>
-                <h5>zoom</h5>
-                <br/>
-                <div style={styles.root}>
-                    <Toggle onToggle={(e,isInputChecked)=>this.opacityAlt(e,isInputChecked)}/>
-                </div>
-                <h5>color</h5>
-                <div style={styles.root}>
-                    <Toggle defaultToggled={true} onToggle={(e,isInputChecked)=>this.opacityLayers(e,isInputChecked)}/>
-                    <Slider style={{height: 60}} axis="y-reverse" defaultValue={1} onChange={(e,newValue)=>this.opacityLayers(e,newValue)}/>
-                </div>
-                <h5>layers</h5>
-
-                <div style={styles.root}>
-                    <Toggle defaultToggled={this.state.layerOp} onToggle={(e,isInputChecked)=>this.detailLayers(e,isInputChecked)}/>
-                   <Slider style={{height: 60}} axis="y-reverse" defaultValue={1} onChange={(e,newValue)=>this.opacityLayers(e,newValue)}/>
-                </div>
-
-                <h5>local<br/>details</h5>
-                <br/>
-           </div>
-       */}
+           <MapOptions actions={{zoom: this.zoom }} />
     	 </div>
 
     	)
@@ -392,7 +382,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     map: state.map,
     options: state.options,
-  }
+    sites: state.sites,
+    }
 }
 
 //setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
@@ -422,6 +413,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setWindowOffsets: (offsets) => {
         dispatch(updateWindowOffsets(offsets));
+    },
+    getLayers: () => {
+        dispatch(loadSites());
+        dispatch(loadLayers());
     },
   }
 }

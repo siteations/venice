@@ -1,9 +1,13 @@
+//---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
+import { cirMain, clusterTest, narrativeTest} from '../pre-db/cirTest.js';
+
 //-------------------CONSTANTS
 
 //SITE REDUCER
 
 //layers all & selected, sites all & selected
 export const GET_ALL_SITES = 'GET_ALL_SITES';
+export const GET_FILTERED_SITES = 'GET_FILTERED_SITES'
 
 export const GET_CURR_SITE = 'GET_CURR_SITE';
 export const GET_CURR_SITEZOOM = 'GET_CURR_SITEZOOM';
@@ -18,8 +22,15 @@ export const GET_CURR_LAYERS= 'GET_CURR_LAYERS';
 //-------------------ACTION CREATORS - vanilla loading of information
 export const getAllSites = (sites) => {
 	return {
-		type: GET_All_SITES,
+		type: GET_ALL_SITES,
 		sites: sites
+	};
+};
+
+export const getFilteredSites = (sites) => {
+	return{
+		type: GET_FILTERED_SITES,
+		sites
 	};
 };
 
@@ -75,6 +86,7 @@ export const getCurrLayers = (layers) => {
 //-------------------reducers && initial info
 const initSites = {
 	allSites:[], //array of objects
+	filteredSites:[], // array filtered
 
 	currSite: {}, //row of data
 	currSiteZoom: [], //secondary object arrays
@@ -133,3 +145,38 @@ export const siteReducer = (prevState = initSites, action) => {
 };
 
 //-------------------COMPLEX ACTION CALLS AND AXIOS INFO...
+
+export const loadSites = () => dispatch => {
+	//rework for axios later
+	dispatch(getAllSites(cirMain));
+}
+
+export const loadFilteredSites = (layerArr) => dispatch => {
+
+	let selectSites = cirMain.filter(circle =>{
+		return layerArr.indexOf(circle.type)>-1;
+	})
+	//rework for axios later
+	dispatch(getFilteredSites(selectSites));
+}
+
+export const loadFiltered = () => dispatch => {
+	//set this up grab all on initial mount, but then work with addSelect below to grab pieces at a time...
+
+	dispatch(getFilteredSites());
+}
+
+export const loadLayers = () => dispatch => {
+
+	let cirLayers = [];
+	cirMain.forEach(circle=>{
+    		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
+		})
+	//rework for axios later
+	dispatch(getAllLayers(cirLayers));
+}
+
+
+export const addSelectLayer = (layer) => dispatch => {
+	dispatch(setCurrLayers(layer));
+}
