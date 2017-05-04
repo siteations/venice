@@ -20,6 +20,7 @@ import {cirMain, clusterTest, narrativeTest} from '../pre-db/cirTest.js';
 
 //---------------------------ACTION for DISPATCH---------------------------
 import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual} from '../action-creators/mapActions.js';
+import {updateColor, updateAnno, updateDetail} from '../action-creators/optionActions.js';
 
 
 
@@ -222,22 +223,6 @@ class MapSVG extends Component {
     	this.setState({labelT:'', labelS: ''});
     }
 
-    opacityAlt(e,isInputChecked){
-        e.preventDefault;
-        this.setState({colorOp:isInputChecked});
-    }
-
-    opacityLayers(e,isInputChecked){
-        e.preventDefault;
-        this.setState({layerOp:isInputChecked});
-        this.setState({detailOp:isInputChecked});
-    }
-
-    detailLayers(e,isInputChecked){
-        e.preventDefault;
-        this.setState({detailOp:isInputChecked});
-    }
-
     render(){
 
         //console.log('store to props', this.props);
@@ -291,8 +276,8 @@ class MapSVG extends Component {
                                             height={this.props.map.tileSize*(scaleOps[this.props.map.currZoom][1]+1)}
                                             x = { -1 * this.props.map.xyOffsets[0] }
                                             y = { -1 * this.props.map.xyOffsets[1] }
-                                            opacity = {(this.state.colorOp===false)? .5 : 1 }
-                                            filter={(this.state.colorOp===false)? "url(#greyscale)" : "" }
+                                            opacity = {(this.props.options.color===false)? .5 : 1 }
+                                            filter={(this.props.options.color===false)? "url(#greyscale)" : "" }
                         />
 
                     </g>
@@ -309,13 +294,13 @@ class MapSVG extends Component {
                                             height={this.props.map.tileSize}
                                             x = { tile.xpos }
                                             y = { tile.ypos }
-                                            opacity = {(this.state.colorOp===false)? .75 : 1 }
-                                            filter={(this.state.colorOp===false)? "url(#greyscale)" : "" }
+                                            opacity = {(this.props.options.color===false)? .75 : 1 }
+                                            filter={(this.props.options.color===false)? "url(#greyscale)" : "" }
                                     />
                             )}
                         })
                     }
-                    {this.state.layerOp && //black masking below
+                    {this.props.options.anno && //black masking below
 
                                     <rect
                                         width={this.props.map.windowSize[0]}
@@ -323,10 +308,10 @@ class MapSVG extends Component {
                                             x = { 0 }
                                             y = { 0}
                                             fill="#21160b"
-                                            opacity={(this.state.colorOp===false)? .65 : .35 }
+                                            opacity={(this.props.options.color===false)? .65 : .35 }
                                     />
                     }
-                    {tiles && this.state.layerOp &&
+                    {tiles && this.props.options.anno &&
                         tiles.map(tile=>{
 
                             if (tile.xpos<this.props.map.windowSize[0] && tile.xpos+256>=0 && tile.ypos<this.props.map.windowSize[1] && tile.ypos+256>=0 ){ // only show those on screen
@@ -346,7 +331,7 @@ class MapSVG extends Component {
 	    	   			})
 	    	   		}
 	    	   		</g>
-                    {this.state.layerOp &&
+                    {this.props.options.anno &&
 	    	   		<g className="allLabelCircs" >
 	    	   		{cirNew &&
 	   					cirNew.map(d=>{
@@ -372,7 +357,7 @@ class MapSVG extends Component {
                     }
 	    	   </svg>
     	   </div>
-           <MapOptions actions={{opacity:this.opacityAlt, layers: this.opacityLayers, details: this.detailLayers, in: this.zoomIn, out:this.zoomOut }} layerOp={this.state.layerOp} />
+           <MapOptions actions={{opacity:this.opacityAlt, layers: this.opacityLayers, details: this.detailLayers, in: this.zoomIn, out:this.zoomOut}} layerOp={this.state.layerOp} />
            {/*<div className="intPanel center-block text-center">
                 <br/>
                 <button className="btn btn-default btn-sm bIconSm"><span className="glyphicon glyphicon-plus"></span></button>
@@ -409,6 +394,7 @@ class MapSVG extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     map: state.map,
+    options: state.options,
   }
 }
 
@@ -443,6 +429,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-const Map = connect( mapStateToProps, mapDispatchToProps)(MapSVG);
+const Map = connect(mapStateToProps, mapDispatchToProps)(MapSVG);
 
 export default Map;

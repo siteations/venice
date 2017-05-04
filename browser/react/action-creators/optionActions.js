@@ -1,44 +1,44 @@
 //OPTIONS REDUCER
 
 //layer view options
-export const GET_COLOR = "GET_COLOR";
-export const GET_ANNO = "GET_ANNO";
-export const GET_ANNO_ZOOM = "GET_ANNO_ZOOM";
-export const GET_KEY_LIST = "GET_KEY_LIST";
-export const GET_KEY_FOCUS = "GET_KEY_FOCUS";
+export const SET_COLOR = "SET_COLOR";
+export const SET_ANNO = "SET_ANNO";
+export const SET_ANNO_ZOOM = "SET_ANNO_ZOOM";
+export const SET_KEY_LIST = "SET_KEY_LIST";
+export const SET_KEY_FOCUS = "SET_KEY_FOCUS";
 
 // //-------------------ACTION CREATORS - vanilla loading of information
-export const getColor = (bool) => {
+export const setColor = (bool) => {
 	return {
-		type: GET_COLOR,
+		type: SET_COLOR,
 		color: bool
 	};
 };
 
-export const getAnno = (bool) => {
+export const setAnno = (bool) => {
 	return {
-		type: GET_ANNO,
+		type: SET_ANNO,
 		anno: bool
 	};
 };
 
-export const getAnnoZoom = (bool) => {
+export const setAnnoZoom = (bool) => {
 	return {
-		type: GET_ANNO_ZOOM,
+		type: SET_ANNO_ZOOM,
 		annoZoom: bool
 	};
 };
 
-export const getKeyList = (keys) => {
+export const setKeyList = (keys) => {
 	return {
-		type: GET_KEY_LIST,
+		type: SET_KEY_LIST,
 		keys: keys
 	};
 };
 
-export const getKeyFocus = (keyId) => {
+export const setKeyFocus = (keyId) => {
 	return {
-		type: GET_KEY_FOCUS,
+		type: SET_KEY_FOCUS,
 		keyId
 	};
 };
@@ -58,23 +58,23 @@ export const optionReducer = (prevState = initOptions, action) => {
 
 	switch(action.type){
 
-	case GET_COLOR:
+	case SET_COLOR:
 		newState.color = action.color;
 		break;
 
-	case GET_ANNO:
+	case SET_ANNO:
 		newState.anno = action.anno;
 		break;
 
-	case GET_ANNO_ZOOM:
+	case SET_ANNO_ZOOM:
 		newState.annoZoom = action.annoZoom;
 		break;
 
-	case GET_KEY_LIST:
+	case SET_KEY_LIST:
 		newState.currKeyList = action.keys;
 		break;
 
-	case GET_KEY_FOCUS:
+	case SET_KEY_FOCUS:
 		newState.currKeyFocus = action.keyId;
 		break;
 
@@ -87,4 +87,17 @@ export const optionReducer = (prevState = initOptions, action) => {
 };
 
 
-//-------------------COMPLEX ACTION CALLS AND AXIOS INFO...
+/* ------------       DISPATCHERS     ------------------ */
+
+// optimistic
+export const updateColor = bool => dispatch => {
+  dispatch(setColor(bool));
+};
+
+export const updateAnno = bool => dispatch => {
+  dispatch(setAnno(bool));
+};
+
+export const updateDetail = bool => dispatch => {
+  dispatch(setAnnoZoom(bool));
+};

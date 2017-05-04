@@ -17,8 +17,33 @@ const styles = {
   },
 };
 
-const MapOptions = (props) => {
-	console.log(props);
+class MapOptions extends Component {
+	constructor(props) {
+        super(props);
+        this.state = {};
+
+        this.opacityAlt=this.opacityAlt.bind(this);
+        this.opacityLayers=this.opacityLayers.bind(this);
+        this.detailLayers=this.detailLayers.bind(this);
+    }
+
+    opacityAlt(e,isInputChecked){
+        e.preventDefault;
+        this.setState({colorOp:isInputChecked});
+    }
+
+    opacityLayers(e,isInputChecked){
+        e.preventDefault;
+        this.setState({layerOp:isInputChecked});
+        this.setState({detailOp:isInputChecked});
+    }
+
+    detailLayers(e,isInputChecked){
+        e.preventDefault;
+        this.setState({detailOp:isInputChecked});
+    }
+
+  render(){
 
 	return (
 	        <div className="intPanel center-block text-center">
@@ -45,7 +70,8 @@ const MapOptions = (props) => {
            </div>
 
 
-	)
+		)
+	}
 }
 
 export default MapOptions;
