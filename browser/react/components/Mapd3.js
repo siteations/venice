@@ -67,9 +67,6 @@ class MapSVG extends Component {
         };
         this.mouseLoc=this.mouseLoc.bind(this);
         this.refSize=this.refSize.bind(this);
-        this.opacityAlt=this.opacityAlt.bind(this);
-        this.opacityLayers=this.opacityLayers.bind(this);
-        this.detailLayers=this.detailLayers.bind(this);
         this.zoomIn = this.zoomIn.bind(this);
         this.zoomOut = this.zoomOut.bind(this);
     }
