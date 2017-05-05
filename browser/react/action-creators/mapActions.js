@@ -7,6 +7,7 @@
 //responding to resizing
 export const SET_WINDOW = 'SET_WINDOW';
 export const SET_WINOFFSET = 'SET_WINOFFSET';
+export const SET_PANELOFFSET = 'SET_PANELOFFSET';
 
 //local up to global on mapbar clicks
 export const SET_ZOOM = 'SET_ZOOM';
@@ -36,6 +37,13 @@ export const setWindowOffsets = (windowOff) => {
 	return {
 		type: SET_WINOFFSET,
 		windowOff
+	};
+};
+
+export const setPanelOffset = (panelOff) => {
+	return {
+		type: SET_PANELOFFSET,
+		panelOff
 	};
 };
 
@@ -85,8 +93,9 @@ export const setCenterScreen = (centerScr) => {
 //-------------------reducers && initial info
 
 const initMap = {
-	windowSize: [2048,1024], //width, height
+	windowSize: [1024,512], //width, height
 	windowOffsets: [0,0], //x, y
+	panelOffset:0,
 
 	currZoom: 3, //map zoom value
 	tileSize: 128, //px size
@@ -110,6 +119,10 @@ export const mapReducer = (prevState = initMap, action) => {
 
 	case SET_WINOFFSET:
 		newState.windowOffsets = action.windowOff;
+		break;
+
+	case SET_PANELOFFSET:
+		newState.panelOffset = action.panelOff;
 		break;
 
 	case SET_ZOOM:
@@ -158,6 +171,10 @@ export const updateOffsets = offsets => dispatch => {
 
 export const updateOffsetsResidual = offsets => dispatch => {
   dispatch(setOffsetsR(offsets));
+};
+
+export const updatePanelOffset = offset => dispatch => {
+  dispatch(setPanelOffset(offset));
 };
 
 export const updateTile = tiles => dispatch => {

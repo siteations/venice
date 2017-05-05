@@ -83,6 +83,19 @@ export const getCurrLayers = (layers) => {
 	};
 };
 
+export const addCurrLayers = (layer) => {
+	return {
+		type: ADD_CURR_LAYERS,
+		layers: layer
+	};
+};
+
+export const resetCurrLayers = (layer) => {
+	return {
+		type: RESET_CURR_LAYERS,
+		layers: layer
+	};
+};
 //-------------------reducers && initial info
 const initSites = {
 	allSites:[], //array of objects
@@ -136,6 +149,15 @@ export const siteReducer = (prevState = initSites, action) => {
 		newState.currLayers = action.layers;
 		break;
 
+	case ADD_CURR_LAYERS:
+		newState.currLayers = newState.currLayers.concat(action.layer);
+		break;
+
+	case RESET_CURR_LAYERS:
+		// reset to delete contents...
+		newState.currLayers = action.layer;
+		break;
+
 	default:
 		return prevState;
 	}
@@ -151,7 +173,7 @@ export const loadSites = () => dispatch => {
 	dispatch(getAllSites(cirMain));
 }
 
-export const loadFilteredSites = (layerArr) => dispatch => {
+export const loadFilteredSites = (layerArr) => dispatch => { //
 
 	let selectSites = cirMain.filter(circle =>{
 		return layerArr.indexOf(circle.type)>-1;
@@ -166,7 +188,7 @@ export const loadFiltered = () => dispatch => {
 	dispatch(getFilteredSites());
 }
 
-export const loadLayers = () => dispatch => {
+export const loadLayers = () => dispatch => { //loading all
 
 	let cirLayers = [];
 	cirMain.forEach(circle=>{
@@ -177,6 +199,22 @@ export const loadLayers = () => dispatch => {
 }
 
 
-export const addSelectLayer = (layer) => dispatch => {
-	dispatch(setCurrLayers(layer));
+export const addSelectLayer = (layer) => dispatch => { //add and load
+	dispatch(addCurrLayers(layer));
+}
+
+export const deleteSelectLayer = (layer) => dispatch => { //add and load
+	dispatch(resetCurrLayers(layer));
+}
+
+export const addAllLayers = (layers) => dispatch => { //load all/clear all to select
+	let cirLayers = [];
+
+	if (layers==='add'){
+		cirMain.forEach(circle=>{
+    		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
+		})
+	};
+
+	dispatch(getCurrLayers(cirLayers));
 }

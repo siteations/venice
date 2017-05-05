@@ -19,7 +19,7 @@ import {cirMain, clusterTest, narrativeTest} from '../pre-db/cirTest.js';
 
 
 //---------------------------ACTION for DISPATCH---------------------------
-import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual} from '../action-creators/mapActions.js';
+import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
 
 import {updateColor, updateAnno, updateDetail} from '../action-creators/optionActions.js';
 
@@ -79,10 +79,21 @@ class MapSVG extends Component {
     refSize(){
         let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
         let width = sele.clientWidth;
+        let panelW = (this.props.map.windowSize[0]-width)/2;
+        //if (panelW <= 0){ panelW = 0; } else { panelW *= 0.5; };
+
+        if (width<this.props.map.windowSize[0]){
+            width=this.props.map.windowSize[0];
+        };
         let height = sele.clientHeight;
+        let [xOff, yOff] = this.props.map.xyOffsets;
+        let [xOffR, yOffR] = this.props.map.xyOffsetsR;
 
         this.props.setWindowOffsets([sele.offsetTop, sele.offsetLeft]);
         this.props.setWinSize([width, height]);
+        this.props.setPanelOffset(panelW); // for recenter;
+        // this.props.setOffsetsR([xOff - panelW, yOff]);
+        // this.props.setCurrOffsets([xOffR - panelW, yOffR]);
         this.props.setCenterScreen([width/2, height/2]);
 
         if (this.props.map.xyOffsets[0]===0){
@@ -414,9 +425,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     setWindowOffsets: (offsets) => {
         dispatch(updateWindowOffsets(offsets));
     },
+    setPanelOffset: (offset) => {
+        dispatch(updatePanelOffset(offset));
+    },
     getLayers: () => {
         dispatch(loadSites());
         dispatch(loadLayers());
+        //dispatch(loadFiltered());
     },
   }
 }
