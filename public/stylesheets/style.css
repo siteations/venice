@@ -117,8 +117,18 @@ a:hover {
     100% {width: 30%;}
 }
 
+@keyframes openingPPart{
+    0%   {width: 60%;}
+    100% {width: 30%;}
+}
+
 @keyframes openingPL{
     0%   {width: 0%;}
+    100% {width: 60%;}
+}
+
+@keyframes openingPLPart{
+    0%   {width: 30%;}
     100% {width: 60%;}
 }
 
@@ -359,6 +369,21 @@ a:hover {
     animation-fill-mode: forwards;
 }
 
+.panelOpenPart {
+	border:double 3px #e6e1d3;
+	padding:10px;
+	/*background-color: #e6e1d3;*/
+	background-color: #ffffff;
+	margin-top: 10px;
+	min-height: 652px;
+	width: 60%;
+	overflow: hidden;
+	box-shadow: 0 0 3px #808080;
+	animation-name: openingPPart;
+    animation-duration: .25s;
+    animation-fill-mode: forwards;
+}
+
 .panelLarge {
 	border:double 3px #e6e1d3;
 	padding:10px;
@@ -370,6 +395,21 @@ a:hover {
 	min-height: 652px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingPL;
+    animation-duration: .25s;
+    animation-fill-mode: forwards;
+}
+
+.panelLargePart {
+	border:double 3px #e6e1d3;
+	padding:10px;
+	/*background-color: #e6e1d3;*/
+	background-color: #ffffff;
+	margin-top: 10px;
+	width: 70%;
+	overflow: hidden;
+	min-height: 652px;
+	box-shadow: 0 0 3px #808080;
+	animation-name: openingPLPart;
     animation-duration: .25s;
     animation-fill-mode: forwards;
 }
@@ -411,6 +451,20 @@ a:hover {
 .nIcon:hover {
 	background-color: #ffffff;
 	box-shadow: 0 0 3px #808080;
+}
+
+.bImg {
+	width: 20px;
+	height: 20px;
+}
+
+.rotate {
+	-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+  transform: rotate(180deg);
+}
+
+.opacity25 {
+	opacity: .25;
 }
 
 .bIcon {

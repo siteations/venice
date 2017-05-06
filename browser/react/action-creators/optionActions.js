@@ -7,6 +7,12 @@ export const SET_ANNO_ZOOM = "SET_ANNO_ZOOM";
 export const SET_KEY_LIST = "SET_KEY_LIST";
 export const SET_KEY_FOCUS = "SET_KEY_FOCUS";
 
+export const SET_PANEL_START ='SET_PANEL_START';
+export const SET_PANEL_NONE = 'SET_PANEL_NONE';
+export const SET_PANEL_SMALL = 'SET_PANEL_SMALL';
+export const SET_PANEL_LARGE = 'SET_PANEL_LARGE';
+export const SET_PANEL_MID = 'SET_PANEL_MID';
+
 // //-------------------ACTION CREATORS - vanilla loading of information
 export const setColor = (bool) => {
 	return {
@@ -43,6 +49,40 @@ export const setKeyFocus = (keyId) => {
 	};
 };
 
+export const setPanelStart = (bool) => {
+	return {
+		type: SET_PANEL_START,
+		bool
+	};
+};
+
+export const setPanelNone = (bool) => {
+	return {
+		type: SET_PANEL_NONE,
+		bool
+	};
+};
+
+export const setPanelSmall = (bool) => {
+	return {
+		type: SET_PANEL_SMALL,
+		bool
+	};
+};
+
+export const setPanelLarge = (bool) => {
+	return {
+		type: SET_PANEL_LARGE,
+		bool
+	};
+};
+
+export const setPanelMid = (bool) => {
+	return {
+		type: SET_PANEL_MID,
+		bool
+	};
+};
 
 const initOptions = {
 	color: false,
@@ -50,6 +90,12 @@ const initOptions = {
 	annoZoom: true,
 	currKeyList: [],
 	currKeyFocus: 0, //id of open options
+
+	panelStart: true,
+	panelNone: true,
+	panelSmall: false,
+	panelLarge: false,
+	panelMid: false,
 };
 
 
@@ -78,6 +124,26 @@ export const optionReducer = (prevState = initOptions, action) => {
 		newState.currKeyFocus = action.keyId;
 		break;
 
+	case SET_PANEL_START:
+		newState.panelStart = action.bool;
+		break;
+
+	case SET_PANEL_NONE:
+		newState.panelNone = action.bool;
+		break;
+
+	case SET_PANEL_SMALL:
+		newState.panelSmall = action.bool;
+		break;
+
+	case SET_PANEL_LARGE:
+		newState.panelLarge = action.bool;
+		break;
+
+	case SET_PANEL_MID:
+		newState.panelMid = action.bool;
+		break;
+
 	default:
 		return prevState;
 	}
@@ -101,3 +167,36 @@ export const updateAnno = bool => dispatch => {
 export const updateDetail = bool => dispatch => {
   dispatch(setAnnoZoom(bool));
 };
+
+
+export const updatePanelStart = () => dispatch => { // positive choice
+	dispatch(setPanelStart(false));
+
+};
+
+export const updatePanelNone = () => dispatch => { // positive choice
+  dispatch(setPanelNone(true));
+  dispatch(setPanelSmall(false));
+  dispatch(setPanelLarge(false));
+  dispatch(setPanelMid(false));
+};
+
+export const updatePanelSmall = () => dispatch => {
+  dispatch(setPanelNone(false));
+  dispatch(setPanelSmall(true));
+  dispatch(setPanelLarge(false));
+  dispatch(setPanelMid(true));
+};
+
+export const updatePanelLarge = () => dispatch => {
+    dispatch(setPanelNone(false));
+  dispatch(setPanelSmall(false));
+  dispatch(setPanelLarge(true));
+};
+
+export const updatePanelMid = () => dispatch =>{
+	dispatch(setPanelNone(false));
+  dispatch(setPanelSmall(true));
+  dispatch(setPanelLarge(false));
+	dispatch(setPanelMid(false));
+}

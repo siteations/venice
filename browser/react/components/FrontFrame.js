@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
+import { render } from 'react-dom';
+import { connect } from 'react-redux';
+
 import Header from './Header.js';
 import Footer from './Footer.js';
 import MapBar from './MapBar.js';
+import MapSVG from './Mapd3.js';
+
 import {Preload} from 'react-preload';
 import {tilepreload} from '../plug-ins/rawTiles.js';
-//import Maptest from './Map.js';
-import MapSVG from './Mapd3.js';
-//import Panel from './Panel.js';
-//connect later?
+
 
 var images = tilepreload();
 //console.log(images);
@@ -19,9 +21,6 @@ class Frame extends Component {
 		super(props);
 		this.state= {
 			start: true,
-			full: false,
-			panel: false,
-			panelLarge : false,
 			intro: false,
 			geo: false,
 			button: 'navigate',
@@ -32,7 +31,6 @@ class Frame extends Component {
 			// need to set up redux and link layers together...
 		};
 		this.hoverName=this.hoverName.bind(this);
-		this.selectName=this.selectName.bind(this);
 		this.nav=this.nav.bind(this);
 	}
 
@@ -54,42 +52,6 @@ class Frame extends Component {
 		}
 	}
 
-	selectName(e){ //rework local for all buttons to work with multiple selected
-		e.preventDefault();
-		let val=e.target.attributes.value.value;
-		this.setState({button: val});
-		//if layer, add to layers series...
-		let arr= this.state.selected;
-		arr=arr.concat(val);
-		this.setState({selected: arr});
-		this.setState({select: true});
-
-		//open and close sides
-		if (val==='panel' && (this.state.start===true || this.state.full===true)){
-			this.setState({full: false});
-			this.setState({panel: true});
-			this.setState({panelLarge: false});
-			this.setState({start: false});
-		} else if (val==='panel' && this.state.panel===true){
-			this.setState({full: true});
-			this.setState({panelLarge: false});
-			this.setState({panel: false});
-			this.setState({start: false});
-		}
-
-		if (val==='panel large' && (this.state.start===true || this.state.full===true || this.state.panel=== true)){
-			this.setState({full: false});
-			this.setState({panel: false });
-			this.setState({panelLarge: true});
-			this.setState({start: false});
-		} else if (val==='panel large' && this.state.panelLarge===true){
-			this.setState({full: true});
-			this.setState({panelLarge: false});
-			this.setState({panel: false});
-			this.setState({start: false});
-		}
-	}
-
 
 	render(){
 		//full for conditional rendering of side panel
@@ -100,38 +62,56 @@ class Frame extends Component {
 			        <div className="row">
 			        <div id="container">
 			        </div>
-			        {this.state.start &&
+			        {this.props.options.panelNone && this.props.options.panelStart &&
 			        	<div className="flex between">
 				        	<MapSVG baseClass="mFullO mainMaps" />
-				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={false}/>
+				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
 				        	<div className="panelClose">
 				        	</div>
 			        	</div>
 			        }
-			        {this.state.full &&
+			        {this.props.options.panelNone &&
 			        	<div className="flex between">
 				        	<MapSVG baseClass="mFull mainMaps" />
-				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={false}/>
+				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
 				        	<div className="panelClose">
 				        	</div>
 			        	</div>
 			        }
 
-			        {this.state.panel &&
+			        {this.props.options.panelSmall && this.props.options.panelMid &&
 			        	<div className="flex between">
 				        	<MapSVG baseClass="mPart mainMaps" />
-				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} open={true}/>
+				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
 				        	<div className="panelOpen">
-				        		panel here
+				        		panel small here
 				        	</div>
 			        	</div>
 			        }
-			        {this.state.panelLarge &&
+			        {this.props.options.panelSmall && !this.props.options.panelMid &&
+			        	<div className="flex between">
+				        	<MapSVG baseClass="mPart mainMaps" />
+				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
+				        	<div className="panelOpenPart">
+				        		panel small here
+				        	</div>
+			        	</div>
+			        }
+			        {this.props.options.panelLarge && this.props.options.panelMid &&
 			        	<div className="flex between">
 				        	<MapSVG baseClass="mQuarter mainMaps" />
-				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} click={this.selectName} large={true}/>
+				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
+				        	<div className="panelLargePart">
+				        		panel large here
+				        	</div>
+			        	</div>
+			        }
+			        {this.props.options.panelLarge && !this.props.options.panelMid &&
+			        	<div className="flex between">
+				        	<MapSVG baseClass="mQuarter mainMaps" />
+				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
 				        	<div className="panelLarge">
-				        		panel here
+				        		panel large here
 				        	</div>
 			        	</div>
 			        }
@@ -142,4 +122,23 @@ class Frame extends Component {
 	}
 }
 
-export default Frame;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    map: state.map,
+    options: state.options,
+    sites: state.sites,
+    }
+}
+
+//setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+
+  }
+}
+
+const FrontFrame = connect(mapStateToProps, mapDispatchToProps)(Frame);
+
+
+export default FrontFrame;

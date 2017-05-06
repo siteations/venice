@@ -21,9 +21,9 @@ import {cirMain, clusterTest, narrativeTest} from '../pre-db/cirTest.js';
 //---------------------------ACTION for DISPATCH---------------------------
 import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
 
-import {updateColor, updateAnno, updateDetail} from '../action-creators/optionActions.js';
+import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarge} from '../action-creators/optionActions.js';
 
-import {loadLayers, loadSites} from '../action-creators/siteActions.js';
+import {loadLayers, loadSites, addAllLayers } from '../action-creators/siteActions.js';
 
 
 
@@ -73,7 +73,6 @@ class MapSVG extends Component {
         window.addEventListener("resize", this.refSize);
         this.refSize();
         this.props.getLayers();
-
     }
 
     refSize(){
@@ -105,7 +104,7 @@ class MapSVG extends Component {
     }
 
     mouseLoc(e) {
-    	e.preventDefault;
+    	e.preventDefault();
 
     	let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
     	let mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
@@ -119,7 +118,7 @@ class MapSVG extends Component {
     }
 
     drag(e) {
-    	e.preventDefault;
+    	e.preventDefault();
 
     	let [lastX, lastY] = this.props.map.xyOffsetsR;
     	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
@@ -142,7 +141,7 @@ class MapSVG extends Component {
     }
 
     zoomScroll(e) {
-    	e.preventDefault;
+    	e.preventDefault();
     	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
     	var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
     	/*
@@ -177,7 +176,7 @@ class MapSVG extends Component {
     }
 
     zoom(e, type){
-        e.preventDefault;
+        e.preventDefault();
         let multiplier;
         if (type==='in'){
             multiplier=2;
@@ -207,7 +206,7 @@ class MapSVG extends Component {
     }
 
     zoomTo(e,site){ // rework to parallel basic scroll zoom...
-        e.preventDefault;
+        e.preventDefault();
         if (site.length===2){ //double click on circle with x,y array center passed in
             var [mouseX, mouseY] = site; //in scaled screen coordinates
 
@@ -235,11 +234,12 @@ class MapSVG extends Component {
     }
 
     flyTo(e){
-        e.preventDefault;
+        e.preventDefault();
+
     }
 
     showLabel(e){
-    	e.preventDefault;
+    	e.preventDefault();
     	let name = e.target.attributes.value.value.split('.');
     	this.setState({labelT:name[0], labelS: name[1]});
     }
@@ -249,19 +249,27 @@ class MapSVG extends Component {
     	this.setState({labelT:'', labelS: ''});
     }
 
+    selectShowPanel(e,site){
+        e.preventDefault;
+        this.zoomTo(e,site);
+        if (this.props.options.panelNone){
+            this.props.panelSmall();
+        };
+        //more mouse elements here...
+
+    }
+
+
     render(){
 
-        console.log('store to props', this.props.sites);
+        //console.log('store to props', this.props.sites);
 
     	const tiles = tilingRaw(this.props.map.currZoom, this.props.map.tileSize, [this.props.map.windowSize[0], this.props.map.windowSize[1]], this.props.map.xyOffsets[0], this.props.map.xyOffsets[1] );
     	const percent = tiles[0].percent;
 
+
     	let cirLayers = this.props.sites.allLayers;
-        //["ritual", "monastery", "convent", "bascilica", "non-catholic", "plague", "parish"]
-        //["monastery", "convent", "non-catholic"]
-
         let cirMain = this.props.sites.allSites;
-
 
     	let cirNew = cirMain.map(circle=>{
     		let newCir = Object.assign({},circle);
@@ -270,7 +278,7 @@ class MapSVG extends Component {
 	    		newCir.r = circle.r*percent;
                 return newCir;
             })
-        //.filter(circle=> (this.props.sites.layers.indexOf(circle.type)>-1));
+        .filter(circle => (this.props.sites.currLayers.indexOf(circle.type)>-1));
 
         // 3) brainstorm a sample of overlay circles - each triggering panel interactions
 
@@ -361,7 +369,7 @@ class MapSVG extends Component {
 	   					cirNew.map(d=>{
                             //strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2}
 	   						return (
-	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} />
+	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} onClick={e=>this.selectShowPanel(e,[d.cx, d.cy])} />
 	   						    )
 	   					})
 	   				}
@@ -431,7 +439,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     getLayers: () => {
         dispatch(loadSites());
         dispatch(loadLayers());
-        //dispatch(loadFiltered());
+        dispatch(addAllLayers('add'));
+    },
+    panelSmall: () => {
+      dispatch(updatePanelSmall());
+    },
+    panelLarge: () => {
+      dispatch(updatePanelLarge());
     },
   }
 }

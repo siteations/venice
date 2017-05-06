@@ -18,6 +18,8 @@ export const GET_CURR_IMGS = 'GET_CURR_IMGS';
 //layers all & selected for filteration
 export const GET_All_LAYERS= 'GET_All_LAYERS';
 export const GET_CURR_LAYERS= 'GET_CURR_LAYERS';
+export const ADD_CURR_LAYERS='ADD_CURR_LAYERS';
+export const RESET_CURR_LAYERS='RESET_CURR_LAYERS';
 
 //-------------------ACTION CREATORS - vanilla loading of information
 export const getAllSites = (sites) => {
@@ -86,14 +88,14 @@ export const getCurrLayers = (layers) => {
 export const addCurrLayers = (layer) => {
 	return {
 		type: ADD_CURR_LAYERS,
-		layers: layer
+		layer: layer
 	};
 };
 
 export const resetCurrLayers = (layer) => {
 	return {
 		type: RESET_CURR_LAYERS,
-		layers: layer
+		layer: layer
 	};
 };
 //-------------------reducers && initial info
@@ -150,12 +152,18 @@ export const siteReducer = (prevState = initSites, action) => {
 		break;
 
 	case ADD_CURR_LAYERS:
-		newState.currLayers = newState.currLayers.concat(action.layer);
+		let add=action.layer.split(', ');
+		let array = newState.currLayers.concat(add);
+		newState.currLayers = array;
 		break;
 
 	case RESET_CURR_LAYERS:
-		// reset to delete contents...
-		newState.currLayers = action.layer;
+		let arr = newState.currLayers;
+		let layers = action.layer.split(', ');
+		layers.forEach(layer=>{
+			arr.splice(arr.indexOf(layer),1);
+		})
+		newState.currLayers = arr;
 		break;
 
 	default:
