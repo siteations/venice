@@ -10,6 +10,8 @@ import MapSVG from './Mapd3.js';
 import {Preload} from 'react-preload';
 import {tilepreload} from '../plug-ins/rawTiles.js';
 
+import {loadLayers, loadSites, addAllLayers, loadFiltered } from '../action-creators/siteActions.js';
+
 
 var images = tilepreload();
 //console.log(images);
@@ -33,6 +35,10 @@ class Frame extends Component {
 		this.hoverName=this.hoverName.bind(this);
 		this.nav=this.nav.bind(this);
 	}
+
+	componentDidMount() {
+    this.props.getLayers();
+  }
 
 	hoverName(e){
 		e.preventDefault();
@@ -134,6 +140,11 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+  	getLayers: () => {
+        dispatch(loadSites());
+        dispatch(loadLayers());
+        dispatch(addAllLayers('add'));
+    },
 
   }
 }

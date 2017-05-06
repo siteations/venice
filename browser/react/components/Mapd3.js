@@ -23,7 +23,7 @@ import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen,
 
 import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarge} from '../action-creators/optionActions.js';
 
-import {loadLayers, loadSites, addAllLayers } from '../action-creators/siteActions.js';
+import {loadLayers, loadSites, addAllLayers, loadFiltered } from '../action-creators/siteActions.js';
 
 
 
@@ -72,7 +72,7 @@ class MapSVG extends Component {
     componentDidMount() {
         window.addEventListener("resize", this.refSize);
         this.refSize();
-        this.props.getLayers();
+        this.props.getLayers(this.props.sites.currLayers);
     }
 
     refSize(){
@@ -369,7 +369,7 @@ class MapSVG extends Component {
 	   					cirNew.map(d=>{
                             //strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2}
 	   						return (
-	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} onClick={e=>this.selectShowPanel(e,[d.cx, d.cy])} />
+	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} onDoubleClick={e=>this.selectShowPanel(e,[d.cx, d.cy])} />
 	   						    )
 	   					})
 	   				}
@@ -436,10 +436,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     setPanelOffset: (offset) => {
         dispatch(updatePanelOffset(offset));
     },
-    getLayers: () => {
+    getLayers: (layers) => {
         dispatch(loadSites());
         dispatch(loadLayers());
-        dispatch(addAllLayers('add'));
+        dispatch(loadFiltered(layers));
     },
     panelSmall: () => {
       dispatch(updatePanelSmall());

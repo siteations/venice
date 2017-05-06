@@ -190,10 +190,10 @@ export const loadFilteredSites = (layerArr) => dispatch => { //
 	dispatch(getFilteredSites(selectSites));
 }
 
-export const loadFiltered = () => dispatch => {
+export const loadFiltered = (layers) => dispatch => {
 	//set this up grab all on initial mount, but then work with addSelect below to grab pieces at a time...
 
-	dispatch(getFilteredSites());
+	dispatch(getCurrLayers(layers));
 }
 
 export const loadLayers = () => dispatch => { //loading all

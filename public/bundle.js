@@ -10081,11 +10081,11 @@ var loadFilteredSites = exports.loadFilteredSites = function loadFilteredSites(l
 	};
 };
 
-var loadFiltered = exports.loadFiltered = function loadFiltered() {
+var loadFiltered = exports.loadFiltered = function loadFiltered(layers) {
 	return function (dispatch) {
 		//set this up grab all on initial mount, but then work with addSelect below to grab pieces at a time...
 
-		dispatch(getFilteredSites());
+		dispatch(getCurrLayers(layers));
 	};
 };
 
@@ -45511,6 +45511,8 @@ var _reactPreload = __webpack_require__(608);
 
 var _rawTiles = __webpack_require__(165);
 
+var _siteActions = __webpack_require__(100);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45550,6 +45552,11 @@ var Frame = function (_Component) {
 	}
 
 	_createClass(Frame, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			this.props.getLayers();
+		}
+	}, {
 		key: 'hoverName',
 		value: function hoverName(e) {
 			e.preventDefault();
@@ -45659,7 +45666,14 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 //setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	return {};
+	return {
+		getLayers: function getLayers() {
+			dispatch((0, _siteActions.loadSites)());
+			dispatch((0, _siteActions.loadLayers)());
+			dispatch((0, _siteActions.addAllLayers)('add'));
+		}
+
+	};
 };
 
 var FrontFrame = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Frame);
@@ -46251,7 +46265,7 @@ var MapSVG = function (_Component) {
         value: function componentDidMount() {
             window.addEventListener("resize", this.refSize);
             this.refSize();
-            this.props.getLayers();
+            this.props.getLayers(this.props.sites.currLayers);
         }
     }, {
         key: 'refSize',
@@ -46619,7 +46633,7 @@ var MapSVG = function (_Component) {
                                         return _this2.showLabel(e);
                                     }, onMouseOut: function onMouseOut(e) {
                                         return _this2.hideLabel(e);
-                                    }, onClick: function onClick(e) {
+                                    }, onDoubleClick: function onDoubleClick(e) {
                                         return _this2.selectShowPanel(e, [d.cx, d.cy]);
                                     } });
                             }),
@@ -46691,10 +46705,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
         setPanelOffset: function setPanelOffset(offset) {
             dispatch((0, _mapActions.updatePanelOffset)(offset));
         },
-        getLayers: function getLayers() {
+        getLayers: function getLayers(layers) {
             dispatch((0, _siteActions.loadSites)());
             dispatch((0, _siteActions.loadLayers)());
-            dispatch((0, _siteActions.addAllLayers)('add'));
+            dispatch((0, _siteActions.loadFiltered)(layers));
         },
         panelSmall: function panelSmall() {
             dispatch((0, _optionActions.updatePanelSmall)());
