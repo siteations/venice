@@ -215,9 +215,9 @@ class MapSVG extends Component {
             var [mouseX, mouseY] = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop]; //in scaled screen coordinates
         }
 
-        //rework here
+        //rework here to tweak panel offset...
         let curX = (mouseX+this.props.map.xyOffsets[0]), curY = (mouseY+this.props.map.xyOffsets[1]); //location on map
-        let resX = curX*2, resY = curY*2; // zoom in one level
+        let resX = curX*2+this.props.map.panelOffset, resY = curY*2-this.props.map.windowOffsets[1]-this.props.map.windowSize[1]/4; // zoom in one level
         let newOx = resX-this.props.map.windowSize[0]/2, newOy = resY-this.props.map.windowSize[1]/2;
 
         //back to basics here
