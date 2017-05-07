@@ -20,6 +20,7 @@ export const GET_All_LAYERS= 'GET_All_LAYERS';
 export const GET_CURR_LAYERS= 'GET_CURR_LAYERS';
 export const ADD_CURR_LAYERS='ADD_CURR_LAYERS';
 export const RESET_CURR_LAYERS='RESET_CURR_LAYERS';
+export const SET_HOVER_LAYER='SET_HOVER_LAYER';
 
 //-------------------ACTION CREATORS - vanilla loading of information
 export const getAllSites = (sites) => {
@@ -98,10 +99,16 @@ export const resetCurrLayers = (layer) => {
 		layer: layer
 	};
 };
+
+export const addHoverLayer = (layer) => {
+	return {
+		type: SET_HOVER_LAYER,
+		layer: layer
+	};
+};
 //-------------------reducers && initial info
 const initSites = {
 	allSites:[], //array of objects
-	filteredSites:[], // array filtered
 
 	currSite: {}, //row of data
 	currSiteZoom: [], //secondary object arrays
@@ -111,6 +118,7 @@ const initSites = {
 
 	allLayers:[], //arr of strings
 	currLayers: [], //arr of strings
+	hoverLayer: '',
 
 };
 
@@ -166,6 +174,10 @@ export const siteReducer = (prevState = initSites, action) => {
 		newState.currLayers = arr;
 		break;
 
+	case SET_HOVER_LAYER:
+		newState.hoverLayer = action.layer;
+		break;
+
 	default:
 		return prevState;
 	}
@@ -206,6 +218,9 @@ export const loadLayers = () => dispatch => { //loading all
 	dispatch(getAllLayers(cirLayers));
 }
 
+export const addHoverSite = (layer) => dispatch =>{
+	dispatch(addHoverLayer(layer));
+}
 
 export const addSelectLayer = (layer) => dispatch => { //add and load
 	dispatch(addCurrLayers(layer));

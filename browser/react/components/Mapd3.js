@@ -13,6 +13,7 @@ import { Toggle, Slider, Chip } from 'material-ui';
 //import { Map, TileLayer, ImageOverlay } from 'react-leaflet';
 import tilingRaw, { scaleOps } from '../plug-ins/rawTiles.js';
 import MapOptions from './MapOptions.js';
+import LayersOptions from './LayersOptions.js';
 
 //---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
 import {cirMain, clusterTest, narrativeTest} from '../pre-db/cirTest.js';
@@ -390,6 +391,7 @@ class MapSVG extends Component {
 	    	   </svg>
     	   </div>
            <MapOptions actions={{zoom: this.zoom }} />
+           {/*<LayersOptions />*/}
     	 </div>
 
     	)

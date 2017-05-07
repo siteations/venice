@@ -5,7 +5,7 @@ import IconButton from 'material-ui/IconButton';
 
 import {updatePanelNone, updatePanelSmall, updatePanelLarge, updatePanelStart, updatePanelMid} from '../action-creators/optionActions.js';
 //connect later?
-import {addSelectLayer, deleteSelectLayer, addAllLayers} from '../action-creators/siteActions.js';
+import {addSelectLayer, deleteSelectLayer, addAllLayers, addHoverSite} from '../action-creators/siteActions.js';
 
 //
 
@@ -35,7 +35,22 @@ class MapBar extends Component{
 		super(props);
 		this.state={};
 		this.layerPanel= this.layerPanel.bind(this);
+		this.layerOver =this.layerOver.bind(this);
+		this.layerOut = this.layerOut.bind(this);
 
+	}
+
+	layerOver(e){
+		e.preventDefault();
+		let val=e.target.attributes.value.value;
+		if (val !=='navigate'){
+			this.props.setHoverLabel(val);
+		}
+	}
+
+	layerOut(e){
+		e.preventDefault();
+		this.props.setHoverLabel('');
 	}
 
 	layerPanel(e){
@@ -82,7 +97,6 @@ class MapBar extends Component{
 	render() {
 			return (
 		        	<div className="mtypeFull flexcol center">
-		        		<p className="sButtons text-center">{this.props.text}</p>
 		        		{mapButtons.map((each,i)=>{
 
 		        			let imgClass='bImg';
@@ -96,7 +110,7 @@ class MapBar extends Component{
 		        			};
 
 		        			return (
-										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.props.hover} onMouseOut={this.props.out} onClick={this.layerPanel}>
+										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onClick={this.layerPanel}>
 											{each.src !== ' ' &&
 												<img src={each.src} className={imgClass} value={each.v} />
 											}
@@ -145,6 +159,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     deleteSelectOne: (layer) => {
         dispatch(deleteSelectLayer(layer));
     },
+    setHoverLabel: (layer) => {
+    	dispatch(addHoverSite(layer));
+    }
 
   }
 }
