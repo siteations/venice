@@ -6,28 +6,28 @@
 
 ## Development Team
 
-**Meg Studer** - of [Siteations Studios](www.siteations.com)
+*Meg Studer* - of [Siteations Studios](www.siteations.com)
 
 ## Extended Curatorial/Research Team members @ [Newberry](https://www.newberry.org/staffdepartment-directory)
 
 #### Exhibitions and Major Projects at the Newberry
-**Diane Dillion** - Director 
-**Anne Champagne** - Program Assistant
-**Christopher D. Fletcher** - Mellon Major Project Fellow
+*Diane Dillion* - Director,  
+*Anne Champagne* - Program Assistant, 
+*Christopher D. Fletcher* - Mellon Major Project Fellow
 
 #### Northwestern University 
-**Ed Muir** - Clarence L. Ver Steeg Professor of History and Italian
+*Ed Muir* - Clarence L. Ver Steeg Professor of History and Italian
 
 #### Hermon Dunlap Smith Center for the History of Cartography at the Newberry
-**James Ackerman** - Director
+*James Ackerman* - Director
 
 #### Center for Renaissance Studies at the Newberry
-**Lia Markey** - Director
+*Lia Markey* - Director
 
 #### Digital Initiatives and IT at the Newberry
-**Jennifer Thom** - Director of Digital Initiative
-**Jennifer Wolfe** - Digital Initiatives Manager 
-**Drin Gyuk** - Director of IT
+*Jennifer Thom* - Director of Digital Initiative,
+*Jennifer Wolfe* - Digital Initiatives Manager, 
+*Drin Gyuk* - Director of IT,
 
 
 # Core Features
