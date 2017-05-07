@@ -56,7 +56,7 @@ to come
 + I will likely clean and refine this react-tiling mechanism for independent adoption (and npm installation) in the fall of 2017. It's not for general mapping projects, but specific DH/mixed-artifact dives; because some projects don't need to deal with geographic projection and, as a developer, it's a waste of time for all of us to re-build skeletal react adaptations and their plug-ins when tiling is pretty easy. 
 + The worst part of mapping is making your own tiles - I'll be posting a tutorial on some older-school strategies for tile development ([gdal](http://www.gdal.org/), [imagemagick](https://www.imagemagick.org/script/index.php), and [processing](https://processing.org/)) and 'quick start' instruction on installing/running those mechanisms. As a designer, I work in Illustrator when dealing with unprojected images, but anyone could develop a similar workflow for making/exporting custom svg in [Inkscape](https://inkscape.org/en/).
 #### Back End 
-+ Due to Newberry Library's hosting set-up (a version on CentOS 6), the back-end is set up to work with MySQL 5.5... (i.e. an older version), be forewarned. Any revision of the code for independent use will simply include sample json/csv data and the ability to read from files vs. api calls.
++ Due to Newberry Library's hosting set-up (a version on CentOS 6), the back-end is set up to work with MySQL 5.5... (i.e. an older version). Any revision of the code for independent use will simply include sample json/csv data and the ability to read from files vs. generic api calls.
 
 # Under Active Construction! 
 
