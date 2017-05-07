@@ -50,7 +50,7 @@ class MapBar extends Component{
 
 	layerOut(e){
 		e.preventDefault();
-		this.props.setHoverLabel('');
+		this.props.setHoverLabel(' ');
 	}
 
 	layerPanel(e){

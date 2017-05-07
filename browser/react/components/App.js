@@ -6,6 +6,9 @@ import {deepOrange400, deepOrange600, deepOrange800, deepOrange900, brown800, bl
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+injectTapEventPlugin();
 //--------add actions here------------
 
 

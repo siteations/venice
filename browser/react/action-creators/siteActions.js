@@ -118,7 +118,7 @@ const initSites = {
 
 	allLayers:[], //arr of strings
 	currLayers: [], //arr of strings
-	hoverLayer: '',
+	hoverLayer: ' ',
 
 };
 
