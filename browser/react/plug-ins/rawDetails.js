@@ -10,8 +10,10 @@ so question becomes whether to cluster in a particular way
 
 export const spacingFrame = (windowSize, dataCircle, allDetails) => {
 	let clipDetails=[];
+	let details=[];
 
-	var details = allDetails.filter(detail => {
+	if (dataCircle && dataCircle.clusterId){
+	details = allDetails.filter(detail => {
 		return detail.clusterId = dataCircle.clusterId;
 	})
 
@@ -46,6 +48,7 @@ export const spacingFrame = (windowSize, dataCircle, allDetails) => {
 		clipDetails.push(clip);
 
 	})
+	}
 
 	return {clipDetails, details};
 }

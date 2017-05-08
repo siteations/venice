@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 //---------------------------MAP OPTIONS & COMPONENTS---------------------------
 import { tiling, scaleOps, sitesFiltered } from '../plug-ins/rawTiles.js';
+import { spacingFrame } from '../plug-ins/rawDetails.js';
 import { ClipTiles, BackgroundTiles, BackgroundMask, Underlay } from './TileVariants.js';
 import DetailOver from './AnnoVariants.js';
 import MapOptions from './MapOptions.js';
@@ -18,7 +19,7 @@ import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen,
 
 import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarge} from '../action-creators/optionActions.js';
 
-import {loadLayers, loadSites, addAllLayers, loadFiltered } from '../action-creators/siteActions.js';
+import {loadLayers, loadSites, addAllLayers, loadFiltered, getDetailsNarratives } from '../action-creators/siteActions.js';
 
 
 class MapSVG extends Component {
@@ -31,6 +32,7 @@ class MapSVG extends Component {
         	mousePos: [0,0],
             drag: '',
             trig: false,
+            labelClick: false,
             labelT:'',
             labelS:'',
 
@@ -48,6 +50,7 @@ class MapSVG extends Component {
         window.addEventListener("resize", this.refSize);
         this.refSize();
         this.props.getLayers(this.props.sites.currLayers);
+        this.props.getAllDetailsNarratives();
     }
 
     refSize(){
@@ -215,7 +218,19 @@ class MapSVG extends Component {
 
     hideLabel(e){
     	e.preventDefault;
+        if (this.state.labelClick===false){
     	this.setState({labelT:'', labelS: ''});
+        }
+    }
+
+    setLabel(e){
+        e.preventDefault;
+        //if (this.state.labelClick===false){
+        let name = e.target.attributes.value.value.split('.');
+            this.setState({labelT:name[0], labelS: name[1], labelClick: true});
+        //} else {
+            //this.setState({labelT:'', labelS: '', labelClick: false});
+        //}
     }
 
     selectShowPanel(e,site){
@@ -224,6 +239,10 @@ class MapSVG extends Component {
         if (this.props.options.panelNone){
             this.props.panelSmall();
         };
+
+        let name = e.target.attributes.value.value.split('.');
+        this.setState({labelT:name[0], labelS: name[1], labelClick: true});
+
         //more mouse elements here...
 
     }
@@ -235,6 +254,11 @@ class MapSVG extends Component {
 
     	const tiles = tiling(this.props.map.currZoom, this.props.map.tileSize, this.props.map.windowSize, this.props.map.xyOffsets);
         const cirNew = sitesFiltered(this.props.map.xyOffsets, this.props.sites.allSites, this.props.sites.currLayers, tiles[0].percent);
+
+        const currentSite = cirNew.filter(d=>d.name.split('.')[1] === this.state.labelS);
+        const {clipDetails, details} = spacingFrame(this.props.map.windowSize, currentSite[0], this.props.sites.genDetails);
+
+        console.log('results?', this.props.map.windowSize, currentSite, clipDetails, details);
 
 
     	return (
@@ -252,6 +276,14 @@ class MapSVG extends Component {
 	    	   					cirNew.map(d => <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} />)
 	    	   				}
 					    </clipPath>
+                        {clipDetails.map(d=>{
+                            return (
+                            <clipPath id={d.id}>
+                                <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} />
+                            </clipPath>
+                            )
+                        })
+                        }
 	    	   		</defs>
 
                     <Underlay tSize={this.props.map.tileSize} currZoom={this.props.map.currZoom} xyOffsets={this.props.map.xyOffsets} color={this.props.options.color} />
@@ -272,8 +304,16 @@ class MapSVG extends Component {
                     {this.props.options.anno && cirNew &&
 	   					cirNew.map(d=>{
                             //strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2}
+                            console.log(d.id, currentSite)
+
 	   						return (
-	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} onDoubleClick={e=>this.selectShowPanel(e,[d.cx, d.cy])} />
+	   						   		<circle className="circHL"
+                                    cx={d.cx} cy={d.cy} r={d.r} value={d.name}
+                                    stroke={(currentSite[0] && currentSite[0].id===d.id)? '#ffffff':'#d8d0ba'}
+                                    onMouseOver = {e=>this.showLabel(e)}
+                                    onMouseOut={e=>this.hideLabel(e)}
+                                    onClick={e=>this.setLabel(e)}
+                                    onDoubleClick={e=>this.selectShowPanel(e,[d.cx, d.cy])} />
 
 	   						    )
 	   					})
@@ -284,9 +324,9 @@ class MapSVG extends Component {
 	   						if (d.name.split('.')[1] === this.state.labelS){
 	   						return (
 	   						   			<g>
-			   						   		<text x={d.cx+d.r+14} y={d.cy} className="textHL" fontSize={Math.pow(this.props.map.currZoom,2)+ 6} >{this.state.labelT}</text>
-			   						   		<text x={d.cx+d.r+14} y={d.cy+Math.pow(this.props.map.currZoom,2)*1.25} className="textSHL" fontSize={Math.pow(this.props.map.currZoom,2)} >{this.state.labelS}</text>
-                                            <DetailOver currSite={d} />
+			   						   		<text x={d.cx+d.r+14} y={d.cy} className="textHL" fontSize={21} >{this.state.labelT}</text>
+			   						   		<text x={d.cx+d.r+14} y={d.cy+18} className="textSHL" fontSize={12} >{this.state.labelS}</text>
+                                            <DetailOver clipDetails={clipDetails} details={details} />
 		   						   		</g>
 	   						    )}
 	   					})
@@ -353,6 +393,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     panelLarge: () => {
       dispatch(updatePanelLarge());
+    },
+    getAllDetailsNarratives : () => {
+      dispatch(getDetailsNarratives ());
     },
   }
 }
