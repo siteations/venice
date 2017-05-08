@@ -1,5 +1,5 @@
 //---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
-import { cirMain, clusterTest, narrativeTest} from '../pre-db/cirTest.js';
+import {  cirMain, cirMinor, clusterTest, narrativeTest } from '../pre-db/cirTest.js';
 
 //-------------------CONSTANTS
 
@@ -11,8 +11,13 @@ export const GET_FILTERED_SITES = 'GET_FILTERED_SITES'
 
 export const GET_CURR_SITE = 'GET_CURR_SITE';
 export const GET_CURR_SITEZOOM = 'GET_CURR_SITEZOOM';
+
 export const GET_CURR_DETAIL = 'GET_CURR_DETAIL';
 export const GET_CURR_NARR = 'GET_CURR_NARR';
+
+export const GET_GEN_DETAIL ='GET_GEN_DETAIL';
+export const GET_GEN_NARR ='GET_GEN_NARR';
+
 export const GET_CURR_IMGS = 'GET_CURR_IMGS';
 
 //layers all & selected for filteration
@@ -65,6 +70,20 @@ export const getCurrNarr = (narrative) => {
 	};
 };
 
+export const getGenDetails = (details) => {
+	return {
+		type: GET_GEN_DETAIL,
+		details
+	};
+};
+
+export const getGenNarratives = (narratives) => {
+	return {
+		type: GET_GEN_NARR,
+		narratives
+	};
+};
+
 export const getCurrImgs = (images) => {
 	return {
 		type: GET_CURR_IMGS,
@@ -113,7 +132,9 @@ const initSites = {
 	currSite: {}, //row of data
 	currSiteZoom: [], //secondary object arrays
 	currDetail: 0, //main vs. peripheral detail for panel (id of site)
-	currNarrative: {}, //narratives & captions
+	currNarrative: {},
+	genNarratives: [],
+	genDetails: [], //narratives & captions
 	currImages: {}, //links for panel images
 
 	allLayers:[], //arr of strings
@@ -145,6 +166,14 @@ export const siteReducer = (prevState = initSites, action) => {
 
 	case GET_CURR_NARR:
 		newState.currNarrative = action.narrative;
+		break;
+
+	case GET_GEN_DETAIL:
+		newState.genDetails = action.details;
+		break;
+
+	case GET_GEN_NARR:
+		newState.genNarratives = action.narratives;
 		break;
 
 	case GET_CURR_IMGS:
@@ -220,6 +249,12 @@ export const loadLayers = () => dispatch => { //loading all
 
 export const addHoverSite = (layer) => dispatch =>{
 	dispatch(addHoverLayer(layer));
+}
+
+export const getDetailsNarratives = () => dispatch =>{
+	//rework for axios
+	dispatch(getGenDetails(cirMinor));
+	dispatch(getGenNarratives(narrativeTest));
 }
 
 export const addSelectLayer = (layer) => dispatch => { //add and load

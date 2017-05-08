@@ -286,13 +286,11 @@ class MapSVG extends Component {
 	   						   			<g>
 			   						   		<text x={d.cx+d.r+14} y={d.cy} className="textHL" fontSize={Math.pow(this.props.map.currZoom,2)+ 6} >{this.state.labelT}</text>
 			   						   		<text x={d.cx+d.r+14} y={d.cy+Math.pow(this.props.map.currZoom,2)*1.25} className="textSHL" fontSize={Math.pow(this.props.map.currZoom,2)} >{this.state.labelS}</text>
+                                            <DetailOver currSite={d} />
 		   						   		</g>
 	   						    )}
 	   					})
 	   				}
-                    {this.props.options.anno && cirNew &&
-                        <DetailOver currSite={this.state.labelS} shownSites={cirNew} />
-                    }
 	   				</g>
 	    	   </svg>
     	   </div>

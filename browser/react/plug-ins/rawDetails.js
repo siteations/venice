@@ -8,6 +8,44 @@ so question becomes whether to cluster in a particular way
 	each thumbnail, onClick should load a new panel of info, hover pulls up its short
 */
 
-export const spacingFrame = () => {
-	return null;
+export const spacingFrame = (windowSize, dataCircle, allDetails) => {
+	let clipDetails=[];
+
+	var details = allDetails.filter(detail => {
+		return detail.clusterId = dataCircle.clusterId;
+	})
+
+	let height;
+	(windowSize[1]*.75>dataCircle.r*6)? height=dataCircle.r*6 : height=windowSize[1]*.75 ;
+	if (details.length<2) { height=dataCircle.r*1.5 };
+
+	let offset;  // this will need adjustment
+	(dataCircle.r/2>20)? offset=20 : offset =  dataCircle.r/2;
+	let size = (height-((details.length-1)*offset))/details.length; //to width, height, radius
+	let x= dataCircle.cx-dataCircle.r-offset-size;
+	let cx = dataCircle.cx-dataCircle.r-offset-size/2;
+	let xText = dataCircle.cx-dataCircle.r-offset-size-5;
+
+	let top =dataCircle.cy-height/2;
+
+	details.forEach((detail,i) =>{
+		let clip={};
+
+		detail.x=x;
+		detail.height=size;
+		detail.width=size;
+		detail.textX=xText;
+		detail.y=top+i*(size+offset);
+		detail.clip=`url(#detail${detail.id})`;
+
+		clip.cx=cx;
+		clip.r = size/2;
+		clip.cy=top+size/2+i*(size+offset);
+		clip.id='detail'+detail.id;
+
+		clipDetails.push(clip);
+
+	})
+
+	return {clipDetails, details};
 }
