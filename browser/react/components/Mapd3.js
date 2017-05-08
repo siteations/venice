@@ -2,21 +2,15 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 
-
-//---------------------------MATERIAL UI---------------------------
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import { Toggle, Slider, Chip } from 'material-ui';
-
-
-//---------------------------MAP OPTIONS---------------------------
-//import * as d3 from 'd3';
-//import { Map, TileLayer, ImageOverlay } from 'react-leaflet';
-import tilingRaw, { scaleOps } from '../plug-ins/rawTiles.js';
+//---------------------------MAP OPTIONS & COMPONENTS---------------------------
+import { tiling, scaleOps, sitesFiltered } from '../plug-ins/rawTiles.js';
+import { ClipTiles, BackgroundTiles, BackgroundMask, Underlay } from './TileVariants.js';
+import DetailOver from './AnnoVariants.js';
 import MapOptions from './MapOptions.js';
-import LayersOptions from './LayersOptions.js';
+
 
 //---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
-import {cirMain, clusterTest, narrativeTest} from '../pre-db/cirTest.js';
+import {cirMain} from '../pre-db/cirTest.js';
 
 
 //---------------------------ACTION for DISPATCH---------------------------
@@ -26,26 +20,6 @@ import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarg
 
 import {loadLayers, loadSites, addAllLayers, loadFiltered } from '../action-creators/siteActions.js';
 
-
-
-
-//---------------------------PRE DB / REDUX PLACEHOLDERS---------------------------
-const TonerTiles = '../../../layouts/color/{z}/map_{x}_{y}.jpg';
-const GreyTiles = '../../../layouts/grey/{z}/map_{x}_{y}.jpg';
-
-
-const styles = {
-  root: {
-    display: 'flex',
-    height: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  chip: {
-    margin: 2,
-
-  },
-};
 
 class MapSVG extends Component {
 	constructor(props) {
@@ -126,12 +100,6 @@ class MapSVG extends Component {
     	var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
     	let offX = this.state.mouseDivloc[0] - mousePos[0] + lastX;
     	let offY = this.state.mouseDivloc[1] - mousePos[1] + lastY;
-
-        /*if (this.state.drag === 'start') {
-            this.setState({xyOff: [lastX, lastY], drag:'drag'}) ;
-        }   else if (this.state.drag === 'drag'){
-            this.setState({xyOff: [offX, offY] });
-        }*/
 
     	if (this.state.drag === 'start') {
     		this.setState({drag:'drag'});
@@ -263,30 +231,17 @@ class MapSVG extends Component {
 
     render(){
 
-        //console.log('store to props', this.props.sites);
+        //minor site/tile filtering at the top of the map... as is fairly often updated
 
-    	const tiles = tilingRaw(this.props.map.currZoom, this.props.map.tileSize, [this.props.map.windowSize[0], this.props.map.windowSize[1]], this.props.map.xyOffsets[0], this.props.map.xyOffsets[1] );
-    	const percent = tiles[0].percent;
+    	const tiles = tiling(this.props.map.currZoom, this.props.map.tileSize, this.props.map.windowSize, this.props.map.xyOffsets);
+        const cirNew = sitesFiltered(this.props.map.xyOffsets, this.props.sites.allSites, this.props.sites.currLayers, tiles[0].percent);
 
-
-    	let cirLayers = this.props.sites.allLayers;
-        let cirMain = this.props.sites.allSites;
-
-    	let cirNew = cirMain.map(circle=>{
-    		let newCir = Object.assign({},circle);
-	    		newCir.cx = circle.cx*percent - this.props.map.xyOffsets[0];
-	    		newCir.cy = circle.cy*percent - this.props.map.xyOffsets[1];
-	    		newCir.r = circle.r*percent;
-                return newCir;
-            })
-        .filter(circle => (this.props.sites.currLayers.indexOf(circle.type)>-1));
-
-        // 3) brainstorm a sample of overlay circles - each triggering panel interactions
 
     	return (
 
     	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
     	   <div className="offset" onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} onWheel = {e=>this.zoomScroll(e)} onDoubleClick={e=>this.zoomTo(e, 'none')} >
+
 	    	   <svg width={this.props.map.windowSize[0]} height={this.props.map.windowSize[1]}  >
 	    	   		<defs>
                         <filter id="greyscale">
@@ -294,87 +249,37 @@ class MapSVG extends Component {
                         </filter>
 	    	   			<clipPath id="myClip">
 	    	   				{cirNew &&
-	    	   					cirNew.map(d=>{
-	    	   						return (
-	    	   						   <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} />
-	    	   						        )
-	    	   					})
+	    	   					cirNew.map(d => <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} />)
 	    	   				}
 					    </clipPath>
 	    	   		</defs>
-                    <g className="lowResUnderlay">
-                        <image
-                                    xlinkHref = {`../../../layouts/novacco_color_0804.jpg`}
-                                        width={this.props.map.tileSize*(scaleOps[this.props.map.currZoom][0]+1)}
-                                            height={this.props.map.tileSize*(scaleOps[this.props.map.currZoom][1]+1)}
-                                            x = { -1 * this.props.map.xyOffsets[0] }
-                                            y = { -1 * this.props.map.xyOffsets[1] }
-                                            opacity = {(this.props.options.color===false)? .5 : 1 }
-                                            filter={(this.props.options.color===false)? "url(#greyscale)" : "" }
-                        />
 
-                    </g>
-	    	   		<g className="underlayTiles" >
-	    	   		{tiles &&
-	    	   			tiles.map(tile=>{
+                    <Underlay tSize={this.props.map.tileSize} currZoom={this.props.map.currZoom} xyOffsets={this.props.map.xyOffsets} color={this.props.options.color} />
 
-	    	   				if (tile.xpos<this.props.map.windowSize[0] && tile.xpos+256>=0 && tile.ypos<this.props.map.windowSize[1] && tile.ypos+256>=0 ){ // only show those on screen
-
-	    	   				return (
-                                    <image
-                                    xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
-                                        width={this.props.map.tileSize}
-                                            height={this.props.map.tileSize}
-                                            x = { tile.xpos }
-                                            y = { tile.ypos }
-                                            opacity = {(this.props.options.color===false)? .75 : 1 }
-                                            filter={(this.props.options.color===false)? "url(#greyscale)" : "" }
-                                    />
-                            )}
-                        })
-                    }
-                    {this.props.options.anno && //black masking below
-
-                                    <rect
-                                        width={this.props.map.windowSize[0]}
-                                        height={this.props.map.windowSize[1]}
-                                            x = { 0 }
-                                            y = { 0}
-                                            fill="#21160b"
-                                            opacity={(this.props.options.color===false)? .65 : .35 }
-                                    />
-                    }
-                    {tiles && this.props.options.anno &&
-                        tiles.map(tile=>{
-
-                            if (tile.xpos<this.props.map.windowSize[0] && tile.xpos+256>=0 && tile.ypos<this.props.map.windowSize[1] && tile.ypos+256>=0 ){ // only show those on screen
-
-                            return (
-    	    	   					<image
-    	      						xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
-    			     					width={this.props.map.tileSize}
-    										height={this.props.map.tileSize}
-    										x = { tile.xpos }
-    										y = { tile.ypos }
-    										clipPath = "url(#myClip)"
-                                            opacity={1}
-    	      						/>
-	    	   				        )
-	    	   				}
-	    	   			})
-	    	   		}
+	    	   		<g className="workingTiles" >
+    	    	   		{tiles &&
+                            <BackgroundTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} color={this.props.options.color} />
+                        }
+                        {this.props.options.anno &&
+                            <BackgroundMask wSize={this.props.map.windowSize} color={this.props.options.color} />
+                        }
+                        {tiles && this.props.options.anno &&
+                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="url(#myClip)" />
+    	    	   		}
 	    	   		</g>
-                    {this.props.options.anno &&
+
 	    	   		<g className="allLabelCircs" >
-	    	   		{cirNew &&
+                    {this.props.options.anno && cirNew &&
 	   					cirNew.map(d=>{
                             //strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2}
 	   						return (
 	   						   		<circle className="circHL" cx={d.cx} cy={d.cy} r={d.r} value={d.name} onMouseOver = {e=>this.showLabel(e)} onMouseOut={e=>this.hideLabel(e)} onDoubleClick={e=>this.selectShowPanel(e,[d.cx, d.cy])} />
+
 	   						    )
 	   					})
-	   				}
-	   				{cirNew &&
+                    }
+                    {this.props.options.anno && cirNew &&
+
 	   					cirNew.map(d=>{
 	   						if (d.name.split('.')[1] === this.state.labelS){
 	   						return (
@@ -382,14 +287,16 @@ class MapSVG extends Component {
 			   						   		<text x={d.cx+d.r+14} y={d.cy} className="textHL" fontSize={Math.pow(this.props.map.currZoom,2)+ 6} >{this.state.labelT}</text>
 			   						   		<text x={d.cx+d.r+14} y={d.cy+Math.pow(this.props.map.currZoom,2)*1.25} className="textSHL" fontSize={Math.pow(this.props.map.currZoom,2)} >{this.state.labelS}</text>
 		   						   		</g>
-	   						    )
-	   						}
+	   						    )}
 	   					})
 	   				}
-	   				</g>
+                    {this.props.options.anno && cirNew &&
+                        <DetailOver currSite={this.state.labelS} shownSites={cirNew} />
                     }
+	   				</g>
 	    	   </svg>
     	   </div>
+
            <MapOptions actions={{zoom: this.zoom }} />
            {/*<LayersOptions />*/}
     	 </div>

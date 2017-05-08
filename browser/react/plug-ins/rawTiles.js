@@ -34,10 +34,12 @@ export const tilepreload = function (){
 }
 
 
-const tiling = function(scale, tileSize, boundArr, xOff, yOff) {
+export const tiling = function(scale, tileSize, boundArr, off) {
 
   let wide = boundArr[0];
   let high = boundArr[1];
+  let xOff = off[0];
+  let yOff = off[1];
 
   let tileArr=[];
 
@@ -75,4 +77,18 @@ const tiling = function(scale, tileSize, boundArr, xOff, yOff) {
   return tileArr;
 };
 
-export default tiling;
+
+export const sitesFiltered = (off, sites, currLayers, percent) => {
+
+      let cirNew = sites.map(circle=>{
+        let newCir = Object.assign({},circle);
+          newCir.cx = circle.cx*percent - off[0];
+          newCir.cy = circle.cy*percent - off[1];
+          newCir.r = circle.r*percent;
+                return newCir;
+            })
+        .filter(circle => (currLayers.indexOf(circle.type)>-1));
+
+      return cirNew;
+
+}
