@@ -49,10 +49,10 @@ export const getCurrSite = (site) => {
 	};
 };
 
-export const getCurrSiteZoom = (sites) => {
+export const getCurrSiteZoom = (bool) => {
 	return {
 		type: GET_CURR_SITEZOOM,
-		sites: sites
+		bool
 	};
 };
 
@@ -129,8 +129,8 @@ export const addHoverLayer = (layer) => {
 const initSites = {
 	allSites:[], //array of objects
 
-	currSite: {}, //row of data
-	currSiteZoom: [], //secondary object arrays
+	currSite: 0, //id of site
+	currSiteOn: false, //secondary object arrays
 	currDetail: 0, //main vs. peripheral detail for panel (id of site)
 	currNarrative: {},
 	genNarratives: [],
@@ -157,7 +157,7 @@ export const siteReducer = (prevState = initSites, action) => {
 		break;
 
 	case GET_CURR_SITEZOOM:
-		newState.currSiteZoom = action.sites;
+		newState.currSiteOn = action.bool;
 		break;
 
 	case GET_CURR_DETAIL:
@@ -229,6 +229,14 @@ export const loadFilteredSites = (layerArr) => dispatch => { //
 	})
 	//rework for axios later
 	dispatch(getFilteredSites(selectSites));
+}
+
+export const updateSite = (site)=> dispatch =>{
+	dispatch(getCurrSite(site));
+}
+
+export const overlayDetails = (bool) => dispatch =>{
+	dispatch(getCurrSiteZoom(bool));
 }
 
 export const loadFiltered = (layers) => dispatch => {

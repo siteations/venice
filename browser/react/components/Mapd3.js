@@ -19,7 +19,7 @@ import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen,
 
 import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarge} from '../action-creators/optionActions.js';
 
-import {loadLayers, loadSites, addAllLayers, loadFiltered, getDetailsNarratives } from '../action-creators/siteActions.js';
+import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives } from '../action-creators/siteActions.js';
 
 
 class MapSVG extends Component {
@@ -213,21 +213,25 @@ class MapSVG extends Component {
     showLabel(e){
     	e.preventDefault();
     	let name = e.target.attributes.value.value.split('.');
+        let siteId = e.target.attributes.id.value;
     	this.setState({labelT:name[0], labelS: name[1]});
+        this.props.updateSite(siteId);
+
     }
 
     hideLabel(e){
     	e.preventDefault;
-        if (this.state.labelClick===false){
+        if (this.props.sites.currSiteOn===false){
     	this.setState({labelT:'', labelS: ''});
+        this.props.updateSite(0);
         }
     }
 
     setLabel(e){
         e.preventDefault;
         //if (this.state.labelClick===false){
-        let name = e.target.attributes.value.value.split('.');
-            this.setState({labelT:name[0], labelS: name[1], labelClick: true});
+        this.showLabel(e)
+        this.props.overlayDetails(true);
         //} else {
             //this.setState({labelT:'', labelS: '', labelClick: false});
         //}
@@ -240,8 +244,8 @@ class MapSVG extends Component {
             this.props.panelSmall();
         };
 
-        let name = e.target.attributes.value.value.split('.');
-        this.setState({labelT:name[0], labelS: name[1], labelClick: true});
+        this.showLabel(e)
+        this.props.overlayDetails(true);
 
         //more mouse elements here...
 
@@ -255,10 +259,12 @@ class MapSVG extends Component {
     	const tiles = tiling(this.props.map.currZoom, this.props.map.tileSize, this.props.map.windowSize, this.props.map.xyOffsets);
         const cirNew = sitesFiltered(this.props.map.xyOffsets, this.props.sites.allSites, this.props.sites.currLayers, tiles[0].percent);
 
-        const currentSite = cirNew.filter(d=>d.name.split('.')[1] === this.state.labelS);
-        const {clipDetails, details} = spacingFrame(this.props.map.windowSize, currentSite[0], this.props.sites.genDetails);
+        const currentSite = cirNew.filter(d=>d.id === +this.props.sites.currSite)[0];
 
-        console.log('results?', this.props.map.windowSize, currentSite, clipDetails, details);
+
+        const {clipDetails, details} = spacingFrame(this.props.map.windowSize, currentSite, this.props.sites.genDetails);
+
+        // console.log('results?', this.props.map.windowSize, currentSite, clipDetails, details);
 
 
     	return (
@@ -310,14 +316,14 @@ class MapSVG extends Component {
                     {this.props.options.anno && cirNew &&
 	   					cirNew.map(d=>{
                             //strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2}
-                            console.log(d.id, currentSite)
+                            //console.log(d.id, currentSite)
 
 	   						return (
 	   						   		<circle className="circHL"
-                                    cx={d.cx} cy={d.cy} r={d.r} value={d.name}
-                                    stroke={(currentSite[0] && currentSite[0].id===d.id)? '#ffffff':'#d8d0ba'}
+                                    cx={d.cx} cy={d.cy} r={d.r} value={d.name} id={d.id}
+                                    stroke={(+this.props.sites.currSite === +d.id)? '#ffffff':'#d8d0ba'}
                                     onMouseOver = {e=>this.showLabel(e)}
-                                    onMouseOut={e=>this.hideLabel(e)}
+                                    onMouseOut={''/*e=>this.hideLabel(e)*/}
                                     onClick={e=>this.setLabel(e)}
                                     onDoubleClick={e=>this.selectShowPanel(e,[d.cx, d.cy])} />
 
@@ -327,7 +333,7 @@ class MapSVG extends Component {
                     {this.props.options.anno && cirNew &&
 
 	   					cirNew.map(d=>{
-	   						if (d.name.split('.')[1] === this.state.labelS){
+	   						if (+this.props.sites.currSite === +d.id){
 	   						return (
 	   						   			<g>
 			   						   		<text x={d.cx+d.r+14} y={d.cy} className="textHL" fontSize={21} >{this.state.labelT}</text>
@@ -405,6 +411,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     getAllDetailsNarratives : () => {
       dispatch(getDetailsNarratives ());
     },
+    updateSite: (site) => {
+        dispatch(updateSite(site));
+    },
+    overlayDetails: (bool) => {
+        dispatch(overlayDetails(bool));
+    }
   }
 }
 

@@ -6074,7 +6074,7 @@ module.exports = SyntheticUIEvent;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.addAllLayers = exports.deleteSelectLayer = exports.addSelectLayer = exports.getDetailsNarratives = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.getAllSites = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.GET_CURR_IMGS = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
+exports.addAllLayers = exports.deleteSelectLayer = exports.addSelectLayer = exports.getDetailsNarratives = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.getAllSites = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.GET_CURR_IMGS = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
 
 var _cirTest = __webpack_require__(103);
 
@@ -6126,10 +6126,10 @@ var getCurrSite = exports.getCurrSite = function getCurrSite(site) {
 	};
 };
 
-var getCurrSiteZoom = exports.getCurrSiteZoom = function getCurrSiteZoom(sites) {
+var getCurrSiteZoom = exports.getCurrSiteZoom = function getCurrSiteZoom(bool) {
 	return {
 		type: GET_CURR_SITEZOOM,
-		sites: sites
+		bool: bool
 	};
 };
 
@@ -6206,8 +6206,8 @@ var addHoverLayer = exports.addHoverLayer = function addHoverLayer(layer) {
 var initSites = {
 	allSites: [], //array of objects
 
-	currSite: {}, //row of data
-	currSiteZoom: [], //secondary object arrays
+	currSite: 0, //id of site
+	currSiteOn: false, //secondary object arrays
 	currDetail: 0, //main vs. peripheral detail for panel (id of site)
 	currNarrative: {},
 	genNarratives: [],
@@ -6237,7 +6237,7 @@ var siteReducer = exports.siteReducer = function siteReducer() {
 			break;
 
 		case GET_CURR_SITEZOOM:
-			newState.currSiteZoom = action.sites;
+			newState.currSiteOn = action.bool;
 			break;
 
 		case GET_CURR_DETAIL:
@@ -6312,6 +6312,18 @@ var loadFilteredSites = exports.loadFilteredSites = function loadFilteredSites(l
 		});
 		//rework for axios later
 		dispatch(getFilteredSites(selectSites));
+	};
+};
+
+var updateSite = exports.updateSite = function updateSite(site) {
+	return function (dispatch) {
+		dispatch(getCurrSite(site));
+	};
+};
+
+var overlayDetails = exports.overlayDetails = function overlayDetails(bool) {
+	return function (dispatch) {
+		dispatch(getCurrSiteZoom(bool));
 	};
 };
 
@@ -46485,14 +46497,17 @@ var MapSVG = function (_Component) {
         value: function showLabel(e) {
             e.preventDefault();
             var name = e.target.attributes.value.value.split('.');
+            var siteId = e.target.attributes.id.value;
             this.setState({ labelT: name[0], labelS: name[1] });
+            this.props.updateSite(siteId);
         }
     }, {
         key: 'hideLabel',
         value: function hideLabel(e) {
             e.preventDefault;
-            if (this.state.labelClick === false) {
+            if (this.props.sites.currSiteOn === false) {
                 this.setState({ labelT: '', labelS: '' });
+                this.props.updateSite(0);
             }
         }
     }, {
@@ -46500,8 +46515,8 @@ var MapSVG = function (_Component) {
         value: function setLabel(e) {
             e.preventDefault;
             //if (this.state.labelClick===false){
-            var name = e.target.attributes.value.value.split('.');
-            this.setState({ labelT: name[0], labelS: name[1], labelClick: true });
+            this.showLabel(e);
+            this.props.overlayDetails(true);
             //} else {
             //this.setState({labelT:'', labelS: '', labelClick: false});
             //}
@@ -46515,8 +46530,8 @@ var MapSVG = function (_Component) {
                 this.props.panelSmall();
             };
 
-            var name = e.target.attributes.value.value.split('.');
-            this.setState({ labelT: name[0], labelS: name[1], labelClick: true });
+            this.showLabel(e);
+            this.props.overlayDetails(true);
 
             //more mouse elements here...
         }
@@ -46531,14 +46546,15 @@ var MapSVG = function (_Component) {
             var cirNew = (0, _rawTiles.sitesFiltered)(this.props.map.xyOffsets, this.props.sites.allSites, this.props.sites.currLayers, tiles[0].percent);
 
             var currentSite = cirNew.filter(function (d) {
-                return d.name.split('.')[1] === _this2.state.labelS;
-            });
+                return d.id === +_this2.props.sites.currSite;
+            })[0];
 
-            var _spacingFrame = (0, _rawDetails.spacingFrame)(this.props.map.windowSize, currentSite[0], this.props.sites.genDetails),
+            var _spacingFrame = (0, _rawDetails.spacingFrame)(this.props.map.windowSize, currentSite, this.props.sites.genDetails),
                 clipDetails = _spacingFrame.clipDetails,
                 details = _spacingFrame.details;
 
-            console.log('results?', this.props.map.windowSize, currentSite, clipDetails, details);
+            // console.log('results?', this.props.map.windowSize, currentSite, clipDetails, details);
+
 
             return _react2.default.createElement(
                 'div',
@@ -46602,17 +46618,15 @@ var MapSVG = function (_Component) {
                             { className: 'allLabelCircs' },
                             this.props.options.anno && cirNew && cirNew.map(function (d) {
                                 //strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2}
-                                console.log(d.id, currentSite);
+                                //console.log(d.id, currentSite)
 
                                 return _react2.default.createElement('circle', { className: 'circHL',
-                                    cx: d.cx, cy: d.cy, r: d.r, value: d.name,
-                                    stroke: currentSite[0] && currentSite[0].id === d.id ? '#ffffff' : '#d8d0ba',
+                                    cx: d.cx, cy: d.cy, r: d.r, value: d.name, id: d.id,
+                                    stroke: +_this2.props.sites.currSite === +d.id ? '#ffffff' : '#d8d0ba',
                                     onMouseOver: function onMouseOver(e) {
                                         return _this2.showLabel(e);
                                     },
-                                    onMouseOut: function onMouseOut(e) {
-                                        return _this2.hideLabel(e);
-                                    },
+                                    onMouseOut: '' /*e=>this.hideLabel(e)*/,
                                     onClick: function onClick(e) {
                                         return _this2.setLabel(e);
                                     },
@@ -46621,7 +46635,7 @@ var MapSVG = function (_Component) {
                                     } });
                             }),
                             this.props.options.anno && cirNew && cirNew.map(function (d) {
-                                if (d.name.split('.')[1] === _this2.state.labelS) {
+                                if (+_this2.props.sites.currSite === +d.id) {
                                     return _react2.default.createElement(
                                         'g',
                                         null,
@@ -46702,6 +46716,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
         },
         getAllDetailsNarratives: function getAllDetailsNarratives() {
             dispatch((0, _siteActions.getDetailsNarratives)());
+        },
+        updateSite: function updateSite(site) {
+            dispatch((0, _siteActions.updateSite)(site));
+        },
+        overlayDetails: function overlayDetails(bool) {
+            dispatch((0, _siteActions.overlayDetails)(bool));
         }
     };
 };
