@@ -277,11 +277,17 @@ class MapSVG extends Component {
 	    	   				}
 					    </clipPath>
                         {clipDetails.map(d=>{
+                            // return (
+                            // <clipPath id={d.id}>
+                            //     <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} />
+                            // </clipPath>
+                            // )
                             return (
                             <clipPath id={d.id}>
-                                <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} />
+                                <rect stroke="#000000" x={d.x} y={d.y} rx={d.rx} ry={d.ry} width={d.width} height={d.height} />
                             </clipPath>
                             )
+
                         })
                         }
 	    	   		</defs>
@@ -326,7 +332,9 @@ class MapSVG extends Component {
 	   						   			<g>
 			   						   		<text x={d.cx+d.r+14} y={d.cy} className="textHL" fontSize={21} >{this.state.labelT}</text>
 			   						   		<text x={d.cx+d.r+14} y={d.cy+18} className="textSHL" fontSize={12} >{this.state.labelS}</text>
+                                            {this.props.options.annoZoom &&
                                             <DetailOver clipDetails={clipDetails} details={details} />
+                                            }
 		   						   		</g>
 	   						    )}
 	   					})

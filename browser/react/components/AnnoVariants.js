@@ -27,7 +27,8 @@ const Detail = (props)=>{
   	      		return ( //add in correct syntax here. . .
   	      		<g>
 	    	   				<image xlinkHref={d.srcThumb} x={d.x} y={d.y} width={d.width} height={d.height} clipPath={d.clip} />
-					    		<circle stroke="#ffffff" className="circHL" cx={clipDetails[i].cx} cy={clipDetails[i].cy} r={clipDetails[i].r} />
+					    		{/*<circle stroke="#ffffff" className="circHL" cx={clipDetails[i].cx} cy={clipDetails[i].cy} r={clipDetails[i].r} />*/}
+					    		<rect stroke="#ffffff" className="circHL"  x={clipDetails[i].x} y={clipDetails[i].y} rx={clipDetails[i].rx} ry={clipDetails[i].ry} width={clipDetails[i].width} height={clipDetails[i].height} />
 					    		<text x={d.x-10} y={clipDetails[i].cy} className="textSHLR" fontSize={12} >{d.nameH}</text>
   	      		</g>
   	      		)

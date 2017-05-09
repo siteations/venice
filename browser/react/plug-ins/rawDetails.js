@@ -33,17 +33,19 @@ export const spacingFrame = (windowSize, dataCircle, allDetails) => {
 	details.forEach((detail,i) =>{
 		let clip={};
 
-		detail.x=x;
-		detail.height=size;
-		detail.width=size;
+		detail.x=x, clip.x=x;
+		detail.height=size, clip.height=size;
+		detail.width=size, clip.width=size;
 		detail.textX=xText;
-		detail.y=top+i*(size+offset);
+		detail.y=top+i*(size+offset), clip.y=top+i*(size+offset);
 		detail.clip=`url(#detail${detail.id})`;
 
 		clip.cx=cx;
 		clip.r = size/2;
 		clip.cy=top+size/2+i*(size+offset);
 		clip.id='detail'+detail.id;
+
+		clip.rx = size/4, clip.ry =size/4;
 
 		clipDetails.push(clip);
 
