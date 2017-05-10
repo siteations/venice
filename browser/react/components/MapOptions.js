@@ -7,6 +7,9 @@ import {updateColor, updateAnno, updateDetail} from '../action-creators/optionAc
 //---------------------------MATERIAL UI---------------------------
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Toggle, Slider, Chip } from 'material-ui';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import ActionFavorite from 'material-ui/svg-icons/action/favorite';
+import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 
 const styles = {
   root: {
@@ -71,6 +74,22 @@ class MapOps extends Component {
                     {/*<Slider style={{height: 60}} axis="y-reverse" defaultValue={1} onChange={(e,newValue)=>this.opacityLayers(e,newValue)}/>*/}
                 </div>
                 <h5>local<br/>details</h5>
+                <br/>
+
+                <h5 className="Trenda-Bold">maps</h5>
+                <div style={styles.root} className="center-block">
+                    <Toggle />
+                </div>
+                <h5>split<br/>screen</h5>
+                <form>
+                  <input type="radio" name="name1" checked /><br/>
+                  options<br/>
+                  <input type="radio" name="lastname" /><br/>
+                  coming<br/>
+                  <input type="radio" name="lastname" /><br/>
+                  soon<br/>
+                </form>
+
            </div>
 
 
