@@ -21,6 +21,7 @@ import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarg
 
 import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives } from '../action-creators/siteActions.js';
 
+import { setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
 
 class MapSVG extends Component {
 	constructor(props) {
@@ -41,6 +42,7 @@ class MapSVG extends Component {
         this.refSize=this.refSize.bind(this);
         this.zoom = this.zoom.bind(this);
         this.zoomTo = this.zoomTo.bind(this);
+        this.loadPanel = this.loadPanel.bind(this);
         //this.flyTo
         //this.other
 
@@ -214,15 +216,19 @@ class MapSVG extends Component {
     	e.preventDefault();
     	let name = e.target.attributes.value.value.split('.');
         let siteId = e.target.attributes.id.value;
-    	this.setState({labelT:name[0], labelS: name[1]});
+        this.props.setTitles(name);
         this.props.updateSite(siteId);
+
+        let obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+siteId);
+        this.props.updateNarrative(obj[0]);
+
 
     }
 
     hideLabel(e){
     	e.preventDefault;
         if (this.props.sites.currSiteOn===false){
-    	this.setState({labelT:'', labelS: ''});
+    	this.props.setTitles('', '');
         this.props.updateSite(0);
         }
     }
@@ -237,6 +243,17 @@ class MapSVG extends Component {
         //}
     }
 
+    loadPanel(e, source){
+        e.preventDefault();
+        if (source==='core') {
+
+        } else {
+        let subsiteId = e.target.attributes.id.value;
+        let obj = this.props.sites.genNarratives.filter(narr => +narr.minorId===+subsiteId);
+        this.props.updateNarrative(obj[0]);
+        }
+    }
+
     selectShowPanel(e,site){
         e.preventDefault;
         this.zoomTo(e,site);
@@ -246,6 +263,7 @@ class MapSVG extends Component {
 
         this.showLabel(e)
         this.props.overlayDetails(true);
+        this.loadPanel(e,'core');
 
         //more mouse elements here...
 
@@ -336,10 +354,10 @@ class MapSVG extends Component {
 	   						if (+this.props.sites.currSite === +d.id){
 	   						return (
 	   						   			<g>
-			   						   		<text x={d.cx+d.r+14} y={d.cy} className="textHL" fontSize={21} >{this.state.labelT}</text>
-			   						   		<text x={d.cx+d.r+14} y={d.cy+18} className="textSHL" fontSize={12} >{this.state.labelS}</text>
+			   						   		<text x={d.cx+d.r+14} y={d.cy} className="textHL" fontSize={21} >{this.props.panel.title}</text>
+			   						   		<text x={d.cx+d.r+14} y={d.cy+18} className="textSHL" fontSize={12} >{this.props.panel.subtitle}</text>
                                             {this.props.options.annoZoom &&
-                                            <DetailOver clipDetails={clipDetails} details={details} />
+                                            <DetailOver clipDetails={clipDetails} details={details} action={this.loadPanel} />
                                             }
 		   						   		</g>
 	   						    )}
@@ -363,6 +381,7 @@ const mapStateToProps = (state, ownProps) => {
     map: state.map,
     options: state.options,
     sites: state.sites,
+    panel: state.panel,
     }
 }
 
@@ -416,7 +435,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     overlayDetails: (bool) => {
         dispatch(overlayDetails(bool));
-    }
+    },
+    setTitles: (name) => {
+        dispatch(setTitlesCore(name));
+    },
+    updateNarrative: (obj) => {
+        dispatch(setNarr(obj));
+    },
   }
 }
 

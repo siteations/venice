@@ -372,7 +372,7 @@ a:hover {
 	margin-top: 10px;
 	min-height: 652px;
 	width: 0%;
-	overflow: hidden;
+	overflow: scroll;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingP;
     animation-duration: .25s;
@@ -387,7 +387,7 @@ a:hover {
 	margin-top: 10px;
 	min-height: 652px;
 	width: 60%;
-	overflow: hidden;
+	overflow: scroll;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingPPart;
     animation-duration: .25s;
@@ -401,7 +401,7 @@ a:hover {
 	background-color: #ffffff;
 	margin-top: 10px;
 	width: 70%;
-	overflow: hidden;
+	overflow: scroll;
 	min-height: 652px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingPL;
@@ -416,7 +416,7 @@ a:hover {
 	background-color: #ffffff;
 	margin-top: 10px;
 	width: 70%;
-	overflow: hidden;
+	overflow: scroll;
 	min-height: 652px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingPLPart;

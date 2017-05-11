@@ -6,6 +6,7 @@ import Header from './Header.js';
 import Footer from './Footer.js';
 import MapBar from './MapBar.js';
 import MapSVG from './Mapd3.js';
+import Panel from './Panel.js';
 
 import {Preload} from 'react-preload';
 import {tilepreload} from '../plug-ins/rawTiles.js';
@@ -89,36 +90,28 @@ class Frame extends Component {
 			        	<div className="flex between">
 				        	<MapSVG baseClass="mPart mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<div className="panelOpen">
-				        		panel small here
-				        	</div>
+				        	<Panel baseClass="panelOpen" />
 			        	</div>
 			        }
 			        {this.props.options.panelSmall && !this.props.options.panelMid &&
 			        	<div className="flex between">
 				        	<MapSVG baseClass="mPart mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<div className="panelOpenPart">
-				        		panel small here
-				        	</div>
+				        	<Panel baseClass="panelOpenPart" />
 			        	</div>
 			        }
 			        {this.props.options.panelLarge && this.props.options.panelMid &&
 			        	<div className="flex between">
 				        	<MapSVG baseClass="mQuarter mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<div className="panelLargePart">
-				        		panel large here
-				        	</div>
+				        	<Panel baseClass="panelLargePart" />
 			        	</div>
 			        }
 			        {this.props.options.panelLarge && !this.props.options.panelMid &&
 			        	<div className="flex between">
 				        	<MapSVG baseClass="mQuarter mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<div className="panelLarge">
-				        		panel large here
-				        	</div>
+				        	<Panel baseClass="panelLarge" />
 			        	</div>
 			        }
 			        </div>

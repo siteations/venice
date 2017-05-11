@@ -63,10 +63,10 @@ export const getCurrDetail = (detailId) => {
 	};
 };
 
-export const getCurrNarr = (narrative) => {
+export const getCurrNarr = (id) => {
 	return {
 		type: GET_CURR_NARR,
-		narrative: narrative
+		id
 	};
 };
 
