@@ -64,8 +64,8 @@ class MapOps extends Component {
                 </div>
                 <h5>color</h5>
                 <div style={styles.root}>
-                    <Toggle defaultToggled={true} onToggle={(e,isInputChecked)=>this.opacityLayers(e,isInputChecked)}/>
-                    {/*<Slider style={{height: 60}} axis="y-reverse" defaultValue={1} onChange={(e,newValue)=>this.opacityLayers(e,newValue)}/>*/}
+                    <Toggle defaultToggled={this.props.options.anno} onToggle={(e,isInputChecked)=>this.opacityLayers(e,isInputChecked)}/>
+                    {/* defaultToggled={true} <Slider style={{height: 60}} axis="y-reverse" defaultValue={1} onChange={(e,newValue)=>this.opacityLayers(e,newValue)}/>*/}
                 </div>
                 <h5>layers</h5>
 

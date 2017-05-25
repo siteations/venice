@@ -45577,7 +45577,7 @@ var Detail = function Detail(props) {
   var details = props.details;
   var action = props.action;
 
-  console.log('here ', clipDetails, details, action);
+  //console.log('here ', clipDetails, details, action);
 
   return _react2.default.createElement(
     'g',
@@ -46001,13 +46001,12 @@ var Header = function Header(props) {
       _react2.default.createElement(
         'h4',
         { className: 'BornholmSandvig closerT text-right ' },
-        ' ',
-        props.sites.hoverLayer
+        'Layers Shown:'
       ),
       _react2.default.createElement(
         'p',
         { className: 'closerB text-right' },
-        'layer options for view'
+        ' '
       )
     ),
     _react2.default.createElement(
@@ -46021,7 +46020,7 @@ var Header = function Header(props) {
       _react2.default.createElement(
         'p',
         { className: 'closerB' },
-        'layers active'
+        ' '
       )
     )
   );
@@ -46058,6 +46057,8 @@ var _reactDom = __webpack_require__(15);
 
 var _reactRedux = __webpack_require__(35);
 
+var _reactLightweightTooltip = __webpack_require__(686);
+
 var _IconButton = __webpack_require__(41);
 
 var _IconButton2 = _interopRequireDefault(_IconButton);
@@ -46079,6 +46080,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 //
 
 var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", src: '/img/intro-01.svg' }, { cn: "nIcon flex center middle", v: "all layers", src: "/img/all-layers-01.svg" }, { cn: "nSpc", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "panel", src: "/img/arrow1-01.svg" }, { cn: "nIcon flex center middle", v: "panel large", src: "/img/arrow2-01.svg" }, { cn: "nSpcSm", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "parish churches", src: "/img/parish-01.svg" }, { cn: "nIcon flex center middle", v: "bascilica", src: "/img/bascilica-01.svg" }, { cn: "nIcon flex center middle", v: "plague churches", src: "/img/plague-01.svg" }, { cn: "nIcon flex center middle", v: "monastery, convent", src: "/img/convent-01.svg" }, { cn: "nIcon flex center middle", v: "non-catholic communities", src: "/img/non-catholic-01.svg" }, { cn: "nIcon flex center middle", v: "processions", src: "/img/ritual-01.svg" }, { cn: "nIcon flex center middle", v: "cultural", src: "/img/culture-01.svg" }, { cn: "nIcon flex center middle", v: "symbolic views", src: "/img/maps-01.svg" }, { cn: "nIcon flex center middle", v: "religious prints", src: "/img/books-01.svg" }, { cn: "nIcon flex center middle", v: "religious ephemera", src: "/img/ephemera-01.svg" }, { cn: "nSpcSm", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "bibliography", src: "/img/menu-01.svg" }];
+
+var toolstyles = {
+	wrapper: {
+		cursor: 'pointer'
+	},
+	content: {
+		backgroundColor: '#d8d0ba',
+		color: 'black'
+	},
+	tooltip: {
+		backgroundColor: '#d8d0ba',
+		borderRadius: '10px',
+		position: 'absolute',
+		zIndex: '99',
+		background: '#000',
+		bottom: '-50%',
+		left: '0%',
+		padding: '5px',
+		transform: 'translateX(-105%)'
+	},
+	arrow: {
+		position: 'absolute',
+		width: '0',
+		height: '0',
+		bottom: '25%',
+		left: '103%',
+		marginLeft: '-6px',
+		borderTop: 'solid transparent 8px',
+		borderBottom: 'solid transparent 8px',
+		borderLeft: 'solid #d8d0ba 8px'
+	}
+};
 
 var MapBar = function (_Component) {
 	_inherits(MapBar, _Component);
@@ -46176,7 +46209,11 @@ var MapBar = function (_Component) {
 					return _react2.default.createElement(
 						'div',
 						{ className: each.cn, key: i + 'navbutton', value: each.v, onMouseOver: _this2.layerOver, onMouseOut: _this2.layerOut, onClick: _this2.layerPanel },
-						each.src !== ' ' && _react2.default.createElement('img', { src: each.src, className: imgClass, value: each.v })
+						_react2.default.createElement(
+							_reactLightweightTooltip.Tooltip,
+							{ content: 'toggle ' + each.v, styles: toolstyles },
+							each.src !== ' ' && _react2.default.createElement('img', { src: each.src, className: imgClass, value: each.v })
+						)
 					);
 				})
 			);
@@ -46379,7 +46416,7 @@ var MapOps = function (_Component) {
         _react2.default.createElement(
           'div',
           { style: styles.root },
-          _react2.default.createElement(_materialUi.Toggle, { defaultToggled: true, onToggle: function onToggle(e, isInputChecked) {
+          _react2.default.createElement(_materialUi.Toggle, { defaultToggled: this.props.options.anno, onToggle: function onToggle(e, isInputChecked) {
               return _this2.opacityLayers(e, isInputChecked);
             } })
         ),
@@ -91353,6 +91390,203 @@ module.exports = function() {
 	throw new Error("define cannot be used indirect");
 };
 
+
+/***/ }),
+/* 685 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(15);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Tooltip = function (_React$Component) {
+  _inherits(Tooltip, _React$Component);
+
+  function Tooltip(props) {
+    _classCallCheck(this, Tooltip);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Tooltip).call(this, props));
+
+    _this.styles = {
+      wrapper: {
+        position: 'relative',
+        display: 'inline-block',
+        zIndex: '98',
+        color: '#555',
+        cursor: 'help'
+      },
+      tooltip: {
+        position: 'absolute',
+        zIndex: '99',
+        background: '#000',
+        bottom: '100%',
+        left: '50%',
+        marginBottom: '10px',
+        padding: '5px',
+        WebkitTransform: 'translateX(-50%)',
+        msTransform: 'translateX(-50%)',
+        OTransform: 'translateX(-50%)',
+        transform: 'translateX(-50%)'
+      },
+      content: {
+        background: '#000',
+        color: '#fff',
+        fontSize: '.8em',
+        padding: '.3em 1em',
+        whiteSpace: 'nowrap'
+      },
+      arrow: {
+        position: 'absolute',
+        width: '0',
+        height: '0',
+        bottom: '-5px',
+        left: '50%',
+        marginLeft: '-5px',
+        borderLeft: 'solid transparent 5px',
+        borderRight: 'solid transparent 5px',
+        borderTop: 'solid #000 5px'
+      },
+      gap: {
+        position: 'absolute',
+        width: '100%',
+        height: '20px',
+        bottom: '-20px'
+      }
+    };
+
+    _this.mergeStyles = function (userStyles) {
+      Object.keys(_this.styles).forEach(function (name) {
+        Object.assign(_this.styles[name], userStyles[name]);
+      });
+    };
+
+    _this.show = function () {
+      return _this.setVisibility(true);
+    };
+
+    _this.hide = function () {
+      return _this.setVisibility(false);
+    };
+
+    _this.setVisibility = function (visible) {
+      _this.setState(Object.assign({}, _this.state, {
+        visible: visible
+      }));
+    };
+
+    _this.handleTouch = function () {
+      _this.show();
+      _this.assignOutsideTouchHandler();
+    };
+
+    _this.assignOutsideTouchHandler = function () {
+      var handler = function handler(e) {
+        var currentNode = e.target;
+        var componentNode = _reactDom2.default.findDOMNode(_this.refs.instance);
+        while (currentNode.parentNode) {
+          if (currentNode === componentNode) return;
+          currentNode = currentNode.parentNode;
+        }
+        if (currentNode !== document) return;
+        _this.hide();
+        document.removeEventListener('touchstart', handler);
+      };
+      document.addEventListener('touchstart', handler);
+    };
+
+    _this.state = {
+      visible: false
+    };
+    if (props.styles) _this.mergeStyles(props.styles);
+    return _this;
+  }
+
+  _createClass(Tooltip, [{
+    key: 'render',
+    value: function render() {
+      var props = this.props;
+      var state = this.state;
+      var styles = this.styles;
+      var show = this.show;
+      var hide = this.hide;
+      var handleTouch = this.handleTouch;
+
+      return _react2.default.createElement(
+        'div',
+        {
+          onMouseEnter: show,
+          onMouseLeave: hide,
+          onTouchStart: handleTouch,
+          style: styles.wrapper },
+        props.children,
+        state.visible && _react2.default.createElement(
+          'div',
+          { style: styles.tooltip },
+          _react2.default.createElement(
+            'div',
+            { style: styles.content },
+            props.content
+          ),
+          _react2.default.createElement(
+            'div',
+            { style: styles.arrow },
+            ' '
+          ),
+          _react2.default.createElement(
+            'div',
+            { style: styles.gap },
+            ' '
+          )
+        )
+      );
+    }
+  }]);
+
+  return Tooltip;
+}(_react2.default.Component);
+
+Tooltip.propTypes = {
+  children: _react.PropTypes.any.isRequired,
+  content: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
+  styles: _react.PropTypes.object
+};
+exports.default = Tooltip;
+
+/***/ }),
+/* 686 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _tooltip = __webpack_require__(685);
+
+var _tooltip2 = _interopRequireDefault(_tooltip);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = { Tooltip: _tooltip2.default };
 
 /***/ })
 /******/ ]);

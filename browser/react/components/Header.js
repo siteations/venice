@@ -38,12 +38,12 @@ const Header = ((props) => {
                                 <h5  className="closerB ">subtitle, dates, context</h5>
                         </div>
 	        	<div className="col-lg-3">
-        			<h4 className="BornholmSandvig closerT text-right "> {props.sites.hoverLayer}</h4>
-        			<p className="closerB text-right">layer options for view</p>
+        			<h4 className="BornholmSandvig closerT text-right ">Layers Shown:</h4>
+        			<p className="closerB text-right"> </p>
         		</div>
                         <div className="col-lg-4">
                                 <h5 className="BornholmSandvig closerT">{props.sites.currLayers.join(', ')}</h5>
-                                <p className="closerB">layers active</p>
+                                <p className="closerB"> </p>
                         </div>
 	        </div>
 	        )

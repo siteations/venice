@@ -356,8 +356,8 @@ a:hover {
 .panelHidden {
 	border:double 3px #e6e1d3;
 	padding:10px;
-	/*background-color: #e6e1d3;*/
-	background-color: #ffffff;
+	background-color: #f4f2ec;
+	/*background-color: #ffffff;*/
 	margin-top: 10px;
 	min-height: 652px;
 	width: 0%;
@@ -367,8 +367,8 @@ a:hover {
 .panelOpen {
 	border:double 3px #e6e1d3;
 	padding:10px;
-	/*background-color: #e6e1d3;*/
-	background-color: #ffffff;
+	background-color: #f4f2ec;
+	/*background-color: #ffffff;*/
 	margin-top: 10px;
 	min-height: 652px;
 	width: 0%;
@@ -382,8 +382,8 @@ a:hover {
 .panelOpenPart {
 	border:double 3px #e6e1d3;
 	padding:10px;
-	/*background-color: #e6e1d3;*/
-	background-color: #ffffff;
+	background-color: #f4f2ec;
+	/*background-color: #ffffff;*/
 	margin-top: 10px;
 	min-height: 652px;
 	width: 60%;
@@ -397,8 +397,8 @@ a:hover {
 .panelLarge {
 	border:double 3px #e6e1d3;
 	padding:10px;
-	/*background-color: #e6e1d3;*/
-	background-color: #ffffff;
+	background-color: #f4f2ec;
+	/*background-color: #ffffff;*/
 	margin-top: 10px;
 	width: 70%;
 	overflow: scroll;
@@ -412,8 +412,8 @@ a:hover {
 .panelLargePart {
 	border:double 3px #e6e1d3;
 	padding:10px;
-	/*background-color: #e6e1d3;*/
-	background-color: #ffffff;
+	background-color: #f4f2ec;
+	/*background-color: #ffffff;*/
 	margin-top: 10px;
 	width: 70%;
 	overflow: scroll;
@@ -426,8 +426,8 @@ a:hover {
 
 .panelClose {
 	border:double 3px #e6e1d3;
-	/*background-color: #e6e1d3;*/
-	background-color: #ffffff;
+	background-color: #f4f2ec;
+	/*background-color: #ffffff;*/
 	margin-top: 10px;
 	width: 30%;
 	overflow: hidden;

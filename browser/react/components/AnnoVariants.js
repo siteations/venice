@@ -20,7 +20,7 @@ const Detail = (props)=>{
   	let details = props.details;
   	let action = props.action;
 
-  	console.log('here ', clipDetails, details, action);
+  	//console.log('here ', clipDetails, details, action);
 
   	return (
   	      <g>

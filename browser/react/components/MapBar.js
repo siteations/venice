@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
+import {Tooltip} from 'react-lightweight-tooltip';
 import IconButton from 'material-ui/IconButton';
 
 import {updatePanelNone, updatePanelSmall, updatePanelLarge, updatePanelStart, updatePanelMid} from '../action-creators/optionActions.js';
@@ -29,6 +30,38 @@ let mapButtons=[
 	{cn:"nSpcSm", v:'navigate', src:" " },
 	{cn:"nIcon flex center middle", v:"bibliography", src:"/img/menu-01.svg" },
 ];
+
+const toolstyles = {
+	wrapper: {
+	  cursor: 'pointer'
+	},
+	content: {
+    backgroundColor: '#d8d0ba',
+    color: 'black',
+  },
+  tooltip: {
+    backgroundColor: '#d8d0ba',
+    borderRadius: '10px',
+    position: 'absolute',
+    zIndex: '99',
+    background: '#000',
+    bottom: '-50%',
+    left: '0%',
+    padding: '5px',
+    transform: 'translateX(-105%)',
+  },
+  arrow: {
+    position: 'absolute',
+    width: '0',
+    height: '0',
+    bottom: '25%',
+    left: '103%',
+    marginLeft: '-6px',
+    borderTop: 'solid transparent 8px',
+    borderBottom: 'solid transparent 8px',
+    borderLeft: 'solid #d8d0ba 8px',
+  },
+};
 
 class MapBar extends Component{
 	constructor(props){
@@ -111,9 +144,11 @@ class MapBar extends Component{
 
 		        			return (
 										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onClick={this.layerPanel}>
+											<Tooltip content={'toggle '+ each.v} styles={toolstyles}>
 											{each.src !== ' ' &&
 												<img src={each.src} className={imgClass} value={each.v} />
 											}
+											</Tooltip>
 										</div>
 		        			)
 		        		})
