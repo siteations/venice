@@ -2,7 +2,7 @@
 
 ### Exploring the geography and print culture of Venetian Religious Experience, in a tile-based mapping app.
 
-[**PROJECT DEMO**] Coming Soon, see [here](https://vimeo.com/216349652) for prototype 1 (map/layer interactions).  
+[**PROJECT DEMO**] Coming Soon, see [here](https://vimeo.com/216934957) for prototype 1 (50% front-end interactions).  
 
 # Project Team
 ### Development 
@@ -25,15 +25,10 @@
 #### Center for Renaissance Studies at the Newberry
 *Lia Markey* - Director
 
-#### Digital Initiatives and IT at the Newberry
-*Jennifer Thom* - Director of Digital Initiative,
-*Jennifer Wolfe* - Digital Initiatives Manager, 
-*Drin Gyuk* - Director of IT,
-
-
 # Core Features
 
 ## Customized 'clone' of [leaflet](http://leafletjs.com/)/[react-leaftlet](https://github.com/PaulLeCam/react-leaflet) for large scale, non-projected imagery 
+(i.e. similar to [storyMap](https://storymap.knightlab.com/), but with animated/non-animated browsing options and customized clustering of info/imagery/markers)
 
 ### Combines svg, map-tiles, and db/redux-store filtering methods for:
 + advanced image filters, 
