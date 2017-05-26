@@ -89,7 +89,7 @@ class MapBar extends Component{
 	layerPanel(e){
 		e.preventDefault();
 		let val=e.target.attributes.value.value;
-		console.log(this.props);
+		console.log('reading panel?', val);
 
 		if (this.props.options.panelStart){
 			this.props.panelStart();

@@ -93,14 +93,14 @@ export const sitesFiltered = (off, sites, currLayers, percent) => {
 
 }
 
-export const centerRescaled = (zoom, newCenter, winSize) => {
+export const centerRescaled = (zoom, newCenter, winSize,tilesize) => {
 
   let limits = scaleOps[zoom];
 
   let xPerc = newCenter[0]/(256*64);
   let yPerc = newCenter[1]/(256*32);
 
-  let xFull = 128*(limits[0]+1), yFull = 128*(limits[1]+1);
+  let xFull = tilesize*(limits[0]+1), yFull = tilesize*(limits[1]+1);
   let x = xPerc*xFull, y = yPerc*yFull;
 
 

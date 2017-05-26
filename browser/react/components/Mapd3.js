@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { connect } from 'react-redux';
 
 //---------------------------MAP OPTIONS & COMPONENTS---------------------------
-import { tiling, scaleOps, sitesFiltered } from '../plug-ins/rawTiles.js';
+import { tiling, scaleOps, sitesFiltered, centerRescaled } from '../plug-ins/rawTiles.js';
 import { spacingFrame } from '../plug-ins/rawDetails.js';
 import { ClipTiles, BackgroundTiles, BackgroundMask, Underlay } from './TileVariants.js';
 import DetailOver from './AnnoVariants.js';
@@ -179,32 +179,60 @@ class MapSVG extends Component {
 
     }
 
-    zoomTo(e,site){ // rework to parallel basic scroll zoom...
+    zoomTo(e, id){ // rework to parallel basic scroll zoom...
         e.preventDefault();
-        if (site.length===2){ //double click on circle with x,y array center passed in
-            var [mouseX, mouseY] = site; //in scaled screen coordinates
+        console.log('getting here', id);
 
-        } else if (site ==='none') { //double click on general area, use mouse to center zoom
-            var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-            var [mouseX, mouseY] = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop]; //in scaled screen coordinates
+        this.props.updateSite(id);
+        let site = this.props.sites.allSites.filter(site=>site.id === +id)[0];
+        let siteCent = [site.cx, site.cy];
+        let obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+id);
+
+        this.props.setTitles(site.name.split('.'));
+        this.props.updateNarrative(obj[0]);
+
+        let wind = this.props.map.windowSize, panel = this.props.panel.panelSize;
+        if (!this.props.options.panelNone){
+            var win = [wind[0]-panel[0], wind[1]];
+        } else {
+            var win = wind;
         }
 
-        //rework here to tweak panel offset...
-        let curX = (mouseX+this.props.map.xyOffsets[0]), curY = (mouseY+this.props.map.xyOffsets[1]); //location on map
-        let resX = curX*2+this.props.map.panelOffset, resY = curY*2-this.props.map.windowOffsets[1]-this.props.map.windowSize[1]/4; // zoom in one level
-        let newOx = resX-this.props.map.windowSize[0]/2, newOy = resY-this.props.map.windowSize[1]/2;
+        let zoom = (this.props.map.currZoom<5)? this.props.map.currZoom+1 : 5 ;
+        console.log(this.props.map.currZoom, zoom);
+        //let tilesize = this.props.map.tileSize;
 
-        //back to basics here
-        let curr = this.props.map.currZoom, pix = this.props.map.tileSize, oX =this.props.map.xyOffsets[0], oY=this.props.map.xyOffsets[1];
+        let offset = centerRescaled(zoom, siteCent, win, 128);
 
-        if (curr<6) { //zoom in
-            curr++, oX = newOx, oY = newOy;
-        }
+        this.props.setOffsetsR([offset.x, offset.y]);
+        this.props.setCurrOffsets([offset.x, offset.y]);
+        this.props.setCurrZoom(+zoom);
+        this.props.setCurrTilesize(128);
 
-        this.props.setOffsetsR([oX, oY]);
-        this.props.setCurrOffsets([oX, oY]);
-        this.props.setCurrZoom(curr);
-        this.props.setCurrTilesize(pix);
+        // if (site.length===2){ //double click on circle with x,y array center passed in
+        //     var [mouseX, mouseY] = site; //in scaled screen coordinates
+        // } else if (site ==='none') { //double click on general area, use mouse to center zoom
+        //     console.log(this.props.map.windowSize, this.props.panel.panelSize, this.props.options.panelNone);
+        //     var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+        //     var [mouseX, mouseY] = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop]; //in scaled screen coordinates
+        // }
+
+        // //rework here to tweak panel offset...
+        // let curX = (mouseX+this.props.map.xyOffsets[0]), curY = (mouseY+this.props.map.xyOffsets[1]); //location on map
+        // let resX = curX*2+this.props.map.panelOffset, resY = curY*2-this.props.map.windowOffsets[1]-this.props.map.windowSize[1]/4; // zoom in one level
+        // let newOx = resX-this.props.map.windowSize[0]/2, newOy = resY-this.props.map.windowSize[1]/2;
+
+        // //back to basics here
+        // let curr = this.props.map.currZoom, pix = this.props.map.tileSize, oX =this.props.map.xyOffsets[0], oY=this.props.map.xyOffsets[1];
+
+        // if (curr<6) { //zoom in
+        //     curr++, oX = newOx, oY = newOy;
+        // }
+
+        // this.props.setOffsetsR([oX, oY]);
+        // this.props.setCurrOffsets([oX, oY]);
+        // this.props.setCurrZoom(curr);
+        // this.props.setCurrTilesize(pix);
     }
 
     flyTo(e){
@@ -254,12 +282,15 @@ class MapSVG extends Component {
         }
     }
 
-    selectShowPanel(e,site){
+    selectShowPanel(e, id){
         e.preventDefault;
-        this.zoomTo(e,site);
+
         if (this.props.options.panelNone){
             this.props.panelSmall();
         };
+
+        console.log(id);
+        this.zoomTo(e, id);
 
         this.showLabel(e)
         this.props.overlayDetails(true);
@@ -343,7 +374,7 @@ class MapSVG extends Component {
                                     onMouseOver = {e=>this.showLabel(e)}
                                     onMouseOut={''/*e=>this.hideLabel(e)*/}
                                     onClick={e=>this.setLabel(e)}
-                                    onDoubleClick={e=>this.selectShowPanel(e,[d.cx, d.cy])} />
+                                    onDoubleClick={(e)=>this.selectShowPanel(e, +d.id)} />
 
 	   						    )
 	   					})

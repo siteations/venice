@@ -78,7 +78,7 @@ class FooterSlides extends Component {
             var win = wind;
         }
 
-        let offset = centerRescaled(zoom, newCenter, win);
+        let offset = centerRescaled(zoom, newCenter, win, 128);
 
         this.props.setOffsetsR([offset.x, offset.y]);
         this.props.setCurrOffsets([offset.x, offset.y]);
