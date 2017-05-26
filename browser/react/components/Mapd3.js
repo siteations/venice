@@ -282,8 +282,8 @@ class MapSVG extends Component {
 
         const {clipDetails, details} = spacingFrame(this.props.map.windowSize, currentSite, this.props.sites.genDetails);
 
-        // console.log('results?', this.props.map.windowSize, currentSite, clipDetails, details);
-
+        //console.log('results?', this.props.map.windowSize, currentSite, clipDetails, details);
+        console.log('results?', currentSite);
 
     	return (
 

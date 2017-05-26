@@ -92,3 +92,26 @@ export const sitesFiltered = (off, sites, currLayers, percent) => {
       return cirNew;
 
 }
+
+export const centerRescaled = (zoom, newCenter, winSize) => {
+
+  let limits = scaleOps[zoom];
+
+  let xPerc = newCenter[0]/(256*64);
+  let yPerc = newCenter[1]/(256*32);
+
+  let xFull = 128*(limits[0]+1), yFull = 128*(limits[1]+1);
+  let x = xPerc*xFull, y = yPerc*yFull;
+
+
+
+  let centerX = winSize[0]/2 - x, centerY = winSize[1]/2 - y;
+
+  console.log(xPerc, yPerc, xFull, yFull, x, y, winSize[0]/2, winSize[1]/2);
+
+  return {
+    x: -1*centerX,
+    y: -1*centerY,
+  };
+
+}
