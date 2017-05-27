@@ -247,6 +247,15 @@ a:hover {
   filter: drop-shadow( 0px 0px 8px #000 );
 }
 
+.circHLThick {
+	stroke-width: 7;
+	fill: #ffffff;
+	fill-opacity:.01;
+	stroke-opacity: 1;
+	text-shadow: 0px 0px 10px #000000;
+	filter: drop-shadow( 0px 0px 10px #000 );
+}
+
 .circHL:hover {
 	stroke-width: 7;
 	fill: #ffffff;
@@ -486,8 +495,19 @@ a:hover {
 	box-shadow: 0 0 1px #808080;
 }
 
+.bIconSelected {
+	background-color: #ffffff;
+	width: 40px;
+	height: 40px;
+	margin:8px 10px;
+	border-radius: 5px;
+	border: solid 2px #352c1a;
+	box-shadow: 0 0 3px #808080;
+}
+
 .bIcon:active {
 	background-color: #ffffff;
+	border: solid 2px #352c1a;
 	box-shadow: 0 0 3px #808080;
 }
 

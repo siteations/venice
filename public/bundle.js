@@ -45711,27 +45711,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 //connect later to store;
 var tour = [{
     id: 3,
-    zoom: 5
+    zoom: 6
 }, {
     id: 6,
     zoom: 5
 }, { id: 9,
-    zoom: 4
+    zoom: 6
 }, {
     id: 21,
     zoom: 5
 }, {
     id: 17,
-    zoom: 3
-}, {
-    id: 13,
     zoom: 5
 }, {
-    id: 15,
+    id: 13,
     zoom: 4
 }, {
+    id: 11,
+    zoom: 6
+}, {
     id: 23,
-    zoom: 4
+    zoom: 6
 }]; //transfer to store, onclick reset current site and zoomto that new site, but requires the percent/zoom numbers
 
 var FooterSlides = function (_Component) {
@@ -45831,6 +45831,10 @@ var FooterSlides = function (_Component) {
 
                 this.props.togglePlay(true);
 
+                if (this.props.options.panelNone) {
+                    this.props.panelSmall();
+                };
+
                 var idIndex = tour.map(function (sites) {
                     return sites.id;
                 }),
@@ -45842,7 +45846,8 @@ var FooterSlides = function (_Component) {
                 var that = this.props;
                 var action = this.flyToSingle;
 
-                this.timer = setInterval(updateElements, 3000);
+                var myVar = setTimeout(updateElements, 500);
+                this.timer = setInterval(updateElements, 5000);
             } else if (e.target.attributes.value.value === 'pause') {
                 //the pause setting...
 
@@ -45872,7 +45877,9 @@ var FooterSlides = function (_Component) {
                     tour.map(function (site) {
                         return _react2.default.createElement(
                             'div',
-                            { className: 'bIcon', value: site.id + '-' + site.zoom, onClick: function onClick(e) {
+                            { className: site.id === _this2.props.sites.currSite ? 'bIconSelected' : 'bIcon',
+                                value: site.id + '-' + site.zoom,
+                                onClick: function onClick(e) {
                                     return _this2.setSite(e);
                                 } },
                             'test ' + site.id
@@ -45977,6 +45984,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
         },
         togglePlay: function togglePlay(bool) {
             dispatch((0, _optionActions.togglePlay)(bool));
+        },
+        panelSmall: function panelSmall() {
+            dispatch((0, _optionActions.updatePanelSmall)());
         }
     };
 };
@@ -47083,31 +47093,6 @@ var MapSVG = function (_Component) {
             this.props.setCurrOffsets([offset.x, offset.y]);
             this.props.setCurrZoom(+zoom);
             this.props.setCurrTilesize(128);
-
-            // if (site.length===2){ //double click on circle with x,y array center passed in
-            //     var [mouseX, mouseY] = site; //in scaled screen coordinates
-            // } else if (site ==='none') { //double click on general area, use mouse to center zoom
-            //     console.log(this.props.map.windowSize, this.props.panel.panelSize, this.props.options.panelNone);
-            //     var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-            //     var [mouseX, mouseY] = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop]; //in scaled screen coordinates
-            // }
-
-            // //rework here to tweak panel offset...
-            // let curX = (mouseX+this.props.map.xyOffsets[0]), curY = (mouseY+this.props.map.xyOffsets[1]); //location on map
-            // let resX = curX*2+this.props.map.panelOffset, resY = curY*2-this.props.map.windowOffsets[1]-this.props.map.windowSize[1]/4; // zoom in one level
-            // let newOx = resX-this.props.map.windowSize[0]/2, newOy = resY-this.props.map.windowSize[1]/2;
-
-            // //back to basics here
-            // let curr = this.props.map.currZoom, pix = this.props.map.tileSize, oX =this.props.map.xyOffsets[0], oY=this.props.map.xyOffsets[1];
-
-            // if (curr<6) { //zoom in
-            //     curr++, oX = newOx, oY = newOy;
-            // }
-
-            // this.props.setOffsetsR([oX, oY]);
-            // this.props.setCurrOffsets([oX, oY]);
-            // this.props.setCurrZoom(curr);
-            // this.props.setCurrTilesize(pix);
         }
     }, {
         key: 'flyTo',
@@ -47265,7 +47250,7 @@ var MapSVG = function (_Component) {
                                 //strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2}
                                 //console.log(d.id, currentSite)
 
-                                return _react2.default.createElement('circle', { className: 'circHL',
+                                return _react2.default.createElement('circle', { className: d.id === _this2.props.sites.currSite ? 'circHLThick' : 'circHL',
                                     cx: d.cx, cy: d.cy, r: d.r, value: d.name, id: d.id,
                                     stroke: +_this2.props.sites.currSite === +d.id ? '#ffffff' : '#d8d0ba',
                                     onMouseOver: function onMouseOver(e) {

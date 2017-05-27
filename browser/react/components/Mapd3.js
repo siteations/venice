@@ -209,30 +209,6 @@ class MapSVG extends Component {
         this.props.setCurrZoom(+zoom);
         this.props.setCurrTilesize(128);
 
-        // if (site.length===2){ //double click on circle with x,y array center passed in
-        //     var [mouseX, mouseY] = site; //in scaled screen coordinates
-        // } else if (site ==='none') { //double click on general area, use mouse to center zoom
-        //     console.log(this.props.map.windowSize, this.props.panel.panelSize, this.props.options.panelNone);
-        //     var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-        //     var [mouseX, mouseY] = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop]; //in scaled screen coordinates
-        // }
-
-        // //rework here to tweak panel offset...
-        // let curX = (mouseX+this.props.map.xyOffsets[0]), curY = (mouseY+this.props.map.xyOffsets[1]); //location on map
-        // let resX = curX*2+this.props.map.panelOffset, resY = curY*2-this.props.map.windowOffsets[1]-this.props.map.windowSize[1]/4; // zoom in one level
-        // let newOx = resX-this.props.map.windowSize[0]/2, newOy = resY-this.props.map.windowSize[1]/2;
-
-        // //back to basics here
-        // let curr = this.props.map.currZoom, pix = this.props.map.tileSize, oX =this.props.map.xyOffsets[0], oY=this.props.map.xyOffsets[1];
-
-        // if (curr<6) { //zoom in
-        //     curr++, oX = newOx, oY = newOy;
-        // }
-
-        // this.props.setOffsetsR([oX, oY]);
-        // this.props.setCurrOffsets([oX, oY]);
-        // this.props.setCurrZoom(curr);
-        // this.props.setCurrTilesize(pix);
     }
 
     flyTo(e){
@@ -368,7 +344,7 @@ class MapSVG extends Component {
                             //console.log(d.id, currentSite)
 
 	   						return (
-	   						   		<circle className="circHL"
+	   						   		<circle className={(d.id===this.props.sites.currSite)? 'circHLThick' : 'circHL' }
                                     cx={d.cx} cy={d.cy} r={d.r} value={d.name} id={d.id}
                                     stroke={(+this.props.sites.currSite === +d.id)? '#ffffff':'#d8d0ba'}
                                     onMouseOver = {e=>this.showLabel(e)}

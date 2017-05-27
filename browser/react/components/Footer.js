@@ -5,21 +5,21 @@ import { connect } from 'react-redux';
 import { centerRescaled, tiling, scaleOps, sitesFiltered } from '../plug-ins/rawTiles.js';
 import {updateSite} from '../action-creators/siteActions.js';
 import {  setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
-import { togglePlay } from '../action-creators/optionActions.js';
+import { togglePlay, updatePanelSmall } from '../action-creators/optionActions.js';
 import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
 
 //connect later to store;
 const tour = [
     {
         id: 3,
-        zoom: 5,
+        zoom: 6,
     },
     {
         id: 6,
         zoom: 5,
     },
     {   id: 9,
-        zoom: 4,
+        zoom: 6,
     },
     {
         id: 21,
@@ -27,19 +27,19 @@ const tour = [
     },
     {
         id: 17,
-        zoom: 3,
-    },
-    {
-        id: 13,
         zoom: 5,
     },
     {
-        id: 15,
+        id: 13,
         zoom: 4,
     },
     {
+        id: 11,
+        zoom: 6,
+    },
+    {
         id: 23,
-        zoom: 4,
+        zoom: 6,
     }
 
 
@@ -97,6 +97,10 @@ class FooterSlides extends Component {
         if (e.target.attributes.value.value === 'play'){
             this.props.togglePlay(true);
 
+        if (this.props.options.panelNone){
+            this.props.panelSmall();
+        };
+
         var idIndex = tour.map(sites=>sites.id), currIndex = idIndex.indexOf(this.props.sites.currSite);
         if (currIndex === -1 || currIndex >= idIndex.length-1) {currIndex = 0};
 
@@ -128,7 +132,8 @@ class FooterSlides extends Component {
 
         }
 
-        this.timer = setInterval(updateElements, 3000);
+        var myVar = setTimeout(updateElements, 500);
+        this.timer = setInterval(updateElements, 5000);
 
         } else if (e.target.attributes.value.value === 'pause'){ //the pause setting...
 
@@ -152,7 +157,9 @@ class FooterSlides extends Component {
 	        <div className="row footer">
                   <div className="row flex center">
                         {tour.map(site=>{
-                            return <div className="bIcon" value={site.id+'-'+site.zoom} onClick={e=>this.setSite(e)}>{'test '+site.id}</div>
+                            return <div className={(site.id===this.props.sites.currSite)? 'bIconSelected' : 'bIcon'}
+                                value={site.id+'-'+site.zoom}
+                                onClick={e=>this.setSite(e)}>{'test '+site.id}</div>
                         })}
                         {!this.props.options.playTour &&
                             <div className="nIcon flex center middle" value=""><span value="play" className="fa fa-play" onClick={(e)=>this.animate(e)}></span></div>
@@ -211,6 +218,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     togglePlay: (bool) => {
         dispatch(togglePlay(bool));
+    },
+    panelSmall: () => {
+      dispatch(updatePanelSmall());
     },
 }}
 
