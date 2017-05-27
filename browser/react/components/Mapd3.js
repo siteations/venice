@@ -181,7 +181,6 @@ class MapSVG extends Component {
 
     zoomTo(e, id){ // rework to parallel basic scroll zoom...
         e.preventDefault();
-        console.log('getting here', id);
 
         this.props.updateSite(id);
         let site = this.props.sites.allSites.filter(site=>site.id === +id)[0];
@@ -199,7 +198,7 @@ class MapSVG extends Component {
         }
 
         let zoom = (this.props.map.currZoom<5)? this.props.map.currZoom+1 : 5 ;
-        console.log(this.props.map.currZoom, zoom);
+        //console.log(this.props.map.currZoom, zoom);
         //let tilesize = this.props.map.tileSize;
 
         let offset = centerRescaled(zoom, siteCent, win, 128);
@@ -265,7 +264,6 @@ class MapSVG extends Component {
             this.props.panelSmall();
         };
 
-        console.log(id);
         this.zoomTo(e, id);
 
         this.showLabel(e)
@@ -290,7 +288,7 @@ class MapSVG extends Component {
         const {clipDetails, details} = spacingFrame(this.props.map.windowSize, currentSite, this.props.sites.genDetails);
 
         //console.log('results?', this.props.map.windowSize, currentSite, clipDetails, details);
-        console.log('results?', currentSite);
+        //console.log('results?', currentSite);
 
     	return (
 

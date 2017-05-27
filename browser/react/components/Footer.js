@@ -15,7 +15,7 @@ const tour = [
         zoom: 6,
     },
     {
-        id: 6,
+        id: 11,
         zoom: 5,
     },
     {   id: 9,
@@ -34,7 +34,7 @@ const tour = [
         zoom: 4,
     },
     {
-        id: 11,
+        id: 6,
         zoom: 6,
     },
     {
@@ -83,6 +83,7 @@ class FooterSlides extends Component {
         }
 
         let offset = centerRescaled(zoom, newCenter, win, 128);
+        //console.log('zooms: ', this.props.map.currZoom, zoom, 'pixels: ', this.props.map.tileSize, 128, 'offsets: ', this.props.map.xyOffsets, offset);
 
         this.props.setOffsetsR([offset.x, offset.y]);
         this.props.setCurrOffsets([offset.x, offset.y]);
@@ -91,7 +92,7 @@ class FooterSlides extends Component {
         //current zoom and tile size... allows for conversion
     }
 
-    animate(e){
+    animate(e, out){
         e.preventDefault();
 
         if (e.target.attributes.value.value === 'play'){
@@ -103,37 +104,60 @@ class FooterSlides extends Component {
 
         var idIndex = tour.map(sites=>sites.id), currIndex = idIndex.indexOf(this.props.sites.currSite);
         if (currIndex === -1 || currIndex >= idIndex.length-1) {currIndex = 0};
+        var iNarr=0;
 
         const that = this.props;
         const action = this.flyToSingle;
 
         function updateElements(){
 
-                console.log(tour[currIndex]);
                 var {id, zoom} = tour[currIndex];
                 let siteId = id, siteZoom = zoom;
+                if (out){siteZoom = 3};
 
                 that.updateSite(siteId);
 
                 let site = that.sites.allSites.filter(site=>site.id === +siteId)[0];
+
                 let siteCent = [site.cx, site.cy];
                 that.setTitles(site.name.split('.'));
 
                 let obj = that.sites.genNarratives.filter(narr => +narr.coreId===+siteId);
-                that.updateNarrative(obj[0]);
+                if (site.cluster){
+                    var key = obj[0].cluster;
+                    var obj2 = that.sites.genNarratives.filter(narr => +narr.cluster===+key);
+                }
 
-                action(siteZoom, siteCent);
+                if (site.cluster && iNarr<obj2.length) {
 
-                if (currIndex===idIndex.length-1){
-                    currIndex = 0;
-                } else {
-                    currIndex ++;
+                    if (obj2[iNarr].coreId){
+                        action(siteZoom, siteCent);
+                    }
+
+                    that.updateNarrative(obj2[iNarr]);
+
+                    if (iNarr===obj2.length-1){
+                        iNarr=0;
+                        (currIndex===idIndex.length-1)? currIndex = 0 : currIndex ++ ;
+
+                    } else {
+                        iNarr++;
+                    }
+
+
+                } else if (!site.cluster) {
+
+                    iNarr=0;
+                    that.updateNarrative(obj[0]);
+                    action(siteZoom, siteCent);
+                    (currIndex===idIndex.length-1)? currIndex = 0 : currIndex ++ ;
+
                 }
 
         }
 
         var myVar = setTimeout(updateElements, 500);
-        this.timer = setInterval(updateElements, 5000);
+        this.timer = setInterval(updateElements, 3000);
 
         } else if (e.target.attributes.value.value === 'pause'){ //the pause setting...
 
@@ -167,9 +191,14 @@ class FooterSlides extends Component {
                         {this.props.options.playTour &&
                             <div className="nIcon flex center middle" value=""><span value="pause" className="fa fa-pause" onClick={(e)=>this.animate(e)}></span></div>
                         }
-                        <div className="nIcon flex center middle" value=""><span value="backward" className="fa fa-backward opacity25"></span></div>
-                        <div className="nIcon flex center middle" value=""><span value="stop" className="fa fa-stop opacity25" onClick={(e)=>this.animate(e)}></span></div>
-                        <div className="nIcon flex center middle" value=""><span value="forward" className="fa fa-forward opacity25"></span></div>
+                        <p>(with zoom)</p>
+                        {!this.props.options.playTour &&
+                            <div className="nIcon flex center middle" value=""><span value="play" className="fa fa-play opacity25" onClick={(e)=>this.animate(e, 'out')}></span></div>
+                        }
+                        {this.props.options.playTour &&
+                            <div className="nIcon flex center middle" value=""><span value="pause" className="fa fa-pause opacity25" onClick={(e)=>this.animate(e, 'out')}></span></div>
+                        }
+                        <p className="opacity25">(no zoom)</p>
                         <div className="l20">
                                 <h4 className="BornholmSandvig closerT">tour of venice religious experience</h4>
                                 <p className="closerB">click thumbnails for a guided sites & narratives</p>

@@ -29,7 +29,9 @@ const Detail = (props)=>{
   	      		<g>
 	    	   				<image xlinkHref={d.srcThumb} x={d.x} y={d.y} width={d.width} height={d.height} clipPath={d.clip} />
 					    		{/*<circle stroke="#ffffff" className="circHL" cx={clipDetails[i].cx} cy={clipDetails[i].cy} r={clipDetails[i].r} />*/}
-					    		<rect stroke="#ffffff" className="circHL"  x={clipDetails[i].x} y={clipDetails[i].y} rx={clipDetails[i].rx} ry={clipDetails[i].ry} width={clipDetails[i].width} height={clipDetails[i].height} id={d.id} onClick={e=> action(e)}/>
+					    		<rect stroke="#ffffff"
+                  className="circHL"
+                  x={clipDetails[i].x} y={clipDetails[i].y} rx={clipDetails[i].rx} ry={clipDetails[i].ry} width={clipDetails[i].width} height={clipDetails[i].height} id={d.id} onClick={e=> action(e)}/>
 					    		<text x={d.x-10} y={clipDetails[i].cy} className="textSHLR" fontSize={12} >{d.nameH}</text>
   	      		</g>
   	      		)
@@ -41,15 +43,16 @@ const Detail = (props)=>{
 
 };
 
-// const mapStateToProps = (state, ownProps) => {
-//   return {
-//     map: state.map,
-//     options: state.options,
-//     sites: state.sites,
-//     }
-// }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    map: state.map,
+    options: state.options,
+    sites: state.sites,
+    panel: state.panel,
+    }
+}
 
-// //setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
+//setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
 
 // const mapDispatchToProps = (dispatch, ownProps) => {
 //   return {
@@ -59,6 +62,6 @@ const Detail = (props)=>{
 //   }
 // }
 
-// const DetailOver = connect(mapStateToProps, mapDispatchToProps)(Detail);
+const DetailOver = connect(mapStateToProps, null)(Detail);
 
-export default Detail;
+export default DetailOver;

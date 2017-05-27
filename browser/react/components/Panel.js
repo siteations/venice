@@ -35,7 +35,7 @@ class PanelBase extends Component {
   	//console.log(this.props.panel.panelSize, this.props.panel.panelRatio);
 
   	return (
-  	     <div className={this.props.baseClass} ref="sizeP" id="panelWin" onAnimationEnd = {e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]}px`}}>
+  	     <div className={this.props.baseClass} ref="sizeP" id="panelWin" onAnimationEnd = {e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`}}>
 				    <h2 className="BornholmSandvig" >{this.props.panel.title}</h2>
 				    <h4>{this.props.panel.subtitle}</h4>
 				    <br/>

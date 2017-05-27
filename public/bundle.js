@@ -45632,7 +45632,9 @@ var Detail = function Detail(props) {
           'g',
           null,
           _react2.default.createElement('image', { xlinkHref: d.srcThumb, x: d.x, y: d.y, width: d.width, height: d.height, clipPath: d.clip }),
-          _react2.default.createElement('rect', { stroke: '#ffffff', className: 'circHL', x: clipDetails[i].x, y: clipDetails[i].y, rx: clipDetails[i].rx, ry: clipDetails[i].ry, width: clipDetails[i].width, height: clipDetails[i].height, id: d.id, onClick: function onClick(e) {
+          _react2.default.createElement('rect', { stroke: '#ffffff',
+            className: 'circHL',
+            x: clipDetails[i].x, y: clipDetails[i].y, rx: clipDetails[i].rx, ry: clipDetails[i].ry, width: clipDetails[i].width, height: clipDetails[i].height, id: d.id, onClick: function onClick(e) {
               return action(e);
             } }),
           _react2.default.createElement(
@@ -45646,15 +45648,19 @@ var Detail = function Detail(props) {
   );
 };
 
-// const mapStateToProps = (state, ownProps) => {
-//   return {
-//     map: state.map,
-//     options: state.options,
-//     sites: state.sites,
-//     }
-// }
+//---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
 
-// //setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    map: state.map,
+    options: state.options,
+    sites: state.sites,
+    panel: state.panel
+  };
+};
+
+//setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
 
 // const mapDispatchToProps = (dispatch, ownProps) => {
 //   return {
@@ -45664,10 +45670,9 @@ var Detail = function Detail(props) {
 //   }
 // }
 
-// const DetailOver = connect(mapStateToProps, mapDispatchToProps)(Detail);
+var DetailOver = (0, _reactRedux.connect)(mapStateToProps, null)(Detail);
 
-//---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
-exports.default = Detail;
+exports.default = DetailOver;
 
 /***/ }),
 /* 300 */
@@ -45713,7 +45718,7 @@ var tour = [{
     id: 3,
     zoom: 6
 }, {
-    id: 6,
+    id: 11,
     zoom: 5
 }, { id: 9,
     zoom: 6
@@ -45727,7 +45732,7 @@ var tour = [{
     id: 13,
     zoom: 4
 }, {
-    id: 11,
+    id: 6,
     zoom: 6
 }, {
     id: 23,
@@ -45784,6 +45789,7 @@ var FooterSlides = function (_Component) {
             }
 
             var offset = (0, _rawTiles.centerRescaled)(zoom, newCenter, win, 128);
+            //console.log('zooms: ', this.props.map.currZoom, zoom, 'pixels: ', this.props.map.tileSize, 128, 'offsets: ', this.props.map.xyOffsets, offset);
 
             this.props.setOffsetsR([offset.x, offset.y]);
             this.props.setCurrOffsets([offset.x, offset.y]);
@@ -45793,39 +45799,60 @@ var FooterSlides = function (_Component) {
         }
     }, {
         key: 'animate',
-        value: function animate(e) {
+        value: function animate(e, out) {
             e.preventDefault();
 
             if (e.target.attributes.value.value === 'play') {
                 var updateElements = function updateElements() {
-
-                    console.log(tour[currIndex]);
                     var _tour$currIndex = tour[currIndex],
                         id = _tour$currIndex.id,
                         zoom = _tour$currIndex.zoom;
 
                     var siteId = id,
                         siteZoom = zoom;
+                    if (out) {
+                        siteZoom = 3;
+                    };
 
                     that.updateSite(siteId);
 
                     var site = that.sites.allSites.filter(function (site) {
                         return site.id === +siteId;
                     })[0];
+
                     var siteCent = [site.cx, site.cy];
                     that.setTitles(site.name.split('.'));
 
                     var obj = that.sites.genNarratives.filter(function (narr) {
                         return +narr.coreId === +siteId;
                     });
-                    that.updateNarrative(obj[0]);
+                    if (site.cluster) {
+                        var key = obj[0].cluster;
+                        var obj2 = that.sites.genNarratives.filter(function (narr) {
+                            return +narr.cluster === +key;
+                        });
+                    }
 
-                    action(siteZoom, siteCent);
+                    if (site.cluster && iNarr < obj2.length) {
 
-                    if (currIndex === idIndex.length - 1) {
-                        currIndex = 0;
-                    } else {
-                        currIndex++;
+                        if (obj2[iNarr].coreId) {
+                            action(siteZoom, siteCent);
+                        }
+
+                        that.updateNarrative(obj2[iNarr]);
+
+                        if (iNarr === obj2.length - 1) {
+                            iNarr = 0;
+                            currIndex === idIndex.length - 1 ? currIndex = 0 : currIndex++;
+                        } else {
+                            iNarr++;
+                        }
+                    } else if (!site.cluster) {
+
+                        iNarr = 0;
+                        that.updateNarrative(obj[0]);
+                        action(siteZoom, siteCent);
+                        currIndex === idIndex.length - 1 ? currIndex = 0 : currIndex++;
                     }
                 };
 
@@ -45842,12 +45869,13 @@ var FooterSlides = function (_Component) {
                 if (currIndex === -1 || currIndex >= idIndex.length - 1) {
                     currIndex = 0;
                 };
+                var iNarr = 0;
 
                 var that = this.props;
                 var action = this.flyToSingle;
 
                 var myVar = setTimeout(updateElements, 500);
-                this.timer = setInterval(updateElements, 5000);
+                this.timer = setInterval(updateElements, 3000);
             } else if (e.target.attributes.value.value === 'pause') {
                 //the pause setting...
 
@@ -45900,21 +45928,28 @@ var FooterSlides = function (_Component) {
                             } })
                     ),
                     _react2.default.createElement(
-                        'div',
-                        { className: 'nIcon flex center middle', value: '' },
-                        _react2.default.createElement('span', { value: 'backward', className: 'fa fa-backward opacity25' })
+                        'p',
+                        null,
+                        '(with zoom)'
                     ),
-                    _react2.default.createElement(
+                    !this.props.options.playTour && _react2.default.createElement(
                         'div',
                         { className: 'nIcon flex center middle', value: '' },
-                        _react2.default.createElement('span', { value: 'stop', className: 'fa fa-stop opacity25', onClick: function onClick(e) {
-                                return _this2.animate(e);
+                        _react2.default.createElement('span', { value: 'play', className: 'fa fa-play opacity25', onClick: function onClick(e) {
+                                return _this2.animate(e, 'out');
+                            } })
+                    ),
+                    this.props.options.playTour && _react2.default.createElement(
+                        'div',
+                        { className: 'nIcon flex center middle', value: '' },
+                        _react2.default.createElement('span', { value: 'pause', className: 'fa fa-pause opacity25', onClick: function onClick(e) {
+                                return _this2.animate(e, 'out');
                             } })
                     ),
                     _react2.default.createElement(
-                        'div',
-                        { className: 'nIcon flex center middle', value: '' },
-                        _react2.default.createElement('span', { value: 'forward', className: 'fa fa-forward opacity25' })
+                        'p',
+                        { className: 'opacity25' },
+                        '(no zoom)'
                     ),
                     _react2.default.createElement(
                         'div',
@@ -47061,7 +47096,6 @@ var MapSVG = function (_Component) {
         value: function zoomTo(e, id) {
             // rework to parallel basic scroll zoom...
             e.preventDefault();
-            console.log('getting here', id);
 
             this.props.updateSite(id);
             var site = this.props.sites.allSites.filter(function (site) {
@@ -47084,7 +47118,7 @@ var MapSVG = function (_Component) {
             }
 
             var zoom = this.props.map.currZoom < 5 ? this.props.map.currZoom + 1 : 5;
-            console.log(this.props.map.currZoom, zoom);
+            //console.log(this.props.map.currZoom, zoom);
             //let tilesize = this.props.map.tileSize;
 
             var offset = (0, _rawTiles.centerRescaled)(zoom, siteCent, win, 128);
@@ -47154,7 +47188,6 @@ var MapSVG = function (_Component) {
                 this.props.panelSmall();
             };
 
-            console.log(id);
             this.zoomTo(e, id);
 
             this.showLabel(e);
@@ -47182,9 +47215,7 @@ var MapSVG = function (_Component) {
                 details = _spacingFrame.details;
 
             //console.log('results?', this.props.map.windowSize, currentSite, clipDetails, details);
-
-
-            console.log('results?', currentSite);
+            //console.log('results?', currentSite);
 
             return _react2.default.createElement(
                 'div',
@@ -47445,7 +47476,7 @@ var PanelBase = function (_Component) {
         'div',
         { className: this.props.baseClass, ref: 'sizeP', id: 'panelWin', onAnimationEnd: function onAnimationEnd(e) {
             return _this2.refSize(e);
-          }, style: { height: this.props.map.windowSize[1] + 'px' } },
+          }, style: { height: this.props.map.windowSize[1] + 6 + 'px' } },
         _react2.default.createElement(
           'h2',
           { className: 'BornholmSandvig' },
