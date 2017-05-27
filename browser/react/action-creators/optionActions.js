@@ -13,6 +13,8 @@ export const SET_PANEL_SMALL = 'SET_PANEL_SMALL';
 export const SET_PANEL_LARGE = 'SET_PANEL_LARGE';
 export const SET_PANEL_MID = 'SET_PANEL_MID';
 
+export const PLAY_TOUR = 'PLAY_TOUR';
+
 // //-------------------ACTION CREATORS - vanilla loading of information
 export const setColor = (bool) => {
 	return {
@@ -20,6 +22,13 @@ export const setColor = (bool) => {
 		color: bool
 	};
 };
+
+export const playTour = (bool) => {
+	return {
+		type: PLAY_TOUR,
+		play: bool
+	};
+}
 
 export const setAnno = (bool) => {
 	return {
@@ -96,6 +105,8 @@ const initOptions = {
 	panelSmall: false,
 	panelLarge: false,
 	panelMid: false,
+
+	playTour: false,
 };
 
 
@@ -106,6 +117,10 @@ export const optionReducer = (prevState = initOptions, action) => {
 
 	case SET_COLOR:
 		newState.color = action.color;
+		break;
+
+	case PLAY_TOUR:
+		newState.playTour = action.play;
 		break;
 
 	case SET_ANNO:
@@ -166,6 +181,10 @@ export const updateAnno = bool => dispatch => {
 
 export const updateDetail = bool => dispatch => {
   dispatch(setAnnoZoom(bool));
+};
+
+export const togglePlay = bool => dispatch => {
+  dispatch(playTour(bool));
 };
 
 

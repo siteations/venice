@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { centerRescaled, tiling, scaleOps, sitesFiltered } from '../plug-ins/rawTiles.js';
 import {updateSite} from '../action-creators/siteActions.js';
 import {  setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
+import { togglePlay } from '../action-creators/optionActions.js';
 import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
 
 //connect later to store;
@@ -47,9 +48,12 @@ const tour = [
 class FooterSlides extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            tourId: 0
+        };
         this.setSite=this.setSite.bind(this);
         this.flyToSingle=this.flyToSingle.bind(this);
+        this.animate = this.animate.bind(this);
     }
 
     setSite(e){
@@ -87,6 +91,59 @@ class FooterSlides extends Component {
         //current zoom and tile size... allows for conversion
     }
 
+    animate(e){
+        e.preventDefault();
+
+        if (e.target.attributes.value.value === 'play'){
+            this.props.togglePlay(true);
+
+        var idIndex = tour.map(sites=>sites.id), currIndex = idIndex.indexOf(this.props.sites.currSite);
+        if (currIndex === -1 || currIndex >= idIndex.length-1) {currIndex = 0};
+
+        const that = this.props;
+        const action = this.flyToSingle;
+
+        function updateElements(){
+
+                console.log(tour[currIndex]);
+                var {id, zoom} = tour[currIndex];
+                let siteId = id, siteZoom = zoom;
+
+                that.updateSite(siteId);
+
+                let site = that.sites.allSites.filter(site=>site.id === +siteId)[0];
+                let siteCent = [site.cx, site.cy];
+                that.setTitles(site.name.split('.'));
+
+                let obj = that.sites.genNarratives.filter(narr => +narr.coreId===+siteId);
+                that.updateNarrative(obj[0]);
+
+                action(siteZoom, siteCent);
+
+                if (currIndex===idIndex.length-1){
+                    currIndex = 0;
+                } else {
+                    currIndex ++;
+                }
+
+        }
+
+        this.timer = setInterval(updateElements, 3000);
+
+        } else if (e.target.attributes.value.value === 'pause'){ //the pause setting...
+
+            this.props.togglePlay(false);
+            clearInterval(this.timer);
+
+        } else if (e.target.attributes.value.value === 'stop'){ //should add another route or local state variable that
+
+            this.props.togglePlay(false);
+            this.setState({tourId:0});
+            clearInterval(this.timer);
+
+        };
+    }
+
     render(){
 
     //console.log(this.props.map);
@@ -94,11 +151,18 @@ class FooterSlides extends Component {
 	return (
 	        <div className="row footer">
                   <div className="row flex center">
-                        <div value=""><span value="" className="fa fa-chevron-left fa-2x white"></span></div>
                         {tour.map(site=>{
                             return <div className="bIcon" value={site.id+'-'+site.zoom} onClick={e=>this.setSite(e)}>{'test '+site.id}</div>
                         })}
-                        <div value=""><span value="" className="fa fa-chevron-right fa-2x white"></span></div>
+                        {!this.props.options.playTour &&
+                            <div className="nIcon flex center middle" value=""><span value="play" className="fa fa-play" onClick={(e)=>this.animate(e)}></span></div>
+                        }
+                        {this.props.options.playTour &&
+                            <div className="nIcon flex center middle" value=""><span value="pause" className="fa fa-pause" onClick={(e)=>this.animate(e)}></span></div>
+                        }
+                        <div className="nIcon flex center middle" value=""><span value="backward" className="fa fa-backward opacity25"></span></div>
+                        <div className="nIcon flex center middle" value=""><span value="stop" className="fa fa-stop opacity25" onClick={(e)=>this.animate(e)}></span></div>
+                        <div className="nIcon flex center middle" value=""><span value="forward" className="fa fa-forward opacity25"></span></div>
                         <div className="l20">
                                 <h4 className="BornholmSandvig closerT">tour of venice religious experience</h4>
                                 <p className="closerB">click thumbnails for a guided sites & narratives</p>
@@ -144,6 +208,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setCurrTilesize: (size) => {
         dispatch(updateTile(size));
+    },
+    togglePlay: (bool) => {
+        dispatch(togglePlay(bool));
     },
 }}
 

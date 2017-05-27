@@ -77,7 +77,7 @@ class Frame extends Component {
 				        	</div>
 			        	</div>
 			        }
-			        {this.props.options.panelNone &&
+			        {this.props.options.panelNone && !this.props.options.panelStart &&
 			        	<div className="flex between">
 				        	<MapSVG baseClass="mFull mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
@@ -85,7 +85,6 @@ class Frame extends Component {
 				        	</div>
 			        	</div>
 			        }
-
 			        {this.props.options.panelSmall && this.props.options.panelMid &&
 			        	<div className="flex between">
 				        	<MapSVG baseClass="mPart mainMaps" />
