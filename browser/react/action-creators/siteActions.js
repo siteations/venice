@@ -1,5 +1,11 @@
+import axios from 'axios';
 //---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
-import {  cirMain, cirMinor, clusterTest, narrativeTest } from '../pre-db/cirTest.js';
+import {siteSeed, detailSeed, narrativeSeed, imageSeed } from '../pre-db/cirTest.js';
+
+//var cirMain = siteSeed;
+var cirMinor = detailSeed;
+var narrativeTest = narrativeSeed;
+var imageTest = imageSeed;
 
 //-------------------CONSTANTS
 
@@ -219,16 +225,31 @@ export const siteReducer = (prevState = initSites, action) => {
 
 export const loadSites = () => dispatch => {
 	//rework for axios later
-	dispatch(getAllSites(cirMain));
+	const allSites = axios.get('/api/sites')
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((sites) => {
+	    		dispatch(getAllSites(sites));
+	    })
+	    .catch(console.log);
 }
 
 export const loadFilteredSites = (layerArr) => dispatch => { //
 
-	let selectSites = cirMain.filter(circle =>{
-		return layerArr.indexOf(circle.type)>-1;
-	})
-	//rework for axios later
-	dispatch(getFilteredSites(selectSites));
+	const allSites = axios.get('/api/sites')
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((sites) => { //front-end filter vs. back
+
+			 var selectSites = sites.filter(circle =>{
+					return layerArr.indexOf(circle.type)>-1;
+				})
+
+				dispatch(getFilteredSites(selectSites));
+			})
+			.catch(console.log);
 }
 
 export const updateSite = (site)=> dispatch =>{
@@ -247,12 +268,19 @@ export const loadFiltered = (layers) => dispatch => {
 
 export const loadLayers = () => dispatch => { //loading all
 
-	let cirLayers = [];
-	cirMain.forEach(circle=>{
-    		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
+		const allSites = axios.get('/api/sites')
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((sites) => { //front-end filter vs. back
+
+			let cirLayers = [];
+			site.forEach(circle=>{
+		    		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
+				})
+			dispatch(getAllLayers(cirLayers));
 		})
-	//rework for axios later
-	dispatch(getAllLayers(cirLayers));
+	   .catch(console.log);
 }
 
 export const addHoverSite = (layer) => dispatch =>{

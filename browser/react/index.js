@@ -7,7 +7,6 @@ import store from '../store';
 //--------------------AXIOS & d3 & other libraries--------------------
 
 import axios from 'axios';
-import * as d3 from 'd3';
 
 //-------------------styles------------------------
 
@@ -80,7 +79,7 @@ render(
    <Provider store={store}>
      <Router>
        <div>
-  		<Route exact path="/" component={App} />
+  		<Route exact path="/Venice" component={App} />
 		  {/* <Route path="/templates" component={Templates} />
 		  <Route path="/about" component={About} /> {/* //about tabs should hold intro, directions, usecases
 		  <Route path="/profile/:user" component={User} />
