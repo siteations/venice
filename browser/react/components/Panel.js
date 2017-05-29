@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 
+import ImageSlides from './ImageSlider.js';
+
 import { setPanelSizing } from '../action-creators/panelActions.js';
+import {imageSeries} from '../pre-db/cirTest.js';
 
 class PanelBase extends Component {
 	constructor(props) {
@@ -40,10 +43,17 @@ class PanelBase extends Component {
 				    <h4>{this.props.panel.subtitle}</h4>
 				    <br/>
 				    <h3 className="BornholmSandvig">{obj.title}</h3>
-				    <div>
-				    	<img src={obj.src} style={{width:`${this.props.panel.imageWidth}px`}}/>
-				    </div>
-				    <h5><span className="Trenda-Bold">Image: </span>{obj.caption}</h5>
+      		    <div>
+      		    	<img src={obj.src} style={{width:`${this.props.panel.imageWidth}px`}}/>
+      		    </div>
+              <div className="row m10">
+                <div className="col-xs-1 col-xs-offset-4 text-center"><span id='1' className="fa fa-circle"></span></div>
+                <div className="col-xs-1 text-center"><span id='1' className="fa fa-circle-o"></span></div>
+                <div className="col-xs-1 text-center"><span id='1' className="fa fa-circle-o"></span></div>
+                <div className="col-xs-1 text-center"><span id='1' className="fa fa-circle-o"></span></div>
+              </div>
+            	<h5><span className="Trenda-Bold">Image: </span>{obj.caption}</h5>
+
 				    <br/>
 				    <p>{obj.text}</p>
 				    <br/>

@@ -46,6 +46,7 @@ export const narrativeTest = [
 		minorId: null,
 		cluster: 1,
 		title: 'Lutherans on the Grand Canal',
+		srcId: [1],
 		src: '/img/placeholder_06.jpg ',
 		caption: 'lorem ipsum',
 		text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sem est, ultricies at cursus non, sodales bibendum elit. Suspendisse pellentesque accumsan risus, ac malesuada risus sodales at. Cras imperdiet tellus sed dolor volutpat pellentesque. Quisque eleifend efficitur lacus. Maecenas ornare blandit turpis non bibendum. Cras vel fermentum tortor, vitae auctor sapien. Suspendisse massa neque, pulvinar vel pulvinar vitae, iaculis sit amet massa. Nunc accumsan sapien quis sapien semper ullamcorper. Etiam pellentesque orci ac lectus tempor tincidunt. In viverra nulla felis, ut mollis tortor semper sit amet. Maecenas nec est lacus. Quisque erat lorem, malesuada non faucibus id, fermentum eget velit.',
@@ -56,6 +57,7 @@ export const narrativeTest = [
 		minorId: 1,
 		cluster: 1,
 		title: 'Lutheran Presence & German Trade',
+		srcId: [2,3],
 		src:'/img/placeholder_01.jpg' ,
 		caption: 'lorem ipsum',
 		text: 'In eu semper nibh, blandit euismod massa. Sed ut pulvinar lorem. Praesent sit amet porta leo. Proin luctus enim sit amet risus molestie, ut elementum leo pulvinar. Morbi maximus felis nec arcu malesuada, a venenatis felis consectetur. Nullam in risus sem. Aenean eget luctus nulla.',
@@ -65,6 +67,7 @@ export const narrativeTest = [
 		minorId: 2,
 		cluster: 1,
 		title: 'Protestant Prints & Lutheran Bible Circulation in Venice',
+		srcId:[4],
 		src:'/img/placeholder_02.jpg' ,
 		caption: 'lorem ipsum',
 		text: 'Donec diam velit, facilisis vitae pharetra rutrum, sodales et orci. Vestibulum id ultrices justo, at lobortis ligula. Aliquam erat volutpat. Sed molestie malesuada lacinia. Proin ex massa, ultricies nec arcu vitae, malesuada aliquet justo. Sed tincidunt, orci sed euismod ultrices, turpis tellus aliquam purus, a rutrum lacus nisl at eros. Maecenas quis diam nunc. Phasellus ac quam eu urna ultrices sagittis. Nulla facilisi. Donec sodales neque sit amet urna dapibus maximus dapibus lobortis metus. Sed vel nisi id lectus laoreet hendrerit nec quis mi. Suspendisse efficitur nisi sed tincidunt congue.',
@@ -74,6 +77,7 @@ export const narrativeTest = [
 		minorId: 3,
 		cluster: 1,
 		title: 'Lutheran Religious Practices',
+		srcId: [5],
 		src:'/img/placeholder_03.jpg' ,
 		caption: 'lorem ipsum',
 		text: 'Quisque tincidunt blandit ipsum, et consectetur dui vulputate nec. Praesent quis velit consectetur quam pharetra feugiat ut vel nibh. Aliquam porttitor nibh et ullamcorper feugiat. Quisque tempus pretium nunc, eu egestas turpis posuere in. Proin enim nunc, vestibulum at erat at, tempor semper leo. Nunc tincidunt enim sed tempus dapibus. Nullam vel elit vitae velit vulputate lacinia vel non erat. Fusce in feugiat nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur iaculis dictum placerat. Maecenas et risus nec metus blandit laoreet. Donec enim velit, hendrerit eu justo at, mollis elementum risus. In tristique metus at dolor tristique, nec aliquam arcu faucibus. Nullam nec risus tortor.',
@@ -83,8 +87,43 @@ export const narrativeTest = [
 		minorId: 4,
 		cluster: 1,
 		title: 'Germanic Costumes & Cultural Portraits',
+		srcId: [6],
 		src:'/img/placeholder_05.jpg' ,
 		caption: 'lorem ipsum',
 		text: 'Quisque in purus faucibus erat iaculis maximus. Maecenas posuere interdum massa, nec tincidunt orci placerat quis. Aenean at tempor lacus, ac malesuada augue. Vestibulum cursus mauris vel nulla pulvinar, quis aliquet orci porttitor. Fusce vel gravida arcu, et tempor nibh. Cras blandit eu urna eu bibendum. Donec id lorem rutrum, imperdiet tellus vel, pulvinar eros. Mauris vulputate odio at metus finibus rhoncus. Fusce ornare risus velit, nec viverra ligula porta ultrices. Donec nunc risus, tincidunt a risus id, commodo feugiat eros. Donec eleifend mauris nec augue rutrum, eu euismod felis blandit. Praesent vel dolor in mi efficitur sollicitudin. Integer molestie varius sapien, a fringilla justo faucibus a. Curabitur maximus feugiat imperdiet. Praesent laoreet, erat nec condimentum tempor, mi elit maximus nunc, at aliquam orci odio in purus. Sed mattis facilisis odio, quis sodales ex efficitur id.',
 		catalog: 'lorem ipsum', }
+];
+
+const imageSeries = [
+	{
+		id: 1,
+		src: '/img/placeholder_06.jpg ',
+		caption: 'lorem ipsum',
+	},
+	{
+		id: 2,
+		src:'/img/placeholder_01.jpg' ,
+		caption: 'lorem ipsum',
+	},
+	{
+		id: 3,
+		src:'/img/placeholder_04.jpg' ,
+		caption: 'lorem ipsum',
+	},
+	{
+		id: 4,
+		src:'/img/placeholder_02.jpg' ,
+		caption: 'lorem ipsum',
+	},
+	{
+		id: 5,
+		src:'/img/placeholder_03.jpg' ,
+		caption: 'lorem ipsum',
+	},
+	{
+		id: 6,
+		src:'/img/placeholder_05.jpg' ,
+		caption: 'lorem ipsum',
+	},
+
 ];

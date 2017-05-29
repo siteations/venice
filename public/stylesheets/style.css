@@ -477,6 +477,10 @@ a:hover {
 	height: 20px;
 }
 
+.m10 {
+	margin-top: 10px;
+}
+
 .rotate {
 	-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
   transform: rotate(180deg);
