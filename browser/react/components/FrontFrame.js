@@ -12,6 +12,7 @@ import {Preload} from 'react-preload';
 import {tilepreload} from '../plug-ins/rawTiles.js';
 
 import {loadLayers, loadSites, addAllLayers, loadFiltered } from '../action-creators/siteActions.js';
+import {getAllToursThemes} from '../action-creators/optionActions.js';
 
 
 var images = tilepreload();
@@ -136,6 +137,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         dispatch(loadSites());
         dispatch(loadLayers());
         dispatch(addAllLayers('add'));
+        dispatch(getAllToursThemes());
     },
 
   }

@@ -48,6 +48,27 @@ router.get('/images', (req, res, next)=>{
 		});
 });
 
+router.get('/tours', (req, res, next)=>{
+		Tours.findAll({})
+		.then(tourList=>{
+			res.send(tourList);
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
+
+router.get('/themes', (req, res, next)=>{
+		Themes.findAll({})
+		.then(themeList=>{
+			res.send(themeList);
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
 
 
 //-------------GET by vessel id FOR EACH TABLE----------generic grabs for summary

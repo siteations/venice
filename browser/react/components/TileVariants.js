@@ -7,7 +7,7 @@ export const ClipTiles = (props) => {
     //props.data, props.wSize, props.tSize, props.clip
 	return (
             <g>
-            { props.data.map(tile=>{
+            { props.data.map((tile, i)=>{
 
                     if (tile.xpos<props.wSize[0] && tile.xpos+256>=0 && tile.ypos<props.wSize[1] && tile.ypos+256>=0 ){ // only show those on screen
 
@@ -20,6 +20,7 @@ export const ClipTiles = (props) => {
                                     y = { tile.ypos }
                                     clipPath = {props.clip}
                                     opacity={1}
+                                    key={`clipTile${i}`}
                             />
                             )
                     }
@@ -33,7 +34,7 @@ export const BackgroundTiles = (props) => {
     //props.data, props.wSize, props.tSize, props.color
     return(
            <g>
-           { props.data.map(tile=>{
+           { props.data.map((tile,i)=>{
                     if (tile.xpos<props.wSize[0] && tile.xpos+256>=0 && tile.ypos<props.wSize[1] && tile.ypos+256>=0 ){ // only show those on screen
 
                     return (
@@ -45,6 +46,7 @@ export const BackgroundTiles = (props) => {
                                     y = { tile.ypos }
                                     opacity = {(props.color===false)? .75 : 1 }
                                     filter={(props.color===false)? "url(#greyscale)" : "" }
+                                    key={`backgroundTile${i}`}
                             />
                     )}
                 })

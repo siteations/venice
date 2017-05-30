@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 
-import ImageSlides from './ImageSlider.js';
+import Imagetrey from './ImageSlider.js';
 
 import { setPanelSizing } from '../action-creators/panelActions.js';
 import {imageSeries} from '../pre-db/cirTest.js';
@@ -33,9 +33,10 @@ class PanelBase extends Component {
 
 
   render(){
-  	let obj;
+  	let obj, image;
   	(this.props.panel.narrObj)? obj=this.props.panel.narrObj : obj={};
-  	//console.log(this.props.panel.panelSize, this.props.panel.panelRatio);
+    (obj.imageSeries) ? image = this.props.sites.genImages.filter(images => +images.imageSeries === +obj.imageSeries) : image = [] ;
+  	console.log(image);
 
   	return (
   	     <div className={this.props.baseClass} ref="sizeP" id="panelWin" onAnimationEnd = {e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`}}>
@@ -43,21 +44,13 @@ class PanelBase extends Component {
 				    <h4>{this.props.panel.subtitle}</h4>
 				    <br/>
 				    <h3 className="BornholmSandvig">{obj.title}</h3>
-      		    <div>
-      		    	<img src={obj.src} style={{width:`${this.props.panel.imageWidth}px`}}/>
-      		    </div>
-              <div className="row m10">
-                <div className="col-xs-1 col-xs-offset-4 text-center"><span id='1' className="fa fa-circle"></span></div>
-                <div className="col-xs-1 text-center"><span id='1' className="fa fa-circle-o"></span></div>
-                <div className="col-xs-1 text-center"><span id='1' className="fa fa-circle-o"></span></div>
-                <div className="col-xs-1 text-center"><span id='1' className="fa fa-circle-o"></span></div>
-              </div>
-            	<h5><span className="Trenda-Bold">Image: </span>{obj.caption}</h5>
-
+              {image.length > 0 &&
+                <Imagetrey image={image} onAnimationEnd = {e=> this.refSize(e)} width={this.props.panel.imageWidth} height={(this.props.map.windowSize[1]+6)*0.65} />
+              }
 				    <br/>
 				    <p>{obj.text}</p>
 				    <br/>
-				    <p><span className="Trenda-Bold">Catalog Links: </span>{obj.catalog}</p>
+				    <p><span className="Trenda-Bold">Catalog Links: </span><a href={obj.catalogLink}>{obj.source}</a></p>
 				</div>
 
   	)
