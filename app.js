@@ -65,7 +65,7 @@ app.use(express.static('./public/img/'));
 app.use('/api', require('./routes/index.js'));
 
 //catch all react-router front-end routes and direct to index
-var validFrontendRoutes = ['/', '/map', '/Venice'];
+var validFrontendRoutes = ['/', '/map', '/Venice', '/Venice-Edit'];
 var indexPath = path.join(__dirname, 'browser', 'index.html');
 console.log(__dirname, indexPath);
 validFrontendRoutes.forEach(function (stateRoute) {

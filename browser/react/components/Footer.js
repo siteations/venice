@@ -150,10 +150,10 @@ class FooterSlides extends Component {
 	        <div className="row footer">
                   <div className="row flex center">
                         {tour.map(site=>{
-                            return <div className={(site.siteId===this.props.sites.currSite)? 'bIconSelected' : 'bIcon'}
+                            return <div className={(site.siteId===this.props.sites.currSite)? 'bIconSelected text-center' : 'bIcon  text-center'}
                                 value={site.siteId+'-'+site.zoom}
                                 key = {site.siteId+'-'+site.zoom}
-                                onClick={e=>this.setSite(e)}>{'test '+site.siteId}</div>
+                                onClick={e=>this.setSite(e)}>{site.siteId}</div>
                         })}
                         {!this.props.options.playTour &&
                             <div className="nIcon flex center middle" value=""><span value="play" className="fa fa-play" onClick={(e)=>this.animate(e)}></span></div>

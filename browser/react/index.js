@@ -80,6 +80,7 @@ render(
      <Router>
        <div>
   		<Route exact path="/Venice" component={App} />
+  		<Route exact path="/Venice-Edit" component={App} />
 		  {/* <Route path="/templates" component={Templates} />
 		  <Route path="/about" component={About} /> {/* //about tabs should hold intro, directions, usecases
 		  <Route path="/profile/:user" component={User} />

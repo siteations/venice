@@ -33654,6 +33654,10 @@ var _FrontFrame = __webpack_require__(301);
 
 var _FrontFrame2 = _interopRequireDefault(_FrontFrame);
 
+var _FrameEdit = __webpack_require__(690);
+
+var _FrameEdit2 = _interopRequireDefault(_FrameEdit);
+
 var _colors = __webpack_require__(93);
 
 var _MuiThemeProvider = __webpack_require__(231);
@@ -33679,27 +33683,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 (0, _reactTapEventPlugin2.default)();
-//--------add actions here------------
-
-
-//-----------add redux here------------
-
-/*const mapStateToProps = (state =>{
-	if immutable and extracting variables: Object.keys(state.get('boxes').toJS());
-	return {
-		thing: state.thing or for immutable state.get('thing'),
-	}
-})
-
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		setThing(thing){
-			dispatch(setThing(thing))
-		},
-	}
-}
-*/
 
 var muiTheme = (0, _getMuiTheme2.default)({
 	palette: {
@@ -33735,13 +33718,16 @@ var App = function (_Component) {
 		key: 'render',
 		value: function render() {
 
+			console.log('app props', this.props.location.pathname);
+
 			return _react2.default.createElement(
 				_MuiThemeProvider2.default,
 				{ muiTheme: muiTheme },
 				_react2.default.createElement(
 					'div',
 					{ className: 'container-fluid ' },
-					_react2.default.createElement(_FrontFrame2.default, null)
+					this.props.location.pathname === '/Venice' && _react2.default.createElement(_FrontFrame2.default, null),
+					this.props.location.pathname === '/Venice-Edit' && _react2.default.createElement(_FrameEdit2.default, null)
 				)
 			);
 		}
@@ -35124,13 +35110,13 @@ var FooterSlides = function (_Component) {
                     tour.map(function (site) {
                         return _react2.default.createElement(
                             'div',
-                            { className: site.siteId === _this3.props.sites.currSite ? 'bIconSelected' : 'bIcon',
+                            { className: site.siteId === _this3.props.sites.currSite ? 'bIconSelected text-center' : 'bIcon  text-center',
                                 value: site.siteId + '-' + site.zoom,
                                 key: site.siteId + '-' + site.zoom,
                                 onClick: function onClick(e) {
                                     return _this3.setSite(e);
                                 } },
-                            'test ' + site.siteId
+                            site.siteId
                         );
                     }),
                     !this.props.options.playTour && _react2.default.createElement(
@@ -37085,7 +37071,8 @@ const onVesselEnter = (nextRouterState) => {
 		_react2.default.createElement(
 			'div',
 			null,
-			_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice', component: _App2.default })
+			_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice', component: _App2.default }),
+			_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice-Edit', component: _App2.default })
 		)
 	)
 ), document.getElementById('app'));
@@ -81490,6 +81477,327 @@ module.exports = function() {
 	throw new Error("define cannot be used indirect");
 };
 
+
+/***/ }),
+/* 690 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(14);
+
+var _reactRedux = __webpack_require__(33);
+
+var _Header = __webpack_require__(302);
+
+var _Header2 = _interopRequireDefault(_Header);
+
+var _Footer = __webpack_require__(300);
+
+var _Footer2 = _interopRequireDefault(_Footer);
+
+var _MapBar = __webpack_require__(304);
+
+var _MapBar2 = _interopRequireDefault(_MapBar);
+
+var _Mapd = __webpack_require__(306);
+
+var _Mapd2 = _interopRequireDefault(_Mapd);
+
+var _Panelform = __webpack_require__(691);
+
+var _Panelform2 = _interopRequireDefault(_Panelform);
+
+var _reactPreload = __webpack_require__(619);
+
+var _rawTiles = __webpack_require__(85);
+
+var _siteActions = __webpack_require__(56);
+
+var _optionActions = __webpack_require__(55);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var images = (0, _rawTiles.tilepreload)();
+//console.log(images);
+
+var loadingIndicator = _react2.default.createElement(
+	'div',
+	null,
+	'Loading...'
+);
+
+var FrameEd = function (_Component) {
+	_inherits(FrameEd, _Component);
+
+	function FrameEd(props) {
+		_classCallCheck(this, FrameEd);
+
+		var _this = _possibleConstructorReturn(this, (FrameEd.__proto__ || Object.getPrototypeOf(FrameEd)).call(this, props));
+
+		_this.state = {
+			start: true,
+			intro: false,
+			geo: false,
+			button: 'navigate',
+			select: false,
+			selected: [],
+			layers: ["monastery", "convent", "non-catholic"] };
+		_this.hoverName = _this.hoverName.bind(_this);
+		_this.nav = _this.nav.bind(_this);
+		return _this;
+	}
+
+	_createClass(FrameEd, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			this.props.getLayers();
+		}
+	}, {
+		key: 'hoverName',
+		value: function hoverName(e) {
+			e.preventDefault();
+			var val = e.target.attributes.value.value;
+			this.setState({ button: val });
+		}
+	}, {
+		key: 'nav',
+		value: function nav(e) {
+			e.preventDefault();
+			if (this.state.select === true && this.state.selected.length === 1) {
+				this.setState({ button: this.state.selected[0] });
+			} else if (this.state.select === true && this.state.selected.length > 1) {
+				this.setState({ button: 'multiple' });
+			} else if (this.state.select === false) {
+				this.setState({ button: 'navigate' });
+			}
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			//full for conditional rendering of side panel
+
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(_Header2.default, null),
+				_react2.default.createElement(
+					'div',
+					{ className: 'row' },
+					_react2.default.createElement('div', { id: 'container' }),
+					_react2.default.createElement(
+						'div',
+						{ className: 'flex between' },
+						_react2.default.createElement(_Mapd2.default, { baseClass: 'mPart mainMaps' }),
+						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav }),
+						_react2.default.createElement(_Panelform2.default, { baseClass: 'panelOpen' })
+					)
+				),
+				_react2.default.createElement(_Footer2.default, null)
+			);
+		}
+	}]);
+
+	return FrameEd;
+}(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+	return {
+		map: state.map,
+		options: state.options,
+		sites: state.sites
+	};
+};
+
+//setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	return {
+		getLayers: function getLayers() {
+			dispatch((0, _siteActions.loadSites)());
+			dispatch((0, _siteActions.loadLayers)());
+			dispatch((0, _siteActions.addAllLayers)('add'));
+			dispatch((0, _optionActions.getAllToursThemes)());
+		}
+
+	};
+};
+
+var FrontEdit = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FrameEd);
+
+exports.default = FrontEdit;
+
+/***/ }),
+/* 691 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(14);
+
+var _reactRedux = __webpack_require__(33);
+
+var _ImageSlider = __webpack_require__(303);
+
+var _ImageSlider2 = _interopRequireDefault(_ImageSlider);
+
+var _panelActions = __webpack_require__(84);
+
+var _cirTest = __webpack_require__(106);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PanelEdit = function (_Component) {
+  _inherits(PanelEdit, _Component);
+
+  function PanelEdit(props) {
+    _classCallCheck(this, PanelEdit);
+
+    var _this = _possibleConstructorReturn(this, (PanelEdit.__proto__ || Object.getPrototypeOf(PanelEdit)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(PanelEdit, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var obj = void 0,
+          image = void 0;
+      this.props.panel.narrObj ? obj = this.props.panel.narrObj : obj = {};
+      obj.imageSeries ? image = this.props.sites.genImages.filter(function (images) {
+        return +images.imageSeries === +obj.imageSeries;
+      }) : image = [];
+      console.log(image);
+
+      return _react2.default.createElement(
+        'div',
+        { className: this.props.baseClass, ref: 'sizeP', id: 'panelWin', onAnimationEnd: function onAnimationEnd(e) {
+            return _this2.refSize(e);
+          }, style: { height: this.props.map.windowSize[1] + 6 + 'px' } },
+        _react2.default.createElement(
+          'p',
+          null,
+          ' click on map to select site;',
+          _react2.default.createElement('br', null),
+          ' add/edit its\' narratives, captions, and other text below'
+        ),
+        _react2.default.createElement(
+          'h2',
+          { className: 'BornholmSandvig' },
+          'Site Type: ',
+          this.props.panel.title
+        ),
+        _react2.default.createElement(
+          'h4',
+          null,
+          'Site Name: ',
+          this.props.panel.subtitle
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          'h3',
+          { className: 'BornholmSandvig' },
+          'Descriptive Title:',
+          obj.title
+        ),
+        image.length > 0 && _react2.default.createElement(_ImageSlider2.default, { image: image, onAnimationEnd: function onAnimationEnd(e) {
+            return _this2.refSize(e);
+          }, width: this.props.panel.imageWidth, height: (this.props.map.windowSize[1] + 6) * 0.65 }),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Core Text (50-90 words): ',
+          obj.text,
+          ' '
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Catalog Source (Chicago Style Citation): '
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Catalog Link (at Newberry): '
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Bibliography for Description (Chicago Style Citations): '
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Text Credits (Name, Title, Affiliation): '
+        )
+      );
+    }
+  }]);
+
+  return PanelEdit;
+}(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    map: state.map,
+    options: state.options,
+    sites: state.sites,
+    panel: state.panel
+  };
+};
+
+//setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+  return {
+    updatePanelSize: function updatePanelSize(size, ratio) {
+      dispatch((0, _panelActions.setPanelSizing)(size, ratio));
+    }
+  };
+};
+
+var PanelForm = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PanelEdit);
+
+exports.default = PanelForm;
 
 /***/ })
 /******/ ]);
