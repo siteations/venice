@@ -6,7 +6,7 @@ import Header from './Header.js';
 import Footer from './Footer.js';
 import MapBar from './MapBar.js';
 import MapSVG from './Mapd3.js';
-import Panel from './Panel.js';
+import PanelForm from './Panelform.js';
 
 import {Preload} from 'react-preload';
 import {tilepreload} from '../plug-ins/rawTiles.js';
@@ -20,7 +20,7 @@ var images = tilepreload();
 
 var loadingIndicator = (<div>Loading...</div>);
 
-class Frame extends Component {
+class FrameEd extends Component {
 	constructor(props){
 		super(props);
 		this.state= {
@@ -70,50 +70,11 @@ class Frame extends Component {
 			        <div className="row">
 			        <div id="container">
 			        </div>
-			        {this.props.options.panelNone && this.props.options.panelStart &&
-			        	<div className="flex between">
-				        	<MapSVG baseClass="mFullO mainMaps" />
-				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<div className="panelClose">
-				        	</div>
-			        	</div>
-			        }
-			        {this.props.options.panelNone && !this.props.options.panelStart &&
-			        	<div className="flex between">
-				        	<MapSVG baseClass="mFull mainMaps" />
-				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<div className="panelClose">
-				        	</div>
-			        	</div>
-			        }
-			        {this.props.options.panelSmall && this.props.options.panelMid &&
 			        	<div className="flex between">
 				        	<MapSVG baseClass="mPart mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<Panel baseClass="panelOpen" />
+				        	<PanelForm baseClass="panelOpen" />
 			        	</div>
-			        }
-			        {this.props.options.panelSmall && !this.props.options.panelMid &&
-			        	<div className="flex between">
-				        	<MapSVG baseClass="mPart mainMaps" />
-				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<Panel baseClass="panelOpenPart" />
-			        	</div>
-			        }
-			        {this.props.options.panelLarge && this.props.options.panelMid &&
-			        	<div className="flex between">
-				        	<MapSVG baseClass="mQuarter mainMaps" />
-				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<Panel baseClass="panelLargePart" />
-			        	</div>
-			        }
-			        {this.props.options.panelLarge && !this.props.options.panelMid &&
-			        	<div className="flex between">
-				        	<MapSVG baseClass="mQuarter mainMaps" />
-				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<Panel baseClass="panelLarge" />
-			        	</div>
-			        }
 			        </div>
 			        <Footer />
 			    </div>
@@ -143,8 +104,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-const FrontFrame = connect(mapStateToProps, mapDispatchToProps)(Frame);
+const FrontEdit = connect(mapStateToProps, mapDispatchToProps)(FrameEd);
 
 
-export default FrontFrame;
+export default FrontEdit;
 

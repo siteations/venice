@@ -1,76 +1,75 @@
 const router = require('express').Router();
-const {Crews, Voyages, Animals, AllAnimals, Contacts, Places} = require('../db/index.js');
+const {Images, Narratives, Details, Sites, Tours, Themes } = require('../db/models/index.js');
 
 //rework once you've done the db design/setup mysql tables
 
 //nested under /api
 
-//-------------GET ALL FOR EACH TABLE----------generic grabs for summary
-router.get('/vessels', (req, res, next)=>{
-	Voyages.findAll({})
-		.then(voyageList=>{
-			res.send(voyageList);
+//-------------------------BASIC 'GET ALL'---------------------------
+
+router.get('/sites', (req, res, next)=>{
+		Sites.findAll({})
+		.then(siteList=>{
+			res.send(siteList);
 		})
 		.catch(err=>{
 			next(err);
 		});
-
 });
 
-router.get('/places', (req, res, next)=>{
-	Places.findAll({})
-		.then(placeList=>{
-			res.send(placeList);
+router.get('/details', (req, res, next)=>{
+		Details.findAll({})
+		.then(detailList=>{
+			res.send(detailList);
 		})
 		.catch(err=>{
 			next(err);
 		});
-
 });
 
-router.get('/animals', (req, res, next)=>{
-	Animals.findAll({})
-		.then(animalSumList=>{
-			res.send(animalSumList);
+router.get('/narratives', (req, res, next)=>{
+		Narratives.findAll({})
+		.then(narrList=>{
+			res.send(narrList);
 		})
 		.catch(err=>{
 			next(err);
 		});
-
 });
 
-router.get('/allanimals', (req, res, next)=>{
-	AllAnimals.findAll({})
-		.then(animalSumList=>{
-			res.send(animalSumList);
+
+router.get('/images', (req, res, next)=>{
+		Images.findAll({})
+		.then(imgList=>{
+			res.send(imgList);
 		})
 		.catch(err=>{
 			next(err);
 		});
-
 });
 
-router.get('/contact', (req, res, next)=>{
-	Contacts.findAll({})
-		.then(contactList=>{
-			res.send(contactList);
+router.get('/tours', (req, res, next)=>{
+		Tours.findAll({})
+		.then(tourList=>{
+			res.send(tourList);
 		})
 		.catch(err=>{
 			next(err);
 		});
-
 });
 
-router.get('/crew', (req, res, next)=>{
-	Crews.findAll({})
-		.then(contactList=>{
-			res.send(contactList);
+
+router.get('/themes', (req, res, next)=>{
+		Themes.findAll({})
+		.then(themeList=>{
+			res.send(themeList);
 		})
 		.catch(err=>{
 			next(err);
 		});
-
 });
+
+
 
 //-------------GET by vessel id FOR EACH TABLE----------generic grabs for summary
 

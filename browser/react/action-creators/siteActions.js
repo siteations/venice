@@ -1,5 +1,12 @@
+import axios from 'axios';
+import Promise from 'bluebird';
 //---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
-import {  cirMain, cirMinor, clusterTest, narrativeTest } from '../pre-db/cirTest.js';
+// import { siteSeed, detailSeed, narrativeSeed, imageSeed, tourSeed } from '../pre-db/cirTest.js';
+
+// //var cirMain = siteSeed;
+// var cirMinor = detailSeed;
+// var narrativeTest = narrativeSeed;
+// var imageTest = imageSeed;
 
 //-------------------CONSTANTS
 
@@ -17,6 +24,7 @@ export const GET_CURR_NARR = 'GET_CURR_NARR';
 
 export const GET_GEN_DETAIL ='GET_GEN_DETAIL';
 export const GET_GEN_NARR ='GET_GEN_NARR';
+export const GET_GEN_IMG = 'GET_GEN_IMG';
 
 export const GET_CURR_IMGS = 'GET_CURR_IMGS';
 
@@ -84,6 +92,13 @@ export const getGenNarratives = (narratives) => {
 	};
 };
 
+export const getGenImages = (images) => {
+	return {
+		type: GET_GEN_IMG,
+		images
+	};
+};
+
 export const getCurrImgs = (images) => {
 	return {
 		type: GET_CURR_IMGS,
@@ -135,6 +150,7 @@ const initSites = {
 	currNarrative: {},
 	genNarratives: [],
 	genDetails: [], //narratives & captions
+	genImages: [],
 	currImages: {}, //links for panel images
 
 	allLayers:[], //arr of strings
@@ -174,6 +190,10 @@ export const siteReducer = (prevState = initSites, action) => {
 
 	case GET_GEN_NARR:
 		newState.genNarratives = action.narratives;
+		break;
+
+	case GET_GEN_IMG:
+		newState.genImages = action.images;
 		break;
 
 	case GET_CURR_IMGS:
@@ -219,16 +239,31 @@ export const siteReducer = (prevState = initSites, action) => {
 
 export const loadSites = () => dispatch => {
 	//rework for axios later
-	dispatch(getAllSites(cirMain));
+	const allSites = axios.get('/api/sites')
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((sites) => {
+	    		dispatch(getAllSites(sites));
+	    })
+	    .catch(console.log);
 }
 
 export const loadFilteredSites = (layerArr) => dispatch => { //
 
-	let selectSites = cirMain.filter(circle =>{
-		return layerArr.indexOf(circle.type)>-1;
-	})
-	//rework for axios later
-	dispatch(getFilteredSites(selectSites));
+	const allSites = axios.get('/api/sites')
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((sites) => { //front-end filter vs. back
+
+			 var selectSites = sites.filter(circle =>{
+					return layerArr.indexOf(circle.type)>-1;
+				})
+
+				dispatch(getFilteredSites(selectSites));
+			})
+			.catch(console.log);
 }
 
 export const updateSite = (site)=> dispatch =>{
@@ -247,12 +282,19 @@ export const loadFiltered = (layers) => dispatch => {
 
 export const loadLayers = () => dispatch => { //loading all
 
-	let cirLayers = [];
-	cirMain.forEach(circle=>{
-    		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
+		const allSites = axios.get('/api/sites')
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((sites) => { //front-end filter vs. back
+
+			let cirLayers = [];
+			sites.forEach(circle=>{
+		    		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
+				})
+			dispatch(getAllLayers(cirLayers));
 		})
-	//rework for axios later
-	dispatch(getAllLayers(cirLayers));
+	   .catch(console.log);
 }
 
 export const addHoverSite = (layer) => dispatch =>{
@@ -260,9 +302,30 @@ export const addHoverSite = (layer) => dispatch =>{
 }
 
 export const getDetailsNarratives = () => dispatch =>{
-	//rework for axios
-	dispatch(getGenDetails(cirMinor));
-	dispatch(getGenNarratives(narrativeTest));
+
+	const allDetails = axios.get('/api/details')
+			.then(responses => {
+				return responses.data;
+			})
+
+	const allNarratives = axios.get('/api/narratives')
+			.then(responses => {
+				return responses.data;
+			})
+
+	const allImages = axios.get('/api/images')
+			.then(responses => {
+				return responses.data;
+			})
+
+	Promise.all([allDetails, allNarratives, allImages])
+		.then((results) => {
+			const details = results[0], narratives = results[1], images=results[2];
+			dispatch(getGenDetails(details));
+			dispatch(getGenNarratives(narratives));
+			dispatch(getGenImages(images));
+		})
+		.catch(console.log);
 }
 
 export const addSelectLayer = (layer) => dispatch => { //add and load
@@ -277,10 +340,19 @@ export const addAllLayers = (layers) => dispatch => { //load all/clear all to se
 	let cirLayers = [];
 
 	if (layers==='add'){
-		cirMain.forEach(circle=>{
-    		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
-		})
-	};
+		const allSites = axios.get('/api/sites')
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((sites) => { //front-end filter vs. back
 
-	dispatch(getCurrLayers(cirLayers));
+			sites.forEach(circle=>{
+		    		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
+				})
+			dispatch(getCurrLayers(cirLayers));
+			})
+	   .catch(console.log);
+	} else {
+		dispatch(getCurrLayers(cirLayers));
+	};
 }

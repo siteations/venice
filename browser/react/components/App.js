@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 //import Immutable from 'immutable';
 import {connect} from 'react-redux';
 import Frame from './FrontFrame.js';
+import FrameEdit from './FrameEdit.js';
 import {deepOrange400, deepOrange600, deepOrange800, deepOrange900, brown800, blueGrey800, grey600, grey300, grey900, darkBlack, white, fullBlack} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -9,27 +10,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
-//--------add actions here------------
 
-
-//-----------add redux here------------
-
-/*const mapStateToProps = (state =>{
-	if immutable and extracting variables: Object.keys(state.get('boxes').toJS());
-	return {
-		thing: state.thing or for immutable state.get('thing'),
-	}
-})
-
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		setThing(thing){
-			dispatch(setThing(thing))
-		},
-	}
-}
-*/
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -58,10 +39,17 @@ class App extends Component {
 
 	render(){
 
+		console.log('app props', this.props.location.pathname);
+
 		return (
 		    <MuiThemeProvider muiTheme={muiTheme} >
 				<div className="container-fluid ">
+				{this.props.location.pathname === '/Venice' &&
 					<Frame />
+				}
+				{this.props.location.pathname === '/Venice-Edit' &&
+					<FrameEdit />
+				}
 				</div>
 				</MuiThemeProvider>
 		)

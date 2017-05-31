@@ -302,7 +302,7 @@ class MapSVG extends Component {
                         </filter>
 	    	   			<clipPath id="myClip">
 	    	   				{cirNew &&
-	    	   					cirNew.map(d => <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} />)
+	    	   					cirNew.map((d,i) => <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} key={`circClip${i}`}/>)
 	    	   				}
 					    </clipPath>
                         {clipDetails.map(d=>{
@@ -312,7 +312,7 @@ class MapSVG extends Component {
                             // </clipPath>
                             // )
                             return (
-                            <clipPath id={d.id}>
+                            <clipPath id={d.id} key={`clipping${d.id}`}>
                                 <rect stroke="#000000" x={d.x} y={d.y} rx={d.rx} ry={d.ry} width={d.width} height={d.height} />
                             </clipPath>
                             )
@@ -343,7 +343,12 @@ class MapSVG extends Component {
 
 	   						return (
 	   						   		<circle className={(d.id===this.props.sites.currSite)? 'circHLThick' : 'circHL' }
-                                    cx={d.cx} cy={d.cy} r={d.r} value={d.name} id={d.id}
+                                    cx={d.cx}
+                                    cy={d.cy}
+                                    r={d.r}
+                                    value={d.name}
+                                    id={d.id}
+                                    key={`site${d.id}`}
                                     stroke={(+this.props.sites.currSite === +d.id)? '#ffffff':'#d8d0ba'}
                                     onMouseOver = {e=>this.showLabel(e)}
                                     onMouseOut={''/*e=>this.hideLabel(e)*/}
@@ -358,7 +363,7 @@ class MapSVG extends Component {
 	   					cirNew.map(d=>{
 	   						if (+this.props.sites.currSite === +d.id){
 	   						return (
-	   						   			<g>
+	   						   			<g key={`label${d.id}`}>
 			   						   		<text x={d.cx+d.r+14} y={d.cy} className="textHL" fontSize={21} >{this.props.panel.title}</text>
 			   						   		<text x={d.cx+d.r+14} y={d.cy+18} className="textSHL" fontSize={12} >{this.props.panel.subtitle}</text>
                                             {this.props.options.annoZoom &&

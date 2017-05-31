@@ -26,7 +26,7 @@ const Detail = (props)=>{
   	      <g>
   	      {details.map((d, i)=>{
   	      		return ( //add in correct syntax here. . .
-  	      		<g>
+  	      		<g key={`detail${i}`}>
 	    	   				<image xlinkHref={d.srcThumb} x={d.x} y={d.y} width={d.width} height={d.height} clipPath={d.clip} />
 					    		{/*<circle stroke="#ffffff" className="circHL" cx={clipDetails[i].cx} cy={clipDetails[i].cy} r={clipDetails[i].r} />*/}
 					    		<rect stroke="#ffffff"

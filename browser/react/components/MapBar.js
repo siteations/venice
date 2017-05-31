@@ -13,6 +13,7 @@ import {addSelectLayer, deleteSelectLayer, addAllLayers, addHoverSite} from '../
 let mapButtons=[
 	{cn:"nIcon flex center middle", v:"intro", src:'/img/intro-01.svg' },
 	{cn:"nIcon flex center middle", v:"all layers", src:"/img/all-layers-01.svg" },
+	{cn:"nIcon flex center middle", v:"maps", src:"/img/maps-01.svg" },
 	{cn:"nSpc", v:'navigate', src:" " },
 	{cn:"nIcon flex center middle", v:"panel", src:"/img/arrow1-01.svg" },
 	{cn:"nIcon flex center middle", v:"panel large", src:"/img/arrow2-01.svg" },
@@ -24,7 +25,6 @@ let mapButtons=[
 	{cn:"nIcon flex center middle", v:"non-catholic communities", src:"/img/non-catholic-01.svg" },
 	{cn:"nIcon flex center middle", v:"processions", src:"/img/ritual-01.svg" },
 	{cn:"nIcon flex center middle", v:"cultural", src:"/img/culture-01.svg" },
-	{cn:"nIcon flex center middle", v:"symbolic views", src:"/img/maps-01.svg" },
 	{cn:"nIcon flex center middle", v:"religious prints", src:"/img/books-01.svg" },
 	{cn:"nIcon flex center middle", v:"religious ephemera", src:"/img/ephemera-01.svg" },
 	{cn:"nSpcSm", v:'navigate', src:" " },

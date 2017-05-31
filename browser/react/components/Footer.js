@@ -9,41 +9,7 @@ import { togglePlay, updatePanelSmall } from '../action-creators/optionActions.j
 import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
 
 //connect later to store;
-const tour = [
-    {
-        id: 3,
-        zoom: 6,
-    },
-    {
-        id: 11,
-        zoom: 5,
-    },
-    {   id: 9,
-        zoom: 6,
-    },
-    {
-        id: 21,
-        zoom: 5,
-    },
-    {
-        id: 17,
-        zoom: 5,
-    },
-    {
-        id: 13,
-        zoom: 4,
-    },
-    {
-        id: 6,
-        zoom: 6,
-    },
-    {
-        id: 23,
-        zoom: 6,
-    }
 
-
-]; //transfer to store, onclick reset current site and zoomto that new site, but requires the percent/zoom numbers
 
 class FooterSlides extends Component {
     constructor(props) {
@@ -62,7 +28,7 @@ class FooterSlides extends Component {
         let siteZoom = e.target.attributes.value.value.split('-')[1];
         this.props.updateSite(siteId);
 
-        let site = this.props.sites.allSites.filter(site=>site.id === +siteId)[0];
+        let site = this.props.sites.allSites.filter(site=> +site.id === +siteId)[0];
         let siteCent = [site.cx, site.cy];
         this.props.setTitles(site.name.split('.'));
 
@@ -102,7 +68,9 @@ class FooterSlides extends Component {
             this.props.panelSmall();
         };
 
-        var idIndex = tour.map(sites=>sites.id), currIndex = idIndex.indexOf(this.props.sites.currSite);
+        var tour = this.props.options.allTours.filter(tour=> +tour.tourId === +this.props.options.currTour);
+
+        var idIndex = tour.map(sites=>sites.siteId), currIndex = idIndex.indexOf(this.props.sites.currSite);
         if (currIndex === -1 || currIndex >= idIndex.length-1) {currIndex = 0};
         var iNarr=0;
 
@@ -111,22 +79,23 @@ class FooterSlides extends Component {
 
         function updateElements(){
 
-                var {id, zoom} = tour[currIndex];
-                let siteId = id, siteZoom = zoom;
+                var {siteId, zoom} = tour[currIndex];
+                let siteZoom = zoom;
                 if (out){siteZoom = 3};
 
                 that.updateSite(siteId);
 
-                let site = that.sites.allSites.filter(site=>site.id === +siteId)[0];
+                let site = that.sites.allSites.filter(site=> +site.id === +siteId)[0];
 
                 let siteCent = [site.cx, site.cy];
                 that.setTitles(site.name.split('.'));
 
                 let obj = that.sites.genNarratives.filter(narr => +narr.coreId===+siteId);
-                if (site.cluster){
-                    var key = obj[0].cluster;
-                    var obj2 = that.sites.genNarratives.filter(narr => +narr.cluster===+key);
+                if (site.clusterId !== null){
+                    var key = obj[0].clusterId;
+                    var obj2 = that.sites.genNarratives.filter(narr => +narr.clusterId===+key);
                 }
+
 
                 if (site.cluster && iNarr<obj2.length) {
 
@@ -175,15 +144,16 @@ class FooterSlides extends Component {
 
     render(){
 
-    //console.log(this.props.map);
+    var tour = this.props.options.allTours.filter(tour=> +tour.tourId === +this.props.options.currTour);
 
 	return (
 	        <div className="row footer">
                   <div className="row flex center">
                         {tour.map(site=>{
-                            return <div className={(site.id===this.props.sites.currSite)? 'bIconSelected' : 'bIcon'}
-                                value={site.id+'-'+site.zoom}
-                                onClick={e=>this.setSite(e)}>{'test '+site.id}</div>
+                            return <div className={(site.siteId===this.props.sites.currSite)? 'bIconSelected text-center' : 'bIcon  text-center'}
+                                value={site.siteId+'-'+site.zoom}
+                                key = {site.siteId+'-'+site.zoom}
+                                onClick={e=>this.setSite(e)}>{site.siteId}</div>
                         })}
                         {!this.props.options.playTour &&
                             <div className="nIcon flex center middle" value=""><span value="play" className="fa fa-play" onClick={(e)=>this.animate(e)}></span></div>

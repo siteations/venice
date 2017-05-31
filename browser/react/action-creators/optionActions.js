@@ -1,4 +1,6 @@
 //OPTIONS REDUCER
+import axios from 'axios';
+import Promise from 'bluebird';
 
 //layer view options
 export const SET_COLOR = "SET_COLOR";
@@ -14,6 +16,11 @@ export const SET_PANEL_LARGE = 'SET_PANEL_LARGE';
 export const SET_PANEL_MID = 'SET_PANEL_MID';
 
 export const PLAY_TOUR = 'PLAY_TOUR';
+export const GET_ALL_TOURS = 'GET_ALL_TOURS';
+export const GET_CURR_TOUR = 'GET_CURR_TOUR';
+export const GET_ALL_THEMES = 'GET_ALL_THEMES';
+export const GET_CURR_THEME = 'GET_CURR_THEME';
+
 
 // //-------------------ACTION CREATORS - vanilla loading of information
 export const setColor = (bool) => {
@@ -93,6 +100,34 @@ export const setPanelMid = (bool) => {
 	};
 };
 
+export const getAllTours = (tours) =>{
+	return {
+		type: GET_ALL_TOURS,
+		tours,
+	}
+}
+
+export const getTour = (tourId) =>{
+	return {
+		type: GET_CURR_TOUR,
+		tourId,
+	}
+}
+
+export const getAllThemes = (themes) =>{
+	return {
+		type: GET_ALL_THEMES,
+		themes,
+	}
+}
+
+export const getTheme = (theme) =>{
+	return {
+		type: GET_CURR_THEME,
+		theme,
+	}
+}
+
 const initOptions = {
 	color: false,
 	anno: true,
@@ -107,6 +142,12 @@ const initOptions = {
 	panelMid: false,
 
 	playTour: false,
+	currTour: 1,
+	allTours: [],
+
+	currTheme: 1,
+	allThemes: [],
+
 };
 
 
@@ -121,6 +162,22 @@ export const optionReducer = (prevState = initOptions, action) => {
 
 	case PLAY_TOUR:
 		newState.playTour = action.play;
+		break;
+
+	case GET_ALL_TOURS:
+		newState.allTours = action.tours;
+		break;
+
+	case GET_CURR_TOUR:
+		newState.currTour = action.tour;
+		break;
+
+	case GET_ALL_THEMES:
+		newState.allThemes = action.themes;
+		break;
+
+	case GET_CURR_THEME:
+		newState.currTheme = action.theme;
 		break;
 
 	case SET_ANNO:
@@ -218,4 +275,26 @@ export const updatePanelMid = () => dispatch =>{
   dispatch(setPanelSmall(true));
   dispatch(setPanelLarge(false));
 	dispatch(setPanelMid(false));
+}
+
+
+export const getAllToursThemes = () => dispatch => {
+	const allTours = axios.get('/api/tours')
+			.then(responses => {
+				return responses.data;
+			})
+
+	const allThemes = axios.get('/api/themes')
+			.then(responses => {
+				return responses.data;
+			})
+
+	Promise.all([allTours, allThemes])
+		.then((results) => {
+			const tours = results[0], themes = results[1];
+			dispatch(getAllTours(tours));
+			dispatch(getAllThemes(themes));
+		})
+		.catch(console.log);
+
 }
