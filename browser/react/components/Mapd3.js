@@ -19,7 +19,7 @@ import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen,
 
 import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarge} from '../action-creators/optionActions.js';
 
-import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives } from '../action-creators/siteActions.js';
+import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives, setDetailId } from '../action-creators/siteActions.js';
 
 import { setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
 
@@ -249,11 +249,13 @@ class MapSVG extends Component {
     loadPanel(e, source){
         e.preventDefault();
         if (source==='core') {
-
+            this.props.setMinorId(0,0);
         } else {
-        let subsiteId = e.target.attributes.id.value;
-        let obj = this.props.sites.genNarratives.filter(narr => +narr.minorId===+subsiteId);
-        this.props.updateNarrative(obj[0]);
+            let subsiteId = e.target.attributes.id.value;
+            let obj = this.props.sites.genNarratives.filter(narr => +narr.minorId===+subsiteId);
+            let clustId = obj[0].clusterId;
+            this.props.setDetailId(+subsiteId, clustId);
+            this.props.updateNarrative(obj[0]);
         }
     }
 
@@ -439,6 +441,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     getAllDetailsNarratives : () => {
       dispatch(getDetailsNarratives ());
+    },
+    setDetailId: (objId, clusterId) => {
+       dispatch(setDetailId(objId, clusterId));
     },
     updateSite: (site) => {
         dispatch(updateSite(site));

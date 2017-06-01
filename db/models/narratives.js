@@ -22,8 +22,12 @@ const narratives = db.define('Narratives', {
     //src: {type: Sequelize.STRING, notNull: true },
     //caption: {type: Sequelize.STRING, notNull: true },
     text: {type: Sequelize.TEXT, notNull: true },
-    source: {type: Sequelize.TEXT, notNull: true },
+    catalogSource: {type: Sequelize.TEXT, notNull: true },
     catalogLink: {type: Sequelize.STRING },
+    biblio: {type: Sequelize.TEXT},
+    researcherName: {type: Sequelize.STRING },
+    researcherTitle: {type: Sequelize.STRING },
+    researcherAffiliation: {type: Sequelize.STRING },
 });
 
 module.exports = narratives;

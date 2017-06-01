@@ -477,13 +477,34 @@ a:hover {
 	height: 20px;
 }
 
+.underline {
+	text-decoration: underline;
+	margin-top: 5px;
+}
+
 .m10 {
 	margin-top: 10px;
+}
+
+.marg10 {
+	margin-right: 10px;
+}
+
+.marg10l {
+	margin-left: 10px;
 }
 
 .pad10 {
 	padding: 0px 10px;
 }
+
+.editOps {
+	padding: 10px;
+	border: solid 1px #352c1a;
+	border-radius: 5px;
+}
+
+
 
 .rotate {
 	-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */

@@ -28,6 +28,8 @@ export const GET_GEN_IMG = 'GET_GEN_IMG';
 
 export const GET_CURR_IMGS = 'GET_CURR_IMGS';
 
+export const SET_MINOR_ID = 'SET_MINOR_ID';
+
 //layers all & selected for filteration
 export const GET_All_LAYERS= 'GET_All_LAYERS';
 export const GET_CURR_LAYERS= 'GET_CURR_LAYERS';
@@ -42,6 +44,13 @@ export const getAllSites = (sites) => {
 		sites: sites
 	};
 };
+
+export const setMinorId = (objId, clusterId) => {
+	return {
+		type: SET_MINOR_ID,
+		objId: [objId, clusterId],
+	};
+}
 
 export const getFilteredSites = (sites) => {
 	return{
@@ -152,6 +161,8 @@ const initSites = {
 	genDetails: [], //narratives & captions
 	genImages: [],
 	currImages: {}, //links for panel images
+	minorId: 0,
+	clusterId: 0,
 
 	allLayers:[], //arr of strings
 	currLayers: [], //arr of strings
@@ -198,6 +209,11 @@ export const siteReducer = (prevState = initSites, action) => {
 
 	case GET_CURR_IMGS:
 		newState.currImages = action.imgs;
+		break;
+
+	case SET_MINOR_ID:
+		newState.minorId = action.objId[0];
+		newState.clusterId = action.objId[1];
 		break;
 
 	case GET_All_LAYERS:
@@ -332,6 +348,10 @@ export const addSelectLayer = (layer) => dispatch => { //add and load
 	dispatch(addCurrLayers(layer));
 }
 
+export const setDetailId = (objId, clusterId) => dispatch => {
+	dispatch(setMinorId(objId, clusterId));
+}
+
 export const deleteSelectLayer = (layer) => dispatch => { //add and load
 	dispatch(resetCurrLayers(layer));
 }
@@ -344,7 +364,7 @@ export const addAllLayers = (layers) => dispatch => { //load all/clear all to se
 			.then(responses => {
 				return responses.data;
 			})
-	    .then((sites) => { //front-end filter vs. back
+	    .then((sites) => {
 
 			sites.forEach(circle=>{
 		    		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
