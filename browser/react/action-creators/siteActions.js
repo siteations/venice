@@ -37,6 +37,9 @@ export const ADD_CURR_LAYERS='ADD_CURR_LAYERS';
 export const RESET_CURR_LAYERS='RESET_CURR_LAYERS';
 export const SET_HOVER_LAYER='SET_HOVER_LAYER';
 
+export const SET_CENTER = 'SET_CENTER';
+export const SET_RADIUS = 'SET_RADIUS';
+
 //-------------------ACTION CREATORS - vanilla loading of information
 export const getAllSites = (sites) => {
 	return {
@@ -149,6 +152,20 @@ export const addHoverLayer = (layer) => {
 		layer: layer
 	};
 };
+
+export const addNewSiteGeo1 = (id, x, y) =>{
+	return {
+		type: SET_CENTER,
+		coord: [id, x, y],
+	}
+}
+
+export const addNewSiteGeo2 = (radius) =>{
+	return {
+		type: SET_RADIUS,
+		radius,
+	}
+}
 //-------------------reducers && initial info
 const initSites = {
 	allSites:[], //array of objects
@@ -168,6 +185,11 @@ const initSites = {
 	currLayers: [], //arr of strings
 	hoverLayer: ' ',
 
+	newSite : 0,
+	newCx : 0,
+	newCy: 0,
+	newRadius: 0,
+
 };
 
 export const siteReducer = (prevState = initSites, action) => {
@@ -177,6 +199,16 @@ export const siteReducer = (prevState = initSites, action) => {
 
 	case GET_ALL_SITES:
 		newState.allSites = action.sites;
+		break;
+
+	case SET_CENTER:
+		newState.newSite = action.coord[0];
+		newState.newCx = action.coord[1];
+		newState.newCy = action.coord[2];
+		break;
+
+	case SET_RADIUS:
+		newState.newRadius = action.radius;
 		break;
 
 	case GET_CURR_SITE:
@@ -375,4 +407,25 @@ export const addAllLayers = (layers) => dispatch => { //load all/clear all to se
 	} else {
 		dispatch(getCurrLayers(cirLayers));
 	};
+}
+
+export const addNewSite = (siteObj) => dispatch => {
+
+	axios.post('/api/sites', siteObj)
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((site) => {
+
+			dispatch(getCurrSite(site.id));
+			})
+	   .catch(console.log);
+}
+
+export const addNewSiteCenter = (id, cx, cy) => dispatch => {
+	dispatch(addNewSiteGeo1(id, cx, cy));
+}
+
+export const addNewSiteRadius = (radius) => dispatch => {
+	dispatch(addNewSiteGeo2(radius));
 }

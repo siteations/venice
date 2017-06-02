@@ -19,8 +19,9 @@ export const ClipTiles = (props) => {
                                     x = { tile.xpos }
                                     y = { tile.ypos }
                                     clipPath = {props.clip}
-                                    opacity={1}
+                                    opacity={props.opacity}
                                     key={`clipTile${i}`}
+                                    onDoubleClick={props.action}
                             />
                             )
                     }

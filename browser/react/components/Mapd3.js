@@ -19,7 +19,7 @@ import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen,
 
 import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarge} from '../action-creators/optionActions.js';
 
-import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives, setDetailId } from '../action-creators/siteActions.js';
+import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives, setDetailId, addNewSiteCenter } from '../action-creators/siteActions.js';
 
 import { setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
 
@@ -43,6 +43,7 @@ class MapSVG extends Component {
         this.zoom = this.zoom.bind(this);
         this.zoomTo = this.zoomTo.bind(this);
         this.loadPanel = this.loadPanel.bind(this);
+        this.addCenter = this.addCenter.bind(this);
         //this.flyTo
         //this.other
 
@@ -179,12 +180,44 @@ class MapSVG extends Component {
 
     }
 
+    zoomDC(e, type){
+        e.preventDefault();
+        let multiplier;
+        if (type==='in'){
+            multiplier=2;
+        } else if (type==='out'){
+            multiplier=0.5;
+        }
+
+        var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+        var mouseX = e.screenX-sele.offsetLeft, mouseY = e.screenY-sele.offsetTop;
+
+        let curX = mouseX+this.props.map.xyOffsets[0], curY = mouseY+this.props.map.xyOffsets[1];
+
+        let resX = curX*multiplier, resY = curY*multiplier;
+        let newOx = resX-mouseX, newOy = resY-mouseY;
+
+        let curr = this.props.map.currZoom, pix = this.props.map.tileSize, oX =this.props.map.xyOffsets[0], oY=this.props.map.xyOffsets[1];
+
+        if (curr<6 && type==='in') { //zoom in
+            curr++, oX = newOx, oY = newOy;
+        } else if (curr>2 && type==='out'){
+            curr--, oX = newOx, oY = newOy;
+        }
+
+        this.props.setOffsetsR([oX, oY]);
+        this.props.setCurrOffsets([oX, oY]);
+        this.props.setCurrZoom(curr);
+        this.props.setCurrTilesize(pix);
+    }
+
     zoomTo(e, id){ // rework to parallel basic scroll zoom...
         e.preventDefault();
 
         this.props.updateSite(id);
         let site = this.props.sites.allSites.filter(site=>site.id === +id)[0];
-        let siteCent = [site.cx, site.cy];
+        if (site){
+            let siteCent = [site.cx, site.cy];
         let obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+id);
 
         this.props.setTitles(site.name.split('.'));
@@ -197,7 +230,7 @@ class MapSVG extends Component {
             var win = wind;
         }
 
-        let zoom = (this.props.map.currZoom<5)? this.props.map.currZoom+1 : 5 ;
+        let zoom = (this.props.map.currZoom<6)? this.props.map.currZoom+1 : 6 ;
         //console.log(this.props.map.currZoom, zoom);
         //let tilesize = this.props.map.tileSize;
 
@@ -208,6 +241,10 @@ class MapSVG extends Component {
         this.props.setCurrZoom(+zoom);
         this.props.setCurrTilesize(128);
 
+        } else {
+            this.zoomDC(e, 'in');
+            //let siteCent = [0, 0]; //rework this to accept current center
+        }
     }
 
     flyTo(e){
@@ -220,6 +257,7 @@ class MapSVG extends Component {
     	let name = e.target.attributes.value.value.split('.');
         let siteId = e.target.attributes.id.value;
         this.props.setTitles(name);
+
         this.props.updateSite(siteId);
 
         let obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+siteId);
@@ -229,7 +267,7 @@ class MapSVG extends Component {
     }
 
     hideLabel(e){
-    	e.preventDefault;
+    	e.preventDefault();
         if (this.props.sites.currSiteOn===false){
     	this.props.setTitles('', '');
         this.props.updateSite(0);
@@ -237,7 +275,7 @@ class MapSVG extends Component {
     }
 
     setLabel(e){
-        e.preventDefault;
+        e.preventDefault();
         //if (this.state.labelClick===false){
         this.showLabel(e)
         this.props.overlayDetails(true);
@@ -260,7 +298,7 @@ class MapSVG extends Component {
     }
 
     selectShowPanel(e, id){
-        e.preventDefault;
+        e.preventDefault();
 
         if (this.props.options.panelNone){
             this.props.panelSmall();
@@ -276,6 +314,11 @@ class MapSVG extends Component {
 
     }
 
+    addCenter(e){
+        e.preventDefault();
+        console.log('ready to add centers/sites');
+
+    }
 
     render(){
 
@@ -284,7 +327,8 @@ class MapSVG extends Component {
     	const tiles = tiling(this.props.map.currZoom, this.props.map.tileSize, this.props.map.windowSize, this.props.map.xyOffsets);
         const cirNew = sitesFiltered(this.props.map.xyOffsets, this.props.sites.allSites, this.props.sites.currLayers, tiles[0].percent);
 
-        const currentSite = cirNew.filter(d=>d.id === +this.props.sites.currSite)[0];
+        let currentSite = {} ;
+        if (this.props.sites.currSite){ currentSite = cirNew.filter(d=>d.id === +this.props.sites.currSite)[0] };
 
 
         const {clipDetails, details} = spacingFrame(this.props.map.windowSize, currentSite, this.props.sites.genDetails);
@@ -295,7 +339,8 @@ class MapSVG extends Component {
     	return (
 
     	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
-    	   <div className="offset" onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} onWheel = {e=>this.zoomScroll(e)} onDoubleClick={e=>this.zoomTo(e, 'none')} >
+    	   <div className="offset" onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} onWheel = {e=>this.zoomScroll(e)}
+           onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, 'none') : e => this.addCenter(e) } >
 
 	    	   <svg width={this.props.map.windowSize[0]} height={this.props.map.windowSize[1]}  >
 	    	   		<defs>
@@ -333,8 +378,13 @@ class MapSVG extends Component {
                             <BackgroundMask wSize={this.props.map.windowSize} color={this.props.options.color} />
                         }
                         {tiles && this.props.options.anno &&
-                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="url(#myClip)" />
+                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="url(#myClip)" opacity={1} action=""/>
     	    	   		}
+                        {this.props.user !== null && !this.props.user.message &&
+                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="" opacity={0.05}
+                            action={(e)=>this.addCenter(e)}
+                            />
+                        }
 	    	   		</g>
 
 	    	   		<g className="allLabelCircs" >
@@ -354,8 +404,8 @@ class MapSVG extends Component {
                                     stroke={(+this.props.sites.currSite === +d.id)? '#ffffff':'#d8d0ba'}
                                     onMouseOver = {e=>this.showLabel(e)}
                                     onMouseOut={''/*e=>this.hideLabel(e)*/}
-                                    onClick={e=>this.setLabel(e)}
-                                    onDoubleClick={(e)=>this.selectShowPanel(e, +d.id)} />
+                                    onClick={ e=>this.setLabel(e)}
+                                    onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, +d.id) : e=> e.preventDefault() } />
 
 	   						    )
 	   					})
@@ -394,6 +444,7 @@ const mapStateToProps = (state, ownProps) => {
     options: state.options,
     sites: state.sites,
     panel: state.panel,
+    user: state.user,
     }
 }
 
@@ -456,6 +507,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     updateNarrative: (obj) => {
         dispatch(setNarr(obj));
+    },
+    addNewSiteCenter: (siteId, siteX, siteY, siteR) => {
+        dispatch(addNewSiteCenter(siteId, siteX, siteY, siteR));
     },
   }
 }

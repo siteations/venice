@@ -4504,7 +4504,7 @@ var getAllToursThemes = exports.getAllToursThemes = function getAllToursThemes()
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.getDetailsNarratives = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getAllSites = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
+exports.addNewSiteRadius = exports.addNewSiteCenter = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.getDetailsNarratives = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getAllSites = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
 
 var _axios = __webpack_require__(86);
 
@@ -4552,6 +4552,9 @@ var GET_CURR_LAYERS = exports.GET_CURR_LAYERS = 'GET_CURR_LAYERS';
 var ADD_CURR_LAYERS = exports.ADD_CURR_LAYERS = 'ADD_CURR_LAYERS';
 var RESET_CURR_LAYERS = exports.RESET_CURR_LAYERS = 'RESET_CURR_LAYERS';
 var SET_HOVER_LAYER = exports.SET_HOVER_LAYER = 'SET_HOVER_LAYER';
+
+var SET_CENTER = exports.SET_CENTER = 'SET_CENTER';
+var SET_RADIUS = exports.SET_RADIUS = 'SET_RADIUS';
 
 //-------------------ACTION CREATORS - vanilla loading of information
 var getAllSites = exports.getAllSites = function getAllSites(sites) {
@@ -4665,6 +4668,20 @@ var addHoverLayer = exports.addHoverLayer = function addHoverLayer(layer) {
 		layer: layer
 	};
 };
+
+var addNewSiteGeo1 = exports.addNewSiteGeo1 = function addNewSiteGeo1(id, x, y) {
+	return {
+		type: SET_CENTER,
+		coord: [id, x, y]
+	};
+};
+
+var addNewSiteGeo2 = exports.addNewSiteGeo2 = function addNewSiteGeo2(radius) {
+	return {
+		type: SET_RADIUS,
+		radius: radius
+	};
+};
 //-------------------reducers && initial info
 var initSites = {
 	allSites: [], //array of objects
@@ -4682,7 +4699,12 @@ var initSites = {
 
 	allLayers: [], //arr of strings
 	currLayers: [], //arr of strings
-	hoverLayer: ' '
+	hoverLayer: ' ',
+
+	newSite: 0,
+	newCx: 0,
+	newCy: 0,
+	newRadius: 0
 
 };
 
@@ -4696,6 +4718,16 @@ var siteReducer = exports.siteReducer = function siteReducer() {
 
 		case GET_ALL_SITES:
 			newState.allSites = action.sites;
+			break;
+
+		case SET_CENTER:
+			newState.newSite = action.coord[0];
+			newState.newCx = action.coord[1];
+			newState.newCy = action.coord[2];
+			break;
+
+		case SET_RADIUS:
+			newState.newRadius = action.radius;
 			break;
 
 		case GET_CURR_SITE:
@@ -4912,6 +4944,30 @@ var addAllLayers = exports.addAllLayers = function addAllLayers(layers) {
 		} else {
 			dispatch(getCurrLayers(cirLayers));
 		};
+	};
+};
+
+var addNewSite = exports.addNewSite = function addNewSite(siteObj) {
+	return function (dispatch) {
+
+		_axios2.default.post('/api/sites', siteObj).then(function (responses) {
+			return responses.data;
+		}).then(function (site) {
+
+			dispatch(getCurrSite(site.id));
+		}).catch(console.log);
+	};
+};
+
+var addNewSiteCenter = exports.addNewSiteCenter = function addNewSiteCenter(id, cx, cy) {
+	return function (dispatch) {
+		dispatch(addNewSiteGeo1(id, cx, cy));
+	};
+};
+
+var addNewSiteRadius = exports.addNewSiteRadius = function addNewSiteRadius(radius) {
+	return function (dispatch) {
+		dispatch(addNewSiteGeo2(radius));
 	};
 };
 
@@ -17584,6 +17640,7 @@ var MapSVG = function (_Component) {
         _this.zoom = _this.zoom.bind(_this);
         _this.zoomTo = _this.zoomTo.bind(_this);
         _this.loadPanel = _this.loadPanel.bind(_this);
+        _this.addCenter = _this.addCenter.bind(_this);
         //this.flyTo
         //this.other
 
@@ -17760,6 +17817,46 @@ var MapSVG = function (_Component) {
             this.props.setCurrTilesize(pix);
         }
     }, {
+        key: 'zoomDC',
+        value: function zoomDC(e, type) {
+            e.preventDefault();
+            var multiplier = void 0;
+            if (type === 'in') {
+                multiplier = 2;
+            } else if (type === 'out') {
+                multiplier = 0.5;
+            }
+
+            var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+            var mouseX = e.screenX - sele.offsetLeft,
+                mouseY = e.screenY - sele.offsetTop;
+
+            var curX = mouseX + this.props.map.xyOffsets[0],
+                curY = mouseY + this.props.map.xyOffsets[1];
+
+            var resX = curX * multiplier,
+                resY = curY * multiplier;
+            var newOx = resX - mouseX,
+                newOy = resY - mouseY;
+
+            var curr = this.props.map.currZoom,
+                pix = this.props.map.tileSize,
+                oX = this.props.map.xyOffsets[0],
+                oY = this.props.map.xyOffsets[1];
+
+            if (curr < 6 && type === 'in') {
+                //zoom in
+                curr++, oX = newOx, oY = newOy;
+            } else if (curr > 2 && type === 'out') {
+                curr--, oX = newOx, oY = newOy;
+            }
+
+            this.props.setOffsetsR([oX, oY]);
+            this.props.setCurrOffsets([oX, oY]);
+            this.props.setCurrZoom(curr);
+            this.props.setCurrTilesize(pix);
+        }
+    }, {
         key: 'zoomTo',
         value: function zoomTo(e, id) {
             // rework to parallel basic scroll zoom...
@@ -17769,32 +17866,37 @@ var MapSVG = function (_Component) {
             var site = this.props.sites.allSites.filter(function (site) {
                 return site.id === +id;
             })[0];
-            var siteCent = [site.cx, site.cy];
-            var obj = this.props.sites.genNarratives.filter(function (narr) {
-                return +narr.coreId === +id;
-            });
+            if (site) {
+                var siteCent = [site.cx, site.cy];
+                var obj = this.props.sites.genNarratives.filter(function (narr) {
+                    return +narr.coreId === +id;
+                });
 
-            this.props.setTitles(site.name.split('.'));
-            this.props.updateNarrative(obj[0]);
+                this.props.setTitles(site.name.split('.'));
+                this.props.updateNarrative(obj[0]);
 
-            var wind = this.props.map.windowSize,
-                panel = this.props.panel.panelSize;
-            if (!this.props.options.panelNone) {
-                var win = [wind[0] - panel[0], wind[1]];
+                var wind = this.props.map.windowSize,
+                    panel = this.props.panel.panelSize;
+                if (!this.props.options.panelNone) {
+                    var win = [wind[0] - panel[0], wind[1]];
+                } else {
+                    var win = wind;
+                }
+
+                var zoom = this.props.map.currZoom < 6 ? this.props.map.currZoom + 1 : 6;
+                //console.log(this.props.map.currZoom, zoom);
+                //let tilesize = this.props.map.tileSize;
+
+                var offset = (0, _rawTiles.centerRescaled)(zoom, siteCent, win, 128);
+
+                this.props.setOffsetsR([offset.x, offset.y]);
+                this.props.setCurrOffsets([offset.x, offset.y]);
+                this.props.setCurrZoom(+zoom);
+                this.props.setCurrTilesize(128);
             } else {
-                var win = wind;
+                this.zoomDC(e, 'in');
+                //let siteCent = [0, 0]; //rework this to accept current center
             }
-
-            var zoom = this.props.map.currZoom < 5 ? this.props.map.currZoom + 1 : 5;
-            //console.log(this.props.map.currZoom, zoom);
-            //let tilesize = this.props.map.tileSize;
-
-            var offset = (0, _rawTiles.centerRescaled)(zoom, siteCent, win, 128);
-
-            this.props.setOffsetsR([offset.x, offset.y]);
-            this.props.setCurrOffsets([offset.x, offset.y]);
-            this.props.setCurrZoom(+zoom);
-            this.props.setCurrTilesize(128);
         }
     }, {
         key: 'flyTo',
@@ -17808,6 +17910,7 @@ var MapSVG = function (_Component) {
             var name = e.target.attributes.value.value.split('.');
             var siteId = e.target.attributes.id.value;
             this.props.setTitles(name);
+
             this.props.updateSite(siteId);
 
             var obj = this.props.sites.genNarratives.filter(function (narr) {
@@ -17818,7 +17921,7 @@ var MapSVG = function (_Component) {
     }, {
         key: 'hideLabel',
         value: function hideLabel(e) {
-            e.preventDefault;
+            e.preventDefault();
             if (this.props.sites.currSiteOn === false) {
                 this.props.setTitles('', '');
                 this.props.updateSite(0);
@@ -17827,7 +17930,7 @@ var MapSVG = function (_Component) {
     }, {
         key: 'setLabel',
         value: function setLabel(e) {
-            e.preventDefault;
+            e.preventDefault();
             //if (this.state.labelClick===false){
             this.showLabel(e);
             this.props.overlayDetails(true);
@@ -17854,7 +17957,7 @@ var MapSVG = function (_Component) {
     }, {
         key: 'selectShowPanel',
         value: function selectShowPanel(e, id) {
-            e.preventDefault;
+            e.preventDefault();
 
             if (this.props.options.panelNone) {
                 this.props.panelSmall();
@@ -17869,6 +17972,12 @@ var MapSVG = function (_Component) {
             //more mouse elements here...
         }
     }, {
+        key: 'addCenter',
+        value: function addCenter(e) {
+            e.preventDefault();
+            console.log('ready to add centers/sites');
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
@@ -17878,9 +17987,12 @@ var MapSVG = function (_Component) {
             var tiles = (0, _rawTiles.tiling)(this.props.map.currZoom, this.props.map.tileSize, this.props.map.windowSize, this.props.map.xyOffsets);
             var cirNew = (0, _rawTiles.sitesFiltered)(this.props.map.xyOffsets, this.props.sites.allSites, this.props.sites.currLayers, tiles[0].percent);
 
-            var currentSite = cirNew.filter(function (d) {
-                return d.id === +_this2.props.sites.currSite;
-            })[0];
+            var currentSite = {};
+            if (this.props.sites.currSite) {
+                currentSite = cirNew.filter(function (d) {
+                    return d.id === +_this2.props.sites.currSite;
+                })[0];
+            };
 
             var _spacingFrame = (0, _rawDetails.spacingFrame)(this.props.map.windowSize, currentSite, this.props.sites.genDetails),
                 clipDetails = _spacingFrame.clipDetails,
@@ -17904,8 +18016,11 @@ var MapSVG = function (_Component) {
                             return _this2.drag(e);
                         }, onWheel: function onWheel(e) {
                             return _this2.zoomScroll(e);
-                        }, onDoubleClick: function onDoubleClick(e) {
-                            return _this2.zoomTo(e, 'none');
+                        },
+                        onDoubleClick: this.props.user === null || this.props.user.message ? function (e) {
+                            return _this2.selectShowPanel(e, 'none');
+                        } : function (e) {
+                            return _this2.addCenter(e);
                         } },
                     _react2.default.createElement(
                         'svg',
@@ -17944,7 +18059,12 @@ var MapSVG = function (_Component) {
                             { className: 'workingTiles' },
                             tiles && _react2.default.createElement(_TileVariants.BackgroundTiles, { data: tiles, wSize: this.props.map.windowSize, tSize: this.props.map.tileSize, color: this.props.options.color }),
                             this.props.options.anno && _react2.default.createElement(_TileVariants.BackgroundMask, { wSize: this.props.map.windowSize, color: this.props.options.color }),
-                            tiles && this.props.options.anno && _react2.default.createElement(_TileVariants.ClipTiles, { data: tiles, wSize: this.props.map.windowSize, tSize: this.props.map.tileSize, clip: 'url(#myClip)' })
+                            tiles && this.props.options.anno && _react2.default.createElement(_TileVariants.ClipTiles, { data: tiles, wSize: this.props.map.windowSize, tSize: this.props.map.tileSize, clip: 'url(#myClip)', opacity: 1, action: '' }),
+                            this.props.user !== null && !this.props.user.message && _react2.default.createElement(_TileVariants.ClipTiles, { data: tiles, wSize: this.props.map.windowSize, tSize: this.props.map.tileSize, clip: '', opacity: 0.05,
+                                action: function action(e) {
+                                    return _this2.addCenter(e);
+                                }
+                            })
                         ),
                         _react2.default.createElement(
                             'g',
@@ -17968,8 +18088,10 @@ var MapSVG = function (_Component) {
                                     onClick: function onClick(e) {
                                         return _this2.setLabel(e);
                                     },
-                                    onDoubleClick: function onDoubleClick(e) {
+                                    onDoubleClick: _this2.props.user === null || _this2.props.user.message ? function (e) {
                                         return _this2.selectShowPanel(e, +d.id);
+                                    } : function (e) {
+                                        return e.preventDefault();
                                     } });
                             }),
                             this.props.options.anno && cirNew && cirNew.map(function (d) {
@@ -18007,7 +18129,8 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
         map: state.map,
         options: state.options,
         sites: state.sites,
-        panel: state.panel
+        panel: state.panel,
+        user: state.user
     };
 };
 
@@ -18070,6 +18193,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
         },
         updateNarrative: function updateNarrative(obj) {
             dispatch((0, _panelActions.setNarr)(obj));
+        },
+        addNewSiteCenter: function addNewSiteCenter(siteId, siteX, siteY, siteR) {
+            dispatch((0, _siteActions.addNewSiteCenter)(siteId, siteX, siteY, siteR));
         }
     };
 };
@@ -39490,20 +39616,6 @@ var PanelEdit = function (_Component) {
                   return _this2.changeForm(e);
                 } },
               'Tour'
-            ),
-            _react2.default.createElement(
-              'button',
-              { className: 'btn btn-default marg10', value: 'edit', onClick: function onClick(e) {
-                  return _this2.changeForm(e);
-                } },
-              'Edit Existing (Any Element)'
-            ),
-            _react2.default.createElement(
-              'button',
-              { className: 'btn btn-default marg10', value: 'delete', onClick: function onClick(e) {
-                  return _this2.changeForm(e);
-                } },
-              'Delete Existing ((Any Element)'
             )
           ),
           _react2.default.createElement('br', null),
@@ -39648,8 +39760,9 @@ var ClipTiles = exports.ClipTiles = function ClipTiles(props) {
                     x: tile.xpos,
                     y: tile.ypos,
                     clipPath: props.clip,
-                    opacity: 1,
-                    key: 'clipTile' + i
+                    opacity: props.opacity,
+                    key: 'clipTile' + i,
+                    onDoubleClick: props.action
                 });
             }
         })

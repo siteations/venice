@@ -97,21 +97,21 @@ export const centerRescaled = (zoom, newCenter, winSize,tilesize) => {
 
   let limits = scaleOps[zoom];
 
-  let xPerc = newCenter[0]/(256*64);
-  let yPerc = newCenter[1]/(256*32);
+    let xPerc = newCenter[0]/(256*64);
+    let yPerc = newCenter[1]/(256*32);
 
-  let xFull = tilesize*(limits[0]+1), yFull = tilesize*(limits[1]+1);
-  let x = xPerc*xFull, y = yPerc*yFull;
+    let xFull = tilesize*(limits[0]+1), yFull = tilesize*(limits[1]+1);
+    let x = xPerc*xFull, y = yPerc*yFull;
 
 
 
-  let centerX = winSize[0]/2 - x, centerY = winSize[1]/2 - y;
+    let centerX = winSize[0]/2 - x, centerY = winSize[1]/2 - y;
 
-  console.log(xPerc, yPerc, xFull, yFull, x, y, winSize[0]/2, winSize[1]/2);
+    console.log(xPerc, yPerc, xFull, yFull, x, y, winSize[0]/2, winSize[1]/2);
 
-  return {
-    x: -1*centerX,
-    y: -1*centerY,
-  };
+    return {
+      x: -1*centerX,
+      y: -1*centerY,
+    };
 
 }
