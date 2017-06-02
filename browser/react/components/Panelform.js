@@ -12,6 +12,7 @@ import FormDetail from './FormDetail.js';
 import FormImage from './FormImage.js';
 import FormSite from './FormSite.js';
 import FormTour from './FormTour.js';
+import FormLogin from './FormLogin.js';
 
 class PanelEdit extends Component {
 	constructor(props) {
@@ -34,6 +35,18 @@ class PanelEdit extends Component {
 
   	return (
          <div className={this.props.baseClass} ref="sizeP" id="panelWin" style={{height:`${this.props.map.windowSize[1]+6}px`}}>
+         {this.props.user === null &&
+            <FormLogin />
+        }
+        {this.props.user !== null && this.props.user.message &&
+          <div>
+            <p>{this.props.user.message}</p>
+            <FormLogin />
+          </div>
+        }
+        {this.props.user !== null && !this.props.user.message &&
+        <div>
+          <p>*web session are not persistent, refresh to log-out</p>
          <div className="">
           <h4 className="BornholmSandvig">Add or Edit</h4>
           <button className="btn btn-default marg10" value="site" onClick={e=>this.changeForm(e)} >Site</button>
@@ -41,23 +54,25 @@ class PanelEdit extends Component {
           <button className="btn btn-default marg10" value="narrative" onClick={e=>this.changeForm(e)} >Narrative</button>
           <button className="btn btn-default marg10" value="image" onClick={e=>this.changeForm(e)} >Panel Image</button>
           <button className="btn btn-default marg10" value="tour" onClick={e=>this.changeForm(e)} >Tour</button>
+          <button className="btn btn-default marg10" value="edit" onClick={e=>this.changeForm(e)} >Edit Existing (Any Element)</button>
+          <button className="btn btn-default marg10" value="delete" onClick={e=>this.changeForm(e)} >Delete Existing ((Any Element)</button>
          </div>
          <br/>
          {this.state.panelform === 'narrative' &&
           <div className="editOps">
-          <h3 className="BornholmSandvig">Add/Edit Narrative </h3>
+          <h3 className="BornholmSandvig">Add Narrative </h3>
            <FormNarrative />
           </div>
          }
          {this.state.panelform === 'detail' &&
           <div className="editOps">
-          <h3 className="BornholmSandvig">Add/Edit Site Detail </h3>
+          <h3 className="BornholmSandvig">Add Site Detail </h3>
            <FormDetail />
           </div>
          }
          {this.state.panelform === 'image' &&
           <div className="editOps">
-          <h3 className="BornholmSandvig">Add/Edit Panel Image </h3>
+          <h3 className="BornholmSandvig">Add Panel Image </h3>
            <FormImage />
           </div>
          }
@@ -73,7 +88,21 @@ class PanelEdit extends Component {
            <FormTour />
           </div>
          }
+         {this.state.panelform === 'edit' &&
+          <div className="editOps">
+          <h3 className="BornholmSandvig">Edit Existing Entry</h3>
+           <FormTour />
+          </div>
+         }
+         {this.state.panelform === 'delete' &&
+          <div className="editOps">
+          <h3 className="BornholmSandvig">Delete Existing Entry</h3>
+           <FormTour />
+          </div>
+         }
          </div>
+        }
+       </div>
 
   	)
 
@@ -87,6 +116,7 @@ const mapStateToProps = (state, ownProps) => {
     options: state.options,
     sites: state.sites,
     panel: state.panel,
+    user: state.user,
     }
 }
 

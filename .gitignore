@@ -4,6 +4,9 @@
 /node_modules/**
 /browser/layouts/**
 
+# any security with seed info
+/db/seeds/CirTest.js
+
 # testing
 /coverage/**
 

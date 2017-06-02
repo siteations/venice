@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const morgan = require('morgan');
 
+const session = require('express-session');
+
 const db = require('./db');
 
 //------------mysql db in full later as sequelize connections------------------
@@ -60,6 +62,16 @@ app.use(express.static('./public/'));
 app.use(express.static('./public/stylesheets/'));
 app.use(express.static('./public/bootstrap/'));
 app.use(express.static('./public/img/'));
+
+//---------super basic login----------------
+//basic sessions/cookies use and login
+//not yet set for actual security
+app.use(session({
+  secret: 'not secure',
+  resave: false,
+  saveUninitialized: false
+}));
+
 
 //-----------API ROUTES-------------------
 app.use('/api', require('./routes/index.js'));

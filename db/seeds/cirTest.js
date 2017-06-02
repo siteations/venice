@@ -201,4 +201,20 @@ const tourSeed = [ //any sort of narrative strategy
 
 ];
 
-module.exports = {siteSeed, detailSeed, narrativeSeed, imageSeed, tourSeed };
+const userSeed =[
+		{
+		name: 'Meg',
+		password: 'Studer',
+	},
+	{
+		name: 'Newberry',
+		password: 'DianeLiaEd',
+	},
+	{
+		name: 'NewberryConsultant',
+		password: 'VenetianNarratives',
+	}
+
+];
+
+module.exports = {siteSeed, detailSeed, narrativeSeed, imageSeed, tourSeed, userSeed };

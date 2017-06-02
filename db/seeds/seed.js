@@ -8,10 +8,11 @@ const Details = require('../models/details.js');
 const Sites = require('../models/sites.js');
 const Narratives = require('../models/narratives.js');
 const Tours = require('../models/tours.js');
+const User = require('../models/user.js');
 
 //-------------faked data from pre-db--------------------
 
-const {siteSeed, detailSeed, narrativeSeed, imageSeed, tourSeed } = require ('./cirTest.js');
+const {siteSeed, detailSeed, narrativeSeed, imageSeed, tourSeed, userSeed } = require ('./cirTest.js');
 
 var database = db.sync({force:true}); // for seeding only...
 database.then(()=> { console.log('synced, top-confirmation'); });
@@ -58,6 +59,13 @@ const creatingTours = Promise.map(tourSeed, tour => {
             return Tours.create(tour);
         })
     .then((tour)=>{
+    })
+    .catch(console.log);
+
+const creatingUser = Promise.map(userSeed, user => {
+            return User.create(user);
+        })
+    .then((user)=>{
     })
     .catch(console.log);
 

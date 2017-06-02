@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Images, Narratives, Details, Sites, Tours, Themes } = require('../db/models/index.js');
+const {Images, Narratives, Details, Sites, Tours, Themes, User } = require('../db/models/index.js');
 
 //rework once you've done the db design/setup mysql tables
 
@@ -68,6 +68,65 @@ router.get('/themes', (req, res, next)=>{
 			next(err);
 		});
 });
+
+//-------------authorization----------------------
+
+router.get('/user', function (req, res, next) {
+  User.findById(req.session.userId)
+  .then(user => res.json(user))
+  .catch(next);
+});
+
+// // signup
+// router.post('/', function (req, res, next) {
+//   User.findOrCreate({
+//     where: {
+//       email: req.body.email
+//     },
+//     defaults: { // if the user doesn't exist, create including this info
+//       password: req.body.password
+//     }
+//   })
+//   .spread((user, created) => {
+//     if (created) {
+//       req.session.userId = user.id;
+//       res.json(user);
+//       console.log('user created');
+//     } else {
+//       res.sendStatus(401); // this user already exists, you cannot sign up
+//     }
+//   });
+// });
+
+// login
+router.put('/user', function (req, res, next) {
+  User.findOne({
+    where: {
+      name: req.body.name
+    },
+    attributes: {
+      include: ['password', 'salt']
+    }
+  })
+  .then(user => {
+    if (!user) {
+      //res.sendStatus(401); // no message; good practice to omit why auth fails
+      res.send({message: 'sorry, login failed'});
+    } else {
+        req.session.userId = user.id;
+        res.json(user);
+    }
+  })
+  .catch(next);
+});
+
+// logout, i.e. "please just forget `me`"
+router.delete('/user', function (req, res, next) {
+  delete req.session.userId;
+  res.sendStatus(204);
+});
+
+module.exports = router;
 
 
 
