@@ -36665,7 +36665,7 @@ var FormDe = function (_Component) {
             _react2.default.createElement(
               'p',
               null,
-              'Save information to database'
+              'You must click below to save edits to database'
             ),
             _react2.default.createElement(
               'button',
@@ -37070,7 +37070,7 @@ var FormImg = function (_Component) {
             _react2.default.createElement(
               'p',
               null,
-              'Save information to database'
+              'You must click below to save edits to database'
             ),
             _react2.default.createElement(
               'button',
@@ -37571,7 +37571,7 @@ var FormNarr = function (_Component) {
             _react2.default.createElement(
               'p',
               null,
-              'Save information to database'
+              'You must click below to save edits to database'
             ),
             _react2.default.createElement(
               'button',
@@ -37737,7 +37737,7 @@ var FormSi = function (_Component) {
             'form',
             { onSubmit: function onSubmit(e) {
                 return _this2.submission(e);
-              }, disabled: !this.state.cx && !this.state.cy && !this.state.r },
+              }, disabled: this.state.cx > 0 && this.state.cy > 0 && this.state.r > 0 },
             _react2.default.createElement(
               'label',
               { className: 'underline', 'for': 'generalName' },
@@ -37766,10 +37766,10 @@ var FormSi = function (_Component) {
               { onChange: function onChange(e) {
                   return _this2.updateOptions(e);
                 }, id: 'gadget' },
-              this.props.sites.allLayers && this.props.sites.allLayers.map(function (layer) {
+              this.props.sites.allLayers && this.props.sites.allLayers.map(function (layer, i) {
                 return _react2.default.createElement(
                   'option',
-                  { value: layer, key: layer },
+                  { value: layer, key: layer + i },
                   layer
                 );
               })
@@ -37839,12 +37839,12 @@ var FormSi = function (_Component) {
             _react2.default.createElement(
               'p',
               null,
-              'Save information to database'
+              'You must click below to save edits to database'
             ),
             _react2.default.createElement(
               'button',
               { className: 'btn btn-default', onClick: '' },
-              'Save'
+              'Save Site'
             )
           )
         )
@@ -37907,6 +37907,8 @@ var _panelActions = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -37926,26 +37928,43 @@ var FormT = function (_Component) {
 
     _this.state = {
       verify: false,
+      new: false,
+      add: false,
       //id will be auto added
       tourId: 0,
       siteId: 0,
       zoom: 3,
-      tourName: ''
+      tourName: '',
+      siteRemove: 0
     };
     _this.submission = _this.submission.bind(_this);
     _this.update = _this.update.bind(_this);
+    _this.updateOptions = _this.updateOptions.bind(_this);
+    _this.save = _this.save.bind(_this);
     return _this;
   }
 
   _createClass(FormT, [{
     key: 'submission',
-    value: function submission(e) {
+    value: function submission(e, type) {
       e.preventDefault();
-      this.setState({ verify: true });
-      var sub = this.state;
+      var obj = {};
+      obj[type] = true;
+      obj['verify'] = true;
+      this.setState(obj);
+      // should open a verification panel
+    }
+  }, {
+    key: 'save',
+    value: function save(e, type) {
+      e.preventDefault();
+      console.log(this.state);
+      //untangle the post/put options here:
 
-      this.setState({ entry: sub });
-      console.log('form submission', this.state);
+      // let obj = {};
+      // obj[type] = true;
+      // obj['verify']=true;
+      // this.setState(obj);
       // should open a verification panel
     }
   }, {
@@ -37959,13 +37978,32 @@ var FormT = function (_Component) {
       this.setState(obj);
     }
   }, {
+    key: 'updateOptions',
+    value: function updateOptions(e, id) {
+      e.preventDefault();
+      var input = document.getElementById(id).value;
+      var obj = {};obj[id] = input;
+      this.setState(obj);
+
+      if (obj.tourId) {
+        var tourCurrName = this.props.options.allTours.filter(function (tour) {
+          return +tour.tourId === +obj.tourId;
+        })[0].tourName;
+        console.log(tourCurrName);
+        this.setState({ tourName: tourCurrName });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
       //console.log(this.props);
       var tours = {};
+
       this.props.options.allTours.forEach(function (site) {
+        site.name = _this2.props.sites.allSites[site.siteId - 1].name;
+
         if (tours[site.tourId]) {
           var arr = tours[site.tourId];
           tours[site.tourId] = arr.concat([site]);
@@ -37973,7 +38011,21 @@ var FormT = function (_Component) {
           tours[site.tourId] = [site];
         }
       });
-      var tourIds = Object.keys(tours);
+      var tourIds = Object.keys(tours).map(function (each) {
+        return +each;
+      });
+      var newTourId = Math.max.apply(Math, _toConsumableArray(tourIds)) + 1;
+      tourIds.unshift('none');
+
+      var siteName = void 0;
+      if (this.state.siteId > 0) {
+        siteName = this.props.sites.allSites[this.state.siteId - 1].name;
+      }
+
+      var siteNameRemoved = void 0;
+      if (this.state.siteRemove > 0) {
+        siteNameRemoved = this.props.sites.allSites[this.state.siteRemove - 1].name;
+      }
 
       return _react2.default.createElement(
         'div',
@@ -37986,7 +38038,7 @@ var FormT = function (_Component) {
         _react2.default.createElement(
           'h4',
           { className: 'BornholmSandvig' },
-          'Add Sites to Exisiting Tour'
+          'Create New Tour'
         ),
         _react2.default.createElement(
           'div',
@@ -37994,8 +38046,102 @@ var FormT = function (_Component) {
           _react2.default.createElement(
             'form',
             { onSubmit: function onSubmit(e) {
-                return _this2.submission(e);
-              }, disabled: !this.state.cx },
+                return _this2.submission(e, 'new');
+              } },
+            _react2.default.createElement(
+              'label',
+              { className: 'underline' },
+              ' Auto Generated Tour Id: '
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              ' ',
+              newTourId,
+              ' '
+            ),
+            _react2.default.createElement(
+              'label',
+              { className: 'underline', 'for': 'tourName' },
+              'Add Tour Name: '
+            ),
+            _react2.default.createElement('input', { className: 'form-control', id: 'tourName', onChange: function onChange(e) {
+                return _this2.update(e);
+              }, placeholder: 'Tour Name' }),
+            _react2.default.createElement(
+              'label',
+              { className: 'underline', 'for': 'siteId' },
+              'Select Initial Site (with Details): '
+            ),
+            _react2.default.createElement(
+              'select',
+              { onChange: function onChange(e) {
+                  return _this2.updateOptions(e, 'siteId');
+                }, id: 'siteId', style: { width: '80%' } },
+              this.props.sites.allSites && this.props.sites.allSites.map(function (layer) {
+                return _react2.default.createElement(
+                  'option',
+                  { value: layer.id },
+                  layer.id + ' ' + layer.name.replace('.', ', ')
+                );
+              })
+            ),
+            _react2.default.createElement(
+              'label',
+              { className: 'underline', 'for': 'zoom' },
+              'Set Zoom level (3 = zoomed-out, 6 = zoomed-in): '
+            ),
+            _react2.default.createElement(
+              'select',
+              { onChange: function onChange(e) {
+                  return _this2.updateOptions(e, 'zoom');
+                }, id: 'zoom', style: { width: '80%' } },
+              _react2.default.createElement(
+                'option',
+                { value: '3' },
+                '3'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '4' },
+                '4'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '5' },
+                '5'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '6' },
+                '6'
+              )
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Submit information (input results will appear at bottom)'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', type: 'submit' },
+              'Submit'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'h4',
+          { className: 'BornholmSandvig' },
+          'Or, Add Site to Exisiting Tour'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'editOps' },
+          _react2.default.createElement(
+            'form',
+            { onSubmit: function onSubmit(e) {
+                return _this2.submission(e, 'add');
+              } },
             _react2.default.createElement(
               'label',
               { className: 'underline', 'for': 'type' },
@@ -38004,17 +38150,13 @@ var FormT = function (_Component) {
             _react2.default.createElement(
               'select',
               { onChange: function onChange(e) {
-                  return _this2.update(e);
-                }, style: { width: '80%' } },
-              this.props.sites.allSites && this.props.sites.allSites.map(function (layer) {
+                  return _this2.updateOptions(e, 'tourId');
+                }, id: 'tourId', style: { width: '80%' } },
+              this.props.options.allTours && tourIds.map(function (layer) {
                 return _react2.default.createElement(
                   'option',
-                  { value: layer.name },
-                  layer.name.split('.')[1],
-                  ',',
-                  _react2.default.createElement('br', null),
-                  ' ',
-                  layer.name.split('.')[0]
+                  { value: layer },
+                  layer
                 );
               })
             ),
@@ -38026,52 +38168,91 @@ var FormT = function (_Component) {
                 null,
                 'Existing sites for tour ',
                 this.state.tourId,
+                ', ',
+                this.state.tourName,
                 ': '
               ),
-              'map thru filtered sites later',
-              _react2.default.createElement('ul', null)
+              _react2.default.createElement(
+                'ul',
+                null,
+                tours[this.state.tourId] && tours[this.state.tourId].map(function (site, i) {
+                  return _react2.default.createElement(
+                    'li',
+                    null,
+                    'id: ' + site.siteId + ', name: ' + site.name.replace('.', ', ')
+                  );
+                })
+              )
             ),
             _react2.default.createElement(
               'label',
-              { className: 'underline', 'for': 'type' },
+              { className: 'underline', 'for': 'siteId' },
               'Select Site to Add (with Details): '
             ),
             _react2.default.createElement(
               'select',
               { onChange: function onChange(e) {
-                  return _this2.update(e);
-                }, style: { width: '80%' } },
+                  return _this2.updateOptions(e, 'siteId');
+                }, id: 'siteId', style: { width: '80%' } },
               this.props.sites.allSites && this.props.sites.allSites.map(function (layer) {
                 return _react2.default.createElement(
                   'option',
-                  { value: layer.name },
-                  layer.name.split('.')[1],
-                  ',',
-                  _react2.default.createElement('br', null),
-                  ' ',
-                  layer.name.split('.')[0]
+                  { value: layer.id },
+                  layer.id + ' ' + layer.name.replace('.', ', ')
                 );
               })
             ),
             _react2.default.createElement(
               'label',
-              { className: 'underline', 'for': 'type' },
+              { className: 'underline', 'for': 'zoom' },
+              'Set Zoom level (3 = zoomed-out, 6 = zoomed-in): '
+            ),
+            _react2.default.createElement(
+              'select',
+              { onChange: function onChange(e) {
+                  return _this2.updateOptions(e, 'zoom');
+                }, id: 'zoom', style: { width: '80%' } },
+              _react2.default.createElement(
+                'option',
+                { value: '3' },
+                '3'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '4' },
+                '4'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '5' },
+                '5'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: '6' },
+                '6'
+              )
+            ),
+            _react2.default.createElement(
+              'label',
+              { className: 'underline', 'for': 'siteRemove' },
               'Or Remove Site (and Details): '
             ),
             _react2.default.createElement(
               'select',
               { onChange: function onChange(e) {
-                  return _this2.update(e);
-                } },
+                  return _this2.updateOptions(e, 'siteRemove');
+                }, id: 'siteRemove', style: { width: '80%' } },
+              _react2.default.createElement(
+                'option',
+                { value: 0 },
+                'none'
+              ),
               this.props.sites.allSites && this.props.sites.allSites.map(function (layer) {
                 return _react2.default.createElement(
                   'option',
-                  { value: layer.name },
-                  layer.name.split('.')[1],
-                  ',',
-                  _react2.default.createElement('br', null),
-                  ' ',
-                  layer.name.split('.')[0]
+                  { value: layer.id },
+                  layer.id + ' ' + layer.name.replace('.', ', ')
                 );
               })
             ),
@@ -38087,7 +38268,7 @@ var FormT = function (_Component) {
             )
           )
         ),
-        this.state.verify && _react2.default.createElement(
+        this.state.verify === true && this.state.add === true && _react2.default.createElement(
           'div',
           null,
           _react2.default.createElement(
@@ -38106,22 +38287,116 @@ var FormT = function (_Component) {
             _react2.default.createElement(
               'label',
               { className: 'underline' },
-              'Layer Classification:'
+              'Choosen Tour:'
             ),
             ' ',
             _react2.default.createElement(
               'p',
               null,
-              this.state.tourId
+              this.state.tourId,
+              ', ',
+              this.state.tourName
+            ),
+            _react2.default.createElement(
+              'ul',
+              null,
+              tours[this.state.tourId] && tours[this.state.tourId].map(function (site, i) {
+
+                if (+site.siteId !== +_this2.state.siteRemove) {
+                  return _react2.default.createElement(
+                    'li',
+                    null,
+                    'id: ' + site.siteId + ', name: ' + site.name.replace('.', ', ')
+                  );
+                }
+              })
+            ),
+            _react2.default.createElement(
+              'label',
+              { className: 'underline' },
+              'added:'
             ),
             _react2.default.createElement(
               'p',
               null,
-              'Save information to database'
+              ' ',
+              'id: ' + this.state.siteId + ', name: ' + siteName
+            ),
+            _react2.default.createElement(
+              'label',
+              { className: 'underline' },
+              'removed:'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              ' ',
+              'id: ' + this.state.siteRemove + ', name: ' + siteNameRemoved
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'You must click below to save edits to database'
             ),
             _react2.default.createElement(
               'button',
-              { className: 'btn btn-default', onClick: '' },
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.save(e, 'add');
+                } },
+              'Save'
+            )
+          )
+        ),
+        this.state.verify === true && this.state.new === true && _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h4',
+            { className: 'BornholmSandvig' },
+            'Review Entries'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            ' either accept (below) or correct & review again'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'editOps' },
+            _react2.default.createElement(
+              'label',
+              { className: 'underline' },
+              'New Tour:'
+            ),
+            ' ',
+            _react2.default.createElement(
+              'p',
+              null,
+              this.state.tourId,
+              ', ',
+              this.state.tourName
+            ),
+            _react2.default.createElement(
+              'label',
+              { className: 'underline' },
+              'Initial Site:'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              ' ',
+              'id: ' + this.state.siteId + ', name: ' + siteName
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'You must click below to save edits to database'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.save(e, 'new');
+                } },
               'Save'
             )
           )
@@ -39001,6 +39276,8 @@ var PanelEdit = function (_Component) {
     key: 'render',
     value: function render() {
       var _this2 = this;
+
+      //add user/sessions and showlogin panel here.
 
       return _react2.default.createElement(
         'div',

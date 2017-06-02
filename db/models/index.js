@@ -9,7 +9,6 @@ const Tours = require('./tours.js');
 
 //add associations here
 
-
 module.exports = {
     db,
     Images,

@@ -30,6 +30,7 @@ class PanelEdit extends Component {
   }
 
   render(){
+    //add user/sessions and showlogin panel here.
 
   	return (
          <div className={this.props.baseClass} ref="sizeP" id="panelWin" style={{height:`${this.props.map.windowSize[1]+6}px`}}>

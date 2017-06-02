@@ -66,16 +66,16 @@ class FormSi extends Component {
             <p> once these have been added, you will be able to add additional info below</p>
             <h4 className="BornholmSandvig">Add a New Map Site</h4>
             <div className="editOps">
-              <form onSubmit={e=>this.submission(e)} disabled={!this.state.cx && !this.state.cy && !this.state.r }>
+              <form onSubmit={e=>this.submission(e)} disabled={this.state.cx>0 && this.state.cy>0 && this.state.r>0 }>
     				    <label className='underline' for="generalName">General Name (church affiliation, etc.):</label> <input className="form-control" id='generalName' onChange={e=>this.update(e)} placeholder="Title input"></input>
     				    <label className='underline' for="properName">Specific Site Name:</label>
                   <input className="form-control" id='properName' onChange={e=>this.update(e)} placeholder="Title input"></input><br/>
                 <label className='underline' for="type">Select Layer Classification: </label>
                   <select onChange={e=>this.updateOptions(e)} id="gadget">
                   {this.props.sites.allLayers &&
-                    this.props.sites.allLayers.map(layer=>{
+                    this.props.sites.allLayers.map((layer,i)=>{
                       return (
-                      <option value={layer} key={layer}>{layer}</option>
+                      <option value={layer} key={layer+i}>{layer}</option>
                       )
                     })
                   }
@@ -92,8 +92,8 @@ class FormSi extends Component {
                 <label className='underline'>General Name (church affiliation, etc.):</label> <p>{this.state.generalName}</p>
                 <label className='underline'>Specific Site Name: </label> <p>{this.state.properName}</p>
                 <label className='underline'>Layer Classification:</label> <p>{this.state.type}</p>
-                <p>Save information to database</p>
-                <button className="btn btn-default" onClick="">Save</button>
+                <p>You must click below to save edits to database</p>
+                <button className="btn btn-default" onClick="">Save Site</button>
 
                 </div>
               </div>

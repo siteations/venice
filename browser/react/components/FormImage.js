@@ -141,7 +141,7 @@ class FormImg extends Component {
                 <label className='underline' >Image Caption: </label> <p>{this.state.caption}</p><br/>
                 <label className='underline'>Image Catalog Source (Chicago Style Citation):</label><p>{this.state.catalogSource}</p>
                 <label className='underline' for="catalogLink">Catalog Link (at Newberry): </label><p>{this.state.catalogLink}</p>
-                <p>Save information to database</p>
+                <p>You must click below to save edits to database</p>
                 <button className="btn btn-default" onClick="">Save Panel Image</button>
                 </div>
               </div>

@@ -155,7 +155,7 @@ class FormNarr extends Component {
                 <label className='underline' for="researcherName">Name:</label><p>{this.state.researcherName}</p>
                 <label className='underline' for="researcherTitle">Title:</label><p>{this.state.researcherTitle}</p>
                 <label className='underline' for="researcherAffiliation">Affiliation:</label><p>{this.state.researcherAffiliation}</p>
-                <p>Save information to database</p>
+                <p>You must click below to save edits to database</p>
                 <button className="btn btn-default" onClick="">Save</button>
 
                 </div>

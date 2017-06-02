@@ -138,7 +138,7 @@ class FormDe extends Component { // so this will be an update to site table, add
                 <label className='underline' >Detail Id: </label> <p>{this.state.minorId}</p>
                 <label className='underline' >Original Site Id: </label> <p>{this.state.coreId}</p>
                 <label className='underline' >Original Site Name: </label> <p>{this.state.name}</p>
-                <p>Save information to database</p>
+                <p>You must click below to save edits to database</p>
                 <button className="btn btn-default" onClick="">Save Thumbnail Detail</button>
 
                 </div>
