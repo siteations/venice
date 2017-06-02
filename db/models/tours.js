@@ -8,6 +8,7 @@ const tours = db.define('Tours', {
     tourId: {type: Sequelize.INTEGER, notNull: true },
     siteId: {type: Sequelize.INTEGER, notNull: true },
     zoom: {type: Sequelize.INTEGER, notNull: true },
+    tourName: {type: Sequelize.STRING, notNull: true},
 });
 
 module.exports = tours;

@@ -154,59 +154,51 @@ const tourSeed = [ //any sort of narrative strategy
 		tourId: 1,
 		siteId: 3,
 		zoom: 6,
+		tourName: 'test',
 	},
 	{
 		tourId: 1,
 		siteId: 11,
 		zoom: 5,
+		tourName: 'test',
     },
   {
 		tourId: 1,
   	siteId: 9,
     zoom: 6,
+    tourName: 'test',
   },
   {
 		tourId: 1,
     siteId: 21,
       zoom: 5,
+  	tourName: 'test',
   },
   {
 		tourId: 1,
 		siteId: 17,
 		zoom: 5,
+  	tourName: 'test',
   },
   {
 		tourId: 1,
 		siteId: 13,
 		zoom: 4,
+  	tourName: 'test',
   },
   {
 		tourId: 1,
 		siteId: 6,
 		zoom: 6,
+  	tourName: 'test',
   },
   {
 		tourId: 1,
 		siteId: 23,
 		zoom: 6,
+  	tourName: 'test',
   }
 
 ];
 
-const themeSeed = [ //any sort of narrative strategy
-	{
-		tourId: 1,
-		layerType: 'plague churches',
-	},
-	{
-		tourId: 2,
-		layerType: 'maps',
-	},
-	{
-		tourId: 3,
-		layerType: 'religious prints',
-	},
-];
-
-
-module.exports = {siteSeed, detailSeed, narrativeSeed, imageSeed, tourSeed, themeSeed };
+module.exports = {siteSeed, detailSeed, narrativeSeed, imageSeed, tourSeed };

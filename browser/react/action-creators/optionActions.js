@@ -18,8 +18,6 @@ export const SET_PANEL_MID = 'SET_PANEL_MID';
 export const PLAY_TOUR = 'PLAY_TOUR';
 export const GET_ALL_TOURS = 'GET_ALL_TOURS';
 export const GET_CURR_TOUR = 'GET_CURR_TOUR';
-export const GET_ALL_THEMES = 'GET_ALL_THEMES';
-export const GET_CURR_THEME = 'GET_CURR_THEME';
 
 
 // //-------------------ACTION CREATORS - vanilla loading of information
@@ -114,19 +112,6 @@ export const getTour = (tourId) =>{
 	}
 }
 
-export const getAllThemes = (themes) =>{
-	return {
-		type: GET_ALL_THEMES,
-		themes,
-	}
-}
-
-export const getTheme = (theme) =>{
-	return {
-		type: GET_CURR_THEME,
-		theme,
-	}
-}
 
 const initOptions = {
 	color: false,
@@ -144,9 +129,6 @@ const initOptions = {
 	playTour: false,
 	currTour: 1,
 	allTours: [],
-
-	currTheme: 1,
-	allThemes: [],
 
 };
 
@@ -170,14 +152,6 @@ export const optionReducer = (prevState = initOptions, action) => {
 
 	case GET_CURR_TOUR:
 		newState.currTour = action.tour;
-		break;
-
-	case GET_ALL_THEMES:
-		newState.allThemes = action.themes;
-		break;
-
-	case GET_CURR_THEME:
-		newState.currTheme = action.theme;
 		break;
 
 	case SET_ANNO:
@@ -283,17 +257,9 @@ export const getAllToursThemes = () => dispatch => {
 			.then(responses => {
 				return responses.data;
 			})
-
-	const allThemes = axios.get('/api/themes')
-			.then(responses => {
-				return responses.data;
-			})
-
-	Promise.all([allTours, allThemes])
-		.then((results) => {
-			const tours = results[0], themes = results[1];
+			.then((results) => {
+			const tours = results;
 			dispatch(getAllTours(tours));
-			dispatch(getAllThemes(themes));
 		})
 		.catch(console.log);
 

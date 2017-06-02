@@ -10,6 +10,8 @@ import { imageSeries } from '../pre-db/cirTest.js';
 import FormNarrative from './FormNarrative.js';
 import FormDetail from './FormDetail.js';
 import FormImage from './FormImage.js';
+import FormSite from './FormSite.js';
+import FormTour from './FormTour.js';
 
 class PanelEdit extends Component {
 	constructor(props) {
@@ -61,13 +63,13 @@ class PanelEdit extends Component {
          {this.state.panelform === 'site' &&
           <div className="editOps">
           <h3 className="BornholmSandvig">Add Site </h3>
-           component to come
+           <FormSite />
           </div>
          }
          {this.state.panelform === 'tour' &&
           <div className="editOps">
           <h3 className="BornholmSandvig">Add Tour </h3>
-           component to come
+           <FormTour />
           </div>
          }
          </div>
