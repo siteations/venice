@@ -115,3 +115,24 @@ export const centerRescaled = (zoom, newCenter, winSize,tilesize) => {
     };
 
 }
+
+export const reverseCenter = (zoom, existingCenter, tilesize) => {
+  let limits=scaleOps[zoom];
+  let larger = scaleOps[6];
+  // let diffY = Math.pow(2,7-zoom)*105;
+  // let diffX = Math.pow(2,7-zoom)*5;
+
+  let widthCurr = tilesize*(limits[0]+1), heightCurr = tilesize*(limits[1]+1);
+  let xPerc = existingCenter[0]/widthCurr, yPerc = existingCenter[1]/heightCurr;
+
+  let widthFull = 256 * (larger[0]+1), heightFull = 256 * (larger[1]+1);
+
+  let centerX = xPerc*widthFull, centerY = yPerc*heightFull;
+
+  return {
+    x: centerX,
+    y: centerY,
+  }
+
+
+}

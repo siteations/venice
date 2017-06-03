@@ -4704,7 +4704,7 @@ var initSites = {
 	newSite: 0,
 	newCx: 0,
 	newCy: 0,
-	newRadius: 0
+	newRadius: 100
 
 };
 
@@ -4949,12 +4949,13 @@ var addAllLayers = exports.addAllLayers = function addAllLayers(layers) {
 
 var addNewSite = exports.addNewSite = function addNewSite(siteObj) {
 	return function (dispatch) {
+		console.log('pre-post', siteObj);
 
 		_axios2.default.post('/api/sites', siteObj).then(function (responses) {
 			return responses.data;
 		}).then(function (site) {
 
-			dispatch(getCurrSite(site.id));
+			//dispatch(getCurrSite(site.id));
 		}).catch(console.log);
 	};
 };
@@ -4962,6 +4963,7 @@ var addNewSite = exports.addNewSite = function addNewSite(siteObj) {
 var addNewSiteCenter = exports.addNewSiteCenter = function addNewSiteCenter(id, cx, cy) {
 	return function (dispatch) {
 		dispatch(addNewSiteGeo1(id, cx, cy));
+		dispatch(addNewSite({ id: id, cx: cx, cy: cy }));
 	};
 };
 
@@ -7319,6 +7321,29 @@ var centerRescaled = exports.centerRescaled = function centerRescaled(zoom, newC
   return {
     x: -1 * centerX,
     y: -1 * centerY
+  };
+};
+
+var reverseCenter = exports.reverseCenter = function reverseCenter(zoom, existingCenter, tilesize) {
+  var limits = scaleOps[zoom];
+  var larger = scaleOps[6];
+  // let diffY = Math.pow(2,7-zoom)*105;
+  // let diffX = Math.pow(2,7-zoom)*5;
+
+  var widthCurr = tilesize * (limits[0] + 1),
+      heightCurr = tilesize * (limits[1] + 1);
+  var xPerc = existingCenter[0] / widthCurr,
+      yPerc = existingCenter[1] / heightCurr;
+
+  var widthFull = 256 * (larger[0] + 1),
+      heightFull = 256 * (larger[1] + 1);
+
+  var centerX = xPerc * widthFull,
+      centerY = yPerc * heightFull;
+
+  return {
+    x: centerX,
+    y: centerY
   };
 };
 
@@ -17676,7 +17701,7 @@ var MapSVG = function (_Component) {
                 xOffR = _props$map$xyOffsetsR[0],
                 yOffR = _props$map$xyOffsetsR[1];
 
-            this.props.setWindowOffsets([sele.offsetTop, sele.offsetLeft]);
+            this.props.setWindowOffsets([sele.offsetLeft, sele.offsetTop]);
             this.props.setWinSize([width, height]);
             this.props.setPanelOffset(panelW); // for recenter;
             // this.props.setOffsetsR([xOff - panelW, yOff]);
@@ -17697,7 +17722,7 @@ var MapSVG = function (_Component) {
             e.preventDefault();
 
             var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-            var mousePos = [e.screenX - sele.offsetLeft, e.screenY - sele.offsetTop];
+            var mousePos = [e.clientX - sele.offsetLeft, e.clientY - sele.offsetTop];
             this.setState({ mouseDivloc: mousePos });
 
             e.type === 'mousedown' ? this.setState({ drag: 'start' }) : this.setState({ drag: '' });
@@ -17716,7 +17741,8 @@ var MapSVG = function (_Component) {
                 lastY = _props$map$xyOffsetsR2[1];
 
             var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-            var mousePos = [e.screenX - sele.offsetLeft, e.screenY - sele.offsetTop];
+            //var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
+            var mousePos = [e.clientX - sele.offsetLeft, e.clientY - sele.offsetTop];
             var offX = this.state.mouseDivloc[0] - mousePos[0] + lastX;
             var offY = this.state.mouseDivloc[1] - mousePos[1] + lastY;
 
@@ -17732,7 +17758,7 @@ var MapSVG = function (_Component) {
         value: function zoomScroll(e) {
             e.preventDefault();
             var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-            var mousePos = [e.screenX - sele.offsetLeft, e.screenY - sele.offsetTop];
+            var mousePos = [e.clientX - sele.offsetLeft, e.clientY - sele.offsetTop];
             /*
             mouseposition + offsets => location on map
             tile position = Math.floor(location/tilesize)
@@ -17828,8 +17854,8 @@ var MapSVG = function (_Component) {
             }
 
             var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-            var mouseX = e.screenX - sele.offsetLeft,
-                mouseY = e.screenY - sele.offsetTop;
+            var mouseX = e.clientX - sele.offsetLeft,
+                mouseY = e.clientY - sele.offsetTop;
 
             var curX = mouseX + this.props.map.xyOffsets[0],
                 curY = mouseY + this.props.map.xyOffsets[1];
@@ -17973,9 +17999,35 @@ var MapSVG = function (_Component) {
         }
     }, {
         key: 'addCenter',
-        value: function addCenter(e) {
-            e.preventDefault();
-            console.log('ready to add centers/sites');
+        value: function addCenter(e, type) {
+            e.preventDefault(); //reverse logic of top
+
+            var mouseX = e.clientX - this.props.map.windowOffsets[0],
+                mouseY = e.clientY - this.props.map.windowOffsets[1];
+
+            var curX = mouseX + this.props.map.xyOffsets[0],
+                curY = mouseY + this.props.map.xyOffsets[1];
+            var zoom = this.props.map.currZoom,
+                pix = this.props.map.tileSize;
+
+            var _reverseCenter = (0, _rawTiles.reverseCenter)(zoom, [curX, curY], pix),
+                x = _reverseCenter.x,
+                y = _reverseCenter.y;
+
+            var id = +this.props.sites.allSites.length + 1;
+
+            if (type === 'center') {
+                this.props.addNewSiteCenter(id, x, y);
+            } else if (type === 'radius') {
+                //get xDif, yDif and take roots
+                var xDif = x - this.props.sites.newCx,
+                    yDif = y - this.props.sites.newCx;
+                var x2 = Math.pow(xDif, 2),
+                    y2 = Math.pow(yDif, 2);
+
+                var radius = Math.pow(x2 + y2, .5);
+                console.log(radius);
+            }
         }
     }, {
         key: 'render',
@@ -18020,8 +18072,14 @@ var MapSVG = function (_Component) {
                         onDoubleClick: this.props.user === null || this.props.user.message ? function (e) {
                             return _this2.selectShowPanel(e, 'none');
                         } : function (e) {
-                            return _this2.addCenter(e);
-                        } },
+                            return _this2.addCenter(e, 'center');
+                        },
+                        onClick: this.props.sites.newCx ? function (e) {
+                            return _this2.addCenter(e, 'radius');
+                        } : function (e) {
+                            return e.preventDefault();
+                        }
+                    },
                     _react2.default.createElement(
                         'svg',
                         { width: this.props.map.windowSize[0], height: this.props.map.windowSize[1] },
@@ -18061,9 +18119,7 @@ var MapSVG = function (_Component) {
                             this.props.options.anno && _react2.default.createElement(_TileVariants.BackgroundMask, { wSize: this.props.map.windowSize, color: this.props.options.color }),
                             tiles && this.props.options.anno && _react2.default.createElement(_TileVariants.ClipTiles, { data: tiles, wSize: this.props.map.windowSize, tSize: this.props.map.tileSize, clip: 'url(#myClip)', opacity: 1, action: '' }),
                             this.props.user !== null && !this.props.user.message && _react2.default.createElement(_TileVariants.ClipTiles, { data: tiles, wSize: this.props.map.windowSize, tSize: this.props.map.tileSize, clip: '', opacity: 0.05,
-                                action: function action(e) {
-                                    return _this2.addCenter(e);
-                                }
+                                action: ''
                             })
                         ),
                         _react2.default.createElement(
@@ -18194,8 +18250,11 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
         updateNarrative: function updateNarrative(obj) {
             dispatch((0, _panelActions.setNarr)(obj));
         },
-        addNewSiteCenter: function addNewSiteCenter(siteId, siteX, siteY, siteR) {
-            dispatch((0, _siteActions.addNewSiteCenter)(siteId, siteX, siteY, siteR));
+        addNewSiteCenter: function addNewSiteCenter(siteId, siteX, siteY) {
+            dispatch((0, _siteActions.addNewSiteCenter)(siteId, siteX, siteY));
+        },
+        addNewSiteRadius: function addNewSiteRadius(radius) {
+            dispatch((0, _siteActions.addNewSiteRadius)(radius));
         }
     };
 };
@@ -38002,6 +38061,57 @@ var FormSi = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'editOps' },
+          this.props.sites.newSite > 0 && _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'h4',
+              { className: 'BornholmSandvig' },
+              'Map-Based Additions: Center'
+            ),
+            _react2.default.createElement(
+              'label',
+              { className: 'underline' },
+              'New Id: '
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.sites.newSite
+            ),
+            _react2.default.createElement(
+              'label',
+              { className: 'underline' },
+              'New Center: '
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.sites.newCx,
+              ', ',
+              this.props.sites.newCy,
+              _react2.default.createElement('br', null),
+              _react2.default.createElement('br', null),
+              'with center placed, click to add radius.'
+            )
+          ),
+          this.props.sites.newRadius > 100 && _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'label',
+              { className: 'underline' },
+              'New Radius: '
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.sites.newRadius - 100,
+              _react2.default.createElement('br', null),
+              _react2.default.createElement('br', null),
+              'with geometry placed, add labels/names below.'
+            )
+          ),
           _react2.default.createElement(
             'form',
             { onSubmit: function onSubmit(e) {

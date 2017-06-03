@@ -17,6 +17,28 @@ router.get('/sites', (req, res, next)=>{
 		});
 });
 
+router.post('/sites', (req, res, next)=>{
+		console.log('adding site', req.body);
+		Sites.create(req.body)
+		.then(siteList=>{
+			res.send(siteList);
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
+router.put('/sites', (req, res, next)=>{
+		Sites.findById(req.body.id)
+		.then(siteList=>{
+			res.send(siteList);
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
+
 router.get('/details', (req, res, next)=>{
 		Details.findAll({})
 		.then(detailList=>{

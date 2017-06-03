@@ -188,7 +188,7 @@ const initSites = {
 	newSite : 0,
 	newCx : 0,
 	newCy: 0,
-	newRadius: 0,
+	newRadius: 100,
 
 };
 
@@ -410,6 +410,7 @@ export const addAllLayers = (layers) => dispatch => { //load all/clear all to se
 }
 
 export const addNewSite = (siteObj) => dispatch => {
+	console.log('pre-post', siteObj);
 
 	axios.post('/api/sites', siteObj)
 			.then(responses => {
@@ -417,13 +418,14 @@ export const addNewSite = (siteObj) => dispatch => {
 			})
 	    .then((site) => {
 
-			dispatch(getCurrSite(site.id));
+			//dispatch(getCurrSite(site.id));
 			})
 	   .catch(console.log);
 }
 
 export const addNewSiteCenter = (id, cx, cy) => dispatch => {
 	dispatch(addNewSiteGeo1(id, cx, cy));
+	dispatch(addNewSite({id,cx,cy}));
 }
 
 export const addNewSiteRadius = (radius) => dispatch => {

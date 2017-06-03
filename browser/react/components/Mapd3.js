@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { connect } from 'react-redux';
 
 //---------------------------MAP OPTIONS & COMPONENTS---------------------------
-import { tiling, scaleOps, sitesFiltered, centerRescaled } from '../plug-ins/rawTiles.js';
+import { tiling, scaleOps, sitesFiltered, centerRescaled, reverseCenter } from '../plug-ins/rawTiles.js';
 import { spacingFrame } from '../plug-ins/rawDetails.js';
 import { ClipTiles, BackgroundTiles, BackgroundMask, Underlay } from './TileVariants.js';
 import DetailOver from './AnnoVariants.js';
@@ -19,7 +19,7 @@ import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen,
 
 import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarge} from '../action-creators/optionActions.js';
 
-import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives, setDetailId, addNewSiteCenter } from '../action-creators/siteActions.js';
+import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives, setDetailId, addNewSiteCenter, addNewSiteRadius } from '../action-creators/siteActions.js';
 
 import { setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
 
@@ -69,7 +69,7 @@ class MapSVG extends Component {
         let [xOff, yOff] = this.props.map.xyOffsets;
         let [xOffR, yOffR] = this.props.map.xyOffsetsR;
 
-        this.props.setWindowOffsets([sele.offsetTop, sele.offsetLeft]);
+        this.props.setWindowOffsets([sele.offsetLeft, sele.offsetTop]);
         this.props.setWinSize([width, height]);
         this.props.setPanelOffset(panelW); // for recenter;
         // this.props.setOffsetsR([xOff - panelW, yOff]);
@@ -88,7 +88,7 @@ class MapSVG extends Component {
     	e.preventDefault();
 
     	let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-    	let mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
+    	var mousePos = [e.clientX-sele.offsetLeft, e.clientY-sele.offsetTop];
     	this.setState({mouseDivloc: mousePos});
 
     	(e.type === 'mousedown')? this.setState({drag: 'start'}) : this.setState({drag: ''})
@@ -103,7 +103,8 @@ class MapSVG extends Component {
 
     	let [lastX, lastY] = this.props.map.xyOffsetsR;
     	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-    	var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
+    	//var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
+        var mousePos = [e.clientX-sele.offsetLeft, e.clientY-sele.offsetTop];
     	let offX = this.state.mouseDivloc[0] - mousePos[0] + lastX;
     	let offY = this.state.mouseDivloc[1] - mousePos[1] + lastY;
 
@@ -118,7 +119,7 @@ class MapSVG extends Component {
     zoomScroll(e) {
     	e.preventDefault();
     	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-    	var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
+        var mousePos = [e.clientX-sele.offsetLeft, e.clientY-sele.offsetTop];
     	/*
     	mouseposition + offsets => location on map
     	tile position = Math.floor(location/tilesize)
@@ -190,7 +191,7 @@ class MapSVG extends Component {
         }
 
         var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-        var mouseX = e.screenX-sele.offsetLeft, mouseY = e.screenY-sele.offsetTop;
+        var mouseX = e.clientX-sele.offsetLeft, mouseY = e.clientY-sele.offsetTop;
 
         let curX = mouseX+this.props.map.xyOffsets[0], curY = mouseY+this.props.map.xyOffsets[1];
 
@@ -314,10 +315,28 @@ class MapSVG extends Component {
 
     }
 
-    addCenter(e){
-        e.preventDefault();
-        console.log('ready to add centers/sites');
+    addCenter(e, type){
+        e.preventDefault(); //reverse logic of top
 
+        var mouseX = e.clientX-this.props.map.windowOffsets[0], mouseY = e.clientY-this.props.map.windowOffsets[1];
+
+        let curX = mouseX+this.props.map.xyOffsets[0], curY = mouseY+this.props.map.xyOffsets[1]
+        let zoom = this.props.map.currZoom, pix = this.props.map.tileSize;
+        let {x,y} = reverseCenter(zoom, [curX, curY], pix);
+
+        let id = +this.props.sites.allSites.length + 1;
+
+        if (type==='center'){
+        this.props.addNewSiteCenter(id,x,y);
+        } else if (type==='radius'){
+            //get xDif, yDif and take roots
+            let xDif = x-this.props.sites.newCx, yDif = y-this.props.sites.newCx;
+            let x2 = Math.pow(xDif, 2), y2 = Math.pow(yDif, 2);
+
+            let radius = Math.pow((x2+y2), .5);
+            console.log(radius);
+
+        }
     }
 
     render(){
@@ -340,7 +359,9 @@ class MapSVG extends Component {
 
     	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
     	   <div className="offset" onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} onWheel = {e=>this.zoomScroll(e)}
-           onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, 'none') : e => this.addCenter(e) } >
+           onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, 'none') : e => this.addCenter(e, 'center') }
+           onClick={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault() }
+           >
 
 	    	   <svg width={this.props.map.windowSize[0]} height={this.props.map.windowSize[1]}  >
 	    	   		<defs>
@@ -382,7 +403,7 @@ class MapSVG extends Component {
     	    	   		}
                         {this.props.user !== null && !this.props.user.message &&
                             <ClipTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="" opacity={0.05}
-                            action={(e)=>this.addCenter(e)}
+                            action=""
                             />
                         }
 	    	   		</g>
@@ -508,8 +529,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updateNarrative: (obj) => {
         dispatch(setNarr(obj));
     },
-    addNewSiteCenter: (siteId, siteX, siteY, siteR) => {
-        dispatch(addNewSiteCenter(siteId, siteX, siteY, siteR));
+    addNewSiteCenter: (siteId, siteX, siteY) => {
+        dispatch(addNewSiteCenter(siteId, siteX, siteY));
+    },
+    addNewSiteRadius: (radius) => {
+        dispatch(addNewSiteRadius(radius));
     },
   }
 }

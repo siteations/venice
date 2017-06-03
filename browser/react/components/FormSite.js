@@ -66,6 +66,25 @@ class FormSi extends Component {
             <p> once these have been added, you will be able to add additional info below</p>
             <h4 className="BornholmSandvig">Add a New Map Site</h4>
             <div className="editOps">
+              {this.props.sites.newSite > 0 &&
+                <div>
+                  <h4 className="BornholmSandvig">Map-Based Additions: Center</h4>
+                  <label className='underline'>New Id: </label>
+                  <p>{this.props.sites.newSite}</p>
+                  <label className='underline'>New Center: </label>
+                  <p>{this.props.sites.newCx}, {this.props.sites.newCy}<br/><br/>
+                  with center placed, click to add radius.
+                  </p>
+                </div>
+              }
+              {this.props.sites.newRadius > 100 &&
+                <div>
+                  <label className='underline'>New Radius: </label>
+                  <p>{this.props.sites.newRadius-100}<br/><br/>
+                  with geometry placed, add labels/names below.
+                  </p>
+                </div>
+              }
               <form onSubmit={e=>this.submission(e)} disabled={this.state.cx>0 && this.state.cy>0 && this.state.r>0 }>
     				    <label className='underline' for="generalName">General Name (church affiliation, etc.):</label> <input className="form-control" id='generalName' onChange={e=>this.update(e)} placeholder="Title input"></input>
     				    <label className='underline' for="properName">Specific Site Name:</label>
