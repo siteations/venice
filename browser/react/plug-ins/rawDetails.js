@@ -9,19 +9,19 @@ so question becomes whether to cluster in a particular way
 */
 
 export const spacingFrame = (windowSize, dataCircle, allDetails) => {
-	let clipDetails=[];
-	let details=[];
+	var clipDetails=[];
+	var details=[];
 
 	if (dataCircle && dataCircle.clusterId){
 	details = allDetails.filter(detail => {
-		return detail.clusterId = dataCircle.clusterId;
+		return detail.clusterId === dataCircle.clusterId;
 	})
 
-	let height;
+	var height;
 	(windowSize[1]*.75>dataCircle.r*6)? height=dataCircle.r*6 : height=windowSize[1]*.75 ;
 	if (details.length<2) { height=dataCircle.r*1.5 };
 
-	let offset;  // this will need adjustment
+	var offset;  // this will need adjustment
 	(dataCircle.r/2>20)? offset=20 : offset =  dataCircle.r/2;
 	let size = (height-((details.length-1)*offset))/details.length; //to width, height, radius
 	let x= dataCircle.cx-dataCircle.r-offset-size;

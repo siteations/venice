@@ -18336,16 +18336,16 @@ var spacingFrame = exports.spacingFrame = function spacingFrame(windowSize, data
 
 	if (dataCircle && dataCircle.clusterId) {
 		details = allDetails.filter(function (detail) {
-			return detail.clusterId = dataCircle.clusterId;
+			return detail.clusterId === dataCircle.clusterId;
 		});
 
-		var height = void 0;
+		var height;
 		windowSize[1] * .75 > dataCircle.r * 6 ? height = dataCircle.r * 6 : height = windowSize[1] * .75;
 		if (details.length < 2) {
 			height = dataCircle.r * 1.5;
 		};
 
-		var offset = void 0; // this will need adjustment
+		var offset; // this will need adjustment
 		dataCircle.r / 2 > 20 ? offset = 20 : offset = dataCircle.r / 2;
 		var size = (height - (details.length - 1) * offset) / details.length; //to width, height, radius
 		var x = dataCircle.cx - dataCircle.r - offset - size;
