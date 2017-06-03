@@ -324,17 +324,22 @@ class MapSVG extends Component {
         let zoom = this.props.map.currZoom, pix = this.props.map.tileSize;
         let {x,y} = reverseCenter(zoom, [curX, curY], pix);
 
-        let id = +this.props.sites.allSites.length + 1;
 
-        if (type==='center'){
-        this.props.addNewSiteCenter(id,x,y);
+        if (type==='center' && this.props.sites.newCx===0){
+            this.props.addNewSiteCenter(Math.floor(x), Math.floor(y), Math.floor(mouseX), Math.floor(mouseY));
+        } else if (type==='center' && this.props.sites.newCx!==0){
+            this.props.addNewSiteCenter(0, 0, 0, 0);
+            this.props.addNewSiteRadius(0, 0);
         } else if (type==='radius'){
             //get xDif, yDif and take roots
-            let xDif = x-this.props.sites.newCx, yDif = y-this.props.sites.newCx;
+            let xDif = x-this.props.sites.newCx, yDif = y-this.props.sites.newCy;
             let x2 = Math.pow(xDif, 2), y2 = Math.pow(yDif, 2);
 
+            let sx = Math.pow(mouseX-this.props.sites.newX, 2), sy = Math.pow(mouseY-this.props.sites.newY, 2);
+            let radScreen = Math.pow((sx+sy), .5);
             let radius = Math.pow((x2+y2), .5);
-            console.log(radius);
+
+            this.props.addNewSiteRadius(Math.floor(radius), Math.floor(radScreen));
 
         }
     }
@@ -360,7 +365,7 @@ class MapSVG extends Component {
     	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
     	   <div className="offset" onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} onWheel = {e=>this.zoomScroll(e)}
            onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, 'none') : e => this.addCenter(e, 'center') }
-           onClick={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault() }
+           onClick={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault()}
            >
 
 	    	   <svg width={this.props.map.windowSize[0]} height={this.props.map.windowSize[1]}  >
@@ -401,11 +406,6 @@ class MapSVG extends Component {
                         {tiles && this.props.options.anno &&
                             <ClipTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="url(#myClip)" opacity={1} action=""/>
     	    	   		}
-                        {this.props.user !== null && !this.props.user.message &&
-                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="" opacity={0.05}
-                            action=""
-                            />
-                        }
 	    	   		</g>
 
 	    	   		<g className="allLabelCircs" >
@@ -446,6 +446,17 @@ class MapSVG extends Component {
 	   						    )}
 	   					})
 	   				}
+                    {this.props.sites.newCx &&
+
+                                    <circle className='circHLThick'
+                                    cx={this.props.sites.newX}
+                                    cy={this.props.sites.newY}
+                                    r={Math.max(15,this.props.sites.newRad)}
+                                    stroke={'#ffffff'}
+                                    strokeWidth = "10px"
+                                    />
+
+                    }
 	   				</g>
 	    	   </svg>
     	   </div>
@@ -529,11 +540,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updateNarrative: (obj) => {
         dispatch(setNarr(obj));
     },
-    addNewSiteCenter: (siteId, siteX, siteY) => {
-        dispatch(addNewSiteCenter(siteId, siteX, siteY));
+    addNewSiteCenter: (x,y, curX, curY) => {
+        dispatch(addNewSiteCenter(x,y, curX, curY));
     },
-    addNewSiteRadius: (radius) => {
-        dispatch(addNewSiteRadius(radius));
+    addNewSiteRadius: (radius, rad2) => {
+        dispatch(addNewSiteRadius(radius, rad2));
     },
   }
 }

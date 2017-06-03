@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Imagetrey from './ImageSlider.js';
 import { setPanelSizing } from '../action-creators/panelActions.js';
+import { addNewSite, addNewSiteCenter, addNewSiteRadius } from '../action-creators/siteActions.js';
 //import { imageSeries } from '../pre-db/cirTest.js';
 
 
@@ -14,9 +15,6 @@ class FormSi extends Component {
         this.state = {
           verify: false,
           //id will be auto added
-          cx: 0,
-          cy: 0,
-          r: 0,
           generalName: '',
           properName: '',
           type: '',
@@ -25,16 +23,31 @@ class FormSi extends Component {
         }
         this.submission = this.submission.bind(this);
         this.update = this.update.bind(this);
+        this.save = this.save.bind(this);
   }
 
   submission(e){
     e.preventDefault();
     this.setState({verify: true});
-    let sub = this.state;
-
-    this.setState({entry: sub});
     console.log('form submission', this.state);
     // should open a verification panel
+  }
+
+  save(e){
+    e.preventDefault();
+    let obj=this.state;
+    obj.name = this.state.generalName+'.'+this.state.properName;
+    obj.cx = this.props.sites.newCx;
+    obj.cy = this.props.sites.newCy;
+    obj.r = this.props.sites.newRadius;
+    //id auto generated
+    delete obj.verify;
+    delete obj.generalName;
+    delete obj.properName;
+    console.log('for database', obj);
+    this.props.addNewSite(obj); //adds, reloads all, and sets site to current for editing
+    this.props.clearTempSite();
+
   }
 
   update(e){
@@ -63,14 +76,13 @@ class FormSi extends Component {
   	return (
            <div>
             <p> zoom in and double-click on map to add a new center, then click once again to add a radius</p>
-            <p> once these have been added, you will be able to add additional info below</p>
+            <p> double-click again to erase and start over. </p>
+            <p> Once geometries have been added, you will be able to add additional info below</p>
             <h4 className="BornholmSandvig">Add a New Map Site</h4>
             <div className="editOps">
-              {this.props.sites.newSite > 0 &&
+              {this.props.sites.newCx > 0 &&
                 <div>
-                  <h4 className="BornholmSandvig">Map-Based Additions: Center</h4>
-                  <label className='underline'>New Id: </label>
-                  <p>{this.props.sites.newSite}</p>
+                  <h4 className="BornholmSandvig">Map-Based Additions: Geometry</h4>
                   <label className='underline'>New Center: </label>
                   <p>{this.props.sites.newCx}, {this.props.sites.newCy}<br/><br/>
                   with center placed, click to add radius.
@@ -85,7 +97,7 @@ class FormSi extends Component {
                   </p>
                 </div>
               }
-              <form onSubmit={e=>this.submission(e)} disabled={this.state.cx>0 && this.state.cy>0 && this.state.r>0 }>
+              <form onSubmit={e=>this.submission(e)}>
     				    <label className='underline' for="generalName">General Name (church affiliation, etc.):</label> <input className="form-control" id='generalName' onChange={e=>this.update(e)} placeholder="Title input"></input>
     				    <label className='underline' for="properName">Specific Site Name:</label>
                   <input className="form-control" id='properName' onChange={e=>this.update(e)} placeholder="Title input"></input><br/>
@@ -108,11 +120,15 @@ class FormSi extends Component {
               <h4 className="BornholmSandvig">Review Entries</h4>
               <p> either accept (below) or correct & review again</p>
                 <div className="editOps">
+                  <label className='underline'>New Geometry: </label>
+                  <p>center: {this.props.sites.newCx}, {this.props.sites.newCy}, radius: {this.props.sites.newRadius}</p>
                 <label className='underline'>General Name (church affiliation, etc.):</label> <p>{this.state.generalName}</p>
                 <label className='underline'>Specific Site Name: </label> <p>{this.state.properName}</p>
                 <label className='underline'>Layer Classification:</label> <p>{this.state.type}</p>
+                <p>Details can be added later via the Detail form</p>
                 <p>You must click below to save edits to database</p>
-                <button className="btn btn-default" onClick="">Save Site</button>
+                <button className="btn btn-default" onClick={e=>this.save(e)}>Save Site</button>
+                <p>Toggle all sites on to confirm/inspect new addition</p>
 
                 </div>
               </div>
@@ -140,6 +156,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updatePanelSize: (size,ratio) => {
       dispatch(setPanelSizing(size,ratio));
     },
+    addNewSite : (siteOb) => {
+      dispatch(addNewSite(siteOb));
+    },
+    clearTempSite : () => {
+      dispatch(addNewSiteCenter(0,0,0,0));
+      disptach(addNewSiteRadius(0,0));
+    }
   }
 }
 

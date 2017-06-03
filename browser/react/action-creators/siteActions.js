@@ -153,17 +153,17 @@ export const addHoverLayer = (layer) => {
 	};
 };
 
-export const addNewSiteGeo1 = (id, x, y) =>{
+export const addNewSiteGeo1 = (x, y, px, py) =>{
 	return {
 		type: SET_CENTER,
-		coord: [id, x, y],
+		coord: [x, y, px, py],
 	}
 }
 
-export const addNewSiteGeo2 = (radius) =>{
+export const addNewSiteGeo2 = (radius, rad2) =>{
 	return {
 		type: SET_RADIUS,
-		radius,
+		rad: [radius, rad2],
 	}
 }
 //-------------------reducers && initial info
@@ -181,14 +181,16 @@ const initSites = {
 	minorId: 0,
 	clusterId: 0,
 
-	allLayers:[], //arr of strings
+	allLayers:['parish churches',"bascilica", "plague churches", "monastery, convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption" ], //arr of strings
 	currLayers: [], //arr of strings
 	hoverLayer: ' ',
 
-	newSite : 0,
 	newCx : 0,
+	newX :0,
+	newY: 0,
+	newRad:0,
 	newCy: 0,
-	newRadius: 100,
+	newRadius: 0,
 
 };
 
@@ -202,13 +204,15 @@ export const siteReducer = (prevState = initSites, action) => {
 		break;
 
 	case SET_CENTER:
-		newState.newSite = action.coord[0];
-		newState.newCx = action.coord[1];
-		newState.newCy = action.coord[2];
+		newState.newCx = action.coord[0];
+		newState.newCy = action.coord[1];
+		newState.newX = action.coord[2];
+		newState.newY = action.coord[3];
 		break;
 
 	case SET_RADIUS:
-		newState.newRadius = action.radius;
+		newState.newRadius = action.rad[0];
+		newState.newRad = action.rad[1];
 		break;
 
 	case GET_CURR_SITE:
@@ -249,7 +253,7 @@ export const siteReducer = (prevState = initSites, action) => {
 		break;
 
 	case GET_All_LAYERS:
-		newState.allLayers = action.layers;
+		//newState.allLayers = action.layers;
 		break;
 
 	case GET_CURR_LAYERS:
@@ -388,6 +392,7 @@ export const deleteSelectLayer = (layer) => dispatch => { //add and load
 	dispatch(resetCurrLayers(layer));
 }
 
+//HARD CODING UNTIL WE ACTUALLY HAVE ALL THE LAYERS SET
 export const addAllLayers = (layers) => dispatch => { //load all/clear all to select
 	let cirLayers = [];
 
@@ -417,17 +422,16 @@ export const addNewSite = (siteObj) => dispatch => {
 				return responses.data;
 			})
 	    .then((site) => {
-
-			//dispatch(getCurrSite(site.id));
+	    dispatch(loadSites());
+			dispatch(getCurrSite(site.id));
 			})
 	   .catch(console.log);
 }
 
-export const addNewSiteCenter = (id, cx, cy) => dispatch => {
-	dispatch(addNewSiteGeo1(id, cx, cy));
-	dispatch(addNewSite({id,cx,cy}));
+export const addNewSiteCenter = (cx, cy, pastX, pastY) => dispatch => {
+	dispatch(addNewSiteGeo1(cx, cy, pastX, pastY));
 }
 
-export const addNewSiteRadius = (radius) => dispatch => {
-	dispatch(addNewSiteGeo2(radius));
+export const addNewSiteRadius = (radius, radPast) => dispatch => {
+	dispatch(addNewSiteGeo2(radius, radPast));
 }

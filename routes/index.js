@@ -18,7 +18,6 @@ router.get('/sites', (req, res, next)=>{
 });
 
 router.post('/sites', (req, res, next)=>{
-		console.log('adding site', req.body);
 		Sites.create(req.body)
 		.then(siteList=>{
 			res.send(siteList);

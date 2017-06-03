@@ -18,7 +18,7 @@ class PanelEdit extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-          panelform: 'narrative', //
+          panelform: 'site', //
         }
         this.changeForm=this.changeForm.bind(this);
   }
