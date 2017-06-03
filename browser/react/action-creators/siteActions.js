@@ -353,6 +353,29 @@ export const addHoverSite = (layer) => dispatch =>{
 	dispatch(addHoverLayer(layer));
 }
 
+export const reloadDetails = () => dispatch => {
+	axios.get('/api/details')
+			.then(responses => {
+				return responses.data;
+			})
+			.then((results) => {
+			dispatch(getGenDetails(results));
+			})
+			.catch(console.log);
+}
+
+export const addDetail = (obj) => dispatch => {
+
+	axios.post('/api/details', obj)
+			.then(responses => {
+				return responses.data;
+			})
+			.then((results) => {
+			dispatch(reloadDetails()); //call and reload all
+			})
+			.catch(console.log);
+}
+
 export const getDetailsNarratives = () => dispatch =>{
 
 	const allDetails = axios.get('/api/details')
@@ -424,6 +447,20 @@ export const addNewSite = (siteObj) => dispatch => {
 	    .then((site) => {
 	    dispatch(loadSites());
 			dispatch(getCurrSite(site.id));
+			})
+	   .catch(console.log);
+}
+
+export const editSite = (siteObj, id) => dispatch => {
+	console.log('pre-put', siteObj);
+
+	axios.put(`/api/sites/${id}`, siteObj)
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((site) => {
+	    dispatch(loadSites());
+			dispatch(getCurrSite(id));
 			})
 	   .catch(console.log);
 }

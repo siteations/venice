@@ -27,10 +27,15 @@ router.post('/sites', (req, res, next)=>{
 		});
 });
 
-router.put('/sites', (req, res, next)=>{
-		Sites.findById(req.body.id)
+router.put('/sites/:id', (req, res, next)=>{
+		Sites.findById(req.params.id)
 		.then(siteList=>{
-			res.send(siteList);
+			return siteList.update(req.body,{fields: ['clusterId', 'cluster']}
+			)
+			.then(results=>{
+				console.log('edited entry', results);
+				res.send(results.data);
+			})
 		})
 		.catch(err=>{
 			next(err);
@@ -42,6 +47,16 @@ router.get('/details', (req, res, next)=>{
 		Details.findAll({})
 		.then(detailList=>{
 			res.send(detailList);
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
+router.post('/details', (req, res, next)=>{
+		Details.create(req.body)
+		.then(siteList=>{
+			res.send(siteList);
 		})
 		.catch(err=>{
 			next(err);

@@ -368,7 +368,7 @@ class MapSVG extends Component {
            onClick={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault()}
            >
 
-	    	   <svg width={this.props.map.windowSize[0]} height={this.props.map.windowSize[1]}  >
+	    	   <svg width={this.props.map.windowSize[0]} height={this.props.map.windowSize[1]} xmlnsXlink='http://www.w3.org/1999/xlink' >
 	    	   		<defs>
                         <filter id="greyscale">
                             <feColorMatrix type="saturate" values="0" />

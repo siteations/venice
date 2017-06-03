@@ -5,7 +5,7 @@ const db = require('../index.js');
 
 const details = db.define('Details', {
     nameH: {type: Sequelize.STRING, notNull: true },
-   	srcThumb: {type: Sequelize.STRING, notNull: true },
+   	srcThumb: {type: Sequelize.TEXT, notNull: true },
     clusterId: {type: Sequelize.INTEGER, notNull: true },
 });
 

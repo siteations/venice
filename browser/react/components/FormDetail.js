@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Imagetrey from './ImageSlider.js';
 import { setPanelSizing } from '../action-creators/panelActions.js';
 //import { imageSeries } from '../pre-db/cirTest.js';
+import { editSite, addDetail } from '../action-creators/siteActions.js';
 
 
 
@@ -25,18 +26,19 @@ class FormDe extends Component { // so this will be an update to site table, add
         this.submission = this.submission.bind(this);
         this.update = this.update.bind(this);
         this.uploadImg = this.uploadImg.bind(this);
+        this.save = this.save.bind(this);
   }
 
   submission(e){
     e.preventDefault();
-    let obj={};
+    var obj={};
     obj['coreId']= +this.props.sites.currSite;
     obj['name'] = this.props.sites.allSites.filter(site=> +site.id === +obj['coreId'])[0].name;
 
-    let clusterId = this.props.sites.allSites.filter(site=> +site.id === +obj['coreId'])[0].clusterId;
-    let allCluster = this.props.sites.allSites.map(site=>site.clusterId);
+    var clusterId = this.props.sites.allSites.filter(site=> +site.id === +obj['coreId'])[0].clusterId;
+    let allCluster = this.props.sites.allSites.filter(site=> site.clusterId>0).map(site=>site.clusterId);
     let cluster = Math.max(...allCluster);
-    if (clusterId===null){clusterId = cluster+1};
+    if (clusterId<cluster){ clusterId = cluster+1};
     obj['clusterId']= +clusterId;
 
     let details=this.props.sites.genDetails.filter(detail=> +detail.clusterId === +clusterId);
@@ -44,12 +46,31 @@ class FormDe extends Component { // so this will be an update to site table, add
     obj['minorId'] = detailId;
     obj['verify'] = true;
 
-    this.setState(obj);
-    let sub = this.state;
 
-    this.setState({entry: sub});
-    console.log('form submission', this.state, obj);
+    console.log('form submission', obj);
+    this.setState(obj);
     // should open a verification panel
+  }
+
+  save(e){
+    e.preventDefault();
+    var detailObj={
+      clusterId: this.state.clusterId,
+      nameH: this.state.nameH,
+      srcThumb: this.state.srcThumb,
+    };
+
+    var siteObj = {
+      id: this.state.coreId,
+      cluster: true,
+      clusterId: this.state.clusterId,
+    };
+
+    console.log('saving', detailObj);
+
+    this.props.addDetail(detailObj);
+    this.props.editSite(siteObj, this.state.coreId);
+
   }
 
   uploadImg(e){
@@ -99,19 +120,11 @@ class FormDe extends Component { // so this will be an update to site table, add
 
   	return (
            <div>
-            <p> click on map to select site or site detail </p>
+            <p> click on map to select site to add Detail</p>
             <h4 className="BornholmSandvig">Background Data</h4>
             <div className="editOps">
   				    <h4><span className='underline'>Site Type:</span> {this.props.panel.title}</h4>
   				    <h4><span className='underline'>Site Name:</span> {this.props.panel.subtitle}</h4>
-              {show &&
-              <div>
-                <ul>
-                  <li><span className='underline'>Layer Type:</span> {element.type} </li>
-                  <li><span className='underline'>Site Id:</span> {element.id}</li>
-                </ul>
-              </div>
-              }
             </div>
             <br/>
             <h4 className="BornholmSandvig">Add Detail (Image & Label)</h4>
@@ -139,7 +152,7 @@ class FormDe extends Component { // so this will be an update to site table, add
                 <label className='underline' >Original Site Id: </label> <p>{this.state.coreId}</p>
                 <label className='underline' >Original Site Name: </label> <p>{this.state.name}</p>
                 <p>You must click below to save edits to database</p>
-                <button className="btn btn-default" onClick="">Save Thumbnail Detail</button>
+                <button className="btn btn-default" onClick={e=>this.save(e)}>Save Thumbnail Detail</button>
 
                 </div>
               </div>
@@ -168,6 +181,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updatePanelSize: (size,ratio) => {
       dispatch(setPanelSizing(size,ratio));
     },
+    editSite: (siteObj, id) => {
+      dispatch(editSite(siteObj, id));
+    },
+    addDetail: (detailObj) => {
+      dispatch(addDetail(detailObj));
+    },
+
   }
 }
 
