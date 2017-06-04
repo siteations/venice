@@ -376,6 +376,17 @@ export const addDetail = (obj) => dispatch => {
 			.catch(console.log);
 }
 
+export const reloadNarratives = () => dispatch => {
+	axios.get('/api/narratives')
+			.then(responses => {
+				return responses.data;
+			})
+			.then((narratives) => {
+			dispatch(getGenNarratives(narratives));
+			})
+			.catch(console.log);
+}
+
 export const getDetailsNarratives = () => dispatch =>{
 
 	const allDetails = axios.get('/api/details')
@@ -471,4 +482,19 @@ export const addNewSiteCenter = (cx, cy, pastX, pastY) => dispatch => {
 
 export const addNewSiteRadius = (radius, radPast) => dispatch => {
 	dispatch(addNewSiteGeo2(radius, radPast));
+}
+
+export const addNarrative = (narrObj) => dispatch => {
+
+	console.log('pre-post narr', narrObj);
+
+	axios.post('/api/narratives', narrObj)
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((narrative) => {
+	    dispatch(reloadNarratives());
+			})
+	   .catch(console.log);
+
 }

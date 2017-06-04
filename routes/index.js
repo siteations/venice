@@ -5,7 +5,7 @@ const {Images, Narratives, Details, Sites, Tours, Themes, User } = require('../d
 
 //nested under /api
 
-//-------------------------BASIC 'GET ALL'---------------------------
+//-------------------------sites--------------------------
 
 router.get('/sites', (req, res, next)=>{
 		Sites.findAll({})
@@ -32,8 +32,7 @@ router.put('/sites/:id', (req, res, next)=>{
 		.then(siteList=>{
 			return siteList.update(req.body,{fields: ['clusterId', 'cluster']}
 			)
-			.then(results=>{
-				console.log('edited entry', results);
+			.then(results=> {
 				res.send(results.data);
 			})
 		})
@@ -42,6 +41,22 @@ router.put('/sites/:id', (req, res, next)=>{
 		});
 });
 
+router.delete('/sites/:id', (req, res, next)=>{
+		Sites.findById(req.params.id)
+		.then(siteList=>{
+			//check for narrative, details (optional)
+			//check for tour entries with site id... must be removed
+			return siteList.destroy();
+		})
+		.then(results=> {
+				res.send({message: `site ${req.params.id} removed, deleted from all tours`});
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
+//-------------------------details--------------------------
 
 router.get('/details', (req, res, next)=>{
 		Details.findAll({})
@@ -63,6 +78,8 @@ router.post('/details', (req, res, next)=>{
 		});
 });
 
+//-------------------------narratives--------------------------
+
 router.get('/narratives', (req, res, next)=>{
 		Narratives.findAll({})
 		.then(narrList=>{
@@ -73,6 +90,17 @@ router.get('/narratives', (req, res, next)=>{
 		});
 });
 
+router.post('/narratives', (req, res, next)=>{
+		Narratives.create(req.body)
+		.then(narrList=>{
+			res.send(narrList);
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
+//-------------------------images--------------------------
 
 router.get('/images', (req, res, next)=>{
 		Images.findAll({})
@@ -84,6 +112,19 @@ router.get('/images', (req, res, next)=>{
 		});
 });
 
+
+router.post('/images', (req, res, next)=>{
+		Images.create(req.body)
+		.then(imgList=>{
+			res.send(imgList);
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
+//-------------------------tours--------------------------
+
 router.get('/tours', (req, res, next)=>{
 		Tours.findAll({})
 		.then(tourList=>{
@@ -94,16 +135,16 @@ router.get('/tours', (req, res, next)=>{
 		});
 });
 
-
-router.get('/themes', (req, res, next)=>{
-		Themes.findAll({})
-		.then(themeList=>{
-			res.send(themeList);
+router.post('/tours', (req, res, next)=>{
+		Tours.create(req.body)
+		.then(tourList=>{
+			res.send(tourList);
 		})
 		.catch(err=>{
 			next(err);
 		});
 });
+
 
 //-------------authorization----------------------
 

@@ -38,7 +38,7 @@ class FormDe extends Component { // so this will be an update to site table, add
     var clusterId = this.props.sites.allSites.filter(site=> +site.id === +obj['coreId'])[0].clusterId;
     let allCluster = this.props.sites.allSites.filter(site=> site.clusterId>0).map(site=>site.clusterId);
     let cluster = Math.max(...allCluster);
-    if (clusterId<cluster){ clusterId = cluster+1};
+    if (clusterId===0){ clusterId = cluster+1};
     obj['clusterId']= +clusterId;
 
     let details=this.props.sites.genDetails.filter(detail=> +detail.clusterId === +clusterId);

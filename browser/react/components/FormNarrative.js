@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Imagetrey from './ImageSlider.js';
 import { setPanelSizing } from '../action-creators/panelActions.js';
 //import { imageSeries } from '../pre-db/cirTest.js';
-
+import { addNarrative } from '../action-creators/siteActions.js';
 
 
 class FormNarr extends Component {
@@ -13,60 +13,41 @@ class FormNarr extends Component {
         super(props);
         this.state = {
           verify: false,
-          added: false,
-          entry : {},
-          coreId: this.props.sites.currSite,
-          minorId: this.props.sites.minorId,
-          clusterId: this.props.sites.clusterId,
+          coreId: 0,
+          minorId: 0,
+          clusterId: 0,
           title:'',
           text:'',
-          catalogSource: '',
-          catalogLink: '',
           biblio: '',
+          imageSeries: 0, // placeholder, update from image upload
           researcherName: '',
           researcherTitle: '',
           researcherAffiliation: '',
         }
         this.submission = this.submission.bind(this);
         this.update = this.update.bind(this);
-        this.imgAdd = this.imgAdd.bind(this);
-        this.uploadImg = this.uploadImg.bind(this);
+        this.save = this.save.bind(this);
   }
 
   submission(e){
     e.preventDefault();
-    this.setState({verify: true});
-    let sub = this.state;
-
-    this.setState({entry: sub});
-    console.log('form submission', this.state);
-    // should open a verification panel
-  }
-
-  uploadImg(e){
-    e.preventDefault();
-    var fileList = e.target.files;
-
-    //check for max current imageSeries, set as plus 1
-    let images = this.props.sites.genImages.map(image=> +image.imageSeries);
-    let seriesId = Math.max(...images);
-    seriesId++;
-    this.setState({imageSeries: seriesId});
-
-    var reader = new FileReader();
-    reader.onload = (e) => {
-      var the_url = e.target.result; //image as data
-      this.setState({src:the_url});
+    let obj= {
+      verify: true,
+      coreId: this.props.sites.currSite,
+      minorId: this.props.sites.minorId,
+      clusterId: this.props.sites.clusterId,
     };
-      reader.readAsDataURL(e.target.files[0]); //only first file, rework
+    if (obj.minorId>0){obj.coreId=0};
 
+    this.setState(obj);
   }
 
-  imgAdd(e){
+  save(e){
     e.preventDefault();
-    let count = this.state.imgCount;
-    count.push(1);
-    this.setState({imgCount: count});
+    var obj = this.state;
+    delete obj.verify;
+
+    this.props.addNarrative(obj);
   }
 
   update(e){
@@ -144,19 +125,17 @@ class FormNarr extends Component {
               <h4 className="BornholmSandvig">Review Entries</h4>
               <p> either accept (below) or correct & review again</p>
                 <div className="editOps">
+                <label className='underline'>Site:</label> <p>{this.props.panel.title}, {this.props.panel.subtitle}</p>
+                <label className='underline'>Core/cluster/minor id: </label><p>{this.state.coreId}, {this.state.clusterId}, {this.state.minorId}</p>
                 <label className='underline'>Descriptive Title:</label> <p>{this.state.title}</p>
-                <label className='underline' for="imageSeries">Image: </label> <img src={this.state.src} style={{width:'100%'}} />
-                <label className='underline' for="caption">Image Caption: </label> <p>{this.state.caption}</p>
                 <label className='underline' for="text">Core Text (50-90 words):</label> <p>{this.state.text}</p>
-                <label className='underline'>Image Catalog Source (Chicago Style Citation):</label><p>{this.state.catalogSource}</p>
-                <label className='underline' for="catalogLink">Catalog Link (at Newberry): </label><p>{this.state.catalogLink}</p>
                 <label className='underline' for="biblio">Bibliography for Description (Chicago Style Citations): </label><p>{this.state.biblio}</p>
                 <p>Research Credits</p>
                 <label className='underline' for="researcherName">Name:</label><p>{this.state.researcherName}</p>
                 <label className='underline' for="researcherTitle">Title:</label><p>{this.state.researcherTitle}</p>
                 <label className='underline' for="researcherAffiliation">Affiliation:</label><p>{this.state.researcherAffiliation}</p>
                 <p>You must click below to save edits to database</p>
-                <button className="btn btn-default" onClick="">Save</button>
+                <button className="btn btn-default" onClick={e=>this.save(e)} >Save</button>
 
                 </div>
               </div>
@@ -184,6 +163,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updatePanelSize: (size,ratio) => {
       dispatch(setPanelSizing(size,ratio));
     },
+    addNarrative: (narrObj) => {
+      dispatch(addNarrative(narrObj));
+    }
   }
 }
 

@@ -58,13 +58,6 @@ class FormImg extends Component {
 
   }
 
-  // imgAdd(e){
-  //   e.preventDefault();
-  //   let count = this.state.imgCount;
-  //   count.push(1);
-  //   this.setState({imgCount: count});
-  // }
-
   update(e){
     e.preventDefault();
     let input = e.target.value;
