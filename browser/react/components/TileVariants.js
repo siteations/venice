@@ -5,8 +5,7 @@ import { scaleOps } from '../plug-ins/rawTiles.js';
 
 /* AWS for the heroku tiles, will be internal on final Newberry version
 all AWS `https://s3.us-east-2.amazonaws.com/newberry-images/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`
-all local titles: `../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`
-
+all local public tiles: `/img/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`
 
 */
 
@@ -18,9 +17,20 @@ export const ClipTiles = (props) => {
 
                     if (tile.xpos<props.wSize[0] && tile.xpos+256>=0 && tile.ypos<props.wSize[1] && tile.ypos+256>=0 ){ // only show those on screen
 
+                        if (tile.z>5){ // adjustment for git hosting on heroku / local
+
+                            if (tile.x<21){
+                                tile.z = '6-0';
+                            } else if (tile.x<43){
+                                tile.z = '6-1';
+                            } else {
+                                tile.z = '6-2';
+                            }
+                        }
+
                     return (
                             <image
-                            xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
+                            xlinkHref = {`/img/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
                                 width={props.tSize}
                                     height={props.tSize}
                                     x = { tile.xpos }
@@ -45,9 +55,20 @@ export const BackgroundTiles = (props) => {
            { props.data.map((tile,i)=>{
                     if (tile.xpos<props.wSize[0] && tile.xpos+256>=0 && tile.ypos<props.wSize[1] && tile.ypos+256>=0 ){ // only show those on screen
 
+                     if (tile.z>5){ // adjustment for git hosting on heroku / local
+
+                            if (tile.x<21){
+                                tile.z = '6-0';
+                            } else if (tile.x<43){
+                                tile.z = '6-1';
+                            } else {
+                                tile.z = '6-2';
+                            }
+                        }
+
                     return (
                             <image
-                            xlinkHref = {`../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
+                            xlinkHref = {`/img/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`}
                                 width={props.tSize}
                                     height={props.tSize}
                                     x = { tile.xpos }
