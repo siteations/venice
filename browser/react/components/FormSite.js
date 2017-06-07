@@ -24,6 +24,23 @@ class FormSi extends Component {
         this.submission = this.submission.bind(this);
         this.update = this.update.bind(this);
         this.save = this.save.bind(this);
+        this.reset = this.reset.bind(this);
+  }
+
+    reset(e){
+    e.preventDefault();
+    let obj = {
+          verify: false,
+          //id will be auto added
+          generalName: '',
+          properName: '',
+          type: '',
+          cluster: false,
+          clusterId: 0,
+        }
+
+    this.setState(obj);
+
   }
 
   submission(e){
@@ -127,7 +144,7 @@ class FormSi extends Component {
                 <label className='underline'>Layer Classification:</label> <p>{this.state.type}</p>
                 <p>Details can be added later via the Detail form</p>
                 <p>You must click below to save edits to database</p>
-                <button className="btn btn-default" onClick={e=>this.save(e)}>Save Site</button>
+                <button className="btn btn-default" onClick={e=>this.save(e)}>Save Site</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
                 <p>Toggle all sites on to confirm/inspect new addition</p>
 
                 </div>

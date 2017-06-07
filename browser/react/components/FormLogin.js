@@ -45,6 +45,7 @@ class Login extends React.Component {
 
   onLoginSubmit(event) {
     event.preventDefault();
+    console.log(event.target.name.value, event.target.password.value);
     const credentials = {
       name: event.target.name.value,
       password: event.target.password.value
@@ -59,8 +60,8 @@ const mapState = () => ({ message: 'Log In To Edit' });
 
 const mapDispatch = dispatch => ({
   login: (credentials) => {
+    console.log('on dispatch', credentials);
     dispatch(login(credentials));
-
   },
 })
 

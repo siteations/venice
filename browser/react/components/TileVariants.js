@@ -3,6 +3,13 @@ import { scaleOps } from '../plug-ins/rawTiles.js';
 
 //dummy components for basic map tiles/layers
 
+/* AWS for the heroku tiles, will be internal on final Newberry version
+all AWS `https://s3.us-east-2.amazonaws.com/newberry-images/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`
+all local titles: `../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`
+
+
+*/
+
 export const ClipTiles = (props) => {
     //props.data, props.wSize, props.tSize, props.clip
 	return (
@@ -73,7 +80,7 @@ export const Underlay = (props) => {
     //props.wSize, props.color
     return(
            <image
-            xlinkHref = {`../../../layouts/novacco_color_0804.jpg`}
+            xlinkHref = {`/img/novacco_color_0804.jpg`}
                 width={props.tSize*(scaleOps[props.currZoom][0]+1)}
                     height={props.tSize*(scaleOps[props.currZoom][1]+1)}
                     x = { -1 * props.xyOffsets[0] }

@@ -5,7 +5,7 @@ const db = require('../index.js');
 
 var crypto = require('crypto');
 
-var User = db.define('user', {
+var user = db.define('User', {
   name: Sequelize.STRING,
   password: {
     type: Sequelize.STRING,
@@ -41,4 +41,4 @@ var User = db.define('user', {
   }
 });
 
-module.exports = User;
+module.exports = user;

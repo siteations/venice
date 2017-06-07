@@ -287,8 +287,11 @@ class MapSVG extends Component {
 
     loadPanel(e, source){
         e.preventDefault();
-        if (source==='core') {
-            this.props.setMinorId(0,0);
+        if (source ==='core') {
+            let subsiteId = this.props.sites.currSite;
+            let obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+subsiteId);
+            let clustId = obj[0].clusterId;
+            this.props.setDetailId(+subsiteId, clustId);
         } else {
             let subsiteId = e.target.attributes.id.value;
             let obj = this.props.sites.genNarratives.filter(narr => +narr.minorId===+subsiteId);

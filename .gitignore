@@ -6,6 +6,7 @@
 
 # any security with seed info
 /db/seeds/CirTest.js
+./secrets.js
 
 # testing
 /coverage/**

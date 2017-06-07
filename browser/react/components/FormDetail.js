@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
+//import $ from 'jquery';
 
 import Imagetrey from './ImageSlider.js';
 import { setPanelSizing } from '../action-creators/panelActions.js';
@@ -14,8 +15,27 @@ class FormDe extends Component { // so this will be an update to site table, add
         super(props);
         this.state = {
           verify: false,
-          added: false,
-          entry : {},
+          coreId: 0,
+          minorId: 0,
+          clusterId: 0,
+          nameH: '',
+          srcThumb: '',
+          data_uri: '',
+          filename: '',
+          filetype: '',
+          name: '',
+        }
+        this.submission = this.submission.bind(this);
+        this.update = this.update.bind(this);
+        this.uploadImg = this.uploadImg.bind(this);
+        this.save = this.save.bind(this);
+        this.reset = this.reset.bind(this);
+  }
+
+  reset(e){
+    e.preventDefault();
+    let obj = {
+          verify: false,
           coreId: 0,
           minorId: 0,
           clusterId: 0,
@@ -23,10 +43,9 @@ class FormDe extends Component { // so this will be an update to site table, add
           srcThumb: '',
           name: '',
         }
-        this.submission = this.submission.bind(this);
-        this.update = this.update.bind(this);
-        this.uploadImg = this.uploadImg.bind(this);
-        this.save = this.save.bind(this);
+
+    this.setState(obj);
+
   }
 
   submission(e){
@@ -38,7 +57,7 @@ class FormDe extends Component { // so this will be an update to site table, add
     var clusterId = this.props.sites.allSites.filter(site=> +site.id === +obj['coreId'])[0].clusterId;
     let allCluster = this.props.sites.allSites.filter(site=> site.clusterId>0).map(site=>site.clusterId);
     let cluster = Math.max(...allCluster);
-    if (clusterId===0){ clusterId = cluster+1};
+    if (!clusterId){ clusterId = cluster+1};
     obj['clusterId']= +clusterId;
 
     let details=this.props.sites.genDetails.filter(detail=> +detail.clusterId === +clusterId);
@@ -57,7 +76,7 @@ class FormDe extends Component { // so this will be an update to site table, add
     var detailObj={
       clusterId: this.state.clusterId,
       nameH: this.state.nameH,
-      srcThumb: this.state.srcThumb,
+      srcThumb: '', //fills in later in request, temp view
     };
 
     var siteObj = {
@@ -66,32 +85,75 @@ class FormDe extends Component { // so this will be an update to site table, add
       clusterId: this.state.clusterId,
     };
 
-    console.log('saving', detailObj);
+    var imgObj = {
+      // url: '/api/v1/image',
+      // type: "POST",
+      // data: {
+        data_uri: this.state.srcThumb,
+        filename: this.state.filename,
+        filetype: this.state.filetype
+      // },
+      // dataType: 'json'
+    };
 
-    this.props.addDetail(detailObj);
+    console.log('saving', detailObj, siteObj, imgObj);
+    // promise.done(function(data){
+    //   _this.setState({
+    //     processing: false,
+    //     uploaded_uri: data.uri
+    //   });
+    // });
+
+
+    this.props.addDetail(imgObj, detailObj);
     this.props.editSite(siteObj, this.state.coreId);
 
   }
+
+  /*handleSubmit(e) {
+    e.preventDefault();
+    const _this = this;
+
+    this.setState({
+      processing: true
+    });
+
+    const promise = $.ajax({
+      url: '/api/v1/image',
+      type: "POST",
+      data: {
+        data_uri: this.state.data_uri,
+        filename: this.state.filename,
+        filetype: this.state.filetype
+      },
+      dataType: 'json'
+    });
+
+    promise.done(function(data){
+      _this.setState({
+        processing: false,
+        uploaded_uri: data.uri
+      });
+    });
+  }*/
 
   uploadImg(e){
     e.preventDefault();
     var fileList = e.target.files;
 
     var reader = new FileReader();
+    var file = e.target.files[0];
     reader.onload = (e) => {
       var the_url = e.target.result; //image as data
-      this.setState({srcThumb:the_url});
+      this.setState({data_uri:the_url,
+        srcThumb: the_url,
+        filename: file.name,
+        filetype: file.type
+      });
     };
-      reader.readAsDataURL(e.target.files[0]); //only first file, rework
+      reader.readAsDataURL(file); //only first file, rework
 
   }
-
-  // imgAdd(e){
-  //   e.preventDefault();
-  //   let count = this.state.imgCount;
-  //   count.push(1);
-  //   this.setState({imgCount: count});
-  // }
 
   update(e){
     e.preventDefault();
@@ -100,8 +162,8 @@ class FormDe extends Component { // so this will be an update to site table, add
     let obj={}; obj[type]=input;
 
     obj['coreId']= +this.props.sites.currSite;
-    obj['minorId']= +this.props.sites.minorId;
     obj['clusterId']= +this.props.sites.clusterId;
+    obj['minorId']= +this.props.sites.minorId;
 
     this.setState(obj);
   }
@@ -127,11 +189,11 @@ class FormDe extends Component { // so this will be an update to site table, add
   				    <h4><span className='underline'>Site Name:</span> {this.props.panel.subtitle}</h4>
             </div>
             <br/>
-            <h4 className="BornholmSandvig">Add Detail (Image & Label)</h4>
+            <h4 className="BornholmSandvig">Add Detail (Thumbnail Image & Label)</h4>
             <div className="editOps">
               <form onSubmit={e=>this.submission(e)}>
 
-                  <label className='underline' for="srcThumb">Detail Image Thumbnail: </label>
+                  <label className='underline' for="srcThumb">Detail Image Thumbnail: (max 600 x 600 pixels)</label>
                     <input className="form-control" type="file" id='srcThumb' onChange={e=>this.uploadImg(e)} ></input>
                   <label className='underline' for="nameH">Detail Label: </label>
                     <input className="form-control" type="text" id='nameH' placeholder="Detail Label" onChange={e=>this.update(e)} ></input>
@@ -145,14 +207,14 @@ class FormDe extends Component { // so this will be an update to site table, add
               <h4 className="BornholmSandvig">Review Entries</h4>
               <p> either accept (below) or correct & review again</p>
                 <div className="editOps">
-                <label className='underline' > Detail Image Thumbnail: </label> <img src={this.state.srcThumb} style={{width:'100%'}} />
+                <label className='underline' >Detail Image Thumbnail: </label> <img src={this.state.srcThumb} style={{width:'100%'}} />
                 <label className='underline' >Detail Label: </label> <p>{this.state.nameH}</p>
                 <label className='underline' >Detail Cluster: </label> <p>{this.state.clusterId}</p>
                 <label className='underline' >Detail Id: </label> <p>{this.state.minorId}</p>
                 <label className='underline' >Original Site Id: </label> <p>{this.state.coreId}</p>
                 <label className='underline' >Original Site Name: </label> <p>{this.state.name}</p>
                 <p>You must click below to save edits to database</p>
-                <button className="btn btn-default" onClick={e=>this.save(e)}>Save Thumbnail Detail</button>
+                <button className="btn btn-default" onClick={e=>this.save(e)}>Save Thumbnail Detail</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
 
                 </div>
               </div>
@@ -184,8 +246,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     editSite: (siteObj, id) => {
       dispatch(editSite(siteObj, id));
     },
-    addDetail: (detailObj) => {
-      dispatch(addDetail(detailObj));
+    addDetail: (imgObj, detailObj) => {
+      dispatch(addDetail(imgObj, detailObj));
     },
 
   }

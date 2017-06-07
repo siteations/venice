@@ -25,6 +25,25 @@ class FormT extends Component {
         this.update = this.update.bind(this);
         this.updateOptions = this.updateOptions.bind(this);
         this.save = this.save.bind(this);
+        this.reset = this.reset.bind(this);
+  }
+
+  reset(e){
+    e.preventDefault();
+    let obj = {
+          verify: false,
+          new: false,
+          add: false,
+          //id will be auto added
+          tourId: 0,
+          siteId: 0,
+          zoom: 3,
+          tourName: '',
+          siteRemove: 0,
+        }
+
+    this.setState(obj);
+
   }
 
   submission(e, type){
@@ -222,7 +241,7 @@ class FormT extends Component {
                 <label className='underline'>Initial Site:</label><p> {`id: ${this.state.siteId}, name: ${siteName}`}</p>
 
                 <p>You must click below to save edits to database</p>
-                <button className="btn btn-default" onClick={e=>this.save(e,'new')}>Save</button>
+                <button className="btn btn-default" onClick={e=>this.save(e,'new')}>Save</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
 
                 </div>
               </div>

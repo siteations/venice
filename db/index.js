@@ -14,17 +14,21 @@ var db = new Sequelize('veniceMamp', 'root', 'root', {
   }
 });
 
-//nonMAMP connection
-/*var db = new Sequelize('venice', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql',
+// var sequelize = new Sequelize('mysql://user:pass@example.com:9821/dbname', {
+//   // Look to the next section for possible options
+// })
 
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  }
-});*/
+//nonMAMP connection
+// var db = new Sequelize('venice', 'root', '', {
+// host: 'localhost',
+// dialect: 'mysql',
+
+//   pool: {
+//     max: 5,
+//     min: 0,
+//     idle: 10000
+//   }
+// });
 
 
 

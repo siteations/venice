@@ -55,8 +55,9 @@ const db = require('./db');
 const port = 3000;
 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.json());
+app.use(bodyParser.json({ 'type': '*/*',limit: '20mb' }));
 app.use(express.static('./browser/'));
 app.use(express.static('./public/'));
 app.use(express.static('./public/stylesheets/'));

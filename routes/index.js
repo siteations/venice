@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const {Images, Narratives, Details, Sites, Tours, Themes, User } = require('../db/models/index.js');
+const {Images, Narratives, Details, Sites, Tours, User } = require('../db/models/index.js');
+const ImageUploaderAWS = require('../utility/imageUploaders.js');
 
 //rework once you've done the db design/setup mysql tables
 
@@ -113,7 +114,7 @@ router.get('/images', (req, res, next)=>{
 });
 
 
-router.post('/images', (req, res, next)=>{
+router.post('/images', (req, res, next)=>{ //to image table
 		Images.create(req.body)
 		.then(imgList=>{
 			res.send(imgList);
@@ -121,6 +122,22 @@ router.post('/images', (req, res, next)=>{
 		.catch(err=>{
 			next(err);
 		});
+});
+
+router.post('/images-files', (req, res, next)=> { //to aws storage
+
+var image = ImageUploaderAWS({
+    data_uri: req.body.data_uri,
+    filename: req.body.filename,
+    filetype: req.body.filetype
+  }).then(result=>{
+  	res.send({
+      status: 'success',
+      uri: 'https://s3.us-east-2.amazonaws.com/newberry-images/images/'+req.body.filename, //image link for secondary submission to database in post above
+    });
+  }).catch(console.log);
+
+
 });
 
 //-------------------------tours--------------------------
@@ -148,11 +165,11 @@ router.post('/tours', (req, res, next)=>{
 
 //-------------authorization----------------------
 
-router.get('/user', function (req, res, next) {
-  User.findById(req.session.userId)
-  .then(user => res.json(user))
-  .catch(next);
-});
+// router.get('/user', function (req, res, next) {
+//   User.findById(req.session.userId)
+//   .then(user => res.json(user))
+//   .catch(next);
+// });
 
 // // signup
 // router.post('/', function (req, res, next) {
@@ -177,6 +194,7 @@ router.get('/user', function (req, res, next) {
 
 // login
 router.put('/user', function (req, res, next) {
+
   User.findOne({
     where: {
       name: req.body.name

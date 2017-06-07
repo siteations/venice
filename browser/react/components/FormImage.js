@@ -13,12 +13,11 @@ class FormImg extends Component {
         super(props);
         this.state = {
           verify: false,
-          added: false,
-          entry : {},
-          coreId: this.props.sites.currSite,
-          minorId: this.props.sites.minorId,
-          clusterId: this.props.sites.clusterId,
+          coreId: 0,
+          minorId: 0,
+          clusterId: 0,
           imageSeries: 0,
+          narrativeId: 0,
           src: '',
           caption: '',
           catalogSource: '',
@@ -27,26 +26,63 @@ class FormImg extends Component {
         this.submission = this.submission.bind(this);
         this.update = this.update.bind(this);
         this.uploadImg = this.uploadImg.bind(this);
+        this.save = this.save.bind(this);
+        this.reset = this.reset.bind(this);
   }
 
   submission(e){
     e.preventDefault();
     this.setState({verify: true});
-    let sub = this.state;
-
-    this.setState({entry: sub});
     console.log('form submission', this.state);
     // should open a verification panel
   }
 
-  uploadImg(e, type){
+  reset(e){
+    e.preventDefault();
+    let obj = {
+          verify: false,
+          coreId: 0,
+          minorId: 0,
+          clusterId: 0,
+          imageSeries: 0,
+          narrativeId: 0,
+          src: '',
+          caption: '',
+          catalogSource: '',
+          catalogLink: '',
+        }
+
+    this.setState(obj);
+
+  }
+
+  save(e){
+
+  }
+
+  uploadImg(e){
     e.preventDefault();
     var fileList = e.target.files;
 
     //check for max current imageSeries, set as plus 1
       let images = this.props.sites.genImages.map(image=> +image.imageSeries);
-      let seriesId = Math.max(...images);
+      var seriesId = Math.max(...images);
       seriesId++;
+
+      var narrative;
+      if (this.props.sites.currSite !== 0){
+        narrative = this.props.sites.genNarratives.filter(narr => +narr.coreId === this.props.sites.currSite.siteId && (narr.minorId===0 || narr.minorId===null))[0];
+        if (this.props.sites.minorId !== 0 && this.props.sites.minorId !== null){ narrative = this.props.sites.genNarratives.filter(narr => +narr.minorId === this.props.sites.minorId)[0] };
+      }
+
+      if (narrative){
+        this.setState({narrativeId: narrative.id});
+
+        if (narrative.imageSeries>0){
+          seriesId = narrative.imageSeries;
+        }
+      }
+
       this.setState({imageSeries: seriesId});
 
     var reader = new FileReader();
@@ -55,7 +91,6 @@ class FormImg extends Component {
       this.setState({src:the_url});
     };
       reader.readAsDataURL(e.target.files[0]); //only first file, rework
-
   }
 
   update(e){
@@ -75,10 +110,12 @@ class FormImg extends Component {
   	//console.log(this.props);
 
     let siteId = +this.props.sites.currSite;
-    let element, cluster, detail;
+    var element, cluster, detail, narrative;
     let show = false, details = false;
     if (siteId !== 0){
       element = this.props.sites.allSites.filter(sites=> +sites.id === siteId)[0];
+      narrative = this.props.sites.genNarratives.filter(narr => +narr.coreId === siteId && (narr.minorId===0 || narr.minorId===null))[0];
+      if (this.props.sites.minorId !== 0 && this.props.sites.minorId !== null){ narrative = this.props.sites.genNarratives.filter(narr => +narr.minorId === this.props.sites.minorId)[0] };
       show = true;
     }
 
@@ -107,6 +144,10 @@ class FormImg extends Component {
                 </ul>
               </div>
               }
+              {narrative !== undefined &&
+                <p><span className='underline'>Current Narrative: </span><br/>{narrative.text}</p>
+              }
+
             </div>
             <br/>
             <h4 className="BornholmSandvig">Upload/Add Images for Narrative Panel</h4>
@@ -135,7 +176,7 @@ class FormImg extends Component {
                 <label className='underline'>Image Catalog Source (Chicago Style Citation):</label><p>{this.state.catalogSource}</p>
                 <label className='underline' for="catalogLink">Catalog Link (at Newberry): </label><p>{this.state.catalogLink}</p>
                 <p>You must click below to save edits to database</p>
-                <button className="btn btn-default" onClick="">Save Panel Image</button>
+                <button className="btn btn-default" onClick={e=> this.save(e)}>Save Panel Image</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
                 </div>
               </div>
             }
@@ -162,6 +203,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     updatePanelSize: (size,ratio) => {
       dispatch(setPanelSizing(size,ratio));
+    },
+    addImage: (imgObj) => {
+      //dispatch(addImage(imgObj));
+    },
+    editNarrative: (editObj, id, fieldsArr) => {
+      //dispatch(editNarrative(editObj, id, fieldsArr));
     },
   }
 }

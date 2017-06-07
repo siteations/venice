@@ -40,6 +40,7 @@ const resToData = res => res.data;
 
 // a "simple" dispatcher which uses API, changes state, and returns a promise.
 export const login = credentials => dispatch => {
+  console.log('on actions', credentials);
   return axios.put('/api/user', credentials)
   .then(resToData)
   .then(user => {

@@ -3214,14 +3214,31 @@ var reloadDetails = exports.reloadDetails = function reloadDetails() {
 	};
 };
 
-var addDetail = exports.addDetail = function addDetail(obj) {
+var addDetail = exports.addDetail = function addDetail(img, obj) {
 	return function (dispatch) {
 
-		_axios2.default.post('/api/details', obj).then(function (responses) {
+		_axios2.default.post('api/images-files', img).then(function (responses) {
 			return responses.data;
 		}).then(function (results) {
-			dispatch(reloadDetails()); //call and reload all
+
+			obj.srcThumb = results.uri;
+			console.log('image placed, link: ', obj);
+
+			_axios2.default.post('/api/details', obj).then(function (responses) {
+				return responses.data;
+			}).then(function (results) {
+				dispatch(reloadDetails()); //call and reload all
+			}).catch(console.log);
 		}).catch(console.log);
+
+		// axios.post('/api/details', obj)
+		// 		.then(responses => {
+		// 			return responses.data;
+		// 		})
+		// 		.then((results) => {
+		// 		dispatch(reloadDetails()); //call and reload all
+		// 		})
+		// 		.catch(console.log);
 	};
 };
 
@@ -16891,6 +16908,7 @@ var resToData = function resToData(res) {
 // a "simple" dispatcher which uses API, changes state, and returns a promise.
 var login = exports.login = function login(credentials) {
   return function (dispatch) {
+    console.log('on actions', credentials);
     return _axios2.default.put('/api/user', credentials).then(resToData).then(function (user) {
       if (user.message) {
         dispatch(fail(user));
@@ -17331,7 +17349,11 @@ var Header = function Header(props) {
     _react2.default.createElement(
       'div',
       { className: 'col-lg-1 flex' },
-      _react2.default.createElement('img', { className: 'logo', src: '/img/the-newberry-small.png' }),
+      _react2.default.createElement(
+        'a',
+        { href: 'http://localhost:80' },
+        _react2.default.createElement('img', { className: 'logo', src: '/img/the-newberry-small.png' })
+      ),
       _react2.default.createElement(
         _IconMenu2.default,
         {
@@ -18030,15 +18052,20 @@ var MapSVG = function (_Component) {
         value: function loadPanel(e, source) {
             e.preventDefault();
             if (source === 'core') {
-                this.props.setMinorId(0, 0);
-            } else {
-                var subsiteId = e.target.attributes.id.value;
+                var subsiteId = this.props.sites.currSite;
                 var obj = this.props.sites.genNarratives.filter(function (narr) {
-                    return +narr.minorId === +subsiteId;
+                    return +narr.coreId === +subsiteId;
                 });
                 var clustId = obj[0].clusterId;
                 this.props.setDetailId(+subsiteId, clustId);
-                this.props.updateNarrative(obj[0]);
+            } else {
+                var _subsiteId = e.target.attributes.id.value;
+                var _obj = this.props.sites.genNarratives.filter(function (narr) {
+                    return +narr.minorId === +_subsiteId;
+                });
+                var _clustId = _obj[0].clusterId;
+                this.props.setDetailId(+_subsiteId, _clustId);
+                this.props.updateNarrative(_obj[0]);
             }
         }
     }, {
@@ -36616,6 +36643,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//import $ from 'jquery';
+
 //import { imageSeries } from '../pre-db/cirTest.js';
 
 
@@ -36630,23 +36659,41 @@ var FormDe = function (_Component) {
 
     _this.state = {
       verify: false,
-      added: false,
-      entry: {},
       coreId: 0,
       minorId: 0,
       clusterId: 0,
       nameH: '',
       srcThumb: '',
+      data_uri: '',
+      filename: '',
+      filetype: '',
       name: ''
     };
     _this.submission = _this.submission.bind(_this);
     _this.update = _this.update.bind(_this);
     _this.uploadImg = _this.uploadImg.bind(_this);
     _this.save = _this.save.bind(_this);
+    _this.reset = _this.reset.bind(_this);
     return _this;
   }
 
   _createClass(FormDe, [{
+    key: 'reset',
+    value: function reset(e) {
+      e.preventDefault();
+      var obj = {
+        verify: false,
+        coreId: 0,
+        minorId: 0,
+        clusterId: 0,
+        nameH: '',
+        srcThumb: '',
+        name: ''
+      };
+
+      this.setState(obj);
+    }
+  }, {
     key: 'submission',
     value: function submission(e) {
       e.preventDefault();
@@ -36665,7 +36712,7 @@ var FormDe = function (_Component) {
         return site.clusterId;
       });
       var cluster = Math.max.apply(Math, _toConsumableArray(allCluster));
-      if (clusterId === 0) {
+      if (!clusterId) {
         clusterId = cluster + 1;
       };
       obj['clusterId'] = +clusterId;
@@ -36688,8 +36735,7 @@ var FormDe = function (_Component) {
       var detailObj = {
         clusterId: this.state.clusterId,
         nameH: this.state.nameH,
-        srcThumb: this.state.srcThumb
-      };
+        srcThumb: '' };
 
       var siteObj = {
         id: this.state.coreId,
@@ -36697,11 +36743,54 @@ var FormDe = function (_Component) {
         clusterId: this.state.clusterId
       };
 
-      console.log('saving', detailObj);
+      var imgObj = {
+        // url: '/api/v1/image',
+        // type: "POST",
+        // data: {
+        data_uri: this.state.srcThumb,
+        filename: this.state.filename,
+        filetype: this.state.filetype
+        // },
+        // dataType: 'json'
+      };
 
-      this.props.addDetail(detailObj);
+      console.log('saving', detailObj, siteObj, imgObj);
+      // promise.done(function(data){
+      //   _this.setState({
+      //     processing: false,
+      //     uploaded_uri: data.uri
+      //   });
+      // });
+
+
+      this.props.addDetail(imgObj, detailObj);
       this.props.editSite(siteObj, this.state.coreId);
     }
+
+    /*handleSubmit(e) {
+      e.preventDefault();
+      const _this = this;
+       this.setState({
+        processing: true
+      });
+       const promise = $.ajax({
+        url: '/api/v1/image',
+        type: "POST",
+        data: {
+          data_uri: this.state.data_uri,
+          filename: this.state.filename,
+          filetype: this.state.filetype
+        },
+        dataType: 'json'
+      });
+       promise.done(function(data){
+        _this.setState({
+          processing: false,
+          uploaded_uri: data.uri
+        });
+      });
+    }*/
+
   }, {
     key: 'uploadImg',
     value: function uploadImg(e) {
@@ -36711,20 +36800,17 @@ var FormDe = function (_Component) {
       var fileList = e.target.files;
 
       var reader = new FileReader();
+      var file = e.target.files[0];
       reader.onload = function (e) {
         var the_url = e.target.result; //image as data
-        _this2.setState({ srcThumb: the_url });
+        _this2.setState({ data_uri: the_url,
+          srcThumb: the_url,
+          filename: file.name,
+          filetype: file.type
+        });
       };
-      reader.readAsDataURL(e.target.files[0]); //only first file, rework
+      reader.readAsDataURL(file); //only first file, rework
     }
-
-    // imgAdd(e){
-    //   e.preventDefault();
-    //   let count = this.state.imgCount;
-    //   count.push(1);
-    //   this.setState({imgCount: count});
-    // }
-
   }, {
     key: 'update',
     value: function update(e) {
@@ -36734,8 +36820,8 @@ var FormDe = function (_Component) {
       var obj = {};obj[type] = input;
 
       obj['coreId'] = +this.props.sites.currSite;
-      obj['minorId'] = +this.props.sites.minorId;
       obj['clusterId'] = +this.props.sites.clusterId;
+      obj['minorId'] = +this.props.sites.minorId;
 
       this.setState(obj);
     }
@@ -36801,7 +36887,7 @@ var FormDe = function (_Component) {
         _react2.default.createElement(
           'h4',
           { className: 'BornholmSandvig' },
-          'Add Detail (Image & Label)'
+          'Add Detail (Thumbnail Image & Label)'
         ),
         _react2.default.createElement(
           'div',
@@ -36814,7 +36900,7 @@ var FormDe = function (_Component) {
             _react2.default.createElement(
               'label',
               { className: 'underline', 'for': 'srcThumb' },
-              'Detail Image Thumbnail: '
+              'Detail Image Thumbnail: (max 600 x 600 pixels)'
             ),
             _react2.default.createElement('input', { className: 'form-control', type: 'file', id: 'srcThumb', onChange: function onChange(e) {
                 return _this3.uploadImg(e);
@@ -36858,7 +36944,7 @@ var FormDe = function (_Component) {
             _react2.default.createElement(
               'label',
               { className: 'underline' },
-              ' Detail Image Thumbnail: '
+              'Detail Image Thumbnail: '
             ),
             ' ',
             _react2.default.createElement('img', { src: this.state.srcThumb, style: { width: '100%' } }),
@@ -36928,6 +37014,14 @@ var FormDe = function (_Component) {
                   return _this3.save(e);
                 } },
               'Save Thumbnail Detail'
+            ),
+            ' or ',
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this3.reset(e);
+                } },
+              'Reset'
             )
           )
         )
@@ -36957,8 +37051,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     editSite: function editSite(siteObj, id) {
       dispatch((0, _siteActions.editSite)(siteObj, id));
     },
-    addDetail: function addDetail(detailObj) {
-      dispatch((0, _siteActions.addDetail)(detailObj));
+    addDetail: function addDetail(imgObj, detailObj) {
+      dispatch((0, _siteActions.addDetail)(imgObj, detailObj));
     }
 
   };
@@ -37018,12 +37112,11 @@ var FormImg = function (_Component) {
 
     _this.state = {
       verify: false,
-      added: false,
-      entry: {},
-      coreId: _this.props.sites.currSite,
-      minorId: _this.props.sites.minorId,
-      clusterId: _this.props.sites.clusterId,
+      coreId: 0,
+      minorId: 0,
+      clusterId: 0,
       imageSeries: 0,
+      narrativeId: 0,
       src: '',
       caption: '',
       catalogSource: '',
@@ -37032,6 +37125,8 @@ var FormImg = function (_Component) {
     _this.submission = _this.submission.bind(_this);
     _this.update = _this.update.bind(_this);
     _this.uploadImg = _this.uploadImg.bind(_this);
+    _this.save = _this.save.bind(_this);
+    _this.reset = _this.reset.bind(_this);
     return _this;
   }
 
@@ -37040,15 +37135,34 @@ var FormImg = function (_Component) {
     value: function submission(e) {
       e.preventDefault();
       this.setState({ verify: true });
-      var sub = this.state;
-
-      this.setState({ entry: sub });
       console.log('form submission', this.state);
       // should open a verification panel
     }
   }, {
+    key: 'reset',
+    value: function reset(e) {
+      e.preventDefault();
+      var obj = {
+        verify: false,
+        coreId: 0,
+        minorId: 0,
+        clusterId: 0,
+        imageSeries: 0,
+        narrativeId: 0,
+        src: '',
+        caption: '',
+        catalogSource: '',
+        catalogLink: ''
+      };
+
+      this.setState(obj);
+    }
+  }, {
+    key: 'save',
+    value: function save(e) {}
+  }, {
     key: 'uploadImg',
-    value: function uploadImg(e, type) {
+    value: function uploadImg(e) {
       var _this2 = this;
 
       e.preventDefault();
@@ -37060,6 +37174,27 @@ var FormImg = function (_Component) {
       });
       var seriesId = Math.max.apply(Math, _toConsumableArray(images));
       seriesId++;
+
+      var narrative;
+      if (this.props.sites.currSite !== 0) {
+        narrative = this.props.sites.genNarratives.filter(function (narr) {
+          return +narr.coreId === _this2.props.sites.currSite.siteId && (narr.minorId === 0 || narr.minorId === null);
+        })[0];
+        if (this.props.sites.minorId !== 0 && this.props.sites.minorId !== null) {
+          narrative = this.props.sites.genNarratives.filter(function (narr) {
+            return +narr.minorId === _this2.props.sites.minorId;
+          })[0];
+        };
+      }
+
+      if (narrative) {
+        this.setState({ narrativeId: narrative.id });
+
+        if (narrative.imageSeries > 0) {
+          seriesId = narrative.imageSeries;
+        }
+      }
+
       this.setState({ imageSeries: seriesId });
 
       var reader = new FileReader();
@@ -37091,15 +37226,21 @@ var FormImg = function (_Component) {
       //console.log(this.props);
 
       var siteId = +this.props.sites.currSite;
-      var element = void 0,
-          cluster = void 0,
-          detail = void 0;
+      var element, cluster, detail, narrative;
       var show = false,
           details = false;
       if (siteId !== 0) {
         element = this.props.sites.allSites.filter(function (sites) {
           return +sites.id === siteId;
         })[0];
+        narrative = this.props.sites.genNarratives.filter(function (narr) {
+          return +narr.coreId === siteId && (narr.minorId === 0 || narr.minorId === null);
+        })[0];
+        if (this.props.sites.minorId !== 0 && this.props.sites.minorId !== null) {
+          narrative = this.props.sites.genNarratives.filter(function (narr) {
+            return +narr.minorId === _this3.props.sites.minorId;
+          })[0];
+        };
         show = true;
       }
 
@@ -37206,6 +37347,17 @@ var FormImg = function (_Component) {
                 this.props.sites.minorId
               )
             )
+          ),
+          narrative !== undefined && _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'underline' },
+              'Current Narrative: '
+            ),
+            _react2.default.createElement('br', null),
+            narrative.text
           )
         ),
         _react2.default.createElement('br', null),
@@ -37330,8 +37482,18 @@ var FormImg = function (_Component) {
             ),
             _react2.default.createElement(
               'button',
-              { className: 'btn btn-default', onClick: '' },
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this3.save(e);
+                } },
               'Save Panel Image'
+            ),
+            ' or ',
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this3.reset(e);
+                } },
+              'Reset'
             )
           )
         )
@@ -37357,6 +37519,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
   return {
     updatePanelSize: function updatePanelSize(size, ratio) {
       dispatch((0, _panelActions.setPanelSizing)(size, ratio));
+    },
+    addImage: function addImage(imgObj) {
+      //dispatch(addImage(imgObj));
+    },
+    editNarrative: function editNarrative(editObj, id, fieldsArr) {
+      //dispatch(editNarrative(editObj, id, fieldsArr));
     }
   };
 };
@@ -37472,6 +37640,7 @@ var Login = function (_React$Component) {
     key: 'onLoginSubmit',
     value: function onLoginSubmit(event) {
       event.preventDefault();
+      console.log(event.target.name.value, event.target.password.value);
       var credentials = {
         name: event.target.name.value,
         password: event.target.password.value
@@ -37492,6 +37661,7 @@ var mapState = function mapState() {
 var mapDispatch = function mapDispatch(dispatch) {
   return {
     login: function login(credentials) {
+      console.log('on dispatch', credentials);
       dispatch((0, _userActions.login)(credentials));
     }
   };
@@ -37562,10 +37732,31 @@ var FormNarr = function (_Component) {
     _this.submission = _this.submission.bind(_this);
     _this.update = _this.update.bind(_this);
     _this.save = _this.save.bind(_this);
+    _this.reset = _this.reset.bind(_this);
     return _this;
   }
 
   _createClass(FormNarr, [{
+    key: 'reset',
+    value: function reset(e) {
+      e.preventDefault();
+      var obj = {
+        verify: false,
+        coreId: 0,
+        minorId: 0,
+        clusterId: 0,
+        title: '',
+        text: '',
+        biblio: '',
+        imageSeries: 0, // placeholder, update from image upload
+        researcherName: '',
+        researcherTitle: '',
+        researcherAffiliation: ''
+      };
+
+      this.setState(obj);
+    }
+  }, {
     key: 'submission',
     value: function submission(e) {
       e.preventDefault();
@@ -37936,6 +38127,14 @@ var FormNarr = function (_Component) {
                   return _this2.save(e);
                 } },
               'Save'
+            ),
+            ' or ',
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.reset(e);
+                } },
+              'Reset'
             )
           )
         )
@@ -38032,10 +38231,27 @@ var FormSi = function (_Component) {
     _this.submission = _this.submission.bind(_this);
     _this.update = _this.update.bind(_this);
     _this.save = _this.save.bind(_this);
+    _this.reset = _this.reset.bind(_this);
     return _this;
   }
 
   _createClass(FormSi, [{
+    key: 'reset',
+    value: function reset(e) {
+      e.preventDefault();
+      var obj = {
+        verify: false,
+        //id will be auto added
+        generalName: '',
+        properName: '',
+        type: '',
+        cluster: false,
+        clusterId: 0
+      };
+
+      this.setState(obj);
+    }
+  }, {
     key: 'submission',
     value: function submission(e) {
       e.preventDefault();
@@ -38290,6 +38506,14 @@ var FormSi = function (_Component) {
                 } },
               'Save Site'
             ),
+            ' or ',
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.reset(e);
+                } },
+              'Reset'
+            ),
             _react2.default.createElement(
               'p',
               null,
@@ -38397,10 +38621,29 @@ var FormT = function (_Component) {
     _this.update = _this.update.bind(_this);
     _this.updateOptions = _this.updateOptions.bind(_this);
     _this.save = _this.save.bind(_this);
+    _this.reset = _this.reset.bind(_this);
     return _this;
   }
 
   _createClass(FormT, [{
+    key: 'reset',
+    value: function reset(e) {
+      e.preventDefault();
+      var obj = {
+        verify: false,
+        new: false,
+        add: false,
+        //id will be auto added
+        tourId: 0,
+        siteId: 0,
+        zoom: 3,
+        tourName: '',
+        siteRemove: 0
+      };
+
+      this.setState(obj);
+    }
+  }, {
     key: 'submission',
     value: function submission(e, type) {
       e.preventDefault();
@@ -38854,6 +39097,14 @@ var FormT = function (_Component) {
                   return _this2.save(e, 'new');
                 } },
               'Save'
+            ),
+            ' or ',
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.reset(e);
+                } },
+              'Reset'
             )
           )
         )
@@ -39930,6 +40181,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //dummy components for basic map tiles/layers
 
+/* AWS for the heroku tiles, will be internal on final Newberry version
+all AWS `https://s3.us-east-2.amazonaws.com/newberry-images/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`
+all local titles: `../../../layouts/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`
+
+
+*/
+
 var ClipTiles = exports.ClipTiles = function ClipTiles(props) {
     //props.data, props.wSize, props.tSize, props.clip
     return _react2.default.createElement(
@@ -39994,7 +40252,7 @@ var BackgroundMask = exports.BackgroundMask = function BackgroundMask(props) {
 var Underlay = exports.Underlay = function Underlay(props) {
     //props.wSize, props.color
     return _react2.default.createElement('image', {
-        xlinkHref: '../../../layouts/novacco_color_0804.jpg',
+        xlinkHref: '/img/novacco_color_0804.jpg',
         width: props.tSize * (_rawTiles.scaleOps[props.currZoom][0] + 1),
         height: props.tSize * (_rawTiles.scaleOps[props.currZoom][1] + 1),
         x: -1 * props.xyOffsets[0],

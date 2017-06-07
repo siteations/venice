@@ -27,6 +27,27 @@ class FormNarr extends Component {
         this.submission = this.submission.bind(this);
         this.update = this.update.bind(this);
         this.save = this.save.bind(this);
+        this.reset = this.reset.bind(this);
+  }
+
+  reset(e){
+    e.preventDefault();
+    let obj = {
+          verify: false,
+          coreId: 0,
+          minorId: 0,
+          clusterId: 0,
+          title:'',
+          text:'',
+          biblio: '',
+          imageSeries: 0, // placeholder, update from image upload
+          researcherName: '',
+          researcherTitle: '',
+          researcherAffiliation: '',
+        }
+
+    this.setState(obj);
+
   }
 
   submission(e){
@@ -135,7 +156,7 @@ class FormNarr extends Component {
                 <label className='underline' for="researcherTitle">Title:</label><p>{this.state.researcherTitle}</p>
                 <label className='underline' for="researcherAffiliation">Affiliation:</label><p>{this.state.researcherAffiliation}</p>
                 <p>You must click below to save edits to database</p>
-                <button className="btn btn-default" onClick={e=>this.save(e)} >Save</button>
+                <button className="btn btn-default" onClick={e=>this.save(e)} >Save</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
 
                 </div>
               </div>

@@ -364,16 +364,36 @@ export const reloadDetails = () => dispatch => {
 			.catch(console.log);
 }
 
-export const addDetail = (obj) => dispatch => {
+export const addDetail = (img, obj) => dispatch => {
 
-	axios.post('/api/details', obj)
+	axios.post('api/images-files', img)
 			.then(responses => {
 				return responses.data;
 			})
-			.then((results) => {
-			dispatch(reloadDetails()); //call and reload all
+			.then(results =>{
+
+				obj.srcThumb = results.uri;
+				console.log('image placed, link: ', obj);
+
+			axios.post('/api/details', obj)
+						.then(responses => {
+							return responses.data;
+						})
+						.then((results) => {
+						dispatch(reloadDetails()); //call and reload all
+						})
+						.catch(console.log);
 			})
 			.catch(console.log);
+
+	// axios.post('/api/details', obj)
+	// 		.then(responses => {
+	// 			return responses.data;
+	// 		})
+	// 		.then((results) => {
+	// 		dispatch(reloadDetails()); //call and reload all
+	// 		})
+	// 		.catch(console.log);
 }
 
 export const reloadNarratives = () => dispatch => {
