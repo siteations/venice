@@ -168,33 +168,6 @@ router.post('/tours', (req, res, next)=>{
 
 //-------------authorization----------------------
 
-// router.get('/user', function (req, res, next) {
-//   User.findById(req.session.userId)
-//   .then(user => res.json(user))
-//   .catch(next);
-// });
-
-// // signup
-// router.post('/', function (req, res, next) {
-//   User.findOrCreate({
-//     where: {
-//       email: req.body.email
-//     },
-//     defaults: { // if the user doesn't exist, create including this info
-//       password: req.body.password
-//     }
-//   })
-//   .spread((user, created) => {
-//     if (created) {
-//       req.session.userId = user.id;
-//       res.json(user);
-//       console.log('user created');
-//     } else {
-//       res.sendStatus(401); // this user already exists, you cannot sign up
-//     }
-//   });
-// });
-
 // login
 router.put('/user', function (req, res, next) {
 
