@@ -1,6 +1,9 @@
 const Promise = require('bluebird');
-var secretAWS = require('../secret.js');
+const fs = require('fs');
+const writeFile = Promise.promisify(fs.writeFile);
+
 //set up alt version for web...
+var secretAWS = require('../secret.js');
 var AWS = require('aws-sdk');
 
 AWS.config = new AWS.Config();
@@ -11,7 +14,7 @@ AWS.config = new AWS.Config();
 
 var s3 = new AWS.S3({apiVersion: '2006-03-01', region: 'us-east-2'});
 
-var ImageUploaderAWS = function(options) { //
+var ImageUploaderAWS = function(options) { //AWS collection
 
   var file = new Buffer(options.data_uri.replace(/^data:image\/\w+;base64,/, ""),'base64');
   var fileName = options.filename;
@@ -29,4 +32,18 @@ var ImageUploaderAWS = function(options) { //
 
 }
 
-module.exports = ImageUploaderAWS;
+var ImageUploader = function(options) { //local collection
+
+  var file = new Buffer(options.data_uri.replace(/^data:image\/\w+;base64,/, ""),'base64');
+  var fileName = options.filename;
+  var photoKey = './public/img/' + fileName;
+
+  var writeObjectPromise = writeFile(photoKey, file,  'base64');
+  return writeObjectPromise;
+
+}
+
+module.exports = {
+    ImageUploaderAWS,
+    ImageUploader,
+  };

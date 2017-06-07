@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {Images, Narratives, Details, Sites, Tours, User } = require('../db/models/index.js');
-const ImageUploaderAWS = require('../utility/imageUploaders.js');
+const { ImageUploaderAWS, ImageUploader }= require('../utility/imageUploaders.js');
 
 //rework once you've done the db design/setup mysql tables
 
@@ -124,18 +124,21 @@ router.post('/images', (req, res, next)=>{ //to image table
 		});
 });
 
-router.post('/images-files', (req, res, next)=> { //to aws storage
+router.post('/images-files', (req, res, next)=> { //to aws storage or local public
+	//AWS and local version, depending on hosting...
 
-var image = ImageUploaderAWS({
-    data_uri: req.body.data_uri,
-    filename: req.body.filename,
-    filetype: req.body.filetype
-  }).then(result=>{
-  	res.send({
-      status: 'success',
-      uri: 'https://s3.us-east-2.amazonaws.com/newberry-images/images/'+req.body.filename, //image link for secondary submission to database in post above
-    });
-  }).catch(console.log);
+	var image = ImageUploader({
+	//var image = ImageUploaderAWS({
+	    data_uri: req.body.data_uri,
+	    filename: req.body.filename,
+	    filetype: req.body.filetype
+	  }).then(result=>{
+	  	res.send({
+	      status: 'success',
+	      //uri: 'https://s3.us-east-2.amazonaws.com/newberry-images/images/'+req.body.filename, //image link for secondary submission to database in post above
+	      uri: '/img/'+req.body.filename,
+	    });
+	  }).catch(console.log);
 
 
 });
@@ -204,9 +207,10 @@ router.put('/user', function (req, res, next) {
     }
   })
   .then(user => {
-    if (!user) {
+
+    if (!user || !user.isPasswordValid(req.body.password)) {
       //res.sendStatus(401); // no message; good practice to omit why auth fails
-      res.send({message: 'sorry, login failed'});
+      res.send({message: 'sorry, login failed: user does not exist or password wrong'});
     } else {
         req.session.userId = user.id;
         res.json(user);
@@ -223,114 +227,3 @@ router.delete('/user', function (req, res, next) {
 
 module.exports = router;
 
-
-
-//-------------GET by vessel id FOR EACH TABLE----------generic grabs for summary
-
-router.get('/vessels/:id', (req, res, next)=>{
-	console.log(req.params.id);
-
-	Voyages.findOne({
-		where: {
-			id : req.params.id
-			}
-		})
-		.then(voyage => {
-			res.send(voyage);
-		})
-		.catch(err=>{
-			next(err);
-		});
-
-});
-
-router.get('/places/:id', (req, res, next)=>{
-	let id = req.params.id.replace('_', ' ');
-
-	Places.findAll({
-			where: {
-				LogId : id
-			}
-		})
-		.then(placeList=>{
-			res.send(placeList);
-		})
-		.catch(err=>{
-			next(err);
-		});
-
-});
-
-router.get('/animals/:id', (req, res, next)=>{
-	let id = req.params.id.replace('_', ' ');
-
-	Animals.findAll({
-			where: {
-				LogId : id
-			}
-		})
-		.then(animalSumList=>{
-			res.send(animalSumList);
-		})
-		.catch(err=>{
-			next(err);
-		});
-
-});
-
-router.get('/allanimals/:id', (req, res, next)=>{
-	let id = req.params.id.replace('_', ' ');
-
-	AllAnimals.findAll({
-			where: {
-				LogId : id
-			}
-		})
-		.then(animalSumList=>{
-			res.send(animalSumList);
-		})
-		.catch(err=>{
-			next(err);
-		});
-
-});
-
-router.get('/contact/:id', (req, res, next)=>{
-	let id = req.params.id.replace('_', ' ');
-
-
-	Contacts.findAll({
-			where: {
-					LogId : id
-				}
-		})
-		.then(contactList=>{
-			res.send(contactList);
-		})
-		.catch(err=>{
-			next(err);
-		});
-
-});
-
-router.get('/crew/:id', (req, res, next)=>{
-	let id = req.params.id.replace('_', ' ');
-	console.log('hit route:', id);
-
-	Crews.findAll({
-			where: {
-					LogId : id
-				}
-		})
-		.then(contactList=>{
-			res.send(contactList);
-		})
-		.catch(err=>{
-			next(err);
-		});
-
-});
-
-
-
-module.exports = router;
