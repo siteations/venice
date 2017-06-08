@@ -144,12 +144,13 @@ class FooterSlides extends Component {
 
     render(){
 
-    var tour = this.props.options.allTours.filter(tour=> +tour.tourId === +this.props.options.currTour);
+    var tour = this.props.options.allTours[this.props.options.currTour];
 
 	return (
 	        <div className="row footer">
                   <div className="row flex center">
-                        {tour.map(site=>{
+                        {tour &&
+                            tour.map(site=>{
                             return <div className={(site.siteId===this.props.sites.currSite)? 'bIconSelected text-center' : 'bIcon  text-center'}
                                 value={site.siteId+'-'+site.zoom}
                                 key = {site.siteId+'-'+site.zoom}

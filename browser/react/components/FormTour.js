@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 
-import Imagetrey from './ImageSlider.js';
-import { setPanelSizing } from '../action-creators/panelActions.js';
+import { resetSaved } from '../action-creators/siteActions.js';
 //import { imageSeries } from '../pre-db/cirTest.js';
 
 
@@ -18,6 +17,9 @@ class FormT extends Component {
           tourId: 0,
           siteId: 0,
           zoom: 3,
+          tourIdNew: 0,
+          siteIdNew: 0,
+          zoomNew: 3,
           tourName: '',
           siteRemove: 0,
         }
@@ -36,6 +38,7 @@ class FormT extends Component {
           add: false,
           //id will be auto added
           tourId: 0,
+          tourIdNew: 0,
           siteId: 0,
           zoom: 3,
           tourName: '',
@@ -52,6 +55,7 @@ class FormT extends Component {
     obj[type] = true;
     obj['verify']=true;
     this.setState(obj);
+    console.log('as submitted, ', this.state);
     // should open a verification panel
   }
 
@@ -76,14 +80,15 @@ class FormT extends Component {
     this.setState(obj);
   }
 
-  updateOptions(e, id){
+  updateOptions(e, id, exists){
     e.preventDefault();
     let input = document.getElementById(id).value;
-    let obj={}; obj[id]=input;
+    console.log('tourid?', id, input);
+    var obj={}; obj[id]=input;
     this.setState(obj);
 
     if (obj.tourId){
-      let tourCurrName = this.props.options.allTours.filter(tour=> +tour.tourId === +obj.tourId)[0].tourName;
+      let tourCurrName = this.props.options.allTours[obj.tourId][0].tourName;
       console.log(tourCurrName);
       this.setState({tourName : tourCurrName});
     }
@@ -92,21 +97,14 @@ class FormT extends Component {
 
   render(){
   	//console.log(this.props);
-    let tours={};
 
-    this.props.options.allTours.forEach(site=>{
-      site.name = this.props.sites.allSites[site.siteId-1].name;
 
-      if (tours[site.tourId]){
-        var arr = tours[site.tourId];
-        tours[site.tourId] = arr.concat([site]);
-      } else {
-        tours[site.tourId] = [site];
-      }
-    });
-    let tourIds = Object.keys(tours).map(each=>+each);
+    var tourIds = Object.keys(this.props.options.allTours);
     let newTourId = Math.max(...tourIds) + 1;
         tourIds.unshift('none');
+
+        console.log(tourIds);
+    //prep choices
 
     let siteName;
     if (this.state.siteId>0){
@@ -124,11 +122,15 @@ class FormT extends Component {
             <h4 className="BornholmSandvig">Create New Tour</h4>
             <div className="editOps">
               <form onSubmit={e=>this.submission(e, 'new')}>
-                <label className='underline'> Auto Generated Tour Id: </label><p> {newTourId} </p>
+                <label className='underline'> New Tour Id: </label>
+                  <select onChange={e=>this.updateOptions(e, 'tourIdNew')} id='tourIdNew' style={{width:'80%'}}>
+                    <option value={newTourId}>none</option>
+                    <option value={newTourId}>{newTourId}</option>
+                  </select>
                 <label className='underline' for="tourName">Add Tour Name: </label>
                   <input className="form-control" id='tourName' onChange={e=>this.update(e)} placeholder="Tour Name"></input>
                 <label className='underline' for="siteId">Select Initial Site (with Details): </label>
-                  <select onChange={e=>this.updateOptions(e, 'siteId')} id='siteId' style={{width:'80%'}}>
+                  <select onChange={e=>this.updateOptions(e, 'siteIdNew')} id='siteIdNew' style={{width:'80%'}}>
                   {this.props.sites.allSites &&
                     this.props.sites.allSites.map(layer=>{
                       return (
@@ -138,7 +140,8 @@ class FormT extends Component {
                   }
                   </select>
                 <label className='underline' for="zoom">Set Zoom level (3 = zoomed-out, 6 = zoomed-in): </label>
-                  <select onChange={e=>this.updateOptions(e, 'zoom')} id='zoom' style={{width:'80%'}}>
+                  <select onChange={e=>this.updateOptions(e, 'zoomNew')} id='zoomNew' style={{width:'80%'}}>
+                    <option value='3'>none</option>
                     <option value='3'>3</option>
                     <option value='4'>4</option>
                     <option value='5'>5</option>
@@ -153,8 +156,8 @@ class FormT extends Component {
             <div className="editOps">
               <form onSubmit={e=>this.submission(e, 'add')}>
                 <label className='underline' for="type">Select Existing Tour: </label>
-                  <select onChange={e=>this.updateOptions(e, 'tourId')} id='tourId' style={{width:'80%'}}>
-                  {this.props.options.allTours &&
+                  <select onChange={e=>this.updateOptions(e, 'tourId', true)} id='tourId' style={{width:'80%'}}>
+                  {tourIds &&
                     tourIds.map(layer=>{
                       return (
                       <option value={layer}>{layer}</option>
@@ -166,8 +169,9 @@ class FormT extends Component {
                     <div>
                       <h4>Existing sites for tour {this.state.tourId}, {this.state.tourName}: </h4>
                       <ul>
-                      {tours[this.state.tourId] &&
-                        tours[this.state.tourId].map((site,i)=>{
+                      {this.props.options.allTours[this.state.tourId] &&
+                        this.props.options.allTours[this.state.tourId].map((site,i)=>{
+                          site.name = this.props.sites.allSites[site.siteId-1].name;
                           return <li>{`id: ${site.siteId}, name: ${site.name.replace('.', ', ')}`}</li>
                         })
 
@@ -187,6 +191,7 @@ class FormT extends Component {
                   </select>
                 <label className='underline' for="zoom">Set Zoom level (3 = zoomed-out, 6 = zoomed-in): </label>
                   <select onChange={e=>this.updateOptions(e, 'zoom')} id='zoom' style={{width:'80%'}}>
+                    <option value='3'>none</option>
                     <option value='3'>3</option>
                     <option value='4'>4</option>
                     <option value='5'>5</option>
@@ -214,8 +219,8 @@ class FormT extends Component {
                 <div className="editOps">
                 <label className='underline'>Choosen Tour:</label> <p>{this.state.tourId}, {this.state.tourName}</p>
                 <ul>
-                      {tours[this.state.tourId] &&
-                        tours[this.state.tourId].map((site,i)=>{
+                      {this.props.options.allTours[this.state.tourId] &&
+                        this.props.options.allTours[this.state.tourId].map((site,i)=>{
 
                           if (+site.siteId !== +this.state.siteRemove) {
                             return <li>{`id: ${site.siteId}, name: ${site.name.replace('.', ', ')}`}</li>
@@ -227,8 +232,7 @@ class FormT extends Component {
                       <label className='underline'>added:</label><p> {`id: ${this.state.siteId}, name: ${siteName}`}</p>
                       <label className='underline'>removed:</label><p> {`id: ${this.state.siteRemove}, name: ${siteNameRemoved}`}</p>
                 <p>You must click below to save edits to database</p>
-                <button className="btn btn-default" onClick={e=>this.save(e,'add')}>Save</button>
-
+                <button className="btn btn-default" onClick={e=>this.save(e,'add')}>Save</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
                 </div>
               </div>
             }
@@ -246,6 +250,9 @@ class FormT extends Component {
                 </div>
               </div>
             }
+            {this.props.sites.saved &&
+              <h4 className="BornholmSandvig">Tour/Site successfully saved!</h4>
+            }
           </div>
 
   	)
@@ -262,12 +269,10 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-//setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
-
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    updatePanelSize: (size,ratio) => {
-      dispatch(setPanelSizing(size,ratio));
+    resetSaved: () => {
+      dispatch(resetSaved());
     },
   }
 }

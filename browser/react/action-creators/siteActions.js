@@ -40,6 +40,7 @@ export const SET_HOVER_LAYER='SET_HOVER_LAYER';
 export const SET_CENTER = 'SET_CENTER';
 export const SET_RADIUS = 'SET_RADIUS';
 
+export const SAVED= 'SAVED';
 //-------------------ACTION CREATORS - vanilla loading of information
 export const getAllSites = (sites) => {
 	return {
@@ -166,6 +167,13 @@ export const addNewSiteGeo2 = (radius, rad2) =>{
 		rad: [radius, rad2],
 	}
 }
+
+export const saved = (bool) => {
+	return {
+		type: SAVED,
+		bool: bool,
+	}
+}
 //-------------------reducers && initial info
 const initSites = {
 	allSites:[], //array of objects
@@ -191,6 +199,8 @@ const initSites = {
 	newRad:0,
 	newCy: 0,
 	newRadius: 0,
+
+	saved: false,
 
 };
 
@@ -279,6 +289,10 @@ export const siteReducer = (prevState = initSites, action) => {
 		newState.hoverLayer = action.layer;
 		break;
 
+	case SAVED:
+		newState.saved = action.bool;
+		break;
+
 	default:
 		return prevState;
 	}
@@ -353,6 +367,8 @@ export const addHoverSite = (layer) => dispatch =>{
 	dispatch(addHoverLayer(layer));
 }
 
+//-----------detail editing dispatches------------------------
+
 export const reloadDetails = () => dispatch => {
 	axios.get('/api/details')
 			.then(responses => {
@@ -381,20 +397,50 @@ export const addDetail = (img, obj) => dispatch => {
 						})
 						.then((results) => {
 						dispatch(reloadDetails()); //call and reload all
+						dispatch(saved(true));
 						})
 						.catch(console.log);
 			})
 			.catch(console.log);
-
-	// axios.post('/api/details', obj)
-	// 		.then(responses => {
-	// 			return responses.data;
-	// 		})
-	// 		.then((results) => {
-	// 		dispatch(reloadDetails()); //call and reload all
-	// 		})
-	// 		.catch(console.log);
 }
+
+export const addImage = (img, obj) => dispatch => {
+	console.log('image original file: ', img);
+
+	axios.post('api/images-files', img)
+			.then(responses => {
+				return responses.data;
+			})
+			.then(results =>{
+
+				obj.src = results.uri;
+				console.log('image placed, link: ', obj);
+
+			axios.post('/api/images', obj)
+						.then(responses => {
+							return responses.data;
+						})
+						.then((results) => {
+							dispatch(reloadImages()); //call and reload all
+							dispatch(saved(true));
+						})
+						.catch(console.log);
+			})
+			.catch(console.log);
+}
+
+export const reloadImages = () => dispatch => {
+	axios.get('/api/images')
+			.then(responses => {
+				return responses.data;
+			})
+			.then((images) => {
+			dispatch(getGenImages(images));
+			})
+			.catch(console.log);
+}
+
+//-----------narrative & detail general dispatches------------------------
 
 export const reloadNarratives = () => dispatch => {
 	axios.get('/api/narratives')
@@ -468,6 +514,8 @@ export const addAllLayers = (layers) => dispatch => { //load all/clear all to se
 	};
 }
 
+//-----------Site editing dispatches------------------------
+
 export const addNewSite = (siteObj) => dispatch => {
 	console.log('pre-post', siteObj);
 
@@ -477,7 +525,7 @@ export const addNewSite = (siteObj) => dispatch => {
 			})
 	    .then((site) => {
 	    dispatch(loadSites());
-			dispatch(getCurrSite(site.id));
+	    dispatch(saved(true));
 			})
 	   .catch(console.log);
 }
@@ -504,6 +552,14 @@ export const addNewSiteRadius = (radius, radPast) => dispatch => {
 	dispatch(addNewSiteGeo2(radius, radPast));
 }
 
+//-----------saved? dispatches------------------------
+
+export const resetSaved = () => dispatch => {
+	dispatch(saved(false));
+}
+
+//-----------Narrative dispatches------------------------
+
 export const addNarrative = (narrObj) => dispatch => {
 
 	console.log('pre-post narr', narrObj);
@@ -514,7 +570,21 @@ export const addNarrative = (narrObj) => dispatch => {
 			})
 	    .then((narrative) => {
 	    dispatch(reloadNarratives());
+	    dispatch(saved(true));
 			})
 	   .catch(console.log);
 
+}
+
+export const editNarrative = (siteObj, id) => dispatch => {
+	console.log('pre-put', siteObj);
+
+	axios.put(`/api/narratives/${id}`, siteObj)
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((site) => {
+	    dispatch(reloadNarratives());
+			})
+	   .catch(console.log);
 }

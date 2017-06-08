@@ -128,7 +128,7 @@ const initOptions = {
 
 	playTour: false,
 	currTour: 1,
-	allTours: [],
+	allTours: {},
 
 };
 
@@ -258,7 +258,19 @@ export const getAllToursThemes = () => dispatch => {
 				return responses.data;
 			})
 			.then((results) => {
-			const tours = results;
+			var tours={}; //arr to object
+
+	    results.forEach(site=>{
+
+	      if (tours[site.tourId]){
+	        var arr = tours[site.tourId];
+	        tours[site.tourId] = arr.concat([site]);
+	      } else {
+	        tours[site.tourId] = [site];
+	      }
+	    });
+	    console.log('inital tours', tours, results);
+
 			dispatch(getAllTours(tours));
 		})
 		.catch(console.log);

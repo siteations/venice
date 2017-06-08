@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Imagetrey from './ImageSlider.js';
 import { setPanelSizing } from '../action-creators/panelActions.js';
 //import { imageSeries } from '../pre-db/cirTest.js';
-import { addNarrative } from '../action-creators/siteActions.js';
+import { addNarrative, resetSaved } from '../action-creators/siteActions.js';
 
 
 class FormNarr extends Component {
@@ -30,6 +30,11 @@ class FormNarr extends Component {
         this.reset = this.reset.bind(this);
   }
 
+  componentDidMount(){
+    this.props.resetSaved();
+  }
+
+
   reset(e){
     e.preventDefault();
     let obj = {
@@ -44,7 +49,7 @@ class FormNarr extends Component {
           researcherName: '',
           researcherTitle: '',
           researcherAffiliation: '',
-        }
+        };
 
     this.setState(obj);
 
@@ -52,13 +57,15 @@ class FormNarr extends Component {
 
   submission(e){
     e.preventDefault();
+
     let obj= {
       verify: true,
       coreId: this.props.sites.currSite,
       minorId: this.props.sites.minorId,
       clusterId: this.props.sites.clusterId,
     };
-    if (obj.minorId>0){obj.coreId=0};
+
+    console.log('form submission', obj);
 
     this.setState(obj);
   }
@@ -161,6 +168,9 @@ class FormNarr extends Component {
                 </div>
               </div>
             }
+            {this.props.sites.saved &&
+              <h4 className="BornholmSandvig">Narrative Saved!</h4>
+            }
           </div>
 
   	)
@@ -181,12 +191,12 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    updatePanelSize: (size,ratio) => {
-      dispatch(setPanelSizing(size,ratio));
-    },
     addNarrative: (narrObj) => {
       dispatch(addNarrative(narrObj));
-    }
+    },
+    resetSaved: () => {
+      dispatch(resetSaved());
+    },
   }
 }
 

@@ -6,7 +6,6 @@ import { scaleOps } from '../plug-ins/rawTiles.js';
 /* AWS for the heroku tiles, will be internal on final Newberry version
 all AWS `https://s3.us-east-2.amazonaws.com/newberry-images/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`
 all local public tiles: `/img/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`
-
 */
 
 export const ClipTiles = (props) => {

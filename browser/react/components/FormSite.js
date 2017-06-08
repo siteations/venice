@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 
-import Imagetrey from './ImageSlider.js';
-import { setPanelSizing } from '../action-creators/panelActions.js';
-import { addNewSite, addNewSiteCenter, addNewSiteRadius } from '../action-creators/siteActions.js';
-//import { imageSeries } from '../pre-db/cirTest.js';
-
+import { addNewSite, addNewSiteCenter, addNewSiteRadius, resetSaved } from '../action-creators/siteActions.js';
 
 
 class FormSi extends Component {
@@ -25,6 +21,10 @@ class FormSi extends Component {
         this.update = this.update.bind(this);
         this.save = this.save.bind(this);
         this.reset = this.reset.bind(this);
+  }
+
+  componentDidMount(){
+    this.props.resetSaved();
   }
 
     reset(e){
@@ -61,7 +61,7 @@ class FormSi extends Component {
     delete obj.verify;
     delete obj.generalName;
     delete obj.properName;
-    console.log('for database', obj);
+
     this.props.addNewSite(obj); //adds, reloads all, and sets site to current for editing
     this.props.clearTempSite();
 
@@ -79,7 +79,6 @@ class FormSi extends Component {
   updateOptions(e){
     e.preventDefault();
     let input = document.getElementById('gadget').value;
-    console.log(input);
     let obj={}; obj.type=input;
 
     this.setState(obj);
@@ -87,8 +86,6 @@ class FormSi extends Component {
   }
 
   render(){
-  	//console.log(this.props);
-
 
   	return (
            <div>
@@ -150,6 +147,9 @@ class FormSi extends Component {
                 </div>
               </div>
             }
+            {this.props.sites.saved &&
+              <h4 className="BornholmSandvig">Site Saved!</h4>
+            }
           </div>
 
   	)
@@ -170,16 +170,16 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    updatePanelSize: (size,ratio) => {
-      dispatch(setPanelSizing(size,ratio));
-    },
     addNewSite : (siteOb) => {
       dispatch(addNewSite(siteOb));
     },
     clearTempSite : () => {
       dispatch(addNewSiteCenter(0,0,0,0));
-      disptach(addNewSiteRadius(0,0));
-    }
+      dispatch(addNewSiteRadius(0,0));
+    },
+    resetSaved: () => {
+      dispatch(resetSaved());
+    },
   }
 }
 

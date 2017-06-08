@@ -291,13 +291,14 @@ class MapSVG extends Component {
             let subsiteId = this.props.sites.currSite;
             let obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+subsiteId);
             let clustId = obj[0].clusterId;
-            this.props.setDetailId(+subsiteId, clustId);
+            this.props.setDetailId( 0 , clustId);
         } else {
             let subsiteId = e.target.attributes.id.value;
-            let obj = this.props.sites.genNarratives.filter(narr => +narr.minorId===+subsiteId);
-            let clustId = obj[0].clusterId;
+            let clustId = this.props.sites.genDetails.filter(detail => +detail.id === +subsiteId)[0].clusterId;
+            var obj = this.props.sites.genNarratives.filter(narr => +narr.minorId===+subsiteId && +narr.clusterId===+clustId)[0];
+            if (obj===undefined) {obj={}};
             this.props.setDetailId(+subsiteId, clustId);
-            this.props.updateNarrative(obj[0]);
+            this.props.updateNarrative(obj);
         }
     }
 

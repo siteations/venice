@@ -259,7 +259,7 @@ process.umask = function() { return 0; };
 "use strict";
 
 
-module.exports = __webpack_require__(54);
+module.exports = __webpack_require__(53);
 
 
 /***/ }),
@@ -1110,7 +1110,7 @@ var _shouldUpdate = __webpack_require__(678);
 
 var _shouldUpdate2 = _interopRequireDefault(_shouldUpdate);
 
-var _shallowEqual = __webpack_require__(57);
+var _shallowEqual = __webpack_require__(56);
 
 var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
@@ -1203,9 +1203,9 @@ module.exports = ExecutionEnvironment;
 
 
 
-var _prodInvariant = __webpack_require__(56);
+var _prodInvariant = __webpack_require__(55);
 
-var ReactCurrentOwner = __webpack_require__(37);
+var ReactCurrentOwner = __webpack_require__(36);
 
 var invariant = __webpack_require__(11);
 var warning = __webpack_require__(12);
@@ -2172,6 +2172,629 @@ module.exports = { debugTool: debugTool };
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.editNarrative = exports.addNarrative = exports.resetSaved = exports.addNewSiteRadius = exports.addNewSiteCenter = exports.editSite = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.getDetailsNarratives = exports.reloadNarratives = exports.reloadImages = exports.addImage = exports.addDetail = exports.reloadDetails = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.saved = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getAllSites = exports.SAVED = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
+
+var _axios = __webpack_require__(86);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _bluebird = __webpack_require__(180);
+
+var _bluebird2 = _interopRequireDefault(_bluebird);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
+// import { siteSeed, detailSeed, narrativeSeed, imageSeed, tourSeed } from '../pre-db/cirTest.js';
+
+// //var cirMain = siteSeed;
+// var cirMinor = detailSeed;
+// var narrativeTest = narrativeSeed;
+// var imageTest = imageSeed;
+
+//-------------------CONSTANTS
+
+//SITE REDUCER
+
+//layers all & selected, sites all & selected
+var GET_ALL_SITES = exports.GET_ALL_SITES = 'GET_ALL_SITES';
+var GET_FILTERED_SITES = exports.GET_FILTERED_SITES = 'GET_FILTERED_SITES';
+
+var GET_CURR_SITE = exports.GET_CURR_SITE = 'GET_CURR_SITE';
+var GET_CURR_SITEZOOM = exports.GET_CURR_SITEZOOM = 'GET_CURR_SITEZOOM';
+
+var GET_CURR_DETAIL = exports.GET_CURR_DETAIL = 'GET_CURR_DETAIL';
+var GET_CURR_NARR = exports.GET_CURR_NARR = 'GET_CURR_NARR';
+
+var GET_GEN_DETAIL = exports.GET_GEN_DETAIL = 'GET_GEN_DETAIL';
+var GET_GEN_NARR = exports.GET_GEN_NARR = 'GET_GEN_NARR';
+var GET_GEN_IMG = exports.GET_GEN_IMG = 'GET_GEN_IMG';
+
+var GET_CURR_IMGS = exports.GET_CURR_IMGS = 'GET_CURR_IMGS';
+
+var SET_MINOR_ID = exports.SET_MINOR_ID = 'SET_MINOR_ID';
+
+//layers all & selected for filteration
+var GET_All_LAYERS = exports.GET_All_LAYERS = 'GET_All_LAYERS';
+var GET_CURR_LAYERS = exports.GET_CURR_LAYERS = 'GET_CURR_LAYERS';
+var ADD_CURR_LAYERS = exports.ADD_CURR_LAYERS = 'ADD_CURR_LAYERS';
+var RESET_CURR_LAYERS = exports.RESET_CURR_LAYERS = 'RESET_CURR_LAYERS';
+var SET_HOVER_LAYER = exports.SET_HOVER_LAYER = 'SET_HOVER_LAYER';
+
+var SET_CENTER = exports.SET_CENTER = 'SET_CENTER';
+var SET_RADIUS = exports.SET_RADIUS = 'SET_RADIUS';
+
+var SAVED = exports.SAVED = 'SAVED';
+//-------------------ACTION CREATORS - vanilla loading of information
+var getAllSites = exports.getAllSites = function getAllSites(sites) {
+	return {
+		type: GET_ALL_SITES,
+		sites: sites
+	};
+};
+
+var setMinorId = exports.setMinorId = function setMinorId(objId, clusterId) {
+	return {
+		type: SET_MINOR_ID,
+		objId: [objId, clusterId]
+	};
+};
+
+var getFilteredSites = exports.getFilteredSites = function getFilteredSites(sites) {
+	return {
+		type: GET_FILTERED_SITES,
+		sites: sites
+	};
+};
+
+var getCurrSite = exports.getCurrSite = function getCurrSite(site) {
+	return {
+		type: GET_CURR_SITE,
+		site: site
+	};
+};
+
+var getCurrSiteZoom = exports.getCurrSiteZoom = function getCurrSiteZoom(bool) {
+	return {
+		type: GET_CURR_SITEZOOM,
+		bool: bool
+	};
+};
+
+var getCurrDetail = exports.getCurrDetail = function getCurrDetail(detailId) {
+	return {
+		type: GET_CURR_DETAIL,
+		detail: detailId
+	};
+};
+
+var getCurrNarr = exports.getCurrNarr = function getCurrNarr(id) {
+	return {
+		type: GET_CURR_NARR,
+		id: id
+	};
+};
+
+var getGenDetails = exports.getGenDetails = function getGenDetails(details) {
+	return {
+		type: GET_GEN_DETAIL,
+		details: details
+	};
+};
+
+var getGenNarratives = exports.getGenNarratives = function getGenNarratives(narratives) {
+	return {
+		type: GET_GEN_NARR,
+		narratives: narratives
+	};
+};
+
+var getGenImages = exports.getGenImages = function getGenImages(images) {
+	return {
+		type: GET_GEN_IMG,
+		images: images
+	};
+};
+
+var getCurrImgs = exports.getCurrImgs = function getCurrImgs(images) {
+	return {
+		type: GET_CURR_IMGS,
+		imgs: images
+	};
+};
+
+var getAllLayers = exports.getAllLayers = function getAllLayers(layers) {
+	return {
+		type: GET_All_LAYERS,
+		layers: layers
+	};
+};
+
+var getCurrLayers = exports.getCurrLayers = function getCurrLayers(layers) {
+	return {
+		type: GET_CURR_LAYERS,
+		layers: layers
+	};
+};
+
+var addCurrLayers = exports.addCurrLayers = function addCurrLayers(layer) {
+	return {
+		type: ADD_CURR_LAYERS,
+		layer: layer
+	};
+};
+
+var resetCurrLayers = exports.resetCurrLayers = function resetCurrLayers(layer) {
+	return {
+		type: RESET_CURR_LAYERS,
+		layer: layer
+	};
+};
+
+var addHoverLayer = exports.addHoverLayer = function addHoverLayer(layer) {
+	return {
+		type: SET_HOVER_LAYER,
+		layer: layer
+	};
+};
+
+var addNewSiteGeo1 = exports.addNewSiteGeo1 = function addNewSiteGeo1(x, y, px, py) {
+	return {
+		type: SET_CENTER,
+		coord: [x, y, px, py]
+	};
+};
+
+var addNewSiteGeo2 = exports.addNewSiteGeo2 = function addNewSiteGeo2(radius, rad2) {
+	return {
+		type: SET_RADIUS,
+		rad: [radius, rad2]
+	};
+};
+
+var saved = exports.saved = function saved(bool) {
+	return {
+		type: SAVED,
+		bool: bool
+	};
+};
+//-------------------reducers && initial info
+var initSites = {
+	allSites: [], //array of objects
+
+	currSite: 0, //id of site
+	currSiteOn: false, //secondary object arrays
+	currDetail: 0, //main vs. peripheral detail for panel (id of site)
+	currNarrative: {},
+	genNarratives: [],
+	genDetails: [], //narratives & captions
+	genImages: [],
+	currImages: {}, //links for panel images
+	minorId: 0,
+	clusterId: 0,
+
+	allLayers: ['parish churches', "bascilica", "plague churches", "monastery, convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption"], //arr of strings
+	currLayers: [], //arr of strings
+	hoverLayer: ' ',
+
+	newCx: 0,
+	newX: 0,
+	newY: 0,
+	newRad: 0,
+	newCy: 0,
+	newRadius: 0,
+
+	saved: false
+
+};
+
+var siteReducer = exports.siteReducer = function siteReducer() {
+	var prevState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initSites;
+	var action = arguments[1];
+
+	var newState = Object.assign({}, prevState);
+
+	switch (action.type) {
+
+		case GET_ALL_SITES:
+			newState.allSites = action.sites;
+			break;
+
+		case SET_CENTER:
+			newState.newCx = action.coord[0];
+			newState.newCy = action.coord[1];
+			newState.newX = action.coord[2];
+			newState.newY = action.coord[3];
+			break;
+
+		case SET_RADIUS:
+			newState.newRadius = action.rad[0];
+			newState.newRad = action.rad[1];
+			break;
+
+		case GET_CURR_SITE:
+			newState.currSite = action.site;
+			break;
+
+		case GET_CURR_SITEZOOM:
+			newState.currSiteOn = action.bool;
+			break;
+
+		case GET_CURR_DETAIL:
+			newState.currDetail = action.detail;
+			break;
+
+		case GET_CURR_NARR:
+			newState.currNarrative = action.narrative;
+			break;
+
+		case GET_GEN_DETAIL:
+			newState.genDetails = action.details;
+			break;
+
+		case GET_GEN_NARR:
+			newState.genNarratives = action.narratives;
+			break;
+
+		case GET_GEN_IMG:
+			newState.genImages = action.images;
+			break;
+
+		case GET_CURR_IMGS:
+			newState.currImages = action.imgs;
+			break;
+
+		case SET_MINOR_ID:
+			newState.minorId = action.objId[0];
+			newState.clusterId = action.objId[1];
+			break;
+
+		case GET_All_LAYERS:
+			//newState.allLayers = action.layers;
+			break;
+
+		case GET_CURR_LAYERS:
+			newState.currLayers = action.layers;
+			break;
+
+		case ADD_CURR_LAYERS:
+			var add = action.layer.split(', ');
+			var array = newState.currLayers.concat(add);
+			newState.currLayers = array;
+			break;
+
+		case RESET_CURR_LAYERS:
+			var arr = newState.currLayers;
+			var layers = action.layer.split(', ');
+			layers.forEach(function (layer) {
+				arr.splice(arr.indexOf(layer), 1);
+			});
+			newState.currLayers = arr;
+			break;
+
+		case SET_HOVER_LAYER:
+			newState.hoverLayer = action.layer;
+			break;
+
+		case SAVED:
+			newState.saved = action.bool;
+			break;
+
+		default:
+			return prevState;
+	}
+
+	return newState;
+};
+
+//-------------------COMPLEX ACTION CALLS AND AXIOS INFO...
+
+var loadSites = exports.loadSites = function loadSites() {
+	return function (dispatch) {
+		//rework for axios later
+		var allSites = _axios2.default.get('/api/sites').then(function (responses) {
+			return responses.data;
+		}).then(function (sites) {
+			dispatch(getAllSites(sites));
+		}).catch(console.log);
+	};
+};
+
+var loadFilteredSites = exports.loadFilteredSites = function loadFilteredSites(layerArr) {
+	return function (dispatch) {
+		//
+
+		var allSites = _axios2.default.get('/api/sites').then(function (responses) {
+			return responses.data;
+		}).then(function (sites) {
+			//front-end filter vs. back
+
+			var selectSites = sites.filter(function (circle) {
+				return layerArr.indexOf(circle.type) > -1;
+			});
+
+			dispatch(getFilteredSites(selectSites));
+		}).catch(console.log);
+	};
+};
+
+var updateSite = exports.updateSite = function updateSite(site) {
+	return function (dispatch) {
+		dispatch(getCurrSite(site));
+	};
+};
+
+var overlayDetails = exports.overlayDetails = function overlayDetails(bool) {
+	return function (dispatch) {
+		dispatch(getCurrSiteZoom(bool));
+	};
+};
+
+var loadFiltered = exports.loadFiltered = function loadFiltered(layers) {
+	return function (dispatch) {
+		//set this up grab all on initial mount, but then work with addSelect below to grab pieces at a time...
+
+		dispatch(getCurrLayers(layers));
+	};
+};
+
+var loadLayers = exports.loadLayers = function loadLayers() {
+	return function (dispatch) {
+		//loading all
+
+		var allSites = _axios2.default.get('/api/sites').then(function (responses) {
+			return responses.data;
+		}).then(function (sites) {
+			//front-end filter vs. back
+
+			var cirLayers = [];
+			sites.forEach(function (circle) {
+				if (cirLayers.indexOf(circle.type) === -1) {
+					cirLayers.push(circle.type);
+				};
+			});
+			dispatch(getAllLayers(cirLayers));
+		}).catch(console.log);
+	};
+};
+
+var addHoverSite = exports.addHoverSite = function addHoverSite(layer) {
+	return function (dispatch) {
+		dispatch(addHoverLayer(layer));
+	};
+};
+
+//-----------detail editing dispatches------------------------
+
+var reloadDetails = exports.reloadDetails = function reloadDetails() {
+	return function (dispatch) {
+		_axios2.default.get('/api/details').then(function (responses) {
+			return responses.data;
+		}).then(function (results) {
+			dispatch(getGenDetails(results));
+		}).catch(console.log);
+	};
+};
+
+var addDetail = exports.addDetail = function addDetail(img, obj) {
+	return function (dispatch) {
+
+		_axios2.default.post('api/images-files', img).then(function (responses) {
+			return responses.data;
+		}).then(function (results) {
+
+			obj.srcThumb = results.uri;
+			console.log('image placed, link: ', obj);
+
+			_axios2.default.post('/api/details', obj).then(function (responses) {
+				return responses.data;
+			}).then(function (results) {
+				dispatch(reloadDetails()); //call and reload all
+				dispatch(saved(true));
+			}).catch(console.log);
+		}).catch(console.log);
+	};
+};
+
+var addImage = exports.addImage = function addImage(img, obj) {
+	return function (dispatch) {
+		console.log('image original file: ', img);
+
+		_axios2.default.post('api/images-files', img).then(function (responses) {
+			return responses.data;
+		}).then(function (results) {
+
+			obj.src = results.uri;
+			console.log('image placed, link: ', obj);
+
+			_axios2.default.post('/api/images', obj).then(function (responses) {
+				return responses.data;
+			}).then(function (results) {
+				dispatch(reloadImages()); //call and reload all
+				dispatch(saved(true));
+			}).catch(console.log);
+		}).catch(console.log);
+	};
+};
+
+var reloadImages = exports.reloadImages = function reloadImages() {
+	return function (dispatch) {
+		_axios2.default.get('/api/images').then(function (responses) {
+			return responses.data;
+		}).then(function (images) {
+			dispatch(getGenImages(images));
+		}).catch(console.log);
+	};
+};
+
+//-----------narrative & detail general dispatches------------------------
+
+var reloadNarratives = exports.reloadNarratives = function reloadNarratives() {
+	return function (dispatch) {
+		_axios2.default.get('/api/narratives').then(function (responses) {
+			return responses.data;
+		}).then(function (narratives) {
+			dispatch(getGenNarratives(narratives));
+		}).catch(console.log);
+	};
+};
+
+var getDetailsNarratives = exports.getDetailsNarratives = function getDetailsNarratives() {
+	return function (dispatch) {
+
+		var allDetails = _axios2.default.get('/api/details').then(function (responses) {
+			return responses.data;
+		});
+
+		var allNarratives = _axios2.default.get('/api/narratives').then(function (responses) {
+			return responses.data;
+		});
+
+		var allImages = _axios2.default.get('/api/images').then(function (responses) {
+			return responses.data;
+		});
+
+		_bluebird2.default.all([allDetails, allNarratives, allImages]).then(function (results) {
+			var details = results[0],
+			    narratives = results[1],
+			    images = results[2];
+			dispatch(getGenDetails(details));
+			dispatch(getGenNarratives(narratives));
+			dispatch(getGenImages(images));
+		}).catch(console.log);
+	};
+};
+
+var addSelectLayer = exports.addSelectLayer = function addSelectLayer(layer) {
+	return function (dispatch) {
+		//add and load
+		dispatch(addCurrLayers(layer));
+	};
+};
+
+var setDetailId = exports.setDetailId = function setDetailId(objId, clusterId) {
+	return function (dispatch) {
+		dispatch(setMinorId(objId, clusterId));
+	};
+};
+
+var deleteSelectLayer = exports.deleteSelectLayer = function deleteSelectLayer(layer) {
+	return function (dispatch) {
+		//add and load
+		dispatch(resetCurrLayers(layer));
+	};
+};
+
+//HARD CODING UNTIL WE ACTUALLY HAVE ALL THE LAYERS SET
+var addAllLayers = exports.addAllLayers = function addAllLayers(layers) {
+	return function (dispatch) {
+		//load all/clear all to select
+		var cirLayers = [];
+
+		if (layers === 'add') {
+			var allSites = _axios2.default.get('/api/sites').then(function (responses) {
+				return responses.data;
+			}).then(function (sites) {
+
+				sites.forEach(function (circle) {
+					if (cirLayers.indexOf(circle.type) === -1) {
+						cirLayers.push(circle.type);
+					};
+				});
+				dispatch(getCurrLayers(cirLayers));
+			}).catch(console.log);
+		} else {
+			dispatch(getCurrLayers(cirLayers));
+		};
+	};
+};
+
+//-----------Site editing dispatches------------------------
+
+var addNewSite = exports.addNewSite = function addNewSite(siteObj) {
+	return function (dispatch) {
+		console.log('pre-post', siteObj);
+
+		_axios2.default.post('/api/sites', siteObj).then(function (responses) {
+			return responses.data;
+		}).then(function (site) {
+			dispatch(loadSites());
+			dispatch(saved(true));
+		}).catch(console.log);
+	};
+};
+
+var editSite = exports.editSite = function editSite(siteObj, id) {
+	return function (dispatch) {
+		console.log('pre-put', siteObj);
+
+		_axios2.default.put('/api/sites/' + id, siteObj).then(function (responses) {
+			return responses.data;
+		}).then(function (site) {
+			dispatch(loadSites());
+			dispatch(getCurrSite(id));
+		}).catch(console.log);
+	};
+};
+
+var addNewSiteCenter = exports.addNewSiteCenter = function addNewSiteCenter(cx, cy, pastX, pastY) {
+	return function (dispatch) {
+		dispatch(addNewSiteGeo1(cx, cy, pastX, pastY));
+	};
+};
+
+var addNewSiteRadius = exports.addNewSiteRadius = function addNewSiteRadius(radius, radPast) {
+	return function (dispatch) {
+		dispatch(addNewSiteGeo2(radius, radPast));
+	};
+};
+
+//-----------saved? dispatches------------------------
+
+var resetSaved = exports.resetSaved = function resetSaved() {
+	return function (dispatch) {
+		dispatch(saved(false));
+	};
+};
+
+//-----------Narrative dispatches------------------------
+
+var addNarrative = exports.addNarrative = function addNarrative(narrObj) {
+	return function (dispatch) {
+
+		console.log('pre-post narr', narrObj);
+
+		_axios2.default.post('/api/narratives', narrObj).then(function (responses) {
+			return responses.data;
+		}).then(function (narrative) {
+			dispatch(reloadNarratives());
+			dispatch(saved(true));
+		}).catch(console.log);
+	};
+};
+
+var editNarrative = exports.editNarrative = function editNarrative(siteObj, id) {
+	return function (dispatch) {
+		console.log('pre-put', siteObj);
+
+		_axios2.default.put('/api/narratives/' + id, siteObj).then(function (responses) {
+			return responses.data;
+		}).then(function (site) {
+			dispatch(reloadNarratives());
+		}).catch(console.log);
+	};
+};
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var store      = __webpack_require__(120)('wks')
   , uid        = __webpack_require__(89)
   , Symbol     = __webpack_require__(41).Symbol
@@ -2185,7 +2808,7 @@ var $exports = module.exports = function(name){
 $exports.store = store;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2598,783 +3221,7 @@ exports.default = EnhancedButton;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-
-// //-------------------CONSTANTS
-
-
-//responding to resizing
-var SET_PANELSIZE = exports.SET_PANELSIZE = 'SET_PANELSIZE';
-var SET_PANELRATIO = exports.SET_PANELRATIO = 'SET_PANELRATIO';
-
-var SET_TITLE = exports.SET_TITLE = 'SET_TITLE';
-var SET_SUBTITLE = exports.SET_SUBTITLE = 'SET_SUBTITLE';
-
-var SET_NARROBJ = exports.SET_NARROBJ = 'SET_NARROBJ';
-var SET_IMAGESIZES = exports.SET_IMAGESIZES = 'SET_IMAGESIZES';
-var SET_BIBLIOALL = exports.SET_BIBLIOALL = 'SET_BIBLIOALL';
-
-//-------------------ACTION CREATORS - vanilla loading of information
-var setPanelSize = exports.setPanelSize = function setPanelSize(panelSize) {
-	return {
-		type: SET_PANELSIZE,
-		panelSize: panelSize
-	};
-};
-
-var setPanelRatio = exports.setPanelRatio = function setPanelRatio(panelRatio) {
-	return {
-		type: SET_PANELRATIO,
-		panelRatio: panelRatio
-	};
-};
-
-var setTitle = exports.setTitle = function setTitle(title) {
-	return {
-		type: SET_TITLE,
-		title: title
-	};
-};
-
-var setSubtitle = exports.setSubtitle = function setSubtitle(subtitle) {
-	return {
-		type: SET_SUBTITLE,
-		subtitle: subtitle
-	};
-};
-
-var setNarrObj = exports.setNarrObj = function setNarrObj(narrObj) {
-	return {
-		type: SET_NARROBJ,
-		narrObj: narrObj
-	};
-};
-
-var setImageSizes = exports.setImageSizes = function setImageSizes(sizes) {
-	return {
-		type: SET_IMAGESIZES,
-		sizes: sizes
-	};
-};
-
-var setBiblioAll = exports.setBiblioAll = function setBiblioAll(biblio) {
-	return {
-		type: SET_BIBLIOALL,
-		biblio: biblio
-	};
-};
-
-//-------------------reducers && initial info
-
-var initPanel = {
-	panelSize: [0, 0], //width, height
-	panelRatio: 1, // width/height
-
-	title: '',
-	subtitle: '',
-
-	imageWidth: 0,
-	narrObj: {},
-	biblioAll: []
-};
-
-var panelReducer = exports.panelReducer = function panelReducer() {
-	var prevState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initPanel;
-	var action = arguments[1];
-
-	var newState = Object.assign({}, prevState);
-
-	switch (action.type) {
-
-		case SET_PANELSIZE:
-			newState.panelSize = action.panelSize;
-			break;
-
-		case SET_PANELRATIO:
-			newState.panelRatio = action.panelRatio;
-			break;
-
-		case SET_TITLE:
-			newState.title = action.title;
-			break;
-
-		case SET_SUBTITLE:
-			newState.subtitle = action.subtitle;
-			break;
-
-		case SET_IMAGESIZES:
-			newState.imageWidth = action.sizes;
-			break;
-
-		case SET_NARROBJ:
-			newState.narrObj = action.narrObj;
-			break;
-
-		case SET_BIBLIOALL:
-			newState.biblioAll = action.biblio;
-			break;
-
-		default:
-			return prevState;
-	}
-
-	return newState;
-};
-
-/* ------------       DISPATCHERS     ------------------ */
-
-// optimistic
-var setTitlesCore = exports.setTitlesCore = function setTitlesCore(titles) {
-	return function (dispatch) {
-		dispatch(setTitle(titles[0]));
-		dispatch(setSubtitle(titles[1]));
-	};
-};
-
-var setNarr = exports.setNarr = function setNarr(narr) {
-	return function (dispatch) {
-		dispatch(setNarrObj(narr));;
-	};
-};
-
-var setPanelSizing = exports.setPanelSizing = function setPanelSizing(size, ratio) {
-	return function (dispatch) {
-		dispatch(setPanelSize(size));
-		dispatch(setPanelRatio(ratio));
-		dispatch(setImageSizes(size[0] - 20));
-	};
-};
-
-// export const detailVoyage = (voyage) => {
-
-// 	  let start = voyage.Start;
-// 	  let end = voyage.End;
-// 	  var dates =[];
-// 	  for (let i=+start; i<=+end+1; i++){dates.push(i);};
-
-// 	voyage.Dates = dates;
-// 	voyage.Length = dates.length;
-
-// 	return dispatch => {
-// 		//dispatch(selectVoyage(voyage));
-// 	};
-// };
-
-
-// export const filterCrew = (crew) => { //filters crew into this voyage and other voyages
-
-// 	//insert into selectCrew...
-// 	let currentCnt=0;
-// 	let years =[];
-
-// 	crew.forEach(member=>{
-// 		if (+member.Fstart === +member.Dyear){
-// 			member.voyage = 'current';
-// 			currentCnt++;
-// 		} else {
-// 		if (years.indexOf(+member.Dyear)===-1){
-// 				years.push(+member.Dyear);
-// 			};
-// 			member.voyage = 'other';
-// 		}
-
-// 	})
-
-// 	console.log(years, crew[0].Fstart);
-// 	var diff;
-// 	if (currentCnt===0 && years.length===1){
-// 		crew.forEach(member=> { member.voyage = 'current'; });
-// 	} else if (currentCnt===0 && years.length > 1){
-// 		diff = years.map(year=> {
-// 			return Math.abs(+year - +crew[0].Fstart);
-// 		});
-// 		var year = years[diff.indexOf(Math.min(...diff))];
-
-// 		crew.forEach(member=>{ if (year === +member.Dyear){
-// 			member.voyage = 'current';
-// 			//console.log(member.Fstart, member.Dyear);
-// 			};
-// 		});
-// 	};
-
-// 	var crewC = crew.filter(member=> {return member.voyage === 'current';});
-// 	var crewr = crew.filter(member=> {return member.voyage !== 'current';});
-
-// 	return dispatch => {
-// 		// dispatch(selectCrew(crewC));
-// 		// dispatch(otherCrews(crewOther));
-// 		// dispatch(extendVoyages(years));
-// 	};
-// };
-
-/***/ }),
 /* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.addNarrative = exports.addNewSiteRadius = exports.addNewSiteCenter = exports.editSite = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.getDetailsNarratives = exports.reloadNarratives = exports.addDetail = exports.reloadDetails = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getAllSites = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
-
-var _axios = __webpack_require__(86);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _bluebird = __webpack_require__(180);
-
-var _bluebird2 = _interopRequireDefault(_bluebird);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
-// import { siteSeed, detailSeed, narrativeSeed, imageSeed, tourSeed } from '../pre-db/cirTest.js';
-
-// //var cirMain = siteSeed;
-// var cirMinor = detailSeed;
-// var narrativeTest = narrativeSeed;
-// var imageTest = imageSeed;
-
-//-------------------CONSTANTS
-
-//SITE REDUCER
-
-//layers all & selected, sites all & selected
-var GET_ALL_SITES = exports.GET_ALL_SITES = 'GET_ALL_SITES';
-var GET_FILTERED_SITES = exports.GET_FILTERED_SITES = 'GET_FILTERED_SITES';
-
-var GET_CURR_SITE = exports.GET_CURR_SITE = 'GET_CURR_SITE';
-var GET_CURR_SITEZOOM = exports.GET_CURR_SITEZOOM = 'GET_CURR_SITEZOOM';
-
-var GET_CURR_DETAIL = exports.GET_CURR_DETAIL = 'GET_CURR_DETAIL';
-var GET_CURR_NARR = exports.GET_CURR_NARR = 'GET_CURR_NARR';
-
-var GET_GEN_DETAIL = exports.GET_GEN_DETAIL = 'GET_GEN_DETAIL';
-var GET_GEN_NARR = exports.GET_GEN_NARR = 'GET_GEN_NARR';
-var GET_GEN_IMG = exports.GET_GEN_IMG = 'GET_GEN_IMG';
-
-var GET_CURR_IMGS = exports.GET_CURR_IMGS = 'GET_CURR_IMGS';
-
-var SET_MINOR_ID = exports.SET_MINOR_ID = 'SET_MINOR_ID';
-
-//layers all & selected for filteration
-var GET_All_LAYERS = exports.GET_All_LAYERS = 'GET_All_LAYERS';
-var GET_CURR_LAYERS = exports.GET_CURR_LAYERS = 'GET_CURR_LAYERS';
-var ADD_CURR_LAYERS = exports.ADD_CURR_LAYERS = 'ADD_CURR_LAYERS';
-var RESET_CURR_LAYERS = exports.RESET_CURR_LAYERS = 'RESET_CURR_LAYERS';
-var SET_HOVER_LAYER = exports.SET_HOVER_LAYER = 'SET_HOVER_LAYER';
-
-var SET_CENTER = exports.SET_CENTER = 'SET_CENTER';
-var SET_RADIUS = exports.SET_RADIUS = 'SET_RADIUS';
-
-//-------------------ACTION CREATORS - vanilla loading of information
-var getAllSites = exports.getAllSites = function getAllSites(sites) {
-	return {
-		type: GET_ALL_SITES,
-		sites: sites
-	};
-};
-
-var setMinorId = exports.setMinorId = function setMinorId(objId, clusterId) {
-	return {
-		type: SET_MINOR_ID,
-		objId: [objId, clusterId]
-	};
-};
-
-var getFilteredSites = exports.getFilteredSites = function getFilteredSites(sites) {
-	return {
-		type: GET_FILTERED_SITES,
-		sites: sites
-	};
-};
-
-var getCurrSite = exports.getCurrSite = function getCurrSite(site) {
-	return {
-		type: GET_CURR_SITE,
-		site: site
-	};
-};
-
-var getCurrSiteZoom = exports.getCurrSiteZoom = function getCurrSiteZoom(bool) {
-	return {
-		type: GET_CURR_SITEZOOM,
-		bool: bool
-	};
-};
-
-var getCurrDetail = exports.getCurrDetail = function getCurrDetail(detailId) {
-	return {
-		type: GET_CURR_DETAIL,
-		detail: detailId
-	};
-};
-
-var getCurrNarr = exports.getCurrNarr = function getCurrNarr(id) {
-	return {
-		type: GET_CURR_NARR,
-		id: id
-	};
-};
-
-var getGenDetails = exports.getGenDetails = function getGenDetails(details) {
-	return {
-		type: GET_GEN_DETAIL,
-		details: details
-	};
-};
-
-var getGenNarratives = exports.getGenNarratives = function getGenNarratives(narratives) {
-	return {
-		type: GET_GEN_NARR,
-		narratives: narratives
-	};
-};
-
-var getGenImages = exports.getGenImages = function getGenImages(images) {
-	return {
-		type: GET_GEN_IMG,
-		images: images
-	};
-};
-
-var getCurrImgs = exports.getCurrImgs = function getCurrImgs(images) {
-	return {
-		type: GET_CURR_IMGS,
-		imgs: images
-	};
-};
-
-var getAllLayers = exports.getAllLayers = function getAllLayers(layers) {
-	return {
-		type: GET_All_LAYERS,
-		layers: layers
-	};
-};
-
-var getCurrLayers = exports.getCurrLayers = function getCurrLayers(layers) {
-	return {
-		type: GET_CURR_LAYERS,
-		layers: layers
-	};
-};
-
-var addCurrLayers = exports.addCurrLayers = function addCurrLayers(layer) {
-	return {
-		type: ADD_CURR_LAYERS,
-		layer: layer
-	};
-};
-
-var resetCurrLayers = exports.resetCurrLayers = function resetCurrLayers(layer) {
-	return {
-		type: RESET_CURR_LAYERS,
-		layer: layer
-	};
-};
-
-var addHoverLayer = exports.addHoverLayer = function addHoverLayer(layer) {
-	return {
-		type: SET_HOVER_LAYER,
-		layer: layer
-	};
-};
-
-var addNewSiteGeo1 = exports.addNewSiteGeo1 = function addNewSiteGeo1(x, y, px, py) {
-	return {
-		type: SET_CENTER,
-		coord: [x, y, px, py]
-	};
-};
-
-var addNewSiteGeo2 = exports.addNewSiteGeo2 = function addNewSiteGeo2(radius, rad2) {
-	return {
-		type: SET_RADIUS,
-		rad: [radius, rad2]
-	};
-};
-//-------------------reducers && initial info
-var initSites = {
-	allSites: [], //array of objects
-
-	currSite: 0, //id of site
-	currSiteOn: false, //secondary object arrays
-	currDetail: 0, //main vs. peripheral detail for panel (id of site)
-	currNarrative: {},
-	genNarratives: [],
-	genDetails: [], //narratives & captions
-	genImages: [],
-	currImages: {}, //links for panel images
-	minorId: 0,
-	clusterId: 0,
-
-	allLayers: ['parish churches', "bascilica", "plague churches", "monastery, convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption"], //arr of strings
-	currLayers: [], //arr of strings
-	hoverLayer: ' ',
-
-	newCx: 0,
-	newX: 0,
-	newY: 0,
-	newRad: 0,
-	newCy: 0,
-	newRadius: 0
-
-};
-
-var siteReducer = exports.siteReducer = function siteReducer() {
-	var prevState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initSites;
-	var action = arguments[1];
-
-	var newState = Object.assign({}, prevState);
-
-	switch (action.type) {
-
-		case GET_ALL_SITES:
-			newState.allSites = action.sites;
-			break;
-
-		case SET_CENTER:
-			newState.newCx = action.coord[0];
-			newState.newCy = action.coord[1];
-			newState.newX = action.coord[2];
-			newState.newY = action.coord[3];
-			break;
-
-		case SET_RADIUS:
-			newState.newRadius = action.rad[0];
-			newState.newRad = action.rad[1];
-			break;
-
-		case GET_CURR_SITE:
-			newState.currSite = action.site;
-			break;
-
-		case GET_CURR_SITEZOOM:
-			newState.currSiteOn = action.bool;
-			break;
-
-		case GET_CURR_DETAIL:
-			newState.currDetail = action.detail;
-			break;
-
-		case GET_CURR_NARR:
-			newState.currNarrative = action.narrative;
-			break;
-
-		case GET_GEN_DETAIL:
-			newState.genDetails = action.details;
-			break;
-
-		case GET_GEN_NARR:
-			newState.genNarratives = action.narratives;
-			break;
-
-		case GET_GEN_IMG:
-			newState.genImages = action.images;
-			break;
-
-		case GET_CURR_IMGS:
-			newState.currImages = action.imgs;
-			break;
-
-		case SET_MINOR_ID:
-			newState.minorId = action.objId[0];
-			newState.clusterId = action.objId[1];
-			break;
-
-		case GET_All_LAYERS:
-			//newState.allLayers = action.layers;
-			break;
-
-		case GET_CURR_LAYERS:
-			newState.currLayers = action.layers;
-			break;
-
-		case ADD_CURR_LAYERS:
-			var add = action.layer.split(', ');
-			var array = newState.currLayers.concat(add);
-			newState.currLayers = array;
-			break;
-
-		case RESET_CURR_LAYERS:
-			var arr = newState.currLayers;
-			var layers = action.layer.split(', ');
-			layers.forEach(function (layer) {
-				arr.splice(arr.indexOf(layer), 1);
-			});
-			newState.currLayers = arr;
-			break;
-
-		case SET_HOVER_LAYER:
-			newState.hoverLayer = action.layer;
-			break;
-
-		default:
-			return prevState;
-	}
-
-	return newState;
-};
-
-//-------------------COMPLEX ACTION CALLS AND AXIOS INFO...
-
-var loadSites = exports.loadSites = function loadSites() {
-	return function (dispatch) {
-		//rework for axios later
-		var allSites = _axios2.default.get('/api/sites').then(function (responses) {
-			return responses.data;
-		}).then(function (sites) {
-			dispatch(getAllSites(sites));
-		}).catch(console.log);
-	};
-};
-
-var loadFilteredSites = exports.loadFilteredSites = function loadFilteredSites(layerArr) {
-	return function (dispatch) {
-		//
-
-		var allSites = _axios2.default.get('/api/sites').then(function (responses) {
-			return responses.data;
-		}).then(function (sites) {
-			//front-end filter vs. back
-
-			var selectSites = sites.filter(function (circle) {
-				return layerArr.indexOf(circle.type) > -1;
-			});
-
-			dispatch(getFilteredSites(selectSites));
-		}).catch(console.log);
-	};
-};
-
-var updateSite = exports.updateSite = function updateSite(site) {
-	return function (dispatch) {
-		dispatch(getCurrSite(site));
-	};
-};
-
-var overlayDetails = exports.overlayDetails = function overlayDetails(bool) {
-	return function (dispatch) {
-		dispatch(getCurrSiteZoom(bool));
-	};
-};
-
-var loadFiltered = exports.loadFiltered = function loadFiltered(layers) {
-	return function (dispatch) {
-		//set this up grab all on initial mount, but then work with addSelect below to grab pieces at a time...
-
-		dispatch(getCurrLayers(layers));
-	};
-};
-
-var loadLayers = exports.loadLayers = function loadLayers() {
-	return function (dispatch) {
-		//loading all
-
-		var allSites = _axios2.default.get('/api/sites').then(function (responses) {
-			return responses.data;
-		}).then(function (sites) {
-			//front-end filter vs. back
-
-			var cirLayers = [];
-			sites.forEach(function (circle) {
-				if (cirLayers.indexOf(circle.type) === -1) {
-					cirLayers.push(circle.type);
-				};
-			});
-			dispatch(getAllLayers(cirLayers));
-		}).catch(console.log);
-	};
-};
-
-var addHoverSite = exports.addHoverSite = function addHoverSite(layer) {
-	return function (dispatch) {
-		dispatch(addHoverLayer(layer));
-	};
-};
-
-var reloadDetails = exports.reloadDetails = function reloadDetails() {
-	return function (dispatch) {
-		_axios2.default.get('/api/details').then(function (responses) {
-			return responses.data;
-		}).then(function (results) {
-			dispatch(getGenDetails(results));
-		}).catch(console.log);
-	};
-};
-
-var addDetail = exports.addDetail = function addDetail(img, obj) {
-	return function (dispatch) {
-
-		_axios2.default.post('api/images-files', img).then(function (responses) {
-			return responses.data;
-		}).then(function (results) {
-
-			obj.srcThumb = results.uri;
-			console.log('image placed, link: ', obj);
-
-			_axios2.default.post('/api/details', obj).then(function (responses) {
-				return responses.data;
-			}).then(function (results) {
-				dispatch(reloadDetails()); //call and reload all
-			}).catch(console.log);
-		}).catch(console.log);
-
-		// axios.post('/api/details', obj)
-		// 		.then(responses => {
-		// 			return responses.data;
-		// 		})
-		// 		.then((results) => {
-		// 		dispatch(reloadDetails()); //call and reload all
-		// 		})
-		// 		.catch(console.log);
-	};
-};
-
-var reloadNarratives = exports.reloadNarratives = function reloadNarratives() {
-	return function (dispatch) {
-		_axios2.default.get('/api/narratives').then(function (responses) {
-			return responses.data;
-		}).then(function (narratives) {
-			dispatch(getGenNarratives(narratives));
-		}).catch(console.log);
-	};
-};
-
-var getDetailsNarratives = exports.getDetailsNarratives = function getDetailsNarratives() {
-	return function (dispatch) {
-
-		var allDetails = _axios2.default.get('/api/details').then(function (responses) {
-			return responses.data;
-		});
-
-		var allNarratives = _axios2.default.get('/api/narratives').then(function (responses) {
-			return responses.data;
-		});
-
-		var allImages = _axios2.default.get('/api/images').then(function (responses) {
-			return responses.data;
-		});
-
-		_bluebird2.default.all([allDetails, allNarratives, allImages]).then(function (results) {
-			var details = results[0],
-			    narratives = results[1],
-			    images = results[2];
-			dispatch(getGenDetails(details));
-			dispatch(getGenNarratives(narratives));
-			dispatch(getGenImages(images));
-		}).catch(console.log);
-	};
-};
-
-var addSelectLayer = exports.addSelectLayer = function addSelectLayer(layer) {
-	return function (dispatch) {
-		//add and load
-		dispatch(addCurrLayers(layer));
-	};
-};
-
-var setDetailId = exports.setDetailId = function setDetailId(objId, clusterId) {
-	return function (dispatch) {
-		dispatch(setMinorId(objId, clusterId));
-	};
-};
-
-var deleteSelectLayer = exports.deleteSelectLayer = function deleteSelectLayer(layer) {
-	return function (dispatch) {
-		//add and load
-		dispatch(resetCurrLayers(layer));
-	};
-};
-
-//HARD CODING UNTIL WE ACTUALLY HAVE ALL THE LAYERS SET
-var addAllLayers = exports.addAllLayers = function addAllLayers(layers) {
-	return function (dispatch) {
-		//load all/clear all to select
-		var cirLayers = [];
-
-		if (layers === 'add') {
-			var allSites = _axios2.default.get('/api/sites').then(function (responses) {
-				return responses.data;
-			}).then(function (sites) {
-
-				sites.forEach(function (circle) {
-					if (cirLayers.indexOf(circle.type) === -1) {
-						cirLayers.push(circle.type);
-					};
-				});
-				dispatch(getCurrLayers(cirLayers));
-			}).catch(console.log);
-		} else {
-			dispatch(getCurrLayers(cirLayers));
-		};
-	};
-};
-
-var addNewSite = exports.addNewSite = function addNewSite(siteObj) {
-	return function (dispatch) {
-		console.log('pre-post', siteObj);
-
-		_axios2.default.post('/api/sites', siteObj).then(function (responses) {
-			return responses.data;
-		}).then(function (site) {
-			dispatch(loadSites());
-			dispatch(getCurrSite(site.id));
-		}).catch(console.log);
-	};
-};
-
-var editSite = exports.editSite = function editSite(siteObj, id) {
-	return function (dispatch) {
-		console.log('pre-put', siteObj);
-
-		_axios2.default.put('/api/sites/' + id, siteObj).then(function (responses) {
-			return responses.data;
-		}).then(function (site) {
-			dispatch(loadSites());
-			dispatch(getCurrSite(id));
-		}).catch(console.log);
-	};
-};
-
-var addNewSiteCenter = exports.addNewSiteCenter = function addNewSiteCenter(cx, cy, pastX, pastY) {
-	return function (dispatch) {
-		dispatch(addNewSiteGeo1(cx, cy, pastX, pastY));
-	};
-};
-
-var addNewSiteRadius = exports.addNewSiteRadius = function addNewSiteRadius(radius, radPast) {
-	return function (dispatch) {
-		dispatch(addNewSiteGeo2(radius, radPast));
-	};
-};
-
-var addNarrative = exports.addNarrative = function addNarrative(narrObj) {
-	return function (dispatch) {
-
-		console.log('pre-post narr', narrObj);
-
-		_axios2.default.post('/api/narratives', narrObj).then(function (responses) {
-			return responses.data;
-		}).then(function (narrative) {
-			dispatch(reloadNarratives());
-		}).catch(console.log);
-	};
-};
-
-/***/ }),
-/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3394,7 +3241,7 @@ var _prodInvariant = __webpack_require__(15),
     _assign = __webpack_require__(16);
 
 var CallbackQueue = __webpack_require__(243);
-var PooledClass = __webpack_require__(53);
+var PooledClass = __webpack_require__(52);
 var ReactFeatureFlags = __webpack_require__(248);
 var ReactReconciler = __webpack_require__(69);
 var Transaction = __webpack_require__(101);
@@ -3631,7 +3478,7 @@ module.exports = ReactUpdates;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3667,6 +3514,225 @@ var ReactCurrentOwner = {
 module.exports = ReactCurrentOwner;
 
 /***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+
+// //-------------------CONSTANTS
+
+
+//responding to resizing
+var SET_PANELSIZE = exports.SET_PANELSIZE = 'SET_PANELSIZE';
+var SET_PANELRATIO = exports.SET_PANELRATIO = 'SET_PANELRATIO';
+
+var SET_TITLE = exports.SET_TITLE = 'SET_TITLE';
+var SET_SUBTITLE = exports.SET_SUBTITLE = 'SET_SUBTITLE';
+
+var SET_NARROBJ = exports.SET_NARROBJ = 'SET_NARROBJ';
+var SET_IMAGESIZES = exports.SET_IMAGESIZES = 'SET_IMAGESIZES';
+var SET_BIBLIOALL = exports.SET_BIBLIOALL = 'SET_BIBLIOALL';
+
+//-------------------ACTION CREATORS - vanilla loading of information
+var setPanelSize = exports.setPanelSize = function setPanelSize(panelSize) {
+	return {
+		type: SET_PANELSIZE,
+		panelSize: panelSize
+	};
+};
+
+var setPanelRatio = exports.setPanelRatio = function setPanelRatio(panelRatio) {
+	return {
+		type: SET_PANELRATIO,
+		panelRatio: panelRatio
+	};
+};
+
+var setTitle = exports.setTitle = function setTitle(title) {
+	return {
+		type: SET_TITLE,
+		title: title
+	};
+};
+
+var setSubtitle = exports.setSubtitle = function setSubtitle(subtitle) {
+	return {
+		type: SET_SUBTITLE,
+		subtitle: subtitle
+	};
+};
+
+var setNarrObj = exports.setNarrObj = function setNarrObj(narrObj) {
+	return {
+		type: SET_NARROBJ,
+		narrObj: narrObj
+	};
+};
+
+var setImageSizes = exports.setImageSizes = function setImageSizes(sizes) {
+	return {
+		type: SET_IMAGESIZES,
+		sizes: sizes
+	};
+};
+
+var setBiblioAll = exports.setBiblioAll = function setBiblioAll(biblio) {
+	return {
+		type: SET_BIBLIOALL,
+		biblio: biblio
+	};
+};
+
+//-------------------reducers && initial info
+
+var initPanel = {
+	panelSize: [0, 0], //width, height
+	panelRatio: 1, // width/height
+
+	title: '',
+	subtitle: '',
+
+	imageWidth: 0,
+	narrObj: {},
+	biblioAll: []
+};
+
+var panelReducer = exports.panelReducer = function panelReducer() {
+	var prevState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initPanel;
+	var action = arguments[1];
+
+	var newState = Object.assign({}, prevState);
+
+	switch (action.type) {
+
+		case SET_PANELSIZE:
+			newState.panelSize = action.panelSize;
+			break;
+
+		case SET_PANELRATIO:
+			newState.panelRatio = action.panelRatio;
+			break;
+
+		case SET_TITLE:
+			newState.title = action.title;
+			break;
+
+		case SET_SUBTITLE:
+			newState.subtitle = action.subtitle;
+			break;
+
+		case SET_IMAGESIZES:
+			newState.imageWidth = action.sizes;
+			break;
+
+		case SET_NARROBJ:
+			newState.narrObj = action.narrObj;
+			break;
+
+		case SET_BIBLIOALL:
+			newState.biblioAll = action.biblio;
+			break;
+
+		default:
+			return prevState;
+	}
+
+	return newState;
+};
+
+/* ------------       DISPATCHERS     ------------------ */
+
+// optimistic
+var setTitlesCore = exports.setTitlesCore = function setTitlesCore(titles) {
+	return function (dispatch) {
+		dispatch(setTitle(titles[0]));
+		dispatch(setSubtitle(titles[1]));
+	};
+};
+
+var setNarr = exports.setNarr = function setNarr(narr) {
+	return function (dispatch) {
+		dispatch(setNarrObj(narr));;
+	};
+};
+
+var setPanelSizing = exports.setPanelSizing = function setPanelSizing(size, ratio) {
+	return function (dispatch) {
+		dispatch(setPanelSize(size));
+		dispatch(setPanelRatio(ratio));
+		dispatch(setImageSizes(size[0] - 20));
+	};
+};
+
+// export const detailVoyage = (voyage) => {
+
+// 	  let start = voyage.Start;
+// 	  let end = voyage.End;
+// 	  var dates =[];
+// 	  for (let i=+start; i<=+end+1; i++){dates.push(i);};
+
+// 	voyage.Dates = dates;
+// 	voyage.Length = dates.length;
+
+// 	return dispatch => {
+// 		//dispatch(selectVoyage(voyage));
+// 	};
+// };
+
+
+// export const filterCrew = (crew) => { //filters crew into this voyage and other voyages
+
+// 	//insert into selectCrew...
+// 	let currentCnt=0;
+// 	let years =[];
+
+// 	crew.forEach(member=>{
+// 		if (+member.Fstart === +member.Dyear){
+// 			member.voyage = 'current';
+// 			currentCnt++;
+// 		} else {
+// 		if (years.indexOf(+member.Dyear)===-1){
+// 				years.push(+member.Dyear);
+// 			};
+// 			member.voyage = 'other';
+// 		}
+
+// 	})
+
+// 	console.log(years, crew[0].Fstart);
+// 	var diff;
+// 	if (currentCnt===0 && years.length===1){
+// 		crew.forEach(member=> { member.voyage = 'current'; });
+// 	} else if (currentCnt===0 && years.length > 1){
+// 		diff = years.map(year=> {
+// 			return Math.abs(+year - +crew[0].Fstart);
+// 		});
+// 		var year = years[diff.indexOf(Math.min(...diff))];
+
+// 		crew.forEach(member=>{ if (year === +member.Dyear){
+// 			member.voyage = 'current';
+// 			//console.log(member.Fstart, member.Dyear);
+// 			};
+// 		});
+// 	};
+
+// 	var crewC = crew.filter(member=> {return member.voyage === 'current';});
+// 	var crewr = crew.filter(member=> {return member.voyage !== 'current';});
+
+// 	return dispatch => {
+// 		// dispatch(selectCrew(crewC));
+// 		// dispatch(otherCrews(crewOther));
+// 		// dispatch(extendVoyages(years));
+// 	};
+// };
+
+/***/ }),
 /* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3685,7 +3751,7 @@ module.exports = ReactCurrentOwner;
 
 var _assign = __webpack_require__(16);
 
-var PooledClass = __webpack_require__(53);
+var PooledClass = __webpack_require__(52);
 
 var emptyFunction = __webpack_require__(25);
 var warning = __webpack_require__(12);
@@ -4250,12 +4316,12 @@ if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject       = __webpack_require__(48)
+var anObject       = __webpack_require__(47)
   , IE8_DOM_DEFINE = __webpack_require__(183)
   , toPrimitive    = __webpack_require__(122)
   , dP             = Object.defineProperty;
 
-exports.f = __webpack_require__(49) ? Object.defineProperty : function defineProperty(O, P, Attributes){
+exports.f = __webpack_require__(48) ? Object.defineProperty : function defineProperty(O, P, Attributes){
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -4899,7 +4965,7 @@ var initOptions = {
 
 	playTour: false,
 	currTour: 1,
-	allTours: []
+	allTours: {}
 
 };
 
@@ -5045,7 +5111,19 @@ var getAllToursThemes = exports.getAllToursThemes = function getAllToursThemes()
 		var allTours = _axios2.default.get('/api/tours').then(function (responses) {
 			return responses.data;
 		}).then(function (results) {
-			var tours = results;
+			var tours = {}; //arr to object
+
+			results.forEach(function (site) {
+
+				if (tours[site.tourId]) {
+					var arr = tours[site.tourId];
+					tours[site.tourId] = arr.concat([site]);
+				} else {
+					tours[site.tourId] = [site];
+				}
+			});
+			console.log('inital tours', tours, results);
+
 			dispatch(getAllTours(tours));
 		}).catch(console.log);
 	};
@@ -5055,112 +5133,6 @@ var getAllToursThemes = exports.getAllToursThemes = function getAllToursThemes()
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Imagetrey = function (_Component) {
-	_inherits(Imagetrey, _Component);
-
-	function Imagetrey(props) {
-		_classCallCheck(this, Imagetrey);
-
-		var _this = _possibleConstructorReturn(this, (Imagetrey.__proto__ || Object.getPrototypeOf(Imagetrey)).call(this, props));
-
-		_this.state = {
-			active: 0,
-			widthOriginal: props.width,
-			width: props.width,
-			height: props.height
-		};
-		return _this;
-	}
-
-	_createClass(Imagetrey, [{
-		key: "getSize",
-		value: function getSize(e) {
-			e.preventDefault();
-			var relH = e.target.attributes.src.ownerElement.clientHeight;
-			if (relH > this.state.height) {
-				var ratioDiff = this.state.height / relH;
-				var newWidth = ratioDiff * this.state.widthOriginal;
-				this.setState({ width: newWidth });
-			} else {
-				this.setState({ width: this.state.widthOriginal });
-			}
-		}
-	}, {
-		key: "render",
-		value: function render() {
-			var _this2 = this;
-
-			return _react2.default.createElement(
-				"div",
-				null,
-				_react2.default.createElement(
-					"div",
-					{ className: "text-center" },
-					_react2.default.createElement("img", { src: this.props.image[this.state.active].src, style: { width: this.state.width + "px" }, onLoad: function onLoad(e) {
-							return _this2.getSize(e);
-						}, onChange: function onChange(e) {
-							return _this2.getSize(e);
-						} })
-				),
-				_react2.default.createElement(
-					"div",
-					{ className: "row m10" },
-					_react2.default.createElement(
-						"div",
-						{ className: "col-xs-4 col-xs-offset-4 text-center" },
-						this.props.image.length > 1 && this.props.image.map(function (image, i) {
-							if (i === _this2.state.active) {
-								return _react2.default.createElement("span", { id: "slider " + i, className: "fa fa-circle pad10", value: "i", onClick: "" });
-							} else {
-								return _react2.default.createElement("span", { id: "slider " + i, className: "fa fa-circle-o pad10", value: "i", onClick: "" });
-							}
-						})
-					)
-				),
-				_react2.default.createElement(
-					"h5",
-					null,
-					_react2.default.createElement(
-						"span",
-						{ className: "Trenda-Bold" },
-						"Image: "
-					),
-					this.props.image[this.state.active].caption
-				)
-			);
-		}
-	}]);
-
-	return Imagetrey;
-}(_react.Component);
-
-exports.default = Imagetrey;
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var isObject = __webpack_require__(73);
 module.exports = function(it){
   if(!isObject(it))throw TypeError(it + ' is not an object!');
@@ -5168,7 +5140,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
@@ -5177,7 +5149,7 @@ module.exports = !__webpack_require__(60)(function(){
 });
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports) {
 
 var hasOwnProperty = {}.hasOwnProperty;
@@ -5186,7 +5158,7 @@ module.exports = function(it, key){
 };
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
@@ -5197,7 +5169,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5213,7 +5185,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5331,7 +5303,7 @@ module.exports = PooledClass;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5354,7 +5326,7 @@ var ReactComponent = __webpack_require__(162);
 var ReactPureComponent = __webpack_require__(665);
 var ReactClass = __webpack_require__(661);
 var ReactDOMFactories = __webpack_require__(662);
-var ReactElement = __webpack_require__(55);
+var ReactElement = __webpack_require__(54);
 var ReactPropTypes = __webpack_require__(663);
 var ReactVersion = __webpack_require__(668);
 
@@ -5441,7 +5413,7 @@ module.exports = React;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 55 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5459,7 +5431,7 @@ module.exports = React;
 
 var _assign = __webpack_require__(16);
 
-var ReactCurrentOwner = __webpack_require__(37);
+var ReactCurrentOwner = __webpack_require__(36);
 
 var warning = __webpack_require__(12);
 var canDefineProperty = __webpack_require__(104);
@@ -5788,7 +5760,7 @@ module.exports = ReactElement;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 56 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5832,7 +5804,7 @@ function reactProdInvariant(code) {
 module.exports = reactProdInvariant;
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5849,7 +5821,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _shallowEqual2.default;
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports) {
 
 var g;
@@ -5874,6 +5846,112 @@ try {
 
 module.exports = g;
 
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Imagetrey = function (_Component) {
+	_inherits(Imagetrey, _Component);
+
+	function Imagetrey(props) {
+		_classCallCheck(this, Imagetrey);
+
+		var _this = _possibleConstructorReturn(this, (Imagetrey.__proto__ || Object.getPrototypeOf(Imagetrey)).call(this, props));
+
+		_this.state = {
+			active: 0,
+			widthOriginal: props.width,
+			width: props.width,
+			height: props.height
+		};
+		return _this;
+	}
+
+	_createClass(Imagetrey, [{
+		key: "getSize",
+		value: function getSize(e) {
+			e.preventDefault();
+			var relH = e.target.attributes.src.ownerElement.clientHeight;
+			if (relH > this.state.height) {
+				var ratioDiff = this.state.height / relH;
+				var newWidth = ratioDiff * this.state.widthOriginal;
+				this.setState({ width: newWidth });
+			} else {
+				this.setState({ width: this.state.widthOriginal });
+			}
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			var _this2 = this;
+
+			return _react2.default.createElement(
+				"div",
+				null,
+				_react2.default.createElement(
+					"div",
+					{ className: "text-center" },
+					_react2.default.createElement("img", { src: this.props.image[this.state.active].src, style: { width: this.state.width + "px" }, onLoad: function onLoad(e) {
+							return _this2.getSize(e);
+						}, onChange: function onChange(e) {
+							return _this2.getSize(e);
+						} })
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "row m10" },
+					_react2.default.createElement(
+						"div",
+						{ className: "col-xs-4 col-xs-offset-4 text-center" },
+						this.props.image.length > 1 && this.props.image.map(function (image, i) {
+							if (i === _this2.state.active) {
+								return _react2.default.createElement("span", { id: "slider " + i, className: "fa fa-circle pad10", value: "i", onClick: "" });
+							} else {
+								return _react2.default.createElement("span", { id: "slider " + i, className: "fa fa-circle-o pad10", value: "i", onClick: "" });
+							}
+						})
+					)
+				),
+				_react2.default.createElement(
+					"h5",
+					null,
+					_react2.default.createElement(
+						"span",
+						{ className: "Trenda-Bold" },
+						"Image: "
+					),
+					this.props.image[this.state.active].caption
+				)
+			);
+		}
+	}]);
+
+	return Imagetrey;
+}(_react.Component);
+
+exports.default = Imagetrey;
 
 /***/ }),
 /* 59 */
@@ -5920,7 +5998,7 @@ module.exports = function(exec){
 
 var dP         = __webpack_require__(42)
   , createDesc = __webpack_require__(74);
-module.exports = __webpack_require__(49) ? function(object, key, value){
+module.exports = __webpack_require__(48) ? function(object, key, value){
   return dP.f(object, key, createDesc(1, value));
 } : function(object, key, value){
   object[key] = value;
@@ -8365,7 +8443,7 @@ var _reactDom = __webpack_require__(14);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _shallowEqual = __webpack_require__(57);
+var _shallowEqual = __webpack_require__(56);
 
 var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
@@ -11508,7 +11586,7 @@ module.exports = true;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject    = __webpack_require__(48)
+var anObject    = __webpack_require__(47)
   , dPs         = __webpack_require__(351)
   , enumBugKeys = __webpack_require__(114)
   , IE_PROTO    = __webpack_require__(119)('IE_PROTO')
@@ -11561,8 +11639,8 @@ exports.f = Object.getOwnPropertySymbols;
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(42).f
-  , has = __webpack_require__(50)
-  , TAG = __webpack_require__(32)('toStringTag');
+  , has = __webpack_require__(49)
+  , TAG = __webpack_require__(33)('toStringTag');
 
 module.exports = function(it, tag, stat){
   if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
@@ -11635,7 +11713,7 @@ module.exports = function(name){
 /* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(32);
+exports.f = __webpack_require__(33);
 
 /***/ }),
 /* 125 */
@@ -11645,7 +11723,7 @@ __webpack_require__(359);
 var global        = __webpack_require__(41)
   , hide          = __webpack_require__(61)
   , Iterators     = __webpack_require__(62)
-  , TO_STRING_TAG = __webpack_require__(32)('toStringTag');
+  , TO_STRING_TAG = __webpack_require__(33)('toStringTag');
 
 for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
   var NAME       = collections[i]
@@ -12152,7 +12230,7 @@ var _reactDom = __webpack_require__(14);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _shallowEqual = __webpack_require__(57);
+var _shallowEqual = __webpack_require__(56);
 
 var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
@@ -12162,7 +12240,7 @@ var _transitions = __webpack_require__(13);
 
 var _transitions2 = _interopRequireDefault(_transitions);
 
-var _EnhancedButton = __webpack_require__(33);
+var _EnhancedButton = __webpack_require__(34);
 
 var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
@@ -12897,7 +12975,7 @@ var _reactDom = __webpack_require__(14);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _shallowEqual = __webpack_require__(57);
+var _shallowEqual = __webpack_require__(56);
 
 var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
@@ -14248,11 +14326,11 @@ var _reactDom = __webpack_require__(14);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _shallowEqual = __webpack_require__(57);
+var _shallowEqual = __webpack_require__(56);
 
 var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-var _autoPrefix = __webpack_require__(52);
+var _autoPrefix = __webpack_require__(51);
 
 var _autoPrefix2 = _interopRequireDefault(_autoPrefix);
 
@@ -14922,7 +15000,7 @@ var _prodInvariant = __webpack_require__(15);
 var ReactPropTypesSecret = __webpack_require__(253);
 var propTypesFactory = __webpack_require__(143);
 
-var React = __webpack_require__(54);
+var React = __webpack_require__(53);
 var PropTypes = propTypesFactory(React.isValidElement);
 
 var invariant = __webpack_require__(11);
@@ -15197,10 +15275,10 @@ module.exports = ReactErrorUtils;
 
 var _prodInvariant = __webpack_require__(15);
 
-var ReactCurrentOwner = __webpack_require__(37);
+var ReactCurrentOwner = __webpack_require__(36);
 var ReactInstanceMap = __webpack_require__(85);
 var ReactInstrumentation = __webpack_require__(31);
-var ReactUpdates = __webpack_require__(36);
+var ReactUpdates = __webpack_require__(35);
 
 var invariant = __webpack_require__(11);
 var warning = __webpack_require__(12);
@@ -16363,7 +16441,7 @@ var matchPath = function matchPath(pathname) {
 
 
 
-var _prodInvariant = __webpack_require__(56);
+var _prodInvariant = __webpack_require__(55);
 
 var ReactNoopUpdateQueue = __webpack_require__(163);
 
@@ -16974,9 +17052,9 @@ var _reactRedux = __webpack_require__(21);
 
 var _rawTiles = __webpack_require__(71);
 
-var _siteActions = __webpack_require__(35);
+var _siteActions = __webpack_require__(32);
 
-var _panelActions = __webpack_require__(34);
+var _panelActions = __webpack_require__(37);
 
 var _optionActions = __webpack_require__(46);
 
@@ -17153,9 +17231,7 @@ var FooterSlides = function (_Component) {
         value: function render() {
             var _this3 = this;
 
-            var tour = this.props.options.allTours.filter(function (tour) {
-                return +tour.tourId === +_this3.props.options.currTour;
-            });
+            var tour = this.props.options.allTours[this.props.options.currTour];
 
             return _react2.default.createElement(
                 'div',
@@ -17163,7 +17239,7 @@ var FooterSlides = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'row flex center' },
-                    tour.map(function (site) {
+                    tour && tour.map(function (site) {
                         return _react2.default.createElement(
                             'div',
                             { className: site.siteId === _this3.props.sites.currSite ? 'bIconSelected text-center' : 'bIcon  text-center',
@@ -17454,7 +17530,7 @@ var _IconButton2 = _interopRequireDefault(_IconButton);
 
 var _optionActions = __webpack_require__(46);
 
-var _siteActions = __webpack_require__(35);
+var _siteActions = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17702,9 +17778,9 @@ var _mapActions = __webpack_require__(107);
 
 var _optionActions = __webpack_require__(46);
 
-var _siteActions = __webpack_require__(35);
+var _siteActions = __webpack_require__(32);
 
-var _panelActions = __webpack_require__(34);
+var _panelActions = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18053,19 +18129,24 @@ var MapSVG = function (_Component) {
             e.preventDefault();
             if (source === 'core') {
                 var subsiteId = this.props.sites.currSite;
-                var obj = this.props.sites.genNarratives.filter(function (narr) {
+                var _obj = this.props.sites.genNarratives.filter(function (narr) {
                     return +narr.coreId === +subsiteId;
                 });
-                var clustId = obj[0].clusterId;
-                this.props.setDetailId(+subsiteId, clustId);
+                var clustId = _obj[0].clusterId;
+                this.props.setDetailId(0, clustId);
             } else {
                 var _subsiteId = e.target.attributes.id.value;
-                var _obj = this.props.sites.genNarratives.filter(function (narr) {
-                    return +narr.minorId === +_subsiteId;
-                });
-                var _clustId = _obj[0].clusterId;
+                var _clustId = this.props.sites.genDetails.filter(function (detail) {
+                    return +detail.id === +_subsiteId;
+                })[0].clusterId;
+                var obj = this.props.sites.genNarratives.filter(function (narr) {
+                    return +narr.minorId === +_subsiteId && +narr.clusterId === +_clustId;
+                })[0];
+                if (obj === undefined) {
+                    obj = {};
+                };
                 this.props.setDetailId(+_subsiteId, _clustId);
-                this.props.updateNarrative(_obj[0]);
+                this.props.updateNarrative(obj);
             }
         }
     }, {
@@ -24118,7 +24199,7 @@ module.exports = ret;
 
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(58), __webpack_require__(695).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(57), __webpack_require__(695).setImmediate))
 
 /***/ }),
 /* 181 */
@@ -24126,7 +24207,7 @@ module.exports = ret;
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = __webpack_require__(111)
-  , TAG = __webpack_require__(32)('toStringTag')
+  , TAG = __webpack_require__(33)('toStringTag')
   // ES3 wrong here
   , ARG = cof(function(){ return arguments; }()) == 'Arguments';
 
@@ -24164,7 +24245,7 @@ module.exports = function(it){
 /* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(49) && !__webpack_require__(60)(function(){
+module.exports = !__webpack_require__(48) && !__webpack_require__(60)(function(){
   return Object.defineProperty(__webpack_require__(182)('div'), 'a', {get: function(){ return 7; }}).a != 7;
 });
 
@@ -24188,12 +24269,12 @@ var LIBRARY        = __webpack_require__(115)
   , $export        = __webpack_require__(40)
   , redefine       = __webpack_require__(191)
   , hide           = __webpack_require__(61)
-  , has            = __webpack_require__(50)
+  , has            = __webpack_require__(49)
   , Iterators      = __webpack_require__(62)
   , $iterCreate    = __webpack_require__(345)
   , setToStringTag = __webpack_require__(118)
   , getPrototypeOf = __webpack_require__(188)
-  , ITERATOR       = __webpack_require__(32)('iterator')
+  , ITERATOR       = __webpack_require__(33)('iterator')
   , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
   , FF_ITERATOR    = '@@iterator'
   , KEYS           = 'keys'
@@ -24260,13 +24341,13 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED
 
 var pIE            = __webpack_require__(88)
   , createDesc     = __webpack_require__(74)
-  , toIObject      = __webpack_require__(51)
+  , toIObject      = __webpack_require__(50)
   , toPrimitive    = __webpack_require__(122)
-  , has            = __webpack_require__(50)
+  , has            = __webpack_require__(49)
   , IE8_DOM_DEFINE = __webpack_require__(183)
   , gOPD           = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(49) ? gOPD : function getOwnPropertyDescriptor(O, P){
+exports.f = __webpack_require__(48) ? gOPD : function getOwnPropertyDescriptor(O, P){
   O = toIObject(O);
   P = toPrimitive(P, true);
   if(IE8_DOM_DEFINE)try {
@@ -24292,7 +24373,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O){
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has         = __webpack_require__(50)
+var has         = __webpack_require__(49)
   , toObject    = __webpack_require__(75)
   , IE_PROTO    = __webpack_require__(119)('IE_PROTO')
   , ObjectProto = Object.prototype;
@@ -24309,8 +24390,8 @@ module.exports = Object.getPrototypeOf || function(O){
 /* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has          = __webpack_require__(50)
-  , toIObject    = __webpack_require__(51)
+var has          = __webpack_require__(49)
+  , toIObject    = __webpack_require__(50)
   , arrayIndexOf = __webpack_require__(338)(false)
   , IE_PROTO     = __webpack_require__(119)('IE_PROTO');
 
@@ -24364,7 +24445,7 @@ module.exports = function(it){
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof   = __webpack_require__(181)
-  , ITERATOR  = __webpack_require__(32)('iterator')
+  , ITERATOR  = __webpack_require__(33)('iterator')
   , Iterators = __webpack_require__(62);
 module.exports = __webpack_require__(24).getIteratorMethod = function(it){
   if(it != undefined)return it[ITERATOR]
@@ -24755,7 +24836,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _EnhancedButton = __webpack_require__(33);
+var _EnhancedButton = __webpack_require__(34);
 
 var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
@@ -28518,7 +28599,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _EnhancedButton = __webpack_require__(33);
+var _EnhancedButton = __webpack_require__(34);
 
 var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
@@ -31518,7 +31599,7 @@ var _prodInvariant = __webpack_require__(15);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var PooledClass = __webpack_require__(53);
+var PooledClass = __webpack_require__(52);
 
 var invariant = __webpack_require__(11);
 
@@ -31908,7 +31989,7 @@ var _assign = __webpack_require__(16);
 
 var LinkedValueUtils = __webpack_require__(147);
 var ReactDOMComponentTree = __webpack_require__(19);
-var ReactUpdates = __webpack_require__(36);
+var ReactUpdates = __webpack_require__(35);
 
 var warning = __webpack_require__(12);
 
@@ -32379,9 +32460,9 @@ var _prodInvariant = __webpack_require__(15);
 
 var DOMLazyTree = __webpack_require__(66);
 var DOMProperty = __webpack_require__(45);
-var React = __webpack_require__(54);
+var React = __webpack_require__(53);
 var ReactBrowserEventEmitter = __webpack_require__(99);
-var ReactCurrentOwner = __webpack_require__(37);
+var ReactCurrentOwner = __webpack_require__(36);
 var ReactDOMComponentTree = __webpack_require__(19);
 var ReactDOMContainerInfo = __webpack_require__(568);
 var ReactDOMFeatureFlags = __webpack_require__(570);
@@ -32391,7 +32472,7 @@ var ReactInstrumentation = __webpack_require__(31);
 var ReactMarkupChecksum = __webpack_require__(590);
 var ReactReconciler = __webpack_require__(69);
 var ReactUpdateQueue = __webpack_require__(150);
-var ReactUpdates = __webpack_require__(36);
+var ReactUpdates = __webpack_require__(35);
 
 var emptyObject = __webpack_require__(76);
 var instantiateReactComponent = __webpack_require__(258);
@@ -32922,7 +33003,7 @@ module.exports = ReactMount;
 
 var _prodInvariant = __webpack_require__(15);
 
-var React = __webpack_require__(54);
+var React = __webpack_require__(53);
 
 var invariant = __webpack_require__(11);
 
@@ -33410,7 +33491,7 @@ module.exports = setTextContent;
 
 var _prodInvariant = __webpack_require__(15);
 
-var ReactCurrentOwner = __webpack_require__(37);
+var ReactCurrentOwner = __webpack_require__(36);
 var REACT_ELEMENT_TYPE = __webpack_require__(584);
 
 var getIteratorFn = __webpack_require__(618);
@@ -34523,9 +34604,9 @@ module.exports = REACT_ELEMENT_TYPE;
 
 
 
-var ReactCurrentOwner = __webpack_require__(37);
+var ReactCurrentOwner = __webpack_require__(36);
 var ReactComponentTreeHook = __webpack_require__(23);
-var ReactElement = __webpack_require__(55);
+var ReactElement = __webpack_require__(54);
 
 var checkReactTypeSpec = __webpack_require__(669);
 
@@ -34852,9 +34933,9 @@ module.exports = getIteratorFn;
 
 
 
-var _prodInvariant = __webpack_require__(56);
+var _prodInvariant = __webpack_require__(55);
 
-var ReactCurrentOwner = __webpack_require__(37);
+var ReactCurrentOwner = __webpack_require__(36);
 var REACT_ELEMENT_TYPE = __webpack_require__(273);
 
 var getIteratorFn = __webpack_require__(276);
@@ -36497,9 +36578,9 @@ var _mapActions = __webpack_require__(107);
 
 var _optionActions = __webpack_require__(46);
 
-var _siteActions = __webpack_require__(35);
+var _siteActions = __webpack_require__(32);
 
-var _panelActions = __webpack_require__(34);
+var _panelActions = __webpack_require__(37);
 
 var _userActions = __webpack_require__(169);
 
@@ -36538,7 +36619,7 @@ var _cirTest = __webpack_require__(87);
 
 var _rawDetails = __webpack_require__(174);
 
-var _siteActions = __webpack_require__(35);
+var _siteActions = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36626,13 +36707,13 @@ var _reactDom = __webpack_require__(14);
 
 var _reactRedux = __webpack_require__(21);
 
-var _ImageSlider = __webpack_require__(47);
+var _ImageSlider = __webpack_require__(58);
 
 var _ImageSlider2 = _interopRequireDefault(_ImageSlider);
 
-var _panelActions = __webpack_require__(34);
+var _panelActions = __webpack_require__(37);
 
-var _siteActions = __webpack_require__(35);
+var _siteActions = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36678,6 +36759,11 @@ var FormDe = function (_Component) {
   }
 
   _createClass(FormDe, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.resetSaved();
+    }
+  }, {
     key: 'reset',
     value: function reset(e) {
       e.preventDefault();
@@ -36744,53 +36830,14 @@ var FormDe = function (_Component) {
       };
 
       var imgObj = {
-        // url: '/api/v1/image',
-        // type: "POST",
-        // data: {
         data_uri: this.state.srcThumb,
         filename: this.state.filename,
         filetype: this.state.filetype
-        // },
-        // dataType: 'json'
       };
-
-      console.log('saving', detailObj, siteObj, imgObj);
-      // promise.done(function(data){
-      //   _this.setState({
-      //     processing: false,
-      //     uploaded_uri: data.uri
-      //   });
-      // });
-
 
       this.props.addDetail(imgObj, detailObj);
       this.props.editSite(siteObj, this.state.coreId);
     }
-
-    /*handleSubmit(e) {
-      e.preventDefault();
-      const _this = this;
-       this.setState({
-        processing: true
-      });
-       const promise = $.ajax({
-        url: '/api/v1/image',
-        type: "POST",
-        data: {
-          data_uri: this.state.data_uri,
-          filename: this.state.filename,
-          filetype: this.state.filetype
-        },
-        dataType: 'json'
-      });
-       promise.done(function(data){
-        _this.setState({
-          processing: false,
-          uploaded_uri: data.uri
-        });
-      });
-    }*/
-
   }, {
     key: 'uploadImg',
     value: function uploadImg(e) {
@@ -36801,9 +36848,11 @@ var FormDe = function (_Component) {
 
       var reader = new FileReader();
       var file = e.target.files[0];
+
       reader.onload = function (e) {
         var the_url = e.target.result; //image as data
-        _this2.setState({ data_uri: the_url,
+        _this2.setState({
+          data_uri: the_url,
           srcThumb: the_url,
           filename: file.name,
           filetype: file.type
@@ -37024,6 +37073,11 @@ var FormDe = function (_Component) {
               'Reset'
             )
           )
+        ),
+        this.props.sites.saved && _react2.default.createElement(
+          'h4',
+          { className: 'BornholmSandvig' },
+          'Detail Saved!'
         )
       );
     }
@@ -37053,6 +37107,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     },
     addDetail: function addDetail(imgObj, detailObj) {
       dispatch((0, _siteActions.addDetail)(imgObj, detailObj));
+    },
+    resetSaved: function resetSaved() {
+      dispatch((0, _siteActions.resetSaved)());
     }
 
   };
@@ -37083,11 +37140,7 @@ var _reactDom = __webpack_require__(14);
 
 var _reactRedux = __webpack_require__(21);
 
-var _ImageSlider = __webpack_require__(47);
-
-var _ImageSlider2 = _interopRequireDefault(_ImageSlider);
-
-var _panelActions = __webpack_require__(34);
+var _siteActions = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37098,9 +37151,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-//import { imageSeries } from '../pre-db/cirTest.js';
-
 
 var FormImg = function (_Component) {
   _inherits(FormImg, _Component);
@@ -37117,7 +37167,11 @@ var FormImg = function (_Component) {
       clusterId: 0,
       imageSeries: 0,
       narrativeId: 0,
+      narrative: {},
       src: '',
+      data_uri: '',
+      filename: '',
+      filetype: '',
       caption: '',
       catalogSource: '',
       catalogLink: ''
@@ -37131,6 +37185,36 @@ var FormImg = function (_Component) {
   }
 
   _createClass(FormImg, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.resetSaved();
+    }
+  }, {
+    key: 'save',
+    value: function save(e) {
+      e.preventDefault();
+      var imageObj = {
+        src: '', //fills in later in request, temp view
+        caption: this.state.caption,
+        catalogSource: this.state.catalogSource,
+        catalogLink: this.state.catalogLink,
+        imageSeries: this.state.imageSeries
+      };
+
+      var narrId = this.state.narrativeId;
+      var narrObj = this.state.narrative;
+      narrObj.imageSeries = this.state.imageSeries;
+
+      var imgObj = { //actual photo
+        data_uri: this.state.data_uri,
+        filename: this.state.filename,
+        filetype: this.state.filetype
+      };
+
+      this.props.addImage(imgObj, imageObj);
+      this.props.editNarrative(narrObj, narrId);
+    }
+  }, {
     key: 'submission',
     value: function submission(e) {
       e.preventDefault();
@@ -37149,7 +37233,11 @@ var FormImg = function (_Component) {
         clusterId: 0,
         imageSeries: 0,
         narrativeId: 0,
+        narrative: {},
         src: '',
+        data_uri: '',
+        filename: '',
+        filetype: '',
         caption: '',
         catalogSource: '',
         catalogLink: ''
@@ -37158,51 +37246,37 @@ var FormImg = function (_Component) {
       this.setState(obj);
     }
   }, {
-    key: 'save',
-    value: function save(e) {}
-  }, {
     key: 'uploadImg',
     value: function uploadImg(e) {
       var _this2 = this;
 
       e.preventDefault();
-      var fileList = e.target.files;
 
-      //check for max current imageSeries, set as plus 1
+      //image series number...
       var images = this.props.sites.genImages.map(function (image) {
         return +image.imageSeries;
       });
       var seriesId = Math.max.apply(Math, _toConsumableArray(images));
       seriesId++;
 
-      var narrative;
-      if (this.props.sites.currSite !== 0) {
-        narrative = this.props.sites.genNarratives.filter(function (narr) {
-          return +narr.coreId === _this2.props.sites.currSite.siteId && (narr.minorId === 0 || narr.minorId === null);
-        })[0];
-        if (this.props.sites.minorId !== 0 && this.props.sites.minorId !== null) {
-          narrative = this.props.sites.genNarratives.filter(function (narr) {
-            return +narr.minorId === _this2.props.sites.minorId;
-          })[0];
-        };
+      if (this.state.narrative.imageSeries > 0) {
+        seriesId = this.state.narrative.imageSeries;
       }
-
-      if (narrative) {
-        this.setState({ narrativeId: narrative.id });
-
-        if (narrative.imageSeries > 0) {
-          seriesId = narrative.imageSeries;
-        }
-      }
-
       this.setState({ imageSeries: seriesId });
 
       var reader = new FileReader();
+      var file = e.target.files[0];
+
       reader.onload = function (e) {
         var the_url = e.target.result; //image as data
-        _this2.setState({ src: the_url });
+        _this2.setState({
+          data_uri: the_url,
+          src: the_url, //preview only
+          filename: file.name,
+          filetype: file.type
+        });
       };
-      reader.readAsDataURL(e.target.files[0]); //only first file, rework
+      reader.readAsDataURL(file); //only first file, rework
     }
   }, {
     key: 'update',
@@ -37212,9 +37286,23 @@ var FormImg = function (_Component) {
       var type = e.target.attributes.id.value;
       var obj = {};obj[type] = input;
 
-      obj['coreId'] = +this.props.sites.currSite;
-      obj['minorId'] = +this.props.sites.minorId;
-      obj['clusterId'] = +this.props.sites.clusterId;
+      this.setState(obj);
+    }
+  }, {
+    key: 'updateOptions',
+    value: function updateOptions(e) {
+      e.preventDefault();
+      var id = document.getElementById('gadget').value;
+      var narrative = this.props.sites.genNarratives.filter(function (narr) {
+        return +narr.id === +id;
+      })[0];
+      var obj = {
+        narrativeId: id,
+        narrative: narrative,
+        coreId: narrative.coreId,
+        minorId: narrative.minorId,
+        clusterId: narrative.clusterId
+      };
 
       this.setState(obj);
     }
@@ -37223,83 +37311,60 @@ var FormImg = function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      //console.log(this.props);
-
-      var siteId = +this.props.sites.currSite;
-      var element, cluster, detail, narrative;
-      var show = false,
-          details = false;
-      if (siteId !== 0) {
-        element = this.props.sites.allSites.filter(function (sites) {
-          return +sites.id === siteId;
-        })[0];
-        narrative = this.props.sites.genNarratives.filter(function (narr) {
-          return +narr.coreId === siteId && (narr.minorId === 0 || narr.minorId === null);
-        })[0];
-        if (this.props.sites.minorId !== 0 && this.props.sites.minorId !== null) {
-          narrative = this.props.sites.genNarratives.filter(function (narr) {
-            return +narr.minorId === _this3.props.sites.minorId;
-          })[0];
-        };
-        show = true;
-      }
-
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'p',
           null,
-          ' click on map to select site or site detail '
+          ' select from list of existing site and detail narratives '
+        ),
+        _react2.default.createElement(
+          'form',
+          null,
+          _react2.default.createElement(
+            'label',
+            { className: 'underline', 'for': 'type' },
+            'Select Existing Narrative: '
+          ),
+          _react2.default.createElement(
+            'select',
+            { onChange: function onChange(e) {
+                return _this3.updateOptions(e);
+              }, id: 'gadget', style: { width: '80%' } },
+            this.props.sites.genNarratives && this.props.sites.genNarratives.map(function (layer, i) {
+              return _react2.default.createElement(
+                'option',
+                { value: layer.id, key: layer + i },
+                layer.id,
+                ' ',
+                layer.title,
+                ', for coreId: ',
+                layer.coreId,
+                ', clusterId: ',
+                layer.clusterId,
+                ', detailId: ',
+                layer.minorId,
+                '.'
+              );
+            })
+          ),
+          _react2.default.createElement('br', null)
         ),
         _react2.default.createElement(
           'h4',
           { className: 'BornholmSandvig' },
-          'Background Data'
+          'Background Data on Selected Narrative'
         ),
         _react2.default.createElement(
           'div',
           { className: 'editOps' },
           _react2.default.createElement(
-            'h4',
-            null,
-            _react2.default.createElement(
-              'span',
-              { className: 'underline' },
-              'Site Type:'
-            ),
-            ' ',
-            this.props.panel.title
-          ),
-          _react2.default.createElement(
-            'h4',
-            null,
-            _react2.default.createElement(
-              'span',
-              { className: 'underline' },
-              'Site Name:'
-            ),
-            ' ',
-            this.props.panel.subtitle
-          ),
-          show && _react2.default.createElement(
             'div',
             null,
             _react2.default.createElement(
               'ul',
               null,
-              _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                  'span',
-                  { className: 'underline' },
-                  'Layer Type:'
-                ),
-                ' ',
-                element.type,
-                ' '
-              ),
               _react2.default.createElement(
                 'li',
                 null,
@@ -37309,21 +37374,8 @@ var FormImg = function (_Component) {
                   'Site Id:'
                 ),
                 ' ',
-                element.id
-              )
-            )
-          ),
-          show && element.clusterId && _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              'p',
-              null,
-              'Subsite Details'
-            ),
-            _react2.default.createElement(
-              'ul',
-              null,
+                this.state.coreId
+              ),
               _react2.default.createElement(
                 'li',
                 null,
@@ -37333,7 +37385,7 @@ var FormImg = function (_Component) {
                   'Cluster Id:'
                 ),
                 ' ',
-                element.clusterId
+                this.state.clusterId
               ),
               _react2.default.createElement(
                 'li',
@@ -37344,20 +37396,20 @@ var FormImg = function (_Component) {
                   'Detail Id:'
                 ),
                 ' ',
-                this.props.sites.minorId
+                this.state.minorId
+              ),
+              _react2.default.createElement(
+                'p',
+                null,
+                _react2.default.createElement(
+                  'span',
+                  { className: 'underline' },
+                  'Narrative Title: '
+                ),
+                _react2.default.createElement('br', null),
+                this.state.narrative.title
               )
             )
-          ),
-          narrative !== undefined && _react2.default.createElement(
-            'p',
-            null,
-            _react2.default.createElement(
-              'span',
-              { className: 'underline' },
-              'Current Narrative: '
-            ),
-            _react2.default.createElement('br', null),
-            narrative.text
           )
         ),
         _react2.default.createElement('br', null),
@@ -37496,6 +37548,11 @@ var FormImg = function (_Component) {
               'Reset'
             )
           )
+        ),
+        this.props.sites.saved && _react2.default.createElement(
+          'h4',
+          { className: 'BornholmSandvig' },
+          'Image Added to Narrative!'
         )
       );
     }
@@ -37513,18 +37570,16 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   };
 };
 
-//setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
-
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
   return {
-    updatePanelSize: function updatePanelSize(size, ratio) {
-      dispatch((0, _panelActions.setPanelSizing)(size, ratio));
+    resetSaved: function resetSaved() {
+      dispatch((0, _siteActions.resetSaved)());
     },
-    addImage: function addImage(imgObj) {
-      //dispatch(addImage(imgObj));
+    addImage: function addImage(imgObj, imageObj) {
+      dispatch((0, _siteActions.addImage)(imgObj, imageObj));
     },
-    editNarrative: function editNarrative(editObj, id, fieldsArr) {
-      //dispatch(editNarrative(editObj, id, fieldsArr));
+    editNarrative: function editNarrative(editObj, id) {
+      dispatch((0, _siteActions.editNarrative)(editObj, id));
     }
   };
 };
@@ -37640,7 +37695,6 @@ var Login = function (_React$Component) {
     key: 'onLoginSubmit',
     value: function onLoginSubmit(event) {
       event.preventDefault();
-      console.log(event.target.name.value, event.target.password.value);
       var credentials = {
         name: event.target.name.value,
         password: event.target.password.value
@@ -37661,7 +37715,6 @@ var mapState = function mapState() {
 var mapDispatch = function mapDispatch(dispatch) {
   return {
     login: function login(credentials) {
-      console.log('on dispatch', credentials);
       dispatch((0, _userActions.login)(credentials));
     }
   };
@@ -37690,13 +37743,13 @@ var _reactDom = __webpack_require__(14);
 
 var _reactRedux = __webpack_require__(21);
 
-var _ImageSlider = __webpack_require__(47);
+var _ImageSlider = __webpack_require__(58);
 
 var _ImageSlider2 = _interopRequireDefault(_ImageSlider);
 
-var _panelActions = __webpack_require__(34);
+var _panelActions = __webpack_require__(37);
 
-var _siteActions = __webpack_require__(35);
+var _siteActions = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37737,6 +37790,11 @@ var FormNarr = function (_Component) {
   }
 
   _createClass(FormNarr, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.resetSaved();
+    }
+  }, {
     key: 'reset',
     value: function reset(e) {
       e.preventDefault();
@@ -37760,15 +37818,15 @@ var FormNarr = function (_Component) {
     key: 'submission',
     value: function submission(e) {
       e.preventDefault();
+
       var obj = {
         verify: true,
         coreId: this.props.sites.currSite,
         minorId: this.props.sites.minorId,
         clusterId: this.props.sites.clusterId
       };
-      if (obj.minorId > 0) {
-        obj.coreId = 0;
-      };
+
+      console.log('form submission', obj);
 
       this.setState(obj);
     }
@@ -38137,6 +38195,11 @@ var FormNarr = function (_Component) {
               'Reset'
             )
           )
+        ),
+        this.props.sites.saved && _react2.default.createElement(
+          'h4',
+          { className: 'BornholmSandvig' },
+          'Narrative Saved!'
         )
       );
     }
@@ -38158,11 +38221,11 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
   return {
-    updatePanelSize: function updatePanelSize(size, ratio) {
-      dispatch((0, _panelActions.setPanelSizing)(size, ratio));
-    },
     addNarrative: function addNarrative(narrObj) {
       dispatch((0, _siteActions.addNarrative)(narrObj));
+    },
+    resetSaved: function resetSaved() {
+      dispatch((0, _siteActions.resetSaved)());
     }
   };
 };
@@ -38192,13 +38255,7 @@ var _reactDom = __webpack_require__(14);
 
 var _reactRedux = __webpack_require__(21);
 
-var _ImageSlider = __webpack_require__(47);
-
-var _ImageSlider2 = _interopRequireDefault(_ImageSlider);
-
-var _panelActions = __webpack_require__(34);
-
-var _siteActions = __webpack_require__(35);
+var _siteActions = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38207,9 +38264,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-//import { imageSeries } from '../pre-db/cirTest.js';
-
 
 var FormSi = function (_Component) {
   _inherits(FormSi, _Component);
@@ -38236,6 +38290,11 @@ var FormSi = function (_Component) {
   }
 
   _createClass(FormSi, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.resetSaved();
+    }
+  }, {
     key: 'reset',
     value: function reset(e) {
       e.preventDefault();
@@ -38272,7 +38331,7 @@ var FormSi = function (_Component) {
       delete obj.verify;
       delete obj.generalName;
       delete obj.properName;
-      console.log('for database', obj);
+
       this.props.addNewSite(obj); //adds, reloads all, and sets site to current for editing
       this.props.clearTempSite();
     }
@@ -38291,7 +38350,6 @@ var FormSi = function (_Component) {
     value: function updateOptions(e) {
       e.preventDefault();
       var input = document.getElementById('gadget').value;
-      console.log(input);
       var obj = {};obj.type = input;
 
       this.setState(obj);
@@ -38300,9 +38358,6 @@ var FormSi = function (_Component) {
     key: 'render',
     value: function render() {
       var _this2 = this;
-
-      //console.log(this.props);
-
 
       return _react2.default.createElement(
         'div',
@@ -38520,6 +38575,11 @@ var FormSi = function (_Component) {
               'Toggle all sites on to confirm/inspect new addition'
             )
           )
+        ),
+        this.props.sites.saved && _react2.default.createElement(
+          'h4',
+          { className: 'BornholmSandvig' },
+          'Site Saved!'
         )
       );
     }
@@ -38541,15 +38601,15 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
   return {
-    updatePanelSize: function updatePanelSize(size, ratio) {
-      dispatch((0, _panelActions.setPanelSizing)(size, ratio));
-    },
     addNewSite: function addNewSite(siteOb) {
       dispatch((0, _siteActions.addNewSite)(siteOb));
     },
     clearTempSite: function clearTempSite() {
       dispatch((0, _siteActions.addNewSiteCenter)(0, 0, 0, 0));
-      disptach((0, _siteActions.addNewSiteRadius)(0, 0));
+      dispatch((0, _siteActions.addNewSiteRadius)(0, 0));
+    },
+    resetSaved: function resetSaved() {
+      dispatch((0, _siteActions.resetSaved)());
     }
   };
 };
@@ -38579,11 +38639,7 @@ var _reactDom = __webpack_require__(14);
 
 var _reactRedux = __webpack_require__(21);
 
-var _ImageSlider = __webpack_require__(47);
-
-var _ImageSlider2 = _interopRequireDefault(_ImageSlider);
-
-var _panelActions = __webpack_require__(34);
+var _siteActions = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38614,6 +38670,9 @@ var FormT = function (_Component) {
       tourId: 0,
       siteId: 0,
       zoom: 3,
+      tourIdNew: 0,
+      siteIdNew: 0,
+      zoomNew: 3,
       tourName: '',
       siteRemove: 0
     };
@@ -38635,6 +38694,7 @@ var FormT = function (_Component) {
         add: false,
         //id will be auto added
         tourId: 0,
+        tourIdNew: 0,
         siteId: 0,
         zoom: 3,
         tourName: '',
@@ -38651,6 +38711,7 @@ var FormT = function (_Component) {
       obj[type] = true;
       obj['verify'] = true;
       this.setState(obj);
+      console.log('as submitted, ', this.state);
       // should open a verification panel
     }
   }, {
@@ -38678,16 +38739,15 @@ var FormT = function (_Component) {
     }
   }, {
     key: 'updateOptions',
-    value: function updateOptions(e, id) {
+    value: function updateOptions(e, id, exists) {
       e.preventDefault();
       var input = document.getElementById(id).value;
+      console.log('tourid?', id, input);
       var obj = {};obj[id] = input;
       this.setState(obj);
 
       if (obj.tourId) {
-        var tourCurrName = this.props.options.allTours.filter(function (tour) {
-          return +tour.tourId === +obj.tourId;
-        })[0].tourName;
+        var tourCurrName = this.props.options.allTours[obj.tourId][0].tourName;
         console.log(tourCurrName);
         this.setState({ tourName: tourCurrName });
       }
@@ -38698,23 +38758,14 @@ var FormT = function (_Component) {
       var _this2 = this;
 
       //console.log(this.props);
-      var tours = {};
 
-      this.props.options.allTours.forEach(function (site) {
-        site.name = _this2.props.sites.allSites[site.siteId - 1].name;
 
-        if (tours[site.tourId]) {
-          var arr = tours[site.tourId];
-          tours[site.tourId] = arr.concat([site]);
-        } else {
-          tours[site.tourId] = [site];
-        }
-      });
-      var tourIds = Object.keys(tours).map(function (each) {
-        return +each;
-      });
+      var tourIds = Object.keys(this.props.options.allTours);
       var newTourId = Math.max.apply(Math, _toConsumableArray(tourIds)) + 1;
       tourIds.unshift('none');
+
+      console.log(tourIds);
+      //prep choices
 
       var siteName = void 0;
       if (this.state.siteId > 0) {
@@ -38750,14 +38801,23 @@ var FormT = function (_Component) {
             _react2.default.createElement(
               'label',
               { className: 'underline' },
-              ' Auto Generated Tour Id: '
+              ' New Tour Id: '
             ),
             _react2.default.createElement(
-              'p',
-              null,
-              ' ',
-              newTourId,
-              ' '
+              'select',
+              { onChange: function onChange(e) {
+                  return _this2.updateOptions(e, 'tourIdNew');
+                }, id: 'tourIdNew', style: { width: '80%' } },
+              _react2.default.createElement(
+                'option',
+                { value: newTourId },
+                'none'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: newTourId },
+                newTourId
+              )
             ),
             _react2.default.createElement(
               'label',
@@ -38775,8 +38835,8 @@ var FormT = function (_Component) {
             _react2.default.createElement(
               'select',
               { onChange: function onChange(e) {
-                  return _this2.updateOptions(e, 'siteId');
-                }, id: 'siteId', style: { width: '80%' } },
+                  return _this2.updateOptions(e, 'siteIdNew');
+                }, id: 'siteIdNew', style: { width: '80%' } },
               this.props.sites.allSites && this.props.sites.allSites.map(function (layer) {
                 return _react2.default.createElement(
                   'option',
@@ -38793,8 +38853,13 @@ var FormT = function (_Component) {
             _react2.default.createElement(
               'select',
               { onChange: function onChange(e) {
-                  return _this2.updateOptions(e, 'zoom');
-                }, id: 'zoom', style: { width: '80%' } },
+                  return _this2.updateOptions(e, 'zoomNew');
+                }, id: 'zoomNew', style: { width: '80%' } },
+              _react2.default.createElement(
+                'option',
+                { value: '3' },
+                'none'
+              ),
               _react2.default.createElement(
                 'option',
                 { value: '3' },
@@ -38849,9 +38914,9 @@ var FormT = function (_Component) {
             _react2.default.createElement(
               'select',
               { onChange: function onChange(e) {
-                  return _this2.updateOptions(e, 'tourId');
+                  return _this2.updateOptions(e, 'tourId', true);
                 }, id: 'tourId', style: { width: '80%' } },
-              this.props.options.allTours && tourIds.map(function (layer) {
+              tourIds && tourIds.map(function (layer) {
                 return _react2.default.createElement(
                   'option',
                   { value: layer },
@@ -38874,7 +38939,8 @@ var FormT = function (_Component) {
               _react2.default.createElement(
                 'ul',
                 null,
-                tours[this.state.tourId] && tours[this.state.tourId].map(function (site, i) {
+                this.props.options.allTours[this.state.tourId] && this.props.options.allTours[this.state.tourId].map(function (site, i) {
+                  site.name = _this2.props.sites.allSites[site.siteId - 1].name;
                   return _react2.default.createElement(
                     'li',
                     null,
@@ -38911,6 +38977,11 @@ var FormT = function (_Component) {
               { onChange: function onChange(e) {
                   return _this2.updateOptions(e, 'zoom');
                 }, id: 'zoom', style: { width: '80%' } },
+              _react2.default.createElement(
+                'option',
+                { value: '3' },
+                'none'
+              ),
               _react2.default.createElement(
                 'option',
                 { value: '3' },
@@ -38999,7 +39070,7 @@ var FormT = function (_Component) {
             _react2.default.createElement(
               'ul',
               null,
-              tours[this.state.tourId] && tours[this.state.tourId].map(function (site, i) {
+              this.props.options.allTours[this.state.tourId] && this.props.options.allTours[this.state.tourId].map(function (site, i) {
 
                 if (+site.siteId !== +_this2.state.siteRemove) {
                   return _react2.default.createElement(
@@ -39043,6 +39114,14 @@ var FormT = function (_Component) {
                   return _this2.save(e, 'add');
                 } },
               'Save'
+            ),
+            ' or ',
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.reset(e);
+                } },
+              'Reset'
             )
           )
         ),
@@ -39107,6 +39186,11 @@ var FormT = function (_Component) {
               'Reset'
             )
           )
+        ),
+        this.props.sites.saved && _react2.default.createElement(
+          'h4',
+          { className: 'BornholmSandvig' },
+          'Tour/Site successfully saved!'
         )
       );
     }
@@ -39124,12 +39208,10 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   };
 };
 
-//setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
-
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
   return {
-    updatePanelSize: function updatePanelSize(size, ratio) {
-      dispatch((0, _panelActions.setPanelSizing)(size, ratio));
+    resetSaved: function resetSaved() {
+      dispatch((0, _siteActions.resetSaved)());
     }
   };
 };
@@ -39183,7 +39265,7 @@ var _reactPreload = __webpack_require__(264);
 
 var _rawTiles = __webpack_require__(71);
 
-var _siteActions = __webpack_require__(35);
+var _siteActions = __webpack_require__(32);
 
 var _optionActions = __webpack_require__(46);
 
@@ -39349,7 +39431,7 @@ var _reactPreload = __webpack_require__(264);
 
 var _rawTiles = __webpack_require__(71);
 
-var _siteActions = __webpack_require__(35);
+var _siteActions = __webpack_require__(32);
 
 var _optionActions = __webpack_require__(46);
 
@@ -39762,11 +39844,11 @@ var _reactDom = __webpack_require__(14);
 
 var _reactRedux = __webpack_require__(21);
 
-var _ImageSlider = __webpack_require__(47);
+var _ImageSlider = __webpack_require__(58);
 
 var _ImageSlider2 = _interopRequireDefault(_ImageSlider);
 
-var _panelActions = __webpack_require__(34);
+var _panelActions = __webpack_require__(37);
 
 var _cirTest = __webpack_require__(87);
 
@@ -39921,11 +40003,11 @@ var _reactDom = __webpack_require__(14);
 
 var _reactRedux = __webpack_require__(21);
 
-var _ImageSlider = __webpack_require__(47);
+var _ImageSlider = __webpack_require__(58);
 
 var _ImageSlider2 = _interopRequireDefault(_ImageSlider);
 
-var _panelActions = __webpack_require__(34);
+var _panelActions = __webpack_require__(37);
 
 var _cirTest = __webpack_require__(87);
 
@@ -40184,7 +40266,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* AWS for the heroku tiles, will be internal on final Newberry version
 all AWS `https://s3.us-east-2.amazonaws.com/newberry-images/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`
 all local public tiles: `/img/color/${tile.z}/map_${tile.x}_${tile.y}.jpg`
-
 */
 
 var ClipTiles = exports.ClipTiles = function ClipTiles(props) {
@@ -41125,7 +41206,7 @@ module.exports = function(){ /* empty */ };
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(51)
+var toIObject = __webpack_require__(50)
   , toLength  = __webpack_require__(192)
   , toIndex   = __webpack_require__(355);
 module.exports = function(IS_INCLUDES){
@@ -41191,7 +41272,7 @@ module.exports = __webpack_require__(41).document && document.documentElement;
 
 // check on default Array iterator
 var Iterators  = __webpack_require__(62)
-  , ITERATOR   = __webpack_require__(32)('iterator')
+  , ITERATOR   = __webpack_require__(33)('iterator')
   , ArrayProto = Array.prototype;
 
 module.exports = function(it){
@@ -41213,7 +41294,7 @@ module.exports = Array.isArray || function isArray(arg){
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
-var anObject = __webpack_require__(48);
+var anObject = __webpack_require__(47);
 module.exports = function(iterator, fn, value, entries){
   try {
     return entries ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -41237,7 +41318,7 @@ var create         = __webpack_require__(116)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(61)(IteratorPrototype, __webpack_require__(32)('iterator'), function(){ return this; });
+__webpack_require__(61)(IteratorPrototype, __webpack_require__(33)('iterator'), function(){ return this; });
 
 module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -41248,7 +41329,7 @@ module.exports = function(Constructor, NAME, next){
 /* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR     = __webpack_require__(32)('iterator')
+var ITERATOR     = __webpack_require__(33)('iterator')
   , SAFE_CLOSING = false;
 
 try {
@@ -41283,7 +41364,7 @@ module.exports = function(done, value){
 /***/ (function(module, exports, __webpack_require__) {
 
 var getKeys   = __webpack_require__(63)
-  , toIObject = __webpack_require__(51);
+  , toIObject = __webpack_require__(50);
 module.exports = function(object, el){
   var O      = toIObject(object)
     , keys   = getKeys(O)
@@ -41299,7 +41380,7 @@ module.exports = function(object, el){
 
 var META     = __webpack_require__(89)('meta')
   , isObject = __webpack_require__(73)
-  , has      = __webpack_require__(50)
+  , has      = __webpack_require__(49)
   , setDesc  = __webpack_require__(42).f
   , id       = 0;
 var isExtensible = Object.isExtensible || function(){
@@ -41395,10 +41476,10 @@ module.exports = !$assign || __webpack_require__(60)(function(){
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP       = __webpack_require__(42)
-  , anObject = __webpack_require__(48)
+  , anObject = __webpack_require__(47)
   , getKeys  = __webpack_require__(63);
 
-module.exports = __webpack_require__(49) ? Object.defineProperties : function defineProperties(O, Properties){
+module.exports = __webpack_require__(48) ? Object.defineProperties : function defineProperties(O, Properties){
   anObject(O);
   var keys   = getKeys(Properties)
     , length = keys.length
@@ -41413,7 +41494,7 @@ module.exports = __webpack_require__(49) ? Object.defineProperties : function de
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(51)
+var toIObject = __webpack_require__(50)
   , gOPN      = __webpack_require__(187).f
   , toString  = {}.toString;
 
@@ -41440,7 +41521,7 @@ module.exports.f = function getOwnPropertyNames(it){
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
 var isObject = __webpack_require__(73)
-  , anObject = __webpack_require__(48);
+  , anObject = __webpack_require__(47);
 var check = function(O, proto){
   anObject(O);
   if(!isObject(proto) && proto !== null)throw TypeError(proto + ": can't set as prototype!");
@@ -41501,7 +41582,7 @@ module.exports = function(index, length){
 /* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(48)
+var anObject = __webpack_require__(47)
   , get      = __webpack_require__(193);
 module.exports = __webpack_require__(24).getIterator = function(it){
   var iterFn = get(it);
@@ -41514,7 +41595,7 @@ module.exports = __webpack_require__(24).getIterator = function(it){
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof   = __webpack_require__(181)
-  , ITERATOR  = __webpack_require__(32)('iterator')
+  , ITERATOR  = __webpack_require__(33)('iterator')
   , Iterators = __webpack_require__(62);
 module.exports = __webpack_require__(24).isIterable = function(it){
   var O = Object(it);
@@ -41576,7 +41657,7 @@ $export($export.S + $export.F * !__webpack_require__(346)(function(iter){ Array.
 var addToUnscopables = __webpack_require__(337)
   , step             = __webpack_require__(347)
   , Iterators        = __webpack_require__(62)
-  , toIObject        = __webpack_require__(51);
+  , toIObject        = __webpack_require__(50);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
@@ -41630,7 +41711,7 @@ $export($export.S, 'Object', {create: __webpack_require__(116)});
 
 var $export = __webpack_require__(40);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(49), 'Object', {defineProperty: __webpack_require__(42).f});
+$export($export.S + $export.F * !__webpack_require__(48), 'Object', {defineProperty: __webpack_require__(42).f});
 
 /***/ }),
 /* 363 */
@@ -41682,8 +41763,8 @@ $export($export.S, 'Object', {setPrototypeOf: __webpack_require__(353).set});
 
 // ECMAScript 6 symbols shim
 var global         = __webpack_require__(41)
-  , has            = __webpack_require__(50)
-  , DESCRIPTORS    = __webpack_require__(49)
+  , has            = __webpack_require__(49)
+  , DESCRIPTORS    = __webpack_require__(48)
   , $export        = __webpack_require__(40)
   , redefine       = __webpack_require__(191)
   , META           = __webpack_require__(349).KEY
@@ -41691,14 +41772,14 @@ var global         = __webpack_require__(41)
   , shared         = __webpack_require__(120)
   , setToStringTag = __webpack_require__(118)
   , uid            = __webpack_require__(89)
-  , wks            = __webpack_require__(32)
+  , wks            = __webpack_require__(33)
   , wksExt         = __webpack_require__(124)
   , wksDefine      = __webpack_require__(123)
   , keyOf          = __webpack_require__(348)
   , enumKeys       = __webpack_require__(340)
   , isArray        = __webpack_require__(343)
-  , anObject       = __webpack_require__(48)
-  , toIObject      = __webpack_require__(51)
+  , anObject       = __webpack_require__(47)
+  , toIObject      = __webpack_require__(50)
   , toPrimitive    = __webpack_require__(122)
   , createDesc     = __webpack_require__(74)
   , _create        = __webpack_require__(116)
@@ -42355,7 +42436,7 @@ __webpack_require__(123)('observable');
   return accumulateDiff;
 }));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(58)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(57)))
 
 /***/ }),
 /* 371 */
@@ -45175,7 +45256,7 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 
 /* harmony default export */ __webpack_exports__["a"] = (freeGlobal);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(58)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(57)))
 
 /***/ }),
 /* 413 */
@@ -47561,7 +47642,7 @@ function stubFalse() {
 
 module.exports = merge;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(58), __webpack_require__(283)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(57), __webpack_require__(283)(module)))
 
 /***/ }),
 /* 420 */
@@ -48007,7 +48088,7 @@ function toNumber(value) {
 
 module.exports = throttle;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(58)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(57)))
 
 /***/ }),
 /* 421 */
@@ -50269,7 +50350,7 @@ var _keycode2 = _interopRequireDefault(_keycode);
 
 var _colorManipulator = __webpack_require__(44);
 
-var _EnhancedButton = __webpack_require__(33);
+var _EnhancedButton = __webpack_require__(34);
 
 var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
@@ -50617,7 +50698,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _autoPrefix = __webpack_require__(52);
+var _autoPrefix = __webpack_require__(51);
 
 var _autoPrefix2 = _interopRequireDefault(_autoPrefix);
 
@@ -52984,7 +53065,7 @@ var _transitions2 = _interopRequireDefault(_transitions);
 
 var _dateUtils = __webpack_require__(80);
 
-var _EnhancedButton = __webpack_require__(33);
+var _EnhancedButton = __webpack_require__(34);
 
 var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
@@ -53184,7 +53265,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _EnhancedButton = __webpack_require__(33);
+var _EnhancedButton = __webpack_require__(34);
 
 var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
@@ -54058,7 +54139,7 @@ var _keycode = __webpack_require__(30);
 
 var _keycode2 = _interopRequireDefault(_keycode);
 
-var _autoPrefix = __webpack_require__(52);
+var _autoPrefix = __webpack_require__(51);
 
 var _autoPrefix2 = _interopRequireDefault(_autoPrefix);
 
@@ -55162,7 +55243,7 @@ var _childUtils = __webpack_require__(83);
 
 var _colorManipulator = __webpack_require__(44);
 
-var _EnhancedButton = __webpack_require__(33);
+var _EnhancedButton = __webpack_require__(34);
 
 var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
@@ -55621,7 +55702,7 @@ var _transitions2 = _interopRequireDefault(_transitions);
 
 var _colorManipulator = __webpack_require__(44);
 
-var _EnhancedButton = __webpack_require__(33);
+var _EnhancedButton = __webpack_require__(34);
 
 var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
@@ -56385,7 +56466,7 @@ var _propTypes3 = __webpack_require__(28);
 
 var _propTypes4 = _interopRequireDefault(_propTypes3);
 
-var _EnhancedButton = __webpack_require__(33);
+var _EnhancedButton = __webpack_require__(34);
 
 var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
@@ -57958,7 +58039,7 @@ var _colorManipulator = __webpack_require__(44);
 
 var _childUtils = __webpack_require__(83);
 
-var _EnhancedButton = __webpack_require__(33);
+var _EnhancedButton = __webpack_require__(34);
 
 var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
@@ -58477,7 +58558,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _autoPrefix = __webpack_require__(52);
+var _autoPrefix = __webpack_require__(51);
 
 var _autoPrefix2 = _interopRequireDefault(_autoPrefix);
 
@@ -60832,7 +60913,7 @@ var _transitions = __webpack_require__(13);
 
 var _transitions2 = _interopRequireDefault(_transitions);
 
-var _EnhancedButton = __webpack_require__(33);
+var _EnhancedButton = __webpack_require__(34);
 
 var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
@@ -62933,7 +63014,7 @@ var _reactDom = __webpack_require__(14);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _shallowEqual = __webpack_require__(57);
+var _shallowEqual = __webpack_require__(56);
 
 var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
@@ -66541,11 +66622,11 @@ var _reactDom = __webpack_require__(14);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _shallowEqual = __webpack_require__(57);
+var _shallowEqual = __webpack_require__(56);
 
 var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-var _autoPrefix = __webpack_require__(52);
+var _autoPrefix = __webpack_require__(51);
 
 var _autoPrefix2 = _interopRequireDefault(_autoPrefix);
 
@@ -67279,7 +67360,7 @@ var _reactDom = __webpack_require__(14);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _autoPrefix = __webpack_require__(52);
+var _autoPrefix = __webpack_require__(51);
 
 var _autoPrefix2 = _interopRequireDefault(_autoPrefix);
 
@@ -67456,7 +67537,7 @@ var _reactDom = __webpack_require__(14);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _autoPrefix = __webpack_require__(52);
+var _autoPrefix = __webpack_require__(51);
 
 var _autoPrefix2 = _interopRequireDefault(_autoPrefix);
 
@@ -70149,7 +70230,7 @@ var EventPluginHub = __webpack_require__(67);
 var EventPropagators = __webpack_require__(68);
 var ExecutionEnvironment = __webpack_require__(22);
 var ReactDOMComponentTree = __webpack_require__(19);
-var ReactUpdates = __webpack_require__(36);
+var ReactUpdates = __webpack_require__(35);
 var SyntheticEvent = __webpack_require__(38);
 
 var getEventTarget = __webpack_require__(155);
@@ -70785,7 +70866,7 @@ module.exports = EventConstants;
 
 var _assign = __webpack_require__(16);
 
-var PooledClass = __webpack_require__(53);
+var PooledClass = __webpack_require__(52);
 
 var getTextContentAccessor = __webpack_require__(257);
 
@@ -71322,9 +71403,9 @@ module.exports = ReactComponentBrowserEnvironment;
 var _prodInvariant = __webpack_require__(15),
     _assign = __webpack_require__(16);
 
-var React = __webpack_require__(54);
+var React = __webpack_require__(53);
 var ReactComponentEnvironment = __webpack_require__(148);
-var ReactCurrentOwner = __webpack_require__(37);
+var ReactCurrentOwner = __webpack_require__(36);
 var ReactErrorUtils = __webpack_require__(149);
 var ReactInstanceMap = __webpack_require__(85);
 var ReactInstrumentation = __webpack_require__(31);
@@ -72233,7 +72314,7 @@ var ReactDOMComponentTree = __webpack_require__(19);
 var ReactDefaultInjection = __webpack_require__(583);
 var ReactMount = __webpack_require__(251);
 var ReactReconciler = __webpack_require__(69);
-var ReactUpdates = __webpack_require__(36);
+var ReactUpdates = __webpack_require__(35);
 var ReactVersion = __webpack_require__(598);
 
 var findDOMNode = __webpack_require__(615);
@@ -73524,7 +73605,7 @@ var _prodInvariant = __webpack_require__(15),
 var DOMPropertyOperations = __webpack_require__(244);
 var LinkedValueUtils = __webpack_require__(147);
 var ReactDOMComponentTree = __webpack_require__(19);
-var ReactUpdates = __webpack_require__(36);
+var ReactUpdates = __webpack_require__(35);
 
 var invariant = __webpack_require__(11);
 var warning = __webpack_require__(12);
@@ -73959,7 +74040,7 @@ module.exports = ReactDOMNullInputValuePropHook;
 
 var _assign = __webpack_require__(16);
 
-var React = __webpack_require__(54);
+var React = __webpack_require__(53);
 var ReactDOMComponentTree = __webpack_require__(19);
 var ReactDOMSelect = __webpack_require__(246);
 
@@ -74478,7 +74559,7 @@ var _prodInvariant = __webpack_require__(15),
 
 var LinkedValueUtils = __webpack_require__(147);
 var ReactDOMComponentTree = __webpack_require__(19);
-var ReactUpdates = __webpack_require__(36);
+var ReactUpdates = __webpack_require__(35);
 
 var invariant = __webpack_require__(11);
 var warning = __webpack_require__(12);
@@ -75266,7 +75347,7 @@ module.exports = ReactDebugTool;
 
 var _assign = __webpack_require__(16);
 
-var ReactUpdates = __webpack_require__(36);
+var ReactUpdates = __webpack_require__(35);
 var Transaction = __webpack_require__(101);
 
 var emptyFunction = __webpack_require__(25);
@@ -75495,9 +75576,9 @@ var _assign = __webpack_require__(16);
 
 var EventListener = __webpack_require__(195);
 var ExecutionEnvironment = __webpack_require__(22);
-var PooledClass = __webpack_require__(53);
+var PooledClass = __webpack_require__(52);
 var ReactDOMComponentTree = __webpack_require__(19);
-var ReactUpdates = __webpack_require__(36);
+var ReactUpdates = __webpack_require__(35);
 
 var getEventTarget = __webpack_require__(155);
 var getUnboundedScrollPosition = __webpack_require__(377);
@@ -75697,7 +75778,7 @@ var ReactComponentEnvironment = __webpack_require__(148);
 var ReactEmptyComponent = __webpack_require__(247);
 var ReactBrowserEventEmitter = __webpack_require__(99);
 var ReactHostComponent = __webpack_require__(249);
-var ReactUpdates = __webpack_require__(36);
+var ReactUpdates = __webpack_require__(35);
 
 var ReactInjection = {
   Component: ReactComponentEnvironment.injection,
@@ -75833,7 +75914,7 @@ var ReactComponentEnvironment = __webpack_require__(148);
 var ReactInstanceMap = __webpack_require__(85);
 var ReactInstrumentation = __webpack_require__(31);
 
-var ReactCurrentOwner = __webpack_require__(37);
+var ReactCurrentOwner = __webpack_require__(36);
 var ReactReconciler = __webpack_require__(69);
 var ReactChildReconciler = __webpack_require__(563);
 
@@ -76417,7 +76498,7 @@ module.exports = ReactPropTypeLocationNames;
 var _assign = __webpack_require__(16);
 
 var CallbackQueue = __webpack_require__(243);
-var PooledClass = __webpack_require__(53);
+var PooledClass = __webpack_require__(52);
 var ReactBrowserEventEmitter = __webpack_require__(99);
 var ReactInputSelection = __webpack_require__(250);
 var ReactInstrumentation = __webpack_require__(31);
@@ -76694,7 +76775,7 @@ module.exports = ReactRef;
 
 var _assign = __webpack_require__(16);
 
-var PooledClass = __webpack_require__(53);
+var PooledClass = __webpack_require__(52);
 var Transaction = __webpack_require__(101);
 var ReactInstrumentation = __webpack_require__(31);
 var ReactServerUpdateQueue = __webpack_require__(597);
@@ -78412,7 +78493,7 @@ module.exports = dangerousStyleValue;
 
 var _prodInvariant = __webpack_require__(15);
 
-var ReactCurrentOwner = __webpack_require__(37);
+var ReactCurrentOwner = __webpack_require__(36);
 var ReactDOMComponentTree = __webpack_require__(19);
 var ReactInstanceMap = __webpack_require__(85);
 
@@ -81404,7 +81485,7 @@ module.exports = function(lastTouchEvent, clickTimestamp) {
 
 
 
-var _prodInvariant = __webpack_require__(56);
+var _prodInvariant = __webpack_require__(55);
 
 var invariant = __webpack_require__(11);
 
@@ -81522,7 +81603,7 @@ module.exports = PooledClass;
 
 
 var PooledClass = __webpack_require__(659);
-var ReactElement = __webpack_require__(55);
+var ReactElement = __webpack_require__(54);
 
 var emptyFunction = __webpack_require__(25);
 var traverseAllChildren = __webpack_require__(277);
@@ -81717,11 +81798,11 @@ module.exports = ReactChildren;
 
 
 
-var _prodInvariant = __webpack_require__(56),
+var _prodInvariant = __webpack_require__(55),
     _assign = __webpack_require__(16);
 
 var ReactComponent = __webpack_require__(162);
-var ReactElement = __webpack_require__(55);
+var ReactElement = __webpack_require__(54);
 var ReactPropTypeLocationNames = __webpack_require__(275);
 var ReactNoopUpdateQueue = __webpack_require__(163);
 
@@ -82446,7 +82527,7 @@ module.exports = ReactClass;
 
 
 
-var ReactElement = __webpack_require__(55);
+var ReactElement = __webpack_require__(54);
 
 /**
  * Create a factory that creates HTML tag elements.
@@ -82622,7 +82703,7 @@ module.exports = ReactDOMFactories;
 
 
 
-var _require = __webpack_require__(55),
+var _require = __webpack_require__(54),
     isValidElement = _require.isValidElement;
 
 var factory = __webpack_require__(143);
@@ -82832,7 +82913,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var React = __webpack_require__(54);
+var React = __webpack_require__(53);
 var ReactTransitionChildMapping = __webpack_require__(666);
 
 var propTypesFactory = __webpack_require__(143);
@@ -83080,7 +83161,7 @@ module.exports = '15.5.3';
 
 
 
-var _prodInvariant = __webpack_require__(56);
+var _prodInvariant = __webpack_require__(55);
 
 var ReactPropTypeLocationNames = __webpack_require__(275);
 var ReactPropTypesSecret = __webpack_require__(664);
@@ -83280,9 +83361,9 @@ module.exports = getNextDebugID;
  */
 
 
-var _prodInvariant = __webpack_require__(56);
+var _prodInvariant = __webpack_require__(55);
 
-var ReactElement = __webpack_require__(55);
+var ReactElement = __webpack_require__(54);
 
 var invariant = __webpack_require__(11);
 
@@ -84559,7 +84640,7 @@ module.exports = resolvePathname;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(58), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(57), __webpack_require__(0)))
 
 /***/ }),
 /* 692 */
@@ -84602,7 +84683,7 @@ if (typeof self !== 'undefined') {
 
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(58), __webpack_require__(283)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(57), __webpack_require__(283)(module)))
 
 /***/ }),
 /* 694 */

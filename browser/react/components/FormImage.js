@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 
-import Imagetrey from './ImageSlider.js';
-import { setPanelSizing } from '../action-creators/panelActions.js';
-//import { imageSeries } from '../pre-db/cirTest.js';
-
+import { editNarrative, addImage, resetSaved } from '../action-creators/siteActions.js';
 
 
 class FormImg extends Component {
@@ -18,7 +15,11 @@ class FormImg extends Component {
           clusterId: 0,
           imageSeries: 0,
           narrativeId: 0,
+          narrative: {},
           src: '',
+          data_uri: '',
+          filename: '',
+          filetype: '',
           caption: '',
           catalogSource: '',
           catalogLink: '',
@@ -28,6 +29,37 @@ class FormImg extends Component {
         this.uploadImg = this.uploadImg.bind(this);
         this.save = this.save.bind(this);
         this.reset = this.reset.bind(this);
+  }
+
+  componentDidMount(){
+    this.props.resetSaved();
+  }
+
+  save(e){
+    e.preventDefault();
+    var imageObj={
+          src: '', //fills in later in request, temp view
+          caption: this.state.caption,
+          catalogSource: this.state.catalogSource,
+          catalogLink: this.state.catalogLink,
+          imageSeries: this.state.imageSeries,
+    };
+
+    var narrId = this.state.narrativeId;
+    var narrObj = this.state.narrative;
+      narrObj.imageSeries = this.state.imageSeries;
+
+
+    var imgObj = { //actual photo
+        data_uri: this.state.data_uri,
+        filename: this.state.filename,
+        filetype: this.state.filetype
+    };
+
+    this.props.addImage(imgObj, imageObj);
+    this.props.editNarrative(narrObj, narrId);
+
+
   }
 
   submission(e){
@@ -46,7 +78,11 @@ class FormImg extends Component {
           clusterId: 0,
           imageSeries: 0,
           narrativeId: 0,
+          narrative: {},
           src: '',
+          data_uri: '',
+          filename: '',
+          filetype: '',
           caption: '',
           catalogSource: '',
           catalogLink: '',
@@ -56,41 +92,32 @@ class FormImg extends Component {
 
   }
 
-  save(e){
-
-  }
-
   uploadImg(e){
     e.preventDefault();
-    var fileList = e.target.files;
 
-    //check for max current imageSeries, set as plus 1
+    //image series number...
       let images = this.props.sites.genImages.map(image=> +image.imageSeries);
       var seriesId = Math.max(...images);
       seriesId++;
 
-      var narrative;
-      if (this.props.sites.currSite !== 0){
-        narrative = this.props.sites.genNarratives.filter(narr => +narr.coreId === this.props.sites.currSite.siteId && (narr.minorId===0 || narr.minorId===null))[0];
-        if (this.props.sites.minorId !== 0 && this.props.sites.minorId !== null){ narrative = this.props.sites.genNarratives.filter(narr => +narr.minorId === this.props.sites.minorId)[0] };
+      if (this.state.narrative.imageSeries>0){
+          seriesId = this.state.narrative.imageSeries;
       }
-
-      if (narrative){
-        this.setState({narrativeId: narrative.id});
-
-        if (narrative.imageSeries>0){
-          seriesId = narrative.imageSeries;
-        }
-      }
-
       this.setState({imageSeries: seriesId});
 
-    var reader = new FileReader();
-    reader.onload = (e) => {
-      var the_url = e.target.result; //image as data
-      this.setState({src:the_url});
-    };
-      reader.readAsDataURL(e.target.files[0]); //only first file, rework
+      var reader = new FileReader();
+      var file = e.target.files[0];
+
+      reader.onload = (e) => {
+        var the_url = e.target.result; //image as data
+        this.setState({
+          data_uri:the_url,
+          src: the_url, //preview only
+          filename: file.name,
+          filetype: file.type
+        });
+      };
+        reader.readAsDataURL(file); //only first file, rework
   }
 
   update(e){
@@ -99,55 +126,52 @@ class FormImg extends Component {
     let type = e.target.attributes.id.value;
     let obj={}; obj[type]=input;
 
-    obj['coreId']= +this.props.sites.currSite;
-    obj['minorId']= +this.props.sites.minorId;
-    obj['clusterId']= +this.props.sites.clusterId;
-
     this.setState(obj);
   }
 
-  render(){
-  	//console.log(this.props);
-
-    let siteId = +this.props.sites.currSite;
-    var element, cluster, detail, narrative;
-    let show = false, details = false;
-    if (siteId !== 0){
-      element = this.props.sites.allSites.filter(sites=> +sites.id === siteId)[0];
-      narrative = this.props.sites.genNarratives.filter(narr => +narr.coreId === siteId && (narr.minorId===0 || narr.minorId===null))[0];
-      if (this.props.sites.minorId !== 0 && this.props.sites.minorId !== null){ narrative = this.props.sites.genNarratives.filter(narr => +narr.minorId === this.props.sites.minorId)[0] };
-      show = true;
+  updateOptions(e){
+    e.preventDefault();
+    let id = document.getElementById('gadget').value;
+    let narrative  = this.props.sites.genNarratives.filter(narr=> +narr.id === +id)[0];
+    let obj = {
+      narrativeId: id,
+      narrative: narrative,
+      coreId: narrative.coreId,
+      minorId: narrative.minorId,
+      clusterId: narrative.clusterId,
     }
 
+    this.setState(obj);
+
+  }
+
+  render(){
 
   	return (
            <div>
-            <p> click on map to select site or site detail </p>
-            <h4 className="BornholmSandvig">Background Data</h4>
+            <p> select from list of existing site and detail narratives </p>
+            <form>
+            <label className='underline' for="type">Select Existing Narrative: </label>
+                  <select onChange={e=>this.updateOptions(e)} id="gadget" style={{width:'80%'}} >
+                  {this.props.sites.genNarratives &&
+                    this.props.sites.genNarratives.map((layer,i)=>{
+                      return (
+                      <option value={layer.id} key={layer+i}>{layer.id} {layer.title}, for coreId: {layer.coreId}, clusterId: {layer.clusterId}, detailId: {layer.minorId}.</option>
+                      )
+                    })
+                  }
+                  </select><br/>
+            </form>
+            <h4 className="BornholmSandvig">Background Data on Selected Narrative</h4>
             <div className="editOps">
-  				    <h4><span className='underline'>Site Type:</span> {this.props.panel.title}</h4>
-  				    <h4><span className='underline'>Site Name:</span> {this.props.panel.subtitle}</h4>
-              {show &&
               <div>
                 <ul>
-                  <li><span className='underline'>Layer Type:</span> {element.type} </li>
-                  <li><span className='underline'>Site Id:</span> {element.id}</li>
+                  <li><span className='underline'>Site Id:</span> {this.state.coreId}</li>
+                  <li><span className='underline'>Cluster Id:</span> {this.state.clusterId}</li>
+                  <li><span className='underline'>Detail Id:</span> {this.state.minorId}</li>
+                  <p><span className='underline'>Narrative Title: </span><br/>{this.state.narrative.title}</p>
                 </ul>
               </div>
-              }
-              {show && element.clusterId &&
-              <div>
-                <p>Subsite Details</p>
-                <ul>
-                  <li><span className='underline'>Cluster Id:</span> {element.clusterId}</li>
-                  <li><span className='underline'>Detail Id:</span> {this.props.sites.minorId}</li>
-                </ul>
-              </div>
-              }
-              {narrative !== undefined &&
-                <p><span className='underline'>Current Narrative: </span><br/>{narrative.text}</p>
-              }
-
             </div>
             <br/>
             <h4 className="BornholmSandvig">Upload/Add Images for Narrative Panel</h4>
@@ -180,6 +204,9 @@ class FormImg extends Component {
                 </div>
               </div>
             }
+            {this.props.sites.saved &&
+              <h4 className="BornholmSandvig">Image Added to Narrative!</h4>
+            }
           </div>
 
   	)
@@ -197,18 +224,16 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-//setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
-
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    updatePanelSize: (size,ratio) => {
-      dispatch(setPanelSizing(size,ratio));
+    resetSaved: () => {
+      dispatch(resetSaved());
     },
-    addImage: (imgObj) => {
-      //dispatch(addImage(imgObj));
+    addImage: (imgObj, imageObj) => {
+      dispatch(addImage(imgObj, imageObj));
     },
-    editNarrative: (editObj, id, fieldsArr) => {
-      //dispatch(editNarrative(editObj, id, fieldsArr));
+    editNarrative: (editObj, id) => {
+      dispatch(editNarrative(editObj, id));
     },
   }
 }

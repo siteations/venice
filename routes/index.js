@@ -101,6 +101,20 @@ router.post('/narratives', (req, res, next)=>{
 		});
 });
 
+router.put('/narratives/:id', (req, res, next)=>{
+		Narratives.findById(req.params.id)
+		.then(narrList=>{
+			return narrList.update(req.body, {fields: ['imageSeries']}
+			)
+			.then(results=> {
+				res.send(results.data);
+			})
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
 //-------------------------images--------------------------
 
 router.get('/images', (req, res, next)=>{
@@ -126,6 +140,7 @@ router.post('/images', (req, res, next)=>{ //to image table
 
 router.post('/images-files', (req, res, next)=> { //to aws storage or local public
 	//AWS and local version, depending on hosting...
+	console.log(req.body);
 
 	var image = ImageUploader({
 	//var image = ImageUploaderAWS({

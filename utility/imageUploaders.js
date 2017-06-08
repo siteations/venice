@@ -33,6 +33,7 @@ var ImageUploaderAWS = function(options) { //AWS collection
 }
 
 var ImageUploader = function(options) { //local collection
+  console.log(options)
 
   var file = new Buffer(options.data_uri.replace(/^data:image\/\w+;base64,/, ""),'base64');
   var fileName = options.filename;

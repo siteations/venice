@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Imagetrey from './ImageSlider.js';
 import { setPanelSizing } from '../action-creators/panelActions.js';
 //import { imageSeries } from '../pre-db/cirTest.js';
-import { editSite, addDetail } from '../action-creators/siteActions.js';
+import { editSite, addDetail, resetSaved } from '../action-creators/siteActions.js';
 
 
 
@@ -30,6 +30,10 @@ class FormDe extends Component { // so this will be an update to site table, add
         this.uploadImg = this.uploadImg.bind(this);
         this.save = this.save.bind(this);
         this.reset = this.reset.bind(this);
+  }
+
+  componentDidMount(){
+    this.props.resetSaved();
   }
 
   reset(e){
@@ -86,56 +90,16 @@ class FormDe extends Component { // so this will be an update to site table, add
     };
 
     var imgObj = {
-      // url: '/api/v1/image',
-      // type: "POST",
-      // data: {
         data_uri: this.state.srcThumb,
         filename: this.state.filename,
         filetype: this.state.filetype
-      // },
-      // dataType: 'json'
     };
-
-    console.log('saving', detailObj, siteObj, imgObj);
-    // promise.done(function(data){
-    //   _this.setState({
-    //     processing: false,
-    //     uploaded_uri: data.uri
-    //   });
-    // });
-
 
     this.props.addDetail(imgObj, detailObj);
     this.props.editSite(siteObj, this.state.coreId);
 
   }
 
-  /*handleSubmit(e) {
-    e.preventDefault();
-    const _this = this;
-
-    this.setState({
-      processing: true
-    });
-
-    const promise = $.ajax({
-      url: '/api/v1/image',
-      type: "POST",
-      data: {
-        data_uri: this.state.data_uri,
-        filename: this.state.filename,
-        filetype: this.state.filetype
-      },
-      dataType: 'json'
-    });
-
-    promise.done(function(data){
-      _this.setState({
-        processing: false,
-        uploaded_uri: data.uri
-      });
-    });
-  }*/
 
   uploadImg(e){
     e.preventDefault();
@@ -143,9 +107,11 @@ class FormDe extends Component { // so this will be an update to site table, add
 
     var reader = new FileReader();
     var file = e.target.files[0];
+
     reader.onload = (e) => {
       var the_url = e.target.result; //image as data
-      this.setState({data_uri:the_url,
+      this.setState({
+        data_uri:the_url,
         srcThumb: the_url,
         filename: file.name,
         filetype: file.type
@@ -219,6 +185,9 @@ class FormDe extends Component { // so this will be an update to site table, add
                 </div>
               </div>
             }
+            {this.props.sites.saved &&
+              <h4 className="BornholmSandvig">Detail Saved!</h4>
+            }
           </div>
 
   	)
@@ -248,6 +217,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     addDetail: (imgObj, detailObj) => {
       dispatch(addDetail(imgObj, detailObj));
+    },
+    resetSaved: () => {
+      dispatch(resetSaved());
     },
 
   }
