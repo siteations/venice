@@ -68,7 +68,7 @@ class FooterSlides extends Component {
             this.props.panelSmall();
         };
 
-        var tour = this.props.options.allTours.filter(tour=> +tour.tourId === +this.props.options.currTour);
+        var tour = this.props.options.allTours[this.props.options.currTour];
 
         var idIndex = tour.map(sites=>sites.siteId), currIndex = idIndex.indexOf(this.props.sites.currSite);
         if (currIndex === -1 || currIndex >= idIndex.length-1) {currIndex = 0};

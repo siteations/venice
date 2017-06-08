@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { connect } from 'react-redux';
 
 import { resetSaved } from '../action-creators/siteActions.js';
+import { addTourEntry, removeTourEntry } from '../action-creators/optionActions.js';
 //import { imageSeries } from '../pre-db/cirTest.js';
 
 
@@ -30,6 +31,10 @@ class FormT extends Component {
         this.reset = this.reset.bind(this);
   }
 
+  componentDidMount(){
+    this.props.resetSaved();
+  }
+
   reset(e){
     e.preventDefault();
     let obj = {
@@ -40,7 +45,9 @@ class FormT extends Component {
           tourId: 0,
           tourIdNew: 0,
           siteId: 0,
+          siteIdNew: 0,
           zoom: 3,
+          zoomNew: 3,
           tourName: '',
           siteRemove: 0,
         }
@@ -62,7 +69,30 @@ class FormT extends Component {
   save(e, type){
     e.preventDefault();
     console.log(this.state);
-    //untangle the post/put options here:
+    var tourObj={}
+
+    if (type==='add'){
+      tourObj.tourId = this.state.tourId,
+      tourObj.siteId = this.state.siteId,
+      tourObj.zoom = this.state.zoom,
+      tourObj.tourName = this.state.tourName,
+
+      this.props.addTourEntry(tourObj);
+
+    } else if (type==='new'){ // new
+      tourObj.tourId = this.state.tourIdNew,
+      tourObj.siteId = this.state.siteIdNew,
+      tourObj.zoom = this.state.zoomNew,
+      tourObj.tourName = this.state.tourName,
+
+      this.props.addTourEntry(tourObj);
+
+    } else if (type==='remove'){ // remove... different dispatch
+
+      let site = this.props.options.allTours[this.state.tourId].filter(sites=> +sites.siteId === +this.state.siteRemove)[0];
+
+      this.props.removeTourEntry(site.id);
+    }
 
     // let obj = {};
     // obj[type] = true;
@@ -80,16 +110,14 @@ class FormT extends Component {
     this.setState(obj);
   }
 
-  updateOptions(e, id, exists){
+  updateOptions(e, id){
     e.preventDefault();
     let input = document.getElementById(id).value;
-    console.log('tourid?', id, input);
     var obj={}; obj[id]=input;
     this.setState(obj);
 
     if (obj.tourId){
       let tourCurrName = this.props.options.allTours[obj.tourId][0].tourName;
-      console.log(tourCurrName);
       this.setState({tourName : tourCurrName});
     }
   }
@@ -102,13 +130,16 @@ class FormT extends Component {
     var tourIds = Object.keys(this.props.options.allTours);
     let newTourId = Math.max(...tourIds) + 1;
         tourIds.unshift('none');
-
-        console.log(tourIds);
     //prep choices
 
     let siteName;
     if (this.state.siteId>0){
       siteName = this.props.sites.allSites[this.state.siteId-1].name;
+    }
+
+    let siteNameNew;
+    if (this.state.siteIdNew>0){
+      siteNameNew = this.props.sites.allSites[this.state.siteIdNew-1].name;
     }
 
     let siteNameRemoved;
@@ -217,7 +248,7 @@ class FormT extends Component {
               <h4 className="BornholmSandvig">Review Entries</h4>
               <p> either accept (below) or correct & review again</p>
                 <div className="editOps">
-                <label className='underline'>Choosen Tour:</label> <p>{this.state.tourId}, {this.state.tourName}</p>
+                <label className='underline'>Choosen Tour:</label> <p>existing: {this.state.tourId}, {this.state.tourName}</p>
                 <ul>
                       {this.props.options.allTours[this.state.tourId] &&
                         this.props.options.allTours[this.state.tourId].map((site,i)=>{
@@ -229,10 +260,10 @@ class FormT extends Component {
 
                       }
                 </ul>
-                      <label className='underline'>added:</label><p> {`id: ${this.state.siteId}, name: ${siteName}`}</p>
+                      <label className='underline'>added site:</label><p>id: {this.state.siteId}, name: {siteName}</p>
                       <label className='underline'>removed:</label><p> {`id: ${this.state.siteRemove}, name: ${siteNameRemoved}`}</p>
                 <p>You must click below to save edits to database</p>
-                <button className="btn btn-default" onClick={e=>this.save(e,'add')}>Save</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
+                <button className="btn btn-default" onClick={e=>this.save(e,'add')}>Save</button>  <button className="btn btn-default" onClick={e=>this.save(e,'remove')}>Remove </button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
                 </div>
               </div>
             }
@@ -241,8 +272,8 @@ class FormT extends Component {
               <h4 className="BornholmSandvig">Review Entries</h4>
               <p> either accept (below) or correct & review again</p>
                 <div className="editOps">
-                <label className='underline'>New Tour:</label> <p>{this.state.tourId}, {this.state.tourName}</p>
-                <label className='underline'>Initial Site:</label><p> {`id: ${this.state.siteId}, name: ${siteName}`}</p>
+                <label className='underline'>New Tour:</label> <p>{this.state.tourIdNew}, {this.state.tourName}</p>
+                <label className='underline'>Initial Site:</label><p> {`id: ${this.state.siteIdNew}, name: ${siteNameNew}`}</p>
 
                 <p>You must click below to save edits to database</p>
                 <button className="btn btn-default" onClick={e=>this.save(e,'new')}>Save</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
@@ -274,6 +305,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     resetSaved: () => {
       dispatch(resetSaved());
     },
+    addTourEntry: (obj) => {
+      dispatch(addTourEntry(obj));
+    },
+    removeTourEntry: (id) => {
+      dispatch(removeTourEntry(id));
+    }
   }
 }
 

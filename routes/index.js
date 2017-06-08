@@ -180,6 +180,19 @@ router.post('/tours', (req, res, next)=>{
 		});
 });
 
+router.delete('/tours/:id', (req, res, next)=>{
+
+		Tours.findById(req.params.id)
+		.then(tourList=>{
+			return tourList.destroy();
+		}).then(() => {
+			res.send({message: req.params.id+' removed'});
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
 
 //-------------authorization----------------------
 

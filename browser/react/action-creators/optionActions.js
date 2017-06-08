@@ -2,6 +2,8 @@
 import axios from 'axios';
 import Promise from 'bluebird';
 
+import {saved} from './siteActions.js';
+
 //layer view options
 export const SET_COLOR = "SET_COLOR";
 export const SET_ANNO = "SET_ANNO";
@@ -269,10 +271,37 @@ export const getAllToursThemes = () => dispatch => {
 	        tours[site.tourId] = [site];
 	      }
 	    });
-	    console.log('inital tours', tours, results);
 
 			dispatch(getAllTours(tours));
 		})
 		.catch(console.log);
+
+}
+
+export const addTourEntry = (obj) => dispatch => {
+
+	axios.post('/api/tours', obj)
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((site) => {
+	    dispatch(getAllToursThemes());
+	    dispatch(saved(true));
+			})
+	   .catch(console.log);
+
+}
+
+export const removeTourEntry = (id) => dispatch => {
+
+	axios.delete(`/api/tours/${id}`)
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((site) => {
+	    dispatch(getAllToursThemes());
+	    dispatch(saved(true));
+			})
+	   .catch(console.log);
 
 }
