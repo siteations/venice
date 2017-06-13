@@ -30,27 +30,40 @@ class PanelBase extends Component {
   	let count = img.split(', ');
   }
 
-
-
   render(){
   	let obj, image;
   	(this.props.panel.narrObj)? obj=this.props.panel.narrObj : obj={};
-    (obj.imageSeries) ? image = this.props.sites.genImages.filter(images => +images.imageSeries === +obj.imageSeries) : image = [] ;
-  	console.log(image);
+
+    let images = this.props.sites.genImages.filter(images => +images.narrativeId === +obj.id);
+    let biblio = this.props.sites.genBiblio.filter(bib => +bib.narrativeId === +obj.id);
+  	console.log(images, biblio);
 
   	return (
-  	     <div className={this.props.baseClass} ref="sizeP" id="panelWin" onAnimationEnd = {e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`}}>
+  	     <div className={this.props.baseClass} ref="sizeP" id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`}}>
 				    <h2 className="BornholmSandvig" >{this.props.panel.title}</h2>
 				    <h4>{this.props.panel.subtitle}</h4>
-				    <br/>
 				    <h3 className="BornholmSandvig">{obj.title}</h3>
-              {image.length > 0 &&
-                <Imagetrey image={image} onAnimationEnd = {e=> this.refSize(e)} width={this.props.panel.imageWidth} height={(this.props.map.windowSize[1]+6)*0.65} />
+              {images.length > 0 &&
+                <Imagetrey image={images} onAnimationEnd={e=> this.refSize(e)} width={this.props.panel.imageWidth} height={(this.props.map.windowSize[1]+6)*0.65} />
               }
 				    <br/>
 				    <p>{obj.text}</p>
 				    <br/>
-				    <p><span className="Trenda-Bold">Catalog Links: </span><a href={obj.catalogLink}>{obj.source}</a></p>
+            {biblio.length > 0  &&
+				    <p className="Trenda-Bold">Sources: </p>
+            }
+            <ul>
+            {biblio.length > 0 &&
+              biblio.map(bib=>{
+                return <li>{bib.author} <a href={bib.link}><em>{bib.title}</em></a> {bib.published} {bib.physical} {bib.page}</li>
+              })
+
+            }
+            </ul>
+            <br/>
+            {obj.researcherName &&
+            <p><span className="Trenda-Bold">Narrative Credits: </span> {obj.researcherName}, {obj.researcherTitle}, {obj.researcherAffiliation}.</p>
+            }
 				</div>
 
   	)

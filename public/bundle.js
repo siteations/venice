@@ -1629,7 +1629,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.editNarrative = exports.addNarrative = exports.resetSaved = exports.addNewSiteRadius = exports.addNewSiteCenter = exports.editSite = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.getDetailsNarratives = exports.reloadNarratives = exports.reloadImages = exports.addImage = exports.addDetail = exports.reloadDetails = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.saved = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getAllSites = exports.SAVED = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
+exports.editNarrative = exports.addNarrative = exports.resetSaved = exports.addNewSiteRadius = exports.addNewSiteCenter = exports.editSite = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.getDetailsNarratives = exports.reloadNarratives = exports.reloadImages = exports.addImage = exports.addDetail = exports.reloadDetails = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.saved = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getGenBiblio = exports.getAllSites = exports.SAVED = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_BIB = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
 
 var _axios = __webpack_require__(85);
 
@@ -1666,6 +1666,7 @@ var GET_CURR_NARR = exports.GET_CURR_NARR = 'GET_CURR_NARR';
 var GET_GEN_DETAIL = exports.GET_GEN_DETAIL = 'GET_GEN_DETAIL';
 var GET_GEN_NARR = exports.GET_GEN_NARR = 'GET_GEN_NARR';
 var GET_GEN_IMG = exports.GET_GEN_IMG = 'GET_GEN_IMG';
+var GET_GEN_BIB = exports.GET_GEN_BIB = 'GET_GEN_BIB';
 
 var GET_CURR_IMGS = exports.GET_CURR_IMGS = 'GET_CURR_IMGS';
 
@@ -1687,6 +1688,13 @@ var getAllSites = exports.getAllSites = function getAllSites(sites) {
 	return {
 		type: GET_ALL_SITES,
 		sites: sites
+	};
+};
+
+var getGenBiblio = exports.getGenBiblio = function getGenBiblio(bib) {
+	return {
+		type: GET_GEN_BIB,
+		bib: bib
 	};
 };
 
@@ -1826,6 +1834,7 @@ var initSites = {
 	genNarratives: [],
 	genDetails: [], //narratives & captions
 	genImages: [],
+	genBiblio: [],
 	currImages: {}, //links for panel images
 	minorId: 0,
 	clusterId: 0,
@@ -1891,6 +1900,10 @@ var siteReducer = exports.siteReducer = function siteReducer() {
 
 		case GET_GEN_NARR:
 			newState.genNarratives = action.narratives;
+			break;
+
+		case GET_GEN_BIB:
+			newState.genBiblio = action.bib;
 			break;
 
 		case GET_GEN_IMG:
@@ -2111,13 +2124,19 @@ var getDetailsNarratives = exports.getDetailsNarratives = function getDetailsNar
 			return responses.data;
 		});
 
-		_bluebird2.default.all([allDetails, allNarratives, allImages]).then(function (results) {
+		var allBiblio = _axios2.default.get('/api/biblio').then(function (responses) {
+			return responses.data;
+		});
+
+		_bluebird2.default.all([allDetails, allNarratives, allImages, allBiblio]).then(function (results) {
 			var details = results[0],
 			    narratives = results[1],
-			    images = results[2];
+			    images = results[2],
+			    biblio = results[3];
 			dispatch(getGenDetails(details));
 			dispatch(getGenNarratives(narratives));
 			dispatch(getGenImages(images));
+			dispatch(getGenBiblio(biblio));
 		}).catch(console.log);
 	};
 };
@@ -8165,7 +8184,7 @@ module.exports = __webpack_require__(287);
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -8173,6 +8192,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(14);
+
+var _reactRedux = __webpack_require__(21);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8182,84 +8205,140 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Imagetrey = function (_Component) {
-	_inherits(Imagetrey, _Component);
+var Image = function (_Component) {
+  _inherits(Image, _Component);
 
-	function Imagetrey(props) {
-		_classCallCheck(this, Imagetrey);
+  function Image(props) {
+    _classCallCheck(this, Image);
 
-		var _this = _possibleConstructorReturn(this, (Imagetrey.__proto__ || Object.getPrototypeOf(Imagetrey)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Image.__proto__ || Object.getPrototypeOf(Image)).call(this, props));
 
-		_this.state = {
-			active: 0,
-			widthOriginal: props.width,
-			width: props.width,
-			height: props.height
-		};
-		return _this;
-	}
+    _this.state = {
+      active: 0,
+      widthOriginal: props.panel.imageWidth,
+      widthImg: props.width,
+      heightImg: props.height
+    };
+    return _this;
+  }
 
-	_createClass(Imagetrey, [{
-		key: "getSize",
-		value: function getSize(e) {
-			e.preventDefault();
-			var relH = e.target.attributes.src.ownerElement.clientHeight;
-			if (relH > this.state.height) {
-				var ratioDiff = this.state.height / relH;
-				var newWidth = ratioDiff * this.state.widthOriginal;
-				this.setState({ width: newWidth });
-			} else {
-				this.setState({ width: this.state.widthOriginal });
-			}
-		}
-	}, {
-		key: "render",
-		value: function render() {
-			var _this2 = this;
+  _createClass(Image, [{
+    key: 'getSize',
+    value: function getSize(e) {
+      e.preventDefault();
+      var relH = e.target.attributes.src.ownerElement.clientHeight;
+      var relW = e.target.attributes.src.ownerElement.clientWidth;
+      var heightImg = this.props.panel.panelSize[1] * .75;
+      var widthImg = this.props.panel.panelSize[0] * .9;
+      this.setState({ widthImg: widthImg });
+      var newH = widthImg / relW * relH;
 
-			return _react2.default.createElement(
-				"div",
-				null,
-				_react2.default.createElement(
-					"div",
-					{ className: "text-center" },
-					_react2.default.createElement("img", { src: this.props.image[this.state.active].src, style: { width: this.state.width + "px" }, onLoad: function onLoad(e) {
-							return _this2.getSize(e);
-						}, onChange: function onChange(e) {
-							return _this2.getSize(e);
-						} })
-				),
-				_react2.default.createElement(
-					"div",
-					{ className: "row m10" },
-					_react2.default.createElement(
-						"div",
-						{ className: "col-xs-4 col-xs-offset-4 text-center" },
-						this.props.image.length > 1 && this.props.image.map(function (image, i) {
-							if (i === _this2.state.active) {
-								return _react2.default.createElement("span", { id: "slider " + i, className: "fa fa-circle pad10", value: "i", onClick: "" });
-							} else {
-								return _react2.default.createElement("span", { id: "slider " + i, className: "fa fa-circle-o pad10", value: "i", onClick: "" });
-							}
-						})
-					)
-				),
-				_react2.default.createElement(
-					"h5",
-					null,
-					_react2.default.createElement(
-						"span",
-						{ className: "Trenda-Bold" },
-						"Image: "
-					),
-					this.props.image[this.state.active].caption
-				)
-			);
-		}
-	}]);
+      if (newH > heightImg) {
+        //in case too tall
+        var ratioDiff = heightImg / newH;
+        var newWidth = ratioDiff * widthImg;
+        this.setState({ widthImg: newWidth });
+      }
+    }
+  }, {
+    key: 'switchImg',
+    value: function switchImg(e) {
+      var ind = +this.state.active;
+      var index = +e.target.id.split(' ')[1];
 
-	return Imagetrey;
+      this.setState({ active: index });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var imgId = this.props.image[this.state.active].id;
+      var biblio = this.props.sites.genBiblio.filter(function (bib) {
+        return +bib.imageId === +imgId;
+      });
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'text-center' },
+          _react2.default.createElement('img', { src: this.props.image[this.state.active].src, style: { width: this.state.widthImg + 'px' }, onLoad: function onLoad(e) {
+              return _this2.getSize(e);
+            }, onChange: function onChange(e) {
+              return _this2.getSize(e);
+            } })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'row m10' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-xs-4 col-xs-offset-4 text-center' },
+            this.props.image.length > 1 && this.props.image.map(function (image, i) {
+              if (i === _this2.state.active) {
+                return _react2.default.createElement('span', { id: 'slider ' + i, className: 'fa fa-circle pad10', value: 'i', onClick: function onClick(e) {
+                    return _this2.switchImg(e);
+                  } });
+              } else {
+                return _react2.default.createElement('span', { id: 'slider ' + i, className: 'fa fa-circle-o pad10', value: 'i', onClick: function onClick(e) {
+                    return _this2.switchImg(e);
+                  } });
+              }
+            })
+          )
+        ),
+        _react2.default.createElement(
+          'h5',
+          null,
+          _react2.default.createElement(
+            'span',
+            { className: 'Trenda-Bold' },
+            'Image: '
+          ),
+          this.props.image[this.state.active].caption,
+          ',',
+          biblio.length > 0 && _react2.default.createElement(
+            'span',
+            { className: 'small' },
+            ' ',
+            biblio[0].author,
+            ' ',
+            _react2.default.createElement(
+              'a',
+              { href: biblio[0].link },
+              _react2.default.createElement(
+                'em',
+                null,
+                biblio[0].title
+              )
+            ),
+            ' ',
+            biblio[0].published,
+            ' ',
+            biblio[0].physical,
+            ' ',
+            biblio[0].page
+          )
+        )
+      );
+    }
+  }]);
+
+  return Image;
 }(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    map: state.map,
+    options: state.options,
+    sites: state.sites,
+    panel: state.panel
+  };
+};
+
+var Imagetrey = (0, _reactRedux.connect)(mapStateToProps, null)(Image);
 
 exports.default = Imagetrey;
 
@@ -39966,10 +40045,14 @@ var PanelBase = function (_Component) {
       var obj = void 0,
           image = void 0;
       this.props.panel.narrObj ? obj = this.props.panel.narrObj : obj = {};
-      obj.imageSeries ? image = this.props.sites.genImages.filter(function (images) {
-        return +images.imageSeries === +obj.imageSeries;
-      }) : image = [];
-      console.log(image);
+
+      var images = this.props.sites.genImages.filter(function (images) {
+        return +images.narrativeId === +obj.id;
+      });
+      var biblio = this.props.sites.genBiblio.filter(function (bib) {
+        return +bib.narrativeId === +obj.id;
+      });
+      console.log(images, biblio);
 
       return _react2.default.createElement(
         'div',
@@ -39986,13 +40069,12 @@ var PanelBase = function (_Component) {
           null,
           this.props.panel.subtitle
         ),
-        _react2.default.createElement('br', null),
         _react2.default.createElement(
           'h3',
           { className: 'BornholmSandvig' },
           obj.title
         ),
-        image.length > 0 && _react2.default.createElement(_ImageSlider2.default, { image: image, onAnimationEnd: function onAnimationEnd(e) {
+        images.length > 0 && _react2.default.createElement(_ImageSlider2.default, { image: images, onAnimationEnd: function onAnimationEnd(e) {
             return _this2.refSize(e);
           }, width: this.props.panel.imageWidth, height: (this.props.map.windowSize[1] + 6) * 0.65 }),
         _react2.default.createElement('br', null),
@@ -40002,19 +40084,54 @@ var PanelBase = function (_Component) {
           obj.text
         ),
         _react2.default.createElement('br', null),
+        biblio.length > 0 && _react2.default.createElement(
+          'p',
+          { className: 'Trenda-Bold' },
+          'Sources: '
+        ),
         _react2.default.createElement(
+          'ul',
+          null,
+          biblio.length > 0 && biblio.map(function (bib) {
+            return _react2.default.createElement(
+              'li',
+              null,
+              bib.author,
+              ' ',
+              _react2.default.createElement(
+                'a',
+                { href: bib.link },
+                _react2.default.createElement(
+                  'em',
+                  null,
+                  bib.title
+                )
+              ),
+              ' ',
+              bib.published,
+              ' ',
+              bib.physical,
+              ' ',
+              bib.page
+            );
+          })
+        ),
+        _react2.default.createElement('br', null),
+        obj.researcherName && _react2.default.createElement(
           'p',
           null,
           _react2.default.createElement(
             'span',
             { className: 'Trenda-Bold' },
-            'Catalog Links: '
+            'Narrative Credits: '
           ),
-          _react2.default.createElement(
-            'a',
-            { href: obj.catalogLink },
-            obj.source
-          )
+          ' ',
+          obj.researcherName,
+          ', ',
+          obj.researcherTitle,
+          ', ',
+          obj.researcherAffiliation,
+          '.'
         )
       );
     }

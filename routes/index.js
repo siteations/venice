@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Images, Narratives, Details, Sites, Tours, User } = require('../db/models/index.js');
+const {Images, Narratives, Details, Sites, Tours, User, Biblio } = require('../db/models/index.js');
 const { ImageUploaderAWS, ImageUploader }= require('../utility/imageUploaders.js');
 
 //rework once you've done the db design/setup mysql tables
@@ -193,6 +193,17 @@ router.delete('/tours/:id', (req, res, next)=>{
 		});
 });
 
+//-------------bibliographic entries----------------------
+
+router.get('/biblio', (req, res, next)=>{
+		Biblio.findAll({})
+		.then(bibList=>{
+			res.send(bibList);
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
 
 //-------------authorization----------------------
 

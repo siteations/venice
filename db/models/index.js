@@ -7,6 +7,7 @@ const Details = require('./details.js');
 const Sites = require('./sites.js');
 const Tours = require('./tours.js');
 const User = require('./user.js');
+const Biblio = require('./bibliography.js');
 
 //add associations here
 
@@ -18,4 +19,5 @@ module.exports = {
     Sites,
     Tours,
     User,
+    Biblio,
 };

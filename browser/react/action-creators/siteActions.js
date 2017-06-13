@@ -25,6 +25,7 @@ export const GET_CURR_NARR = 'GET_CURR_NARR';
 export const GET_GEN_DETAIL ='GET_GEN_DETAIL';
 export const GET_GEN_NARR ='GET_GEN_NARR';
 export const GET_GEN_IMG = 'GET_GEN_IMG';
+export const GET_GEN_BIB = 'GET_GEN_BIB';
 
 export const GET_CURR_IMGS = 'GET_CURR_IMGS';
 
@@ -46,6 +47,13 @@ export const getAllSites = (sites) => {
 	return {
 		type: GET_ALL_SITES,
 		sites: sites
+	};
+};
+
+export const getGenBiblio = (bib) => {
+	return {
+		type: GET_GEN_BIB,
+		bib
 	};
 };
 
@@ -185,6 +193,7 @@ const initSites = {
 	genNarratives: [],
 	genDetails: [], //narratives & captions
 	genImages: [],
+	genBiblio: [],
 	currImages: {}, //links for panel images
 	minorId: 0,
 	clusterId: 0,
@@ -247,6 +256,10 @@ export const siteReducer = (prevState = initSites, action) => {
 
 	case GET_GEN_NARR:
 		newState.genNarratives = action.narratives;
+		break;
+
+		case GET_GEN_BIB:
+		newState.genBiblio = action.bib;
 		break;
 
 	case GET_GEN_IMG:
@@ -470,12 +483,18 @@ export const getDetailsNarratives = () => dispatch =>{
 				return responses.data;
 			})
 
-	Promise.all([allDetails, allNarratives, allImages])
+	const allBiblio = axios.get('/api/biblio')
+			.then(responses => {
+				return responses.data;
+			})
+
+	Promise.all([allDetails, allNarratives, allImages, allBiblio])
 		.then((results) => {
-			const details = results[0], narratives = results[1], images=results[2];
+			const details = results[0], narratives = results[1], images=results[2], biblio = results[3];
 			dispatch(getGenDetails(details));
 			dispatch(getGenNarratives(narratives));
 			dispatch(getGenImages(images));
+			dispatch(getGenBiblio(biblio));
 		})
 		.catch(console.log);
 }
