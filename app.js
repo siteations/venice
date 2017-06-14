@@ -49,7 +49,8 @@ const db = require('./db');
 //------------PUBLIC/USE/ETC------------------
 //const fsP = Promise.promisify(fs.readFile);
 
-const port = 3000;
+//const port = 3000;
+const port = process.env.PORT;
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
