@@ -18,8 +18,6 @@ class FormNarr extends Component {
           clusterId: 0,
           title:'',
           text:'',
-          biblio: '',
-          imageSeries: 0, // placeholder, update from image upload
           researcherName: '',
           researcherTitle: '',
           researcherAffiliation: '',
@@ -44,8 +42,6 @@ class FormNarr extends Component {
           clusterId: 0,
           title:'',
           text:'',
-          biblio: '',
-          imageSeries: 0, // placeholder, update from image upload
           researcherName: '',
           researcherTitle: '',
           researcherAffiliation: '',
@@ -135,8 +131,6 @@ class FormNarr extends Component {
     				    <label className='underline' for="title">Descriptive Title:</label> <input className="form-control" id='title' onChange={e=>this.update(e)} placeholder="Title input"></input>
     				    <label className='underline' for="text">Core Text (50-90 words):</label>
                   <textarea id='text' onChange={e=>this.update(e)} className="form-control col-xs-12" rows="3" placeholder="Text input" ></textarea><br/><br/>
-                <label className='underline' for="biblio">Bibliography for Description (Chicago Style Citations): </label>
-                  <textarea id='biblio' onChange={e=>this.update(e)} className="form-control col-xs-12" rows="3" placeholder="Text input" ></textarea><br/>
                 <p>Research Credits</p>
                 <label className='underline' for="researcherName">Name:</label>
                   <input className="form-control" id='researcherName' onChange={e=>this.update(e)} placeholder="Reseacher Name" ></input><br/>
@@ -157,7 +151,6 @@ class FormNarr extends Component {
                 <label className='underline'>Core/cluster/minor id: </label><p>{this.state.coreId}, {this.state.clusterId}, {this.state.minorId}</p>
                 <label className='underline'>Descriptive Title:</label> <p>{this.state.title}</p>
                 <label className='underline' for="text">Core Text (50-90 words):</label> <p>{this.state.text}</p>
-                <label className='underline' for="biblio">Bibliography for Description (Chicago Style Citations): </label><p>{this.state.biblio}</p>
                 <p>Research Credits</p>
                 <label className='underline' for="researcherName">Name:</label><p>{this.state.researcherName}</p>
                 <label className='underline' for="researcherTitle">Title:</label><p>{this.state.researcherTitle}</p>

@@ -13,7 +13,6 @@ class FormImg extends Component {
           coreId: 0,
           minorId: 0,
           clusterId: 0,
-          imageSeries: 0,
           narrativeId: 0,
           narrative: {},
           src: '',
@@ -21,8 +20,6 @@ class FormImg extends Component {
           filename: '',
           filetype: '',
           caption: '',
-          catalogSource: '',
-          catalogLink: '',
         }
         this.submission = this.submission.bind(this);
         this.update = this.update.bind(this);
@@ -40,9 +37,7 @@ class FormImg extends Component {
     var imageObj={
           src: '', //fills in later in request, temp view
           caption: this.state.caption,
-          catalogSource: this.state.catalogSource,
-          catalogLink: this.state.catalogLink,
-          imageSeries: this.state.imageSeries,
+          narrativeId: this.state.narrativeId,
     };
 
     var narrId = this.state.narrativeId;
@@ -57,7 +52,7 @@ class FormImg extends Component {
     };
 
     this.props.addImage(imgObj, imageObj);
-    this.props.editNarrative(narrObj, narrId);
+    //this.props.editNarrative(narrObj, narrId);
 
 
   }
@@ -76,7 +71,6 @@ class FormImg extends Component {
           coreId: 0,
           minorId: 0,
           clusterId: 0,
-          imageSeries: 0,
           narrativeId: 0,
           narrative: {},
           src: '',
@@ -84,8 +78,6 @@ class FormImg extends Component {
           filename: '',
           filetype: '',
           caption: '',
-          catalogSource: '',
-          catalogLink: '',
         }
 
     this.setState(obj);
@@ -95,15 +87,15 @@ class FormImg extends Component {
   uploadImg(e){
     e.preventDefault();
 
-    //image series number...
-      let images = this.props.sites.genImages.map(image=> +image.imageSeries);
-      var seriesId = Math.max(...images);
-      seriesId++;
+    // //image series number...
+    //   let images = this.props.sites.genImages.map(image=> +image.imageSeries);
+    //   var seriesId = Math.max(...images);
+    //   seriesId++;
 
-      if (this.state.narrative.imageSeries>0){
-          seriesId = this.state.narrative.imageSeries;
-      }
-      this.setState({imageSeries: seriesId});
+    //   if (this.state.narrative.imageSeries>0){
+    //       seriesId = this.state.narrative.imageSeries;
+    //   }
+    //   this.setState({imageSeries: seriesId});
 
       var reader = new FileReader();
       var file = e.target.files[0];
@@ -156,7 +148,7 @@ class FormImg extends Component {
                   {this.props.sites.genNarratives &&
                     this.props.sites.genNarratives.map((layer,i)=>{
                       return (
-                      <option value={layer.id} key={layer+i}>{layer.id} {layer.title}, for coreId: {layer.coreId}, clusterId: {layer.clusterId}, detailId: {layer.minorId}.</option>
+                      <option value={layer.id} key={layer+i}>{layer.id}) {layer.title}, for coreId: {layer.coreId}, clusterId: {layer.clusterId}, detailId: {layer.minorId}.</option>
                       )
                     })
                   }
@@ -181,10 +173,7 @@ class FormImg extends Component {
                   <input className="form-control" type="file" id='image' onChange={e=>this.uploadImg(e)} ></input>
                 <label className='underline' for="caption">Image Caption: </label>
                   <input className="form-control" type="text" id='caption' placeholder="Caption input" onChange={e=>this.update(e)} ></input>
-                <label className='underline'>Image Catalog Source (Chicago Style Citation):</label>
-                  <input className="form-control" id='catalogSource' onChange={e=>this.update(e)} placeholder="Source input" ></input><br/>
-                <label className='underline' for="catalogLink">Catalog Link (at Newberry): </label>
-                  <input className="form-control" id='catalogLink' onChange={e=>this.update(e)} placeholder="Link input" ></input><br/>
+                <p className='underline'>Add Image Source later, from Bibliography Form</p><br/>
 
     				    <p>Submit information (input results will appear below)</p>
                 <button className="btn btn-default" type="submit">Submit</button>
@@ -197,8 +186,6 @@ class FormImg extends Component {
                 <div className="editOps">
                 <label className='underline' >Image: </label> <img src={this.state.src} style={{width:'100%'}} />
                 <label className='underline' >Image Caption: </label> <p>{this.state.caption}</p><br/>
-                <label className='underline'>Image Catalog Source (Chicago Style Citation):</label><p>{this.state.catalogSource}</p>
-                <label className='underline' for="catalogLink">Catalog Link (at Newberry): </label><p>{this.state.catalogLink}</p>
                 <p>You must click below to save edits to database</p>
                 <button className="btn btn-default" onClick={e=> this.save(e)}>Save Panel Image</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
                 </div>
@@ -232,9 +219,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     addImage: (imgObj, imageObj) => {
       dispatch(addImage(imgObj, imageObj));
     },
-    editNarrative: (editObj, id) => {
-      dispatch(editNarrative(editObj, id));
-    },
+    // editNarrative: (editObj, id) => {
+    //   dispatch(editNarrative(editObj, id));
+    // },
   }
 }
 

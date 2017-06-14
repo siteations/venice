@@ -477,6 +477,10 @@ a:hover {
 	height: 20px;
 }
 
+.imgSelect {
+	border: solid 1px #000000;
+}
+
 .underline {
 	text-decoration: underline;
 	margin-top: 5px;

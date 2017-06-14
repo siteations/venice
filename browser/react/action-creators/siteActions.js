@@ -466,6 +466,17 @@ export const reloadNarratives = () => dispatch => {
 			.catch(console.log);
 }
 
+export const reloadBiblio = () => dispatch => {
+		axios.get('/api/biblio')
+			.then(responses => {
+				return responses.data;
+			})
+			.then((bib) => {
+			dispatch(getGenBiblio(bib));
+			})
+			.catch(console.log);
+}
+
 export const getDetailsNarratives = () => dispatch =>{
 
 	const allDetails = axios.get('/api/details')
@@ -497,6 +508,20 @@ export const getDetailsNarratives = () => dispatch =>{
 			dispatch(getGenBiblio(biblio));
 		})
 		.catch(console.log);
+}
+
+export const addBiblio = (biblioObj) => dispatch => {
+		console.log('pre-post', biblioObj);
+
+	axios.post('/api/biblio', biblioObj)
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((site) => {
+	    dispatch(reloadBiblio());
+	    dispatch(saved(true));
+			})
+	   .catch(console.log);
 }
 
 export const addSelectLayer = (layer) => dispatch => { //add and load
@@ -604,6 +629,22 @@ export const editNarrative = (siteObj, id) => dispatch => {
 			})
 	    .then((site) => {
 	    dispatch(reloadNarratives());
+			})
+	   .catch(console.log);
+}
+
+//-----------Bibliography dispatches------------------------
+
+export const addBibliography = (biblioObj) => dispatch => {
+		console.log('pre-post', biblioObj);
+
+	axios.post('/api/biblio', biblioObj)
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((site) => {
+	    dispatch(reloadBiblio());
+	    dispatch(saved(true));
 			})
 	   .catch(console.log);
 }

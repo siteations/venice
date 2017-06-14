@@ -205,6 +205,16 @@ router.get('/biblio', (req, res, next)=>{
 		});
 });
 
+router.post('/biblio', (req, res, next)=>{
+		Biblio.create(req.body)
+		.then(bibList=>{
+			res.send(bibList);
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
 //-------------authorization----------------------
 
 // login

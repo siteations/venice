@@ -13,6 +13,7 @@ import FormImage from './FormImage.js';
 import FormSite from './FormSite.js';
 import FormTour from './FormTour.js';
 import FormLogin from './FormLogin.js';
+import FormBiblio from './FormBiblio.js';
 
 class PanelEdit extends Component {
 	constructor(props) {
@@ -50,10 +51,11 @@ class PanelEdit extends Component {
          <div className="">
           <h4 className="BornholmSandvig">Add or Edit</h4>
           <button className="btn btn-default marg10" value="site" onClick={e=>this.changeForm(e)} >Site</button>
-          <button className="btn btn-default marg10" value="detail" onClick={e=>this.changeForm(e)} >Site Detail</button>
+          <button className="btn btn-default marg10" value="detail" onClick={e=>this.changeForm(e)} >Detail</button>
           <button className="btn btn-default marg10" value="narrative" onClick={e=>this.changeForm(e)} >Narrative</button>
-          <button className="btn btn-default marg10" value="image" onClick={e=>this.changeForm(e)} >Panel Image</button>
+          <button className="btn btn-default marg10" value="image" onClick={e=>this.changeForm(e)} >Image</button>
           <button className="btn btn-default marg10" value="tour" onClick={e=>this.changeForm(e)} >Tour</button>
+          <button className="btn btn-default marg10" value="biblio" onClick={e=>this.changeForm(e)} >Bibliography</button>
           {/*<button className="btn btn-default marg10" value="edit" onClick={e=>this.changeForm(e)} >Edit Existing (Any Element)</button>
           <button className="btn btn-default marg10" value="delete" onClick={e=>this.changeForm(e)} >Delete Existing ((Any Element)</button>*/}
          </div>
@@ -78,14 +80,20 @@ class PanelEdit extends Component {
          }
          {this.state.panelform === 'site' &&
           <div className="editOps">
-          <h3 className="BornholmSandvig">Add Site </h3>
+          <h3 className="BornholmSandvig">Add Site</h3>
            <FormSite />
           </div>
          }
          {this.state.panelform === 'tour' &&
           <div className="editOps">
-          <h3 className="BornholmSandvig">Add Tour </h3>
+          <h3 className="BornholmSandvig">Add (to) Tour </h3>
            <FormTour />
+          </div>
+         }
+         {this.state.panelform === 'biblio' &&
+          <div className="editOps">
+          <h3 className="BornholmSandvig">Add Bibliographic Source </h3>
+           <FormBiblio />
           </div>
          }
          {this.state.panelform === 'edit' &&

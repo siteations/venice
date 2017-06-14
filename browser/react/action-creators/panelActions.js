@@ -12,7 +12,7 @@ export const SET_SUBTITLE = 'SET_SUBTITLE';
 
 export const SET_NARROBJ = 'SET_NARROBJ';
 export const SET_IMAGESIZES = 'SET_IMAGESIZES';
-export const SET_BIBLIOALL ='SET_BIBLIOALL';
+//export const SET_BIBLIOALL ='SET_BIBLIOALL';
 
 
 //-------------------ACTION CREATORS - vanilla loading of information
@@ -58,12 +58,12 @@ export const setImageSizes = (sizes) => {
 	};
 };
 
-export const setBiblioAll = (biblio) => {
-	return {
-		type: SET_BIBLIOALL,
-		biblio,
-	}
-}
+// export const setBiblioAll = (biblio) => {
+// 	return {
+// 		type: SET_BIBLIOALL,
+// 		biblio,
+// 	}
+// }
 
 
 //-------------------reducers && initial info
@@ -77,7 +77,7 @@ const initPanel = {
 
 	imageWidth: 0,
 	narrObj: {},
-	biblioAll: [],
+	// biblioAll: [],
 };
 
 
@@ -110,9 +110,9 @@ export const panelReducer = (prevState = initPanel, action) => {
 		newState.narrObj = action.narrObj;
 		break;
 
-	case SET_BIBLIOALL:
-		newState.biblioAll = action.biblio;
-		break;
+	// case SET_BIBLIOALL:
+	// 	newState.biblioAll = action.biblio;
+	// 	break;
 
 	default:
 		return prevState;
