@@ -41557,7 +41557,7 @@ const onVesselEnter = (nextRouterState) => {
 		_react2.default.createElement(
 			'div',
 			null,
-			_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice', component: _App2.default }),
+			_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _App2.default }),
 			_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice-Edit', component: _App2.default })
 		)
 	)
