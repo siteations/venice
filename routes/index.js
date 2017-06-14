@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {Images, Narratives, Details, Sites, Tours, User, Biblio } = require('../db/models/index.js');
-const { ImageUploaderAWS, ImageUploader }= require('../utility/imageUploaders.js');
-
+const { ImageUploader }= require('../utility/imageUploaders.js');
+//const { ImageUploaderAWS }= require('../utility/imageUploaders.js');
 //rework once you've done the db design/setup mysql tables
 
 //nested under /api

@@ -1,6 +1,3 @@
-//-----------ONLY FOR SEEDING!-------------------
-//const seed = require('./db/seed.js');
-
 //-----------ALL OTHER-------------------
 const Sequelize = require('sequelize');
 const path = require('path');

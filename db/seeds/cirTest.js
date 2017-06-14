@@ -1,43 +1,43 @@
 //use for database seeding later...
 
 const siteSeed = [ // this should be akin to json entries, minus name, etc.
-	{id: 1, cx:9335, cy:5672, r:1480/2, name: 'Marriage of the Sea.Bissona Serenissima', type:'processions', cluster: false, clusterId: null },
-	{id: 2,  cx:7668, cy:5989, r:900/2, name: 'Benedictine Monastery.San Giorgio Maggiore', type:'monastery', cluster: false, clusterId: null },
-	{id: 3,  cx:8687, cy:4677, r:700/2, name: 'Benedictine Convent.San Zaccaria', type:'convent', cluster: false, clusterId: null },
-	{id: 4,  cx:13535, cy:4563, r:900/2, name: 'Basilica (main).San Pietro di Castello', type:'bascilica', cluster: false, clusterId: null },
-	{id: 5,  cx:9747, cy:3541, r:700/2, name: 'Franciscan Church and Monastery.San Francesco della Vigna', type:'monastery', cluster: false, clusterId: null },
-	{id: 6,  cx:9446, cy:4379, r:500/2, name: 'The Greeks.San Giorgio dei Greci (Sant’Antonin)', type:'non-catholic communities', cluster: false, clusterId: null },
-	{id: 7,  cx:8474, cy:2043, r:500/2, name: 'Camaldolese.San Michele in Isola', type:'monastery', cluster: false, clusterId: null },
-	{id: 8,  cx:7972, cy:3242, r:700/2, name: 'Dominican Basilica.Basilica dei Santi Giovanni e Paolo', type:'bascilica', cluster: false, clusterId: null },
-	{id: 9,  cx:7899, cy:3109, r:500/2, name: 'Plague Hospital.Santi Giovanni e Paolo', type:'plague churches', cluster: false, clusterId: null },
-	{id: 10,  cx:7674, cy:3842, r:500/2, name: 'Parish Church.Santa Maria Formosa', type:'parish churches', cluster: false, clusterId: null },
-	{id: 11,  cx:6696, cy:3163, r:500/2, name: 'German Lutherans.Il Fondaco dei Tedeschi', type:'non-catholic communities', cluster: true, clusterId: 1 },
-	{id: 12,  cx:7271, cy:4563, r:900/2, name: 'Bascilica of patron saint of Venice.Basilica di San Marco (connected to Doge’s palace)', type:'bascilica', cluster: false, clusterId: null },
-	{id: 13,  cx:6642, cy:4677, r:1480/2, name: 'Holy week processions.Piazza San Marco/Bascilica San Marco', type:'processions', cluster: false, clusterId: null },
-	{id: 14,  cx:4325, cy:5150, r:700/2, name: 'Basilica and Plague Church.Santa Maria della Salute', type:'bascilica', cluster: false, clusterId: null },
-	{id: 15,  cx:4023, cy:3900, r:500/2, name: 'Augustinian Church and Monastery.Santo Stefano', type:'monastery', cluster: false, clusterId: null },
-	{id: 16,  cx:3074, cy:5090, r:700/2, name: 'Augustinian Convent.Spirito Santo', type:'convent', cluster: false, clusterId: null },
-	{id: 17,  cx:3271, cy:6563, r:700/2, name: 'Basilica and Plague Church.Il Redentore', type:'bascilica', cluster: false, clusterId: null },
-	{id: 18,  cx:1547, cy:3674, r:500/2, name: 'Parish Church.San Nicolò', type:'parish churches', cluster: false, clusterId: null },
-	{id: 19,  cx:3331, cy:3195, r:500/2, name: 'Parish Church.San Pantalon', type:'parish churches', cluster: false, clusterId: null },
-	{id: 20, cx:3693, cy:2976, r:500/2, name: 'Plague Church and Scuola (confraternity).San Rocco', type:'plague churches', cluster: false, clusterId: null },
-	{id: 21, cx:3839, cy:3065, r:700/2, name: 'Franciscan Basilica.Basilica di Santa Maria Gloriosa dei Frari', type:'bascilica', cluster: false, clusterId: null },
-	{id: 22, cx:4071, cy:2217, r:500/2, name: 'Spanish Presence.San Geremia', type:'non-catholic communities', cluster: false, clusterId: null },
-	{id: 23, cx:4287, cy:1684, r:700/2, name: 'The Jewish Ghetto.Il Ghetto', type:'non-catholic communities', cluster: false, clusterId: null },
-	{id: 24, cx:5814, cy:1623, r:700/2, name: "Cistercian.Madonna dell'Orto", type:'monastery', cluster: false, clusterId: null },
-	{id: 25, cx:4941, cy:2189, r:500/2, name: 'The Turks.Il Fondaco dei Turchi', type:'non-catholic communities', cluster: false, clusterId: null },
+	{cx:9335, cy:5672, r:1480/2, name: 'Marriage of the Sea.Bissona Serenissima', type:'processions', cluster: false, clusterId: null },
+	{cx:7668, cy:5989, r:900/2, name: 'Benedictine Monastery.San Giorgio Maggiore', type:'monastery', cluster: false, clusterId: null },
+	{cx:8687, cy:4677, r:700/2, name: 'Benedictine Convent.San Zaccaria', type:'convent', cluster: false, clusterId: null },
+	{cx:13535, cy:4563, r:900/2, name: 'Basilica (main).San Pietro di Castello', type:'bascilica', cluster: false, clusterId: null },
+	{cx:9747, cy:3541, r:700/2, name: 'Franciscan Church and Monastery.San Francesco della Vigna', type:'monastery', cluster: false, clusterId: null },
+	{cx:9446, cy:4379, r:500/2, name: 'The Greeks.San Giorgio dei Greci (Sant’Antonin)', type:'non-catholic communities', cluster: false, clusterId: null },
+	{cx:8474, cy:2043, r:500/2, name: 'Camaldolese.San Michele in Isola', type:'monastery', cluster: false, clusterId: null },
+	{cx:7972, cy:3242, r:700/2, name: 'Dominican Basilica.Basilica dei Santi Giovanni e Paolo', type:'bascilica', cluster: false, clusterId: null },
+	{cx:7899, cy:3109, r:500/2, name: 'Plague Hospital.Santi Giovanni e Paolo', type:'plague churches', cluster: false, clusterId: null },
+	{cx:7674, cy:3842, r:500/2, name: 'Parish Church.Santa Maria Formosa', type:'parish churches', cluster: false, clusterId: null },
+	{cx:6696, cy:3163, r:500/2, name: 'German Lutherans.Il Fondaco dei Tedeschi', type:'non-catholic communities', cluster: true, clusterId: 1 },
+	{cx:7271, cy:4563, r:900/2, name: 'Bascilica of patron saint of Venice.Basilica di San Marco (connected to Doge’s palace)', type:'bascilica', cluster: false, clusterId: null },
+	{cx:6642, cy:4677, r:1480/2, name: 'Holy week processions.Piazza San Marco/Bascilica San Marco', type:'processions', cluster: false, clusterId: null },
+	{cx:4325, cy:5150, r:700/2, name: 'Basilica and Plague Church.Santa Maria della Salute', type:'bascilica', cluster: false, clusterId: null },
+	{cx:4023, cy:3900, r:500/2, name: 'Augustinian Church and Monastery.Santo Stefano', type:'monastery', cluster: false, clusterId: null },
+	{cx:3074, cy:5090, r:700/2, name: 'Augustinian Convent.Spirito Santo', type:'convent', cluster: false, clusterId: null },
+	{cx:3271, cy:6563, r:700/2, name: 'Basilica and Plague Church.Il Redentore', type:'bascilica', cluster: false, clusterId: null },
+	{cx:1547, cy:3674, r:500/2, name: 'Parish Church.San Nicolò', type:'parish churches', cluster: false, clusterId: null },
+	{cx:3331, cy:3195, r:500/2, name: 'Parish Church.San Pantalon', type:'parish churches', cluster: false, clusterId: null },
+	{cx:3693, cy:2976, r:500/2, name: 'Plague Church and Scuola (confraternity).San Rocco', type:'plague churches', cluster: false, clusterId: null },
+	{cx:3839, cy:3065, r:700/2, name: 'Franciscan Basilica.Basilica di Santa Maria Gloriosa dei Frari', type:'bascilica', cluster: false, clusterId: null },
+	{cx:4071, cy:2217, r:500/2, name: 'Spanish Presence.San Geremia', type:'non-catholic communities', cluster: false, clusterId: null },
+	{cx:4287, cy:1684, r:700/2, name: 'The Jewish Ghetto.Il Ghetto', type:'non-catholic communities', cluster: false, clusterId: null },
+	{cx:5814, cy:1623, r:700/2, name: "Cistercian.Madonna dell'Orto", type:'monastery', cluster: false, clusterId: null },
+	{cx:4941, cy:2189, r:500/2, name: 'The Turks.Il Fondaco dei Turchi', type:'non-catholic communities', cluster: false, clusterId: null },
 ];
 
 const detailSeed = [
-	{id:1, nameH: 'Customs', srcThumb:'/img/placeholder_01sm.jpg', clusterId: 1, },
-	{id:2, nameH: 'Publications', srcThumb:'/img/placeholder_02sm.jpg', clusterId: 1, },
-	{id:3, nameH: 'Observations', srcThumb:'/img/placeholder_03sm.jpg', clusterId: 1, },
-	{id:4, nameH: 'Dress', srcThumb:'/img/placeholder_05sm.jpg', clusterId: 1, }
+	{nameH: 'Customs', srcThumb:'/img/placeholder_01sm.jpg', clusterId: 1, },
+	{nameH: 'Publications', srcThumb:'/img/placeholder_02sm.jpg', clusterId: 1, },
+	{nameH: 'Observations', srcThumb:'/img/placeholder_03sm.jpg', clusterId: 1, },
+	{nameH: 'Dress', srcThumb:'/img/placeholder_05sm.jpg', clusterId: 1, }
 ];
 
 
 const narrativeSeed = [
-	{id:1,
+	{
 		coreId: 11,
 		minorId: null,
 		clusterId: 1,
@@ -47,7 +47,7 @@ const narrativeSeed = [
     researcherTitle: 'professor',
     researcherAffiliation: 'University',
 	},
-	{id:2,
+	{
 		coreId: null,
 		minorId: 1,
 		clusterId: 1,
@@ -57,7 +57,7 @@ const narrativeSeed = [
     researcherTitle: 'professor',
     researcherAffiliation: 'University',
 	},
-	{id:3,
+	{
 		coreId: null,
 		minorId: 2,
 		clusterId: 1,
@@ -67,7 +67,7 @@ const narrativeSeed = [
     researcherTitle: 'professor',
     researcherAffiliation: 'University',
 	},
-	{id:4,
+	{
 		coreId: null,
 		minorId: 3,
 		clusterId: 1,
@@ -77,7 +77,7 @@ const narrativeSeed = [
     researcherTitle: 'professor',
     researcherAffiliation: 'University',
 	},
-	{id:5,
+	{
 		coreId: null,
 		minorId: 4,
 		clusterId: 1,
