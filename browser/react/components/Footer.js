@@ -40,13 +40,12 @@ class FooterSlides extends Component {
     }
 
     flyToSingle(zoom, newCenter){
-        let wind = this.props.map.windowSize;
+        var win = this.props.map.windowSize;
         let panel = this.props.panel.panelSize;
-        if (!this.props.options.panelNone){
-            var win = [wind[0]-panel[0], wind[1]];
-        } else {
-            var win = wind;
-        }
+        // if (!this.props.options.panelNone){
+        //     win = [wind[0]-panel[0], wind[1]];
+        //     //var win = wind;
+        // };
 
         let offset = centerRescaled(zoom, newCenter, win, 128);
         //console.log('zooms: ', this.props.map.currZoom, zoom, 'pixels: ', this.props.map.tileSize, 128, 'offsets: ', this.props.map.xyOffsets, offset);

@@ -12,13 +12,12 @@ import { ClipTiles, BackgroundTiles, BackgroundMask, Underlay } from './TileVari
 
 
 // //---------------------------ACTION for DISPATCH---------------------------
-// import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
+ import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
+ import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarge} from '../action-creators/optionActions.js';
 
-// import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarge} from '../action-creators/optionActions.js';
+ import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives, setDetailId, addNewSiteCenter, addNewSiteRadius } from '../action-creators/siteActions.js';
 
-// import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives, setDetailId, addNewSiteCenter, addNewSiteRadius } from '../action-creators/siteActions.js';
-
-// import { setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
+ import { setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
 
 class MapSVG extends Component {
 	constructor(props) {
@@ -47,10 +46,10 @@ class MapSVG extends Component {
     }
 
     componentDidMount() {
-        window.addEventListener("resize", this.refSize);
-        this.refSize();
-        this.props.getLayers(this.props.sites.currLayers);
-        this.props.getAllDetailsNarratives();
+        // window.addEventListener("resize", this.refSize);
+        // this.refSize();
+        // this.props.getLayers(this.props.sites.currLayers);
+        // this.props.getAllDetailsNarratives();
     }
 
     refSize(){
@@ -359,10 +358,17 @@ class MapSVG extends Component {
 
     	return (
 
-    	<div className={this.props.baseClass} ref="size" id="mapVarWin" >
-    	   <div className="offset">
+    	<div className={this.props.baseClass} id="mapVarWin" >
+    	   <div className="offset"
+           onMouseDown = {e=>this.mouseLoc(e)}
+           onMouseUp = {e=>this.mouseLoc(e)}
+           onMouseMove = {e=>this.drag(e)}
+           onWheel = {e=>this.zoomScroll(e)}
+           onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, 'none') : e => this.addCenter(e, 'center') }
+           onClick={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault()}
+           >
 
-	    	   <svg width={this.props.map.windowSize[0]} height={this.props.map.windowSize[1]} xmlnsXlink='http://www.w3.org/1999/xlink' >
+	    	   <svg width={this.props.map.windowSize[0]*this.props.width} height={this.props.map.windowSize[1]*this.props.height} xmlnsXlink='http://www.w3.org/1999/xlink' >
 	    	   		<defs>
                         <filter id="greyscale">
                             <feColorMatrix type="saturate" values="0" />
@@ -402,9 +408,68 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    getMapbyName : (name) => {
-        //dispatch later;
-    }
+    setCurrZoom: (zoom) => {
+      dispatch(updateZoom(zoom));
+    },
+    setCurrOffsets: (offsets) => {
+      dispatch(updateOffsets(offsets));
+    },
+    setOffsetsR: (offsets) => {
+        dispatch(updateOffsetsResidual(offsets));
+    },
+    setCurrTilesize: (size) => {
+        dispatch(updateTile(size));
+    },
+    setCenter: (center) => {
+        dispatch(updateCenter(center));
+    },
+    setCenterScreen: (center) =>{
+        dispatch(updateCenterScreen(center));
+    },
+    setWinSize: (winSize) => {
+        dispatch(updateWindow(winSize));
+    },
+    setWindowOffsets: (offsets) => {
+        dispatch(updateWindowOffsets(offsets));
+    },
+    setPanelOffset: (offset) => {
+        dispatch(updatePanelOffset(offset));
+    },
+    getLayers: (layers) => {
+        dispatch(loadSites());
+        dispatch(loadLayers());
+        dispatch(loadFiltered(layers));
+    },
+    panelSmall: () => {
+      dispatch(updatePanelSmall());
+    },
+    panelLarge: () => {
+      dispatch(updatePanelLarge());
+    },
+    getAllDetailsNarratives : () => {
+      dispatch(getDetailsNarratives ());
+    },
+    setDetailId: (objId, clusterId) => {
+       dispatch(setDetailId(objId, clusterId));
+    },
+    updateSite: (site) => {
+        dispatch(updateSite(site));
+    },
+    overlayDetails: (bool) => {
+        dispatch(overlayDetails(bool));
+    },
+    setTitles: (name) => {
+        dispatch(setTitlesCore(name));
+    },
+    updateNarrative: (obj) => {
+        dispatch(setNarr(obj));
+    },
+    addNewSiteCenter: (x,y, curX, curY) => {
+        dispatch(addNewSiteCenter(x,y, curX, curY));
+    },
+    addNewSiteRadius: (radius, rad2) => {
+        dispatch(addNewSiteRadius(radius, rad2));
+    },
   }
 }
 

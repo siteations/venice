@@ -30,10 +30,21 @@ class PanelB extends Component {
   }
 
   render(){
+                //<MapSecondary height={1} width={1} />
 
-  	return (
-  	     <div className={this.props.baseClass} ref="sizeP" id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`}}>
-				    <MapSecondary />
+    return (
+         <div className={this.props.baseClass} id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`}}>
+            {this.props.sites.specLayer==='maps' &&
+              <div>
+              <div className="whiteBackground">
+                <MapSecondary height={.8} width={1} />
+              </div>
+              <h2 className="BornholmSandvig" >Cartographic comparisons</h2>
+              <h4>details</h4>
+              <p>elaborations</p>
+              </div>
+          }
+
 
 				</div>
 

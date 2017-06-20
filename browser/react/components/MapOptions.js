@@ -80,11 +80,11 @@ class MapOps extends Component {
                 <h5><span className="Trenda-Bold">maps</span><br/>
                 alternates<br/>(no sites)</h5>
                 <form>
-                  <input type="radio" name="name1" checked /><br/>
+                  <input type="radio" name="name1" /><br/>
                   Barbari Map<br/>
-                  <input type="radio" name="lastname" /><br/>
+                  <input type="radio" name="name2" /><br/>
                   other <br/>
-                  <input type="radio" name="lastname" /><br/>
+                  <input type="radio" name="name3" /><br/>
                   other <br/>
                 </form>
 

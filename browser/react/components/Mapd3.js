@@ -74,8 +74,8 @@ class MapSVG extends Component {
         this.props.setPanelOffset(panelW); // for recenter;
 
         if (width<this.props.map.windowSize[0]){
-            this.props.setOffsetsR([panelW - xOff  , yOff]);
-            this.props.setCurrOffsets([panelW- xOffR , yOffR]);
+            this.props.setOffsetsR([xOff + panelW , yOff]);
+            this.props.setCurrOffsets([xOffR + panelW , yOffR]);
         } else {
             this.props.setOffsetsR([xOff + panelW, yOff]);
             this.props.setCurrOffsets([xOffR + panelW , yOffR]);

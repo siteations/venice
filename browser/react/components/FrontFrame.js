@@ -103,28 +103,38 @@ class Frame extends Component {
 				        	<Panel baseClass="panelOpenPart" />
 			        	</div>
 			        }
-			        {this.props.options.panelLarge && this.props.options.panelMid && this.props.sites.specLayer === '' &&
+			        {this.props.options.panelLarge && this.props.options.panelMid &&
 			        	<div className="flex between">
 			        		<MapOptions />
 				        	<MapSVG baseClass="mQuarter mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<Panel baseClass="panelLargePart" />
+				        	{this.props.sites.specLayer === '' &&
+				        		<Panel baseClass="panelLargePart" />
+				        	}
+				        	{this.props.sites.specLayer !== '' &&
+				        		<PanelOps baseClass="panelLargePart noPad" />
+				        	}
 			        	</div>
 			        }
-			        {this.props.options.panelLarge && !this.props.options.panelMid && this.props.sites.specLayer === '' &&
+			        {this.props.options.panelLarge && !this.props.options.panelMid &&
 			        	<div className="flex between">
 			        		<MapOptions />
 				        	<MapSVG baseClass="mQuarter mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<Panel baseClass="panelLarge" />
+				        	{this.props.sites.specLayer === '' &&
+				        		<Panel baseClass="panelLarge" />
+				        	}
+				        	{this.props.sites.specLayer !== '' &&
+				        		<PanelOps baseClass="panelLarge noPad" />
+				        	}
 			        	</div>
 			        }
-			        {this.props.options.panelLarge && this.props.options.panelMid && this.props.sites.specLayer !== '' &&
+			        {/*this.props.options.panelLarge && this.props.options.panelMid && this.props.sites.specLayer !== '' &&
 			        	<div className="flex between">
 			        		<MapOptions />
 				        	<MapSVG baseClass="mQuarter mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<PanelOps baseClass="panelLargePart" />
+				        	<PanelOps baseClass="panelLargePart noPad" />
 			        	</div>
 			        }
 			        {this.props.options.panelLarge && !this.props.options.panelMid && this.props.sites.specLayer !== '' &&
@@ -132,9 +142,9 @@ class Frame extends Component {
 			        		<MapOptions />
 				        	<MapSVG baseClass="mQuarter mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<PanelOps baseClass="panelLarge" />
+				        	<PanelOps baseClass="panelLarge noPad" />
 			        	</div>
-			        }
+			        */}
 			        </div>
 			        <Footer />
 			    </div>

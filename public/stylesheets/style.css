@@ -411,11 +411,16 @@ a:hover {
 	margin-top: 10px;
 	width: 65%;
 	overflow-y: scroll;
+	overflow-x: hidden;
 	min-height: 652px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingPL;
     animation-duration: .25s;
     animation-fill-mode: forwards;
+}
+
+.noPad {
+	padding:0px;
 }
 
 .panelLargePart {
@@ -426,6 +431,7 @@ a:hover {
 	margin-top: 10px;
 	width: 65%;
 	overflow-y: scroll;
+	overflow-x: hidden;
 	min-height: 652px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingPLPart;
@@ -509,7 +515,18 @@ a:hover {
 	border-radius: 5px;
 }
 
+.whiteBackground {
+	background-color: #ffffff;
+}
 
+.overlayWhite {
+	background-color: #ffffff;
+	opacity: 0.45;
+}
+
+.overlayText {
+	padding: 10px;
+}
 
 .rotate {
 	-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
