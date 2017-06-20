@@ -6,33 +6,6 @@ export const scaleOps = {
     '6': [63 , 31],
   };
 
-export const tilepreload = function (){
-
-  let tileArr=[];
-
-  for (let key in scaleOps){
-    let limits = scaleOps[key];
-    let x=0, y=0, xMax=limits[0], yMax=limits[1];
-
-    const tiles=[];
-    let tile1, tile2;
-
-    for (let i=0; i<=xMax; i++){
-      for (let j=0; j<=yMax; j++){
-        tile1= `../../../layouts/color/${key}/map_${i}_${j}.jpg`;
-        tile2= `'../../../layouts/grey/${key}/map_${i}_${j}.jpg`;
-        tiles.push(tile1, tile2);
-      }
-    }
-
-    tileArr.push(...tiles);
-
-  }
-
-  return tileArr;
-
-}
-
 
 export const tiling = function(scale, tileSize, boundArr, off) {
 

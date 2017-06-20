@@ -51,9 +51,10 @@ class MapOps extends Component {
     }
 
   render(){
+    //intPanel
 
 	return (
-	        <div className="intPanel center-block text-center">
+	        <div className="mtypeFull center-block text-center">
                 <button className="btn btn-default btn-sm bIconSm" onClick={e=>this.props.actions.zoom(e, 'in')}><span className="glyphicon glyphicon-plus" onClick={e=>this.props.actions.zoom(e, 'in')}></span></button>
                 <br/>
                 <button className="btn btn-default btn-sm bIconSm" onClick={e=>this.props.actions.zoom(e, 'out')}><span className="glyphicon glyphicon-minus" onClick={e=>this.props.actions.zoom(e, 'out')}></span></button>
@@ -76,18 +77,15 @@ class MapOps extends Component {
                 <h5>local<br/>details</h5>
                 <br/>
 
-                <h5 className="Trenda-Bold">maps</h5>
-                <div style={styles.root} className="center-block">
-                    <Toggle />
-                </div>
-                <h5>split<br/>screen</h5>
+                <h5><span className="Trenda-Bold">maps</span><br/>
+                alternates<br/>(no sites)</h5>
                 <form>
                   <input type="radio" name="name1" checked /><br/>
-                  options<br/>
+                  Barbari Map<br/>
                   <input type="radio" name="lastname" /><br/>
-                  coming<br/>
+                  other <br/>
                   <input type="radio" name="lastname" /><br/>
-                  soon<br/>
+                  other <br/>
                 </form>
 
            </div>

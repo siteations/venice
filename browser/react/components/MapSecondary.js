@@ -4,24 +4,21 @@ import { connect } from 'react-redux';
 
 //---------------------------MAP OPTIONS & COMPONENTS---------------------------
 import { tiling, scaleOps, sitesFiltered, centerRescaled, reverseCenter } from '../plug-ins/rawTiles.js';
-import { spacingFrame } from '../plug-ins/rawDetails.js';
 import { ClipTiles, BackgroundTiles, BackgroundMask, Underlay } from './TileVariants.js';
-import DetailOver from './AnnoVariants.js';
-import MapOptions from './MapOptions.js';
 
 
 //---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
-import {cirMain} from '../pre-db/cirTest.js';
+// import {cirMain} from '../pre-db/cirTest.js';
 
 
-//---------------------------ACTION for DISPATCH---------------------------
-import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
+// //---------------------------ACTION for DISPATCH---------------------------
+// import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
 
-import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarge} from '../action-creators/optionActions.js';
+// import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarge} from '../action-creators/optionActions.js';
 
-import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives, setDetailId, addNewSiteCenter, addNewSiteRadius } from '../action-creators/siteActions.js';
+// import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives, setDetailId, addNewSiteCenter, addNewSiteRadius } from '../action-creators/siteActions.js';
 
-import { setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
+// import { setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
 
 class MapSVG extends Component {
 	constructor(props) {
@@ -359,117 +356,27 @@ class MapSVG extends Component {
         //minor site/tile filtering at the top of the map... as is fairly often updated
 
     	const tiles = tiling(this.props.map.currZoom, this.props.map.tileSize, this.props.map.windowSize, this.props.map.xyOffsets);
-        const cirNew = sitesFiltered(this.props.map.xyOffsets, this.props.sites.allSites, this.props.sites.currLayers, tiles[0].percent);
-
-        let currentSite = {} ;
-        if (this.props.sites.currSite){ currentSite = cirNew.filter(d=>d.id === +this.props.sites.currSite)[0] };
-
-
-        const {clipDetails, details} = spacingFrame(this.props.map.windowSize, currentSite, this.props.sites.genDetails);
-
-        //console.log('results?', this.props.map.windowSize, currentSite, clipDetails, details);
-        //console.log('results?', currentSite);
 
     	return (
 
-    	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
-    	   <div className="offset" onMouseDown = {e=>this.mouseLoc(e)}
-           onMouseUp = {e=>this.mouseLoc(e)}
-           onMouseMove = {e=>this.drag(e)}
-           onWheel = {e=>this.zoomScroll(e)}
-           onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, 'none') : e => this.addCenter(e, 'center') }
-           onClick={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault()}
-           >
+    	<div className={this.props.baseClass} ref="size" id="mapVarWin" >
+    	   <div className="offset">
 
 	    	   <svg width={this.props.map.windowSize[0]} height={this.props.map.windowSize[1]} xmlnsXlink='http://www.w3.org/1999/xlink' >
 	    	   		<defs>
                         <filter id="greyscale">
                             <feColorMatrix type="saturate" values="0" />
                         </filter>
-	    	   			<clipPath id="myClip">
-	    	   				{cirNew &&
-	    	   					cirNew.map((d,i) => <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} key={`circClip${i}`}/>)
-	    	   				}
-					    </clipPath>
-                        {clipDetails.map(d=>{
-                            // return (
-                            // <clipPath id={d.id}>
-                            //     <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} />
-                            // </clipPath>
-                            // )
-                            return (
-                            <clipPath id={d.id} key={`clipping${d.id}`}>
-                                <rect stroke="#000000" x={d.x} y={d.y} rx={d.rx} ry={d.ry} width={d.width} height={d.height} />
-                            </clipPath>
-                            )
-
-                        })
-                        }
 	    	   		</defs>
 
                     <Underlay tSize={this.props.map.tileSize} currZoom={this.props.map.currZoom} xyOffsets={this.props.map.xyOffsets} color={this.props.options.color} />
 
 	    	   		<g className="workingTiles" >
-    	    	   		{tiles &&
-                            <BackgroundTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} color={this.props.options.color} />
-                        }
-                        {this.props.options.anno &&
-                            <BackgroundMask wSize={this.props.map.windowSize} color={this.props.options.color} />
-                        }
-                        {tiles && this.props.options.anno &&
-                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="url(#myClip)" opacity={1} action=""/>
+                        {tiles &&
+                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="" opacity={1} action=""/>
     	    	   		}
 	    	   		</g>
-
-	    	   		<g className="allLabelCircs" >
-                    {this.props.options.anno && cirNew &&
-	   					cirNew.map(d=>{
-                            //strokeWidth={Math.pow(this.state.currentZoomLevel,2)/2}
-                            //console.log(d.id, currentSite)
-
-	   						return (
-	   						   		<circle className={(d.id===this.props.sites.currSite)? 'circHLThick' : 'circHL' }
-                                    cx={d.cx}
-                                    cy={d.cy}
-                                    r={d.r}
-                                    value={d.name}
-                                    id={d.id}
-                                    key={`site${d.id}`}
-                                    stroke={(+this.props.sites.currSite === +d.id)? '#ffffff':'#d8d0ba'}
-                                    onMouseOver = {e=>this.showLabel(e)}
-                                    onMouseOut={''/*e=>this.hideLabel(e)*/}
-                                    onClick={ e=>this.setLabel(e)}
-                                    onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, +d.id) : e=> e.preventDefault() } />
-
-	   						    )
-	   					})
-                    }
-                    {this.props.options.anno && cirNew &&
-
-	   					cirNew.map(d=>{
-	   						if (+this.props.sites.currSite === +d.id){
-	   						return (
-	   						   			<g key={`label${d.id}`}>
-			   						   		<text x={d.cx+d.r+14} y={d.cy} className="textHL" fontSize={21} >{this.props.panel.title}</text>
-			   						   		<text x={d.cx+d.r+14} y={d.cy+18} className="textSHL" fontSize={12} >{this.props.panel.subtitle}</text>
-                                            {this.props.options.annoZoom &&
-                                            <DetailOver clipDetails={clipDetails} details={details} action={this.loadPanel} />
-                                            }
-		   						   		</g>
-	   						    )}
-	   					})
-	   				}
-                    {this.props.sites.newCx &&
-
-                                    <circle className='circHLThick'
-                                    cx={this.props.sites.newX}
-                                    cy={this.props.sites.newY}
-                                    r={Math.max(15,this.props.sites.newRad)}
-                                    stroke={'#ffffff'}
-                                    strokeWidth = "10px"
-                                    />
-
-                    }
+	    	   		<g className="allLabelGeneral" >
 	   				</g>
 	    	   </svg>
     	   </div>
@@ -495,71 +402,12 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    setCurrZoom: (zoom) => {
-      dispatch(updateZoom(zoom));
-    },
-    setCurrOffsets: (offsets) => {
-      dispatch(updateOffsets(offsets));
-    },
-    setOffsetsR: (offsets) => {
-        dispatch(updateOffsetsResidual(offsets));
-    },
-    setCurrTilesize: (size) => {
-        dispatch(updateTile(size));
-    },
-    setCenter: (center) => {
-        dispatch(updateCenter(center));
-    },
-    setCenterScreen: (center) =>{
-        dispatch(updateCenterScreen(center));
-    },
-    setWinSize: (winSize) => {
-        dispatch(updateWindow(winSize));
-    },
-    setWindowOffsets: (offsets) => {
-        dispatch(updateWindowOffsets(offsets));
-    },
-    setPanelOffset: (offset) => {
-        dispatch(updatePanelOffset(offset));
-    },
-    getLayers: (layers) => {
-        dispatch(loadSites());
-        dispatch(loadLayers());
-        dispatch(loadFiltered(layers));
-    },
-    panelSmall: () => {
-      dispatch(updatePanelSmall());
-    },
-    panelLarge: () => {
-      dispatch(updatePanelLarge());
-    },
-    getAllDetailsNarratives : () => {
-      dispatch(getDetailsNarratives ());
-    },
-    setDetailId: (objId, clusterId) => {
-       dispatch(setDetailId(objId, clusterId));
-    },
-    updateSite: (site) => {
-        dispatch(updateSite(site));
-    },
-    overlayDetails: (bool) => {
-        dispatch(overlayDetails(bool));
-    },
-    setTitles: (name) => {
-        dispatch(setTitlesCore(name));
-    },
-    updateNarrative: (obj) => {
-        dispatch(setNarr(obj));
-    },
-    addNewSiteCenter: (x,y, curX, curY) => {
-        dispatch(addNewSiteCenter(x,y, curX, curY));
-    },
-    addNewSiteRadius: (radius, rad2) => {
-        dispatch(addNewSiteRadius(radius, rad2));
-    },
+    getMapbyName : (name) => {
+        //dispatch later;
+    }
   }
 }
 
-const Map = connect(mapStateToProps, mapDispatchToProps)(MapSVG);
+const MapSecondary = connect(mapStateToProps, mapDispatchToProps)(MapSVG);
 
-export default Map;
+export default MapSecondary;

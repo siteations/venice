@@ -1195,7 +1195,7 @@ module.exports = ExecutionEnvironment;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.addBibliography = exports.editNarrative = exports.addNarrative = exports.resetSaved = exports.addNewSiteRadius = exports.addNewSiteCenter = exports.editSite = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.addBiblio = exports.getDetailsNarratives = exports.reloadBiblio = exports.reloadNarratives = exports.reloadImages = exports.addImage = exports.addDetail = exports.reloadDetails = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.saved = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getGenBiblio = exports.getAllSites = exports.SAVED = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_BIB = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
+exports.addBibliography = exports.editNarrative = exports.addNarrative = exports.resetSaved = exports.addNewSiteRadius = exports.addNewSiteCenter = exports.editSite = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.addBiblio = exports.getDetailsNarratives = exports.reloadBiblio = exports.reloadNarratives = exports.reloadImages = exports.addImage = exports.addDetail = exports.reloadDetails = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.setSpecPanel = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.saved = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.setSpecLayer = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getGenBiblio = exports.getAllSites = exports.SAVED = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_SPEC_LAYER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_BIB = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
 
 var _axios = __webpack_require__(85);
 
@@ -1244,6 +1244,7 @@ var GET_CURR_LAYERS = exports.GET_CURR_LAYERS = 'GET_CURR_LAYERS';
 var ADD_CURR_LAYERS = exports.ADD_CURR_LAYERS = 'ADD_CURR_LAYERS';
 var RESET_CURR_LAYERS = exports.RESET_CURR_LAYERS = 'RESET_CURR_LAYERS';
 var SET_HOVER_LAYER = exports.SET_HOVER_LAYER = 'SET_HOVER_LAYER';
+var SET_SPEC_LAYER = exports.SET_SPEC_LAYER = 'SET_SPEC_LAYER';
 
 var SET_CENTER = exports.SET_CENTER = 'SET_CENTER';
 var SET_RADIUS = exports.SET_RADIUS = 'SET_RADIUS';
@@ -1369,6 +1370,13 @@ var addHoverLayer = exports.addHoverLayer = function addHoverLayer(layer) {
 	};
 };
 
+var setSpecLayer = exports.setSpecLayer = function setSpecLayer(type) {
+	return {
+		type: SET_SPEC_LAYER,
+		layer: type
+	};
+};
+
 var addNewSiteGeo1 = exports.addNewSiteGeo1 = function addNewSiteGeo1(x, y, px, py) {
 	return {
 		type: SET_CENTER,
@@ -1405,9 +1413,10 @@ var initSites = {
 	minorId: 0,
 	clusterId: 0,
 
-	allLayers: ['parish churches', "bascilica", "plague churches", "monastery, convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption"], //arr of strings
+	allLayers: ['parish churches', "bascilica", "plague churches", "monastery", "convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption"], //arr of strings
 	currLayers: [], //arr of strings
 	hoverLayer: ' ',
+	specLayer: '',
 
 	newCx: 0,
 	newX: 0,
@@ -1512,6 +1521,10 @@ var siteReducer = exports.siteReducer = function siteReducer() {
 			newState.hoverLayer = action.layer;
 			break;
 
+		case SET_SPEC_LAYER:
+			newState.specLayer = action.layer;
+			break;
+
 		case SAVED:
 			newState.saved = action.bool;
 			break;
@@ -1557,6 +1570,12 @@ var loadFilteredSites = exports.loadFilteredSites = function loadFilteredSites(l
 var updateSite = exports.updateSite = function updateSite(site) {
 	return function (dispatch) {
 		dispatch(getCurrSite(site));
+	};
+};
+
+var setSpecPanel = exports.setSpecPanel = function setSpecPanel(type) {
+	return function (dispatch) {
+		dispatch(setSpecLayer(type));
 	};
 };
 
@@ -1757,17 +1776,8 @@ var addAllLayers = exports.addAllLayers = function addAllLayers(layers) {
 		var cirLayers = [];
 
 		if (layers === 'add') {
-			var allSites = _axios2.default.get('/api/sites').then(function (responses) {
-				return responses.data;
-			}).then(function (sites) {
-
-				sites.forEach(function (circle) {
-					if (cirLayers.indexOf(circle.type) === -1) {
-						cirLayers.push(circle.type);
-					};
-				});
-				dispatch(getCurrLayers(cirLayers));
-			}).catch(console.log);
+			var _layers = ['parish churches', "bascilica", "plague churches", "monastery", "convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption"];
+			dispatch(getCurrLayers(_layers));
 		} else {
 			dispatch(getCurrLayers(cirLayers));
 		};
@@ -7342,35 +7352,6 @@ var scaleOps = exports.scaleOps = {
   '4': [15, 7],
   '5': [31, 15],
   '6': [63, 31]
-};
-
-var tilepreload = exports.tilepreload = function tilepreload() {
-
-  var tileArr = [];
-
-  for (var key in scaleOps) {
-    var limits = scaleOps[key];
-    var x = 0,
-        y = 0,
-        xMax = limits[0],
-        yMax = limits[1];
-
-    var tiles = [];
-    var tile1 = void 0,
-        tile2 = void 0;
-
-    for (var i = 0; i <= xMax; i++) {
-      for (var j = 0; j <= yMax; j++) {
-        tile1 = '../../../layouts/color/' + key + '/map_' + i + '_' + j + '.jpg';
-        tile2 = '\'../../../layouts/grey/' + key + '/map_' + i + '_' + j + '.jpg';
-        tiles.push(tile1, tile2);
-      }
-    }
-
-    tileArr.push.apply(tileArr, tiles);
-  }
-
-  return tileArr;
 };
 
 var tiling = exports.tiling = function tiling(scale, tileSize, boundArr, off) {
@@ -17682,7 +17663,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 //
 
-var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", src: '/img/intro-01.svg' }, { cn: "nIcon flex center middle", v: "all layers", src: "/img/all-layers-01.svg" }, { cn: "nIcon flex center middle", v: "maps", src: "/img/maps-01.svg" }, { cn: "nSpc", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "panel", src: "/img/arrow1-01.svg" }, { cn: "nIcon flex center middle", v: "panel large", src: "/img/arrow2-01.svg" }, { cn: "nSpcSm", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "parish churches", src: "/img/parish-01.svg" }, { cn: "nIcon flex center middle", v: "bascilica", src: "/img/bascilica-01.svg" }, { cn: "nIcon flex center middle", v: "plague churches", src: "/img/plague-01.svg" }, { cn: "nIcon flex center middle", v: "monastery, convents", src: "/img/convent-01.svg" }, { cn: "nIcon flex center middle", v: "non-catholic communities", src: "/img/non-catholic-01.svg" }, { cn: "nIcon flex center middle", v: "processions", src: "/img/ritual-01.svg" }, { cn: "nIcon flex center middle", v: "cultural", src: "/img/culture-01.svg" }, { cn: "nIcon flex center middle", v: "printing", src: "/img/books-01.svg" }, { cn: "nIcon flex center middle", v: "textual consumption", src: "/img/ephemera-01.svg" }, { cn: "nSpcSm", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "bibliography", src: "/img/menu-01.svg" }];
+var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", src: '/img/intro-01.svg' }, { cn: "nIcon flex center middle", v: "maps", src: "/img/maps-01.svg" }, { cn: "nSpc", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "panel", src: "/img/arrow1-01.svg" }, { cn: "nIcon flex center middle", v: "panel large", src: "/img/arrow2-01.svg" }, { cn: "nSpc", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "all layers", src: "/img/all-layers-01.svg" }, { cn: "nIcon flex center middle", v: "parish churches", src: "/img/parish-01.svg" }, { cn: "nIcon flex center middle", v: "bascilica", src: "/img/bascilica-01.svg" }, { cn: "nIcon flex center middle", v: "plague churches", src: "/img/plague-01.svg" }, { cn: "nIcon flex center middle", v: "monastery", src: "/img/culture-01.svg" }, { cn: "nIcon flex center middle", v: "convents", src: "/img/convent-01.svg" }, { cn: "nIcon flex center middle", v: "non-catholic communities", src: "/img/non-catholic-01.svg" }, { cn: "nIcon flex center middle", v: "processions", src: "/img/ritual-01.svg" }, { cn: "nIcon flex center middle", v: "cultural", src: "/img/culture-01.svg" }, { cn: "nIcon flex center middle", v: "printing", src: "/img/books-01.svg" }, { cn: "nIcon flex center middle", v: "textual consumption", src: "/img/ephemera-01.svg" }, { cn: "nSpcSm", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "bibliography", src: "/img/menu-01.svg" }];
 
 var toolstyles = {
 	wrapper: {
@@ -17754,9 +17735,9 @@ var MapBar = function (_Component) {
 			var val = e.target.attributes.value.value;
 			console.log('reading panel?', val);
 
-			if (this.props.options.panelStart) {
-				this.props.panelStart();
-			}
+			// if (this.props.options.panelStart){
+			// 	this.props.panelStart();
+			// }
 
 			//panel options
 			if (val === 'panel' && this.props.options.panelNone) {
@@ -17771,23 +17752,38 @@ var MapBar = function (_Component) {
 				this.props.panelNone();
 			}
 
-			//intro options
-
-			//layer addition/subtractions dispatch
-			if (val === 'all layers' && this.props.sites.currLayers.length !== this.props.sites.allLayers.length) {
-				this.props.loadSelectAll('add');
-			} else if (val === 'all layers' && this.props.sites.currLayers.length === this.props.sites.allLayers.length) {
-				this.props.loadSelectAll('clear');
-			} else if (val !== 'panel' && val !== 'panel large' && val !== 'intro' && val !== 'biblio') {
-				//individual layers
-				if (this.props.sites.currLayers.indexOf(val.split(', ')[0]) < 0) {
-					//not in add
-					this.props.addSelectOne(val);
-				} else {
-					//in layers, so remove...
-					this.props.deleteSelectOne(val);
+			//map/intro/biblio options
+			else if ((val === 'maps' || val === 'intro' || val === 'bibliography') && (this.props.options.panelNone || this.props.options.panelSmall)) {
+					this.props.panelLarge();
+					this.props.setSpecPanel(val);
+				} else if ((val === 'maps' || val === 'intro' || val === 'bibliography') && this.props.options.panelLarge) {
+					if (val !== this.props.sites.specLayer) {
+						this.props.setSpecPanel(val);
+					} else {
+						this.props.panelNone();
+						this.props.setSpecPanel('');
+					}
 				}
-			}
+
+				//layer addition/subtractions dispatch
+				else if (val === 'all layers' && this.props.sites.currLayers.length !== this.props.sites.allLayers.length) {
+						this.props.loadSelectAll('add');
+						this.props.setSpecPanel('');
+					} else if (val === 'all layers' && this.props.sites.currLayers.length === this.props.sites.allLayers.length) {
+						this.props.loadSelectAll('clear');
+						this.props.setSpecPanel('');
+					} else if (val !== 'panel' && val !== 'panel large' && val !== 'intro' && val !== 'biblio' && val !== 'maps') {
+						//individual layers
+						if (this.props.sites.currLayers.indexOf(val.split(', ')[0]) < 0) {
+							//not in add
+							this.props.addSelectOne(val);
+							this.props.setSpecPanel('');
+						} else {
+							//in layers, so remove...
+							this.props.deleteSelectOne(val);
+							this.props.setSpecPanel('');
+						}
+					}
 		}
 	}, {
 		key: 'render',
@@ -17864,6 +17860,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 		},
 		setHoverLabel: function setHoverLabel(layer) {
 			dispatch((0, _siteActions.addHoverSite)(layer));
+		},
+		setSpecPanel: function setSpecPanel(type) {
+			dispatch((0, _siteActions.setSpecPanel)(type));
 		}
 
 	};
@@ -17985,9 +17984,9 @@ var MapSVG = function (_Component) {
             var panelW = (this.props.map.windowSize[0] - width) / 2;
             //if (panelW <= 0){ panelW = 0; } else { panelW *= 0.5; };
 
-            if (width < this.props.map.windowSize[0]) {
-                width = this.props.map.windowSize[0];
-            };
+            // if (width<this.props.map.windowSize[0]){
+            //     width=this.props.map.windowSize[0];
+            // };
             var height = sele.clientHeight;
 
             var _props$map$xyOffsets = _slicedToArray(this.props.map.xyOffsets, 2),
@@ -18001,8 +18000,14 @@ var MapSVG = function (_Component) {
             this.props.setWindowOffsets([sele.offsetLeft, sele.offsetTop]);
             this.props.setWinSize([width, height]);
             this.props.setPanelOffset(panelW); // for recenter;
-            // this.props.setOffsetsR([xOff - panelW, yOff]);
-            // this.props.setCurrOffsets([xOffR - panelW, yOffR]);
+
+            if (width < this.props.map.windowSize[0]) {
+                this.props.setOffsetsR([panelW - xOff, yOff]);
+                this.props.setCurrOffsets([panelW - xOffR, yOffR]);
+            } else {
+                this.props.setOffsetsR([xOff + panelW, yOff]);
+                this.props.setCurrOffsets([xOffR + panelW, yOffR]);
+            }
             this.props.setCenterScreen([width / 2, height / 2]);
 
             if (this.props.map.xyOffsets[0] === 0) {
@@ -18374,11 +18379,14 @@ var MapSVG = function (_Component) {
                     'div',
                     { className: 'offset', onMouseDown: function onMouseDown(e) {
                             return _this2.mouseLoc(e);
-                        }, onMouseUp: function onMouseUp(e) {
+                        },
+                        onMouseUp: function onMouseUp(e) {
                             return _this2.mouseLoc(e);
-                        }, onMouseMove: function onMouseMove(e) {
+                        },
+                        onMouseMove: function onMouseMove(e) {
                             return _this2.drag(e);
-                        }, onWheel: function onWheel(e) {
+                        },
+                        onWheel: function onWheel(e) {
                             return _this2.zoomScroll(e);
                         },
                         onDoubleClick: this.props.user === null || this.props.user.message ? function (e) {
@@ -18487,8 +18495,7 @@ var MapSVG = function (_Component) {
                             })
                         )
                     )
-                ),
-                _react2.default.createElement(_MapOptions2.default, { actions: { zoom: this.zoom } })
+                )
             );
         }
     }]);
@@ -40274,8 +40281,6 @@ var _Panelform2 = _interopRequireDefault(_Panelform);
 
 var _reactPreload = __webpack_require__(264);
 
-var _rawTiles = __webpack_require__(70);
-
 var _siteActions = __webpack_require__(23);
 
 var _optionActions = __webpack_require__(39);
@@ -40287,8 +40292,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//import {tilepreload} from '../plug-ins/rawTiles.js';
 
-var images = (0, _rawTiles.tilepreload)();
+//var images = tilepreload();
 //console.log(images);
 
 var loadingIndicator = _react2.default.createElement(
@@ -40438,9 +40444,15 @@ var _Panel = __webpack_require__(318);
 
 var _Panel2 = _interopRequireDefault(_Panel);
 
-var _reactPreload = __webpack_require__(264);
+var _PanelOps = __webpack_require__(701);
 
-var _rawTiles = __webpack_require__(70);
+var _PanelOps2 = _interopRequireDefault(_PanelOps);
+
+var _MapOptions = __webpack_require__(317);
+
+var _MapOptions2 = _interopRequireDefault(_MapOptions);
+
+var _reactPreload = __webpack_require__(264);
 
 var _siteActions = __webpack_require__(23);
 
@@ -40453,8 +40465,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//import {tilepreload} from '../plug-ins/rawTiles.js';
 
-var images = (0, _rawTiles.tilepreload)();
+//var images = tilepreload();
 //console.log(images);
 
 var loadingIndicator = _react2.default.createElement(
@@ -40477,8 +40490,8 @@ var Frame = function (_Component) {
 			geo: false,
 			button: 'navigate',
 			select: false,
-			selected: [],
-			layers: ["monastery", "convent", "non-catholic"] };
+			selected: []
+		};
 		_this.hoverName = _this.hoverName.bind(_this);
 		_this.nav = _this.nav.bind(_this);
 		return _this;
@@ -40524,6 +40537,7 @@ var Frame = function (_Component) {
 					this.props.options.panelNone && this.props.options.panelStart && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
+						_react2.default.createElement(_MapOptions2.default, null),
 						_react2.default.createElement(_Mapd2.default, { baseClass: 'mFullO mainMaps' }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav }),
 						_react2.default.createElement('div', { className: 'panelClose' })
@@ -40531,6 +40545,7 @@ var Frame = function (_Component) {
 					this.props.options.panelNone && !this.props.options.panelStart && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
+						_react2.default.createElement(_MapOptions2.default, null),
 						_react2.default.createElement(_Mapd2.default, { baseClass: 'mFull mainMaps' }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav }),
 						_react2.default.createElement('div', { className: 'panelClose' })
@@ -40538,6 +40553,7 @@ var Frame = function (_Component) {
 					this.props.options.panelSmall && this.props.options.panelMid && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
+						_react2.default.createElement(_MapOptions2.default, null),
 						_react2.default.createElement(_Mapd2.default, { baseClass: 'mPart mainMaps' }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav }),
 						_react2.default.createElement(_Panel2.default, { baseClass: 'panelOpen' })
@@ -40545,23 +40561,42 @@ var Frame = function (_Component) {
 					this.props.options.panelSmall && !this.props.options.panelMid && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
+						_react2.default.createElement(_MapOptions2.default, null),
 						_react2.default.createElement(_Mapd2.default, { baseClass: 'mPart mainMaps' }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav }),
 						_react2.default.createElement(_Panel2.default, { baseClass: 'panelOpenPart' })
 					),
-					this.props.options.panelLarge && this.props.options.panelMid && _react2.default.createElement(
+					this.props.options.panelLarge && this.props.options.panelMid && this.props.sites.specLayer === '' && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
+						_react2.default.createElement(_MapOptions2.default, null),
 						_react2.default.createElement(_Mapd2.default, { baseClass: 'mQuarter mainMaps' }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav }),
 						_react2.default.createElement(_Panel2.default, { baseClass: 'panelLargePart' })
 					),
-					this.props.options.panelLarge && !this.props.options.panelMid && _react2.default.createElement(
+					this.props.options.panelLarge && !this.props.options.panelMid && this.props.sites.specLayer === '' && _react2.default.createElement(
 						'div',
 						{ className: 'flex between' },
+						_react2.default.createElement(_MapOptions2.default, null),
 						_react2.default.createElement(_Mapd2.default, { baseClass: 'mQuarter mainMaps' }),
 						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav }),
 						_react2.default.createElement(_Panel2.default, { baseClass: 'panelLarge' })
+					),
+					this.props.options.panelLarge && this.props.options.panelMid && this.props.sites.specLayer !== '' && _react2.default.createElement(
+						'div',
+						{ className: 'flex between' },
+						_react2.default.createElement(_MapOptions2.default, null),
+						_react2.default.createElement(_Mapd2.default, { baseClass: 'mQuarter mainMaps' }),
+						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav }),
+						_react2.default.createElement(_PanelOps2.default, { baseClass: 'panelLargePart' })
+					),
+					this.props.options.panelLarge && !this.props.options.panelMid && this.props.sites.specLayer !== '' && _react2.default.createElement(
+						'div',
+						{ className: 'flex between' },
+						_react2.default.createElement(_MapOptions2.default, null),
+						_react2.default.createElement(_Mapd2.default, { baseClass: 'mQuarter mainMaps' }),
+						_react2.default.createElement(_MapBar2.default, { text: this.state.button, hover: this.hoverName, out: this.nav }),
+						_react2.default.createElement(_PanelOps2.default, { baseClass: 'panelLarge' })
 					)
 				),
 				_react2.default.createElement(_Footer2.default, null)
@@ -40701,9 +40736,11 @@ var MapOps = function (_Component) {
     value: function render() {
       var _this2 = this;
 
+      //intPanel
+
       return _react2.default.createElement(
         'div',
-        { className: 'intPanel center-block text-center' },
+        { className: 'mtypeFull center-block text-center' },
         _react2.default.createElement(
           'button',
           { className: 'btn btn-default btn-sm bIconSm', onClick: function onClick(e) {
@@ -40770,35 +40807,31 @@ var MapOps = function (_Component) {
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           'h5',
-          { className: 'Trenda-Bold' },
-          'maps'
-        ),
-        _react2.default.createElement(
-          'div',
-          { style: styles.root, className: 'center-block' },
-          _react2.default.createElement(_materialUi.Toggle, null)
-        ),
-        _react2.default.createElement(
-          'h5',
           null,
-          'split',
+          _react2.default.createElement(
+            'span',
+            { className: 'Trenda-Bold' },
+            'maps'
+          ),
           _react2.default.createElement('br', null),
-          'screen'
+          'alternates',
+          _react2.default.createElement('br', null),
+          '(no sites)'
         ),
         _react2.default.createElement(
           'form',
           null,
           _react2.default.createElement('input', { type: 'radio', name: 'name1', checked: true }),
           _react2.default.createElement('br', null),
-          'options',
+          'Barbari Map',
           _react2.default.createElement('br', null),
           _react2.default.createElement('input', { type: 'radio', name: 'lastname' }),
           _react2.default.createElement('br', null),
-          'coming',
+          'other ',
           _react2.default.createElement('br', null),
           _react2.default.createElement('input', { type: 'radio', name: 'lastname' }),
           _react2.default.createElement('br', null),
-          'soon',
+          'other ',
           _react2.default.createElement('br', null)
         )
       );
@@ -85923,6 +85956,643 @@ module.exports = function() {
 	throw new Error("define cannot be used indirect");
 };
 
+
+/***/ }),
+/* 701 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(13);
+
+var _reactRedux = __webpack_require__(18);
+
+var _panelActions = __webpack_require__(46);
+
+var _MapSecondary = __webpack_require__(702);
+
+var _MapSecondary2 = _interopRequireDefault(_MapSecondary);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PanelB = function (_Component) {
+  _inherits(PanelB, _Component);
+
+  function PanelB(props) {
+    _classCallCheck(this, PanelB);
+
+    var _this = _possibleConstructorReturn(this, (PanelB.__proto__ || Object.getPrototypeOf(PanelB)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(PanelB, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      window.addEventListener("resize", this.refSizeP);
+      this.refSize();
+    }
+  }, {
+    key: 'refSize',
+    value: function refSize(e) {
+      if (e) {
+        e.preventDefault();
+      };
+      var sele = window.document.getElementById("panelWin").attributes[0].ownerElement;
+      var width = sele.clientWidth;
+      var height = sele.clientHeight;
+      this.props.updatePanelSize([width, height], width / height);
+    }
+  }, {
+    key: 'refImages',
+    value: function refImages(img) {
+      var count = img.split(', ');
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { className: this.props.baseClass, ref: 'sizeP', id: 'panelWin', onAnimationEnd: function onAnimationEnd(e) {
+            return _this2.refSize(e);
+          }, style: { height: this.props.map.windowSize[1] + 6 + 'px' } },
+        _react2.default.createElement(_MapSecondary2.default, null)
+      );
+    }
+  }]);
+
+  return PanelB;
+}(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    map: state.map,
+    options: state.options,
+    sites: state.sites,
+    panel: state.panel
+  };
+};
+
+//setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+  return {
+    updatePanelSize: function updatePanelSize(size, ratio) {
+      dispatch((0, _panelActions.setPanelSizing)(size, ratio));
+    }
+  };
+};
+
+var PanelOps = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PanelB);
+
+exports.default = PanelOps;
+
+/***/ }),
+/* 702 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(13);
+
+var _reactRedux = __webpack_require__(18);
+
+var _rawTiles = __webpack_require__(70);
+
+var _TileVariants = __webpack_require__(320);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+//---------------------------MAP OPTIONS & COMPONENTS---------------------------
+
+
+//---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
+// import {cirMain} from '../pre-db/cirTest.js';
+
+
+// //---------------------------ACTION for DISPATCH---------------------------
+// import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
+
+// import {updateColor, updateAnno, updateDetail, updatePanelSmall, updatePanelLarge} from '../action-creators/optionActions.js';
+
+// import {loadLayers, updateSite, overlayDetails, loadSites, addAllLayers, loadFiltered, getDetailsNarratives, setDetailId, addNewSiteCenter, addNewSiteRadius } from '../action-creators/siteActions.js';
+
+// import { setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
+
+var MapSVG = function (_Component) {
+    _inherits(MapSVG, _Component);
+
+    function MapSVG(props) {
+        _classCallCheck(this, MapSVG);
+
+        var _this = _possibleConstructorReturn(this, (MapSVG.__proto__ || Object.getPrototypeOf(MapSVG)).call(this, props));
+
+        _this.state = { // more or less temporary var for map manipulation
+            mouseDivloc: [0, 0],
+            mouseLast: [0, 0],
+            mousePast: [0, 0],
+            mousePos: [0, 0],
+            drag: '',
+            trig: false,
+            labelClick: false,
+            labelT: '',
+            labelS: ''
+
+        };
+        _this.mouseLoc = _this.mouseLoc.bind(_this);
+        _this.refSize = _this.refSize.bind(_this);
+        _this.zoom = _this.zoom.bind(_this);
+        _this.zoomTo = _this.zoomTo.bind(_this);
+        _this.loadPanel = _this.loadPanel.bind(_this);
+        _this.addCenter = _this.addCenter.bind(_this);
+        //this.flyTo
+        //this.other
+
+        return _this;
+    }
+
+    _createClass(MapSVG, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            window.addEventListener("resize", this.refSize);
+            this.refSize();
+            this.props.getLayers(this.props.sites.currLayers);
+            this.props.getAllDetailsNarratives();
+        }
+    }, {
+        key: 'refSize',
+        value: function refSize() {
+            var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+            var width = sele.clientWidth;
+            var panelW = (this.props.map.windowSize[0] - width) / 2;
+            //if (panelW <= 0){ panelW = 0; } else { panelW *= 0.5; };
+
+            // if (width<this.props.map.windowSize[0]){
+            //     width=this.props.map.windowSize[0];
+            // };
+            var height = sele.clientHeight;
+
+            var _props$map$xyOffsets = _slicedToArray(this.props.map.xyOffsets, 2),
+                xOff = _props$map$xyOffsets[0],
+                yOff = _props$map$xyOffsets[1];
+
+            var _props$map$xyOffsetsR = _slicedToArray(this.props.map.xyOffsetsR, 2),
+                xOffR = _props$map$xyOffsetsR[0],
+                yOffR = _props$map$xyOffsetsR[1];
+
+            this.props.setWindowOffsets([sele.offsetLeft, sele.offsetTop]);
+            this.props.setWinSize([width, height]);
+            this.props.setPanelOffset(panelW); // for recenter;
+
+            if (width < this.props.map.windowSize[0]) {
+                this.props.setOffsetsR([panelW - xOff, yOff]);
+                this.props.setCurrOffsets([panelW - xOffR, yOffR]);
+            } else {
+                this.props.setOffsetsR([xOff + panelW, yOff]);
+                this.props.setCurrOffsets([xOffR + panelW, yOffR]);
+            }
+            this.props.setCenterScreen([width / 2, height / 2]);
+
+            if (this.props.map.xyOffsets[0] === 0) {
+                var w = this.props.map.tileSize * (_rawTiles.scaleOps[this.props.map.currZoom][0] + 1),
+                    h = this.props.map.tileSize * (_rawTiles.scaleOps[this.props.map.currZoom][1] + 1);
+
+                this.props.setCurrOffsets([(width - w) / -2, (height - h) / -2]);
+                this.props.setOffsetsR([(width - w) / -2, (height - h) / -2]);
+            }
+        }
+    }, {
+        key: 'mouseLoc',
+        value: function mouseLoc(e) {
+            e.preventDefault();
+
+            var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+            var mousePos = [e.clientX - sele.offsetLeft, e.clientY - sele.offsetTop];
+            this.setState({ mouseDivloc: mousePos });
+
+            e.type === 'mousedown' ? this.setState({ drag: 'start' }) : this.setState({ drag: '' });
+            if (e.type === 'mouseup') {
+                this.setState({ mouseLast: mousePos });
+                this.props.setOffsetsR(this.props.map.xyOffsets);
+            };
+        }
+    }, {
+        key: 'drag',
+        value: function drag(e) {
+            e.preventDefault();
+
+            var _props$map$xyOffsetsR2 = _slicedToArray(this.props.map.xyOffsetsR, 2),
+                lastX = _props$map$xyOffsetsR2[0],
+                lastY = _props$map$xyOffsetsR2[1];
+
+            var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+            //var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
+            var mousePos = [e.clientX - sele.offsetLeft, e.clientY - sele.offsetTop];
+            var offX = this.state.mouseDivloc[0] - mousePos[0] + lastX;
+            var offY = this.state.mouseDivloc[1] - mousePos[1] + lastY;
+
+            if (this.state.drag === 'start') {
+                this.setState({ drag: 'drag' });
+                this.props.setCurrOffsets(this.props.map.xyOffsetsR);
+            } else if (this.state.drag === 'drag') {
+                this.props.setCurrOffsets([offX, offY]);
+            }
+        }
+    }, {
+        key: 'zoomScroll',
+        value: function zoomScroll(e) {
+            e.preventDefault();
+            var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+            var mousePos = [e.clientX - sele.offsetLeft, e.clientY - sele.offsetTop];
+            /*
+            mouseposition + offsets => location on map
+            tile position = Math.floor(location/tilesize)
+            */
+            var curX = mousePos[0] + this.props.map.xyOffsets[0],
+                curY = mousePos[1] + this.props.map.xyOffsets[1];
+            var resX = curX / this.props.map.tileSize,
+                resY = curY / this.props.map.tileSize;
+            var mosPos = mousePos;
+
+            var curr = this.props.map.currZoom,
+                pix = this.props.map.tileSize,
+                oX = this.props.map.xyOffsets[0],
+                oY = this.props.map.xyOffsets[1];
+
+            if (e.deltaY > 1) {
+                //zoom in
+                pix += 2, oX += 2 * resX, oY += 2 * resY;
+                if (pix >= 256) {
+                    curr++;pix = 128;
+                }
+                if (curr > 6) {
+                    curr = 6;pix = 256;oX = this.props.map.xyOffsets[0];oY = this.props.map.xyOffsets[1];
+                };
+            } else if (e.deltaY < 1) {
+                //zoom out
+                pix -= 2, oX -= 2 * resX, oY -= 2 * resY;
+                if (pix <= 128) {
+                    curr--;pix = 256;
+                }
+                if (curr < 2) {
+                    curr = 2;pix = 128;oX = this.props.map.xyOffsets[0];oY = this.props.map.xyOffsets[1];
+                };
+            } else {
+                mosPos = mousePos;
+            }
+
+            this.setState({ mousePast: mousePos, mousePos: mosPos });
+            this.props.setOffsetsR([oX, oY]);
+            this.props.setCurrOffsets([oX, oY]);
+            this.props.setCurrZoom(curr);
+            this.props.setCurrTilesize(pix);
+        }
+    }, {
+        key: 'zoom',
+        value: function zoom(e, type) {
+            e.preventDefault();
+            var multiplier = void 0;
+            if (type === 'in') {
+                multiplier = 2;
+            } else if (type === 'out') {
+                multiplier = 0.5;
+            }
+
+            var _props$map$xyCenter = _slicedToArray(this.props.map.xyCenter, 2),
+                mouseX = _props$map$xyCenter[0],
+                mouseY = _props$map$xyCenter[1];
+
+            var curX = mouseX + this.props.map.xyOffsets[0],
+                curY = mouseY + this.props.map.xyOffsets[1];
+
+            var resX = curX * multiplier,
+                resY = curY * multiplier;
+            var newOx = resX - mouseX,
+                newOy = resY - mouseY;
+
+            var curr = this.props.map.currZoom,
+                pix = this.props.map.tileSize,
+                oX = this.props.map.xyOffsets[0],
+                oY = this.props.map.xyOffsets[1];
+
+            if (curr < 6 && type === 'in') {
+                //zoom in
+                curr++, oX = newOx, oY = newOy;
+            } else if (curr > 2 && type === 'out') {
+                curr--, oX = newOx, oY = newOy;
+            }
+
+            this.props.setOffsetsR([oX, oY]);
+            this.props.setCurrOffsets([oX, oY]);
+            this.props.setCurrZoom(curr);
+            this.props.setCurrTilesize(pix);
+        }
+    }, {
+        key: 'zoomDC',
+        value: function zoomDC(e, type) {
+            e.preventDefault();
+            var multiplier = void 0;
+            if (type === 'in') {
+                multiplier = 2;
+            } else if (type === 'out') {
+                multiplier = 0.5;
+            }
+
+            var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+            var mouseX = e.clientX - sele.offsetLeft,
+                mouseY = e.clientY - sele.offsetTop;
+
+            var curX = mouseX + this.props.map.xyOffsets[0],
+                curY = mouseY + this.props.map.xyOffsets[1];
+
+            var resX = curX * multiplier,
+                resY = curY * multiplier;
+            var newOx = resX - mouseX,
+                newOy = resY - mouseY;
+
+            var curr = this.props.map.currZoom,
+                pix = this.props.map.tileSize,
+                oX = this.props.map.xyOffsets[0],
+                oY = this.props.map.xyOffsets[1];
+
+            if (curr < 6 && type === 'in') {
+                //zoom in
+                curr++, oX = newOx, oY = newOy;
+            } else if (curr > 2 && type === 'out') {
+                curr--, oX = newOx, oY = newOy;
+            }
+
+            this.props.setOffsetsR([oX, oY]);
+            this.props.setCurrOffsets([oX, oY]);
+            this.props.setCurrZoom(curr);
+            this.props.setCurrTilesize(pix);
+        }
+    }, {
+        key: 'zoomTo',
+        value: function zoomTo(e, id) {
+            // rework to parallel basic scroll zoom...
+            e.preventDefault();
+
+            this.props.updateSite(id);
+            var site = this.props.sites.allSites.filter(function (site) {
+                return site.id === +id;
+            })[0];
+            if (site) {
+                var siteCent = [site.cx, site.cy];
+                var obj = this.props.sites.genNarratives.filter(function (narr) {
+                    return +narr.coreId === +id;
+                });
+
+                this.props.setTitles(site.name.split('.'));
+                this.props.updateNarrative(obj[0]);
+
+                var wind = this.props.map.windowSize,
+                    panel = this.props.panel.panelSize;
+                if (!this.props.options.panelNone) {
+                    var win = [wind[0] - panel[0], wind[1]];
+                } else {
+                    var win = wind;
+                }
+
+                var zoom = this.props.map.currZoom < 6 ? this.props.map.currZoom + 1 : 6;
+                //console.log(this.props.map.currZoom, zoom);
+                //let tilesize = this.props.map.tileSize;
+
+                var offset = (0, _rawTiles.centerRescaled)(zoom, siteCent, win, 128);
+
+                this.props.setOffsetsR([offset.x, offset.y]);
+                this.props.setCurrOffsets([offset.x, offset.y]);
+                this.props.setCurrZoom(+zoom);
+                this.props.setCurrTilesize(128);
+            } else {
+                this.zoomDC(e, 'in');
+                //let siteCent = [0, 0]; //rework this to accept current center
+            }
+        }
+    }, {
+        key: 'flyTo',
+        value: function flyTo(e) {
+            e.preventDefault();
+        }
+    }, {
+        key: 'showLabel',
+        value: function showLabel(e) {
+            e.preventDefault();
+            var name = e.target.attributes.value.value.split('.');
+            var siteId = e.target.attributes.id.value;
+            this.props.setTitles(name);
+
+            this.props.updateSite(siteId);
+
+            var obj = this.props.sites.genNarratives.filter(function (narr) {
+                return +narr.coreId === +siteId;
+            });
+            this.props.updateNarrative(obj[0]);
+        }
+    }, {
+        key: 'hideLabel',
+        value: function hideLabel(e) {
+            e.preventDefault();
+            if (this.props.sites.currSiteOn === false) {
+                this.props.setTitles('', '');
+                this.props.updateSite(0);
+            }
+        }
+    }, {
+        key: 'setLabel',
+        value: function setLabel(e) {
+            e.preventDefault();
+            //if (this.state.labelClick===false){
+            this.showLabel(e);
+            this.props.overlayDetails(true);
+            //} else {
+            //this.setState({labelT:'', labelS: '', labelClick: false});
+            //}
+        }
+    }, {
+        key: 'loadPanel',
+        value: function loadPanel(e, source) {
+            e.preventDefault();
+            if (source === 'core') {
+                var subsiteId = this.props.sites.currSite;
+                var _obj = this.props.sites.genNarratives.filter(function (narr) {
+                    return +narr.coreId === +subsiteId;
+                });
+                var clustId = _obj[0].clusterId;
+                this.props.setDetailId(0, clustId);
+            } else {
+                var _subsiteId = e.target.attributes.id.value;
+                var _clustId = this.props.sites.genDetails.filter(function (detail) {
+                    return +detail.id === +_subsiteId;
+                })[0].clusterId;
+                var obj = this.props.sites.genNarratives.filter(function (narr) {
+                    return +narr.minorId === +_subsiteId && +narr.clusterId === +_clustId;
+                })[0];
+                if (obj === undefined) {
+                    obj = {};
+                };
+                this.props.setDetailId(+_subsiteId, _clustId);
+                this.props.updateNarrative(obj);
+            }
+        }
+    }, {
+        key: 'selectShowPanel',
+        value: function selectShowPanel(e, id) {
+            e.preventDefault();
+
+            if (this.props.options.panelNone) {
+                this.props.panelSmall();
+            };
+
+            this.zoomTo(e, id);
+
+            this.showLabel(e);
+            this.props.overlayDetails(true);
+            this.loadPanel(e, 'core');
+
+            //more mouse elements here...
+        }
+    }, {
+        key: 'addCenter',
+        value: function addCenter(e, type) {
+            e.preventDefault(); //reverse logic of top
+
+            var mouseX = e.clientX - this.props.map.windowOffsets[0],
+                mouseY = e.clientY - this.props.map.windowOffsets[1];
+
+            var curX = mouseX + this.props.map.xyOffsets[0],
+                curY = mouseY + this.props.map.xyOffsets[1];
+            var zoom = this.props.map.currZoom,
+                pix = this.props.map.tileSize;
+
+            var _reverseCenter = (0, _rawTiles.reverseCenter)(zoom, [curX, curY], pix),
+                x = _reverseCenter.x,
+                y = _reverseCenter.y;
+
+            if (type === 'center' && this.props.sites.newCx === 0) {
+                this.props.addNewSiteCenter(Math.floor(x), Math.floor(y), Math.floor(mouseX), Math.floor(mouseY));
+            } else if (type === 'center' && this.props.sites.newCx !== 0) {
+                this.props.addNewSiteCenter(0, 0, 0, 0);
+                this.props.addNewSiteRadius(0, 0);
+            } else if (type === 'radius') {
+                //get xDif, yDif and take roots
+                var xDif = x - this.props.sites.newCx,
+                    yDif = y - this.props.sites.newCy;
+                var x2 = Math.pow(xDif, 2),
+                    y2 = Math.pow(yDif, 2);
+
+                var sx = Math.pow(mouseX - this.props.sites.newX, 2),
+                    sy = Math.pow(mouseY - this.props.sites.newY, 2);
+                var radScreen = Math.pow(sx + sy, .5);
+                var radius = Math.pow(x2 + y2, .5);
+
+                this.props.addNewSiteRadius(Math.floor(radius), Math.floor(radScreen));
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            //minor site/tile filtering at the top of the map... as is fairly often updated
+
+            var tiles = (0, _rawTiles.tiling)(this.props.map.currZoom, this.props.map.tileSize, this.props.map.windowSize, this.props.map.xyOffsets);
+
+            return _react2.default.createElement(
+                'div',
+                { className: this.props.baseClass, ref: 'size', id: 'mapVarWin' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'offset' },
+                    _react2.default.createElement(
+                        'svg',
+                        { width: this.props.map.windowSize[0], height: this.props.map.windowSize[1], xmlnsXlink: 'http://www.w3.org/1999/xlink' },
+                        _react2.default.createElement(
+                            'defs',
+                            null,
+                            _react2.default.createElement(
+                                'filter',
+                                { id: 'greyscale' },
+                                _react2.default.createElement('feColorMatrix', { type: 'saturate', values: '0' })
+                            )
+                        ),
+                        _react2.default.createElement(_TileVariants.Underlay, { tSize: this.props.map.tileSize, currZoom: this.props.map.currZoom, xyOffsets: this.props.map.xyOffsets, color: this.props.options.color }),
+                        _react2.default.createElement(
+                            'g',
+                            { className: 'workingTiles' },
+                            tiles && _react2.default.createElement(_TileVariants.ClipTiles, { data: tiles, wSize: this.props.map.windowSize, tSize: this.props.map.tileSize, clip: '', opacity: 1, action: '' })
+                        ),
+                        _react2.default.createElement('g', { className: 'allLabelGeneral' })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return MapSVG;
+}(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+    return {
+        map: state.map,
+        options: state.options,
+        sites: state.sites,
+        panel: state.panel,
+        user: state.user
+    };
+};
+
+//setZoom, setTile, setOffsets, setCenter, setCenterScreen, setWindowSize, setWindowOffset
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        getMapbyName: function getMapbyName(name) {
+            //dispatch later;
+        }
+    };
+};
+
+var MapSecondary = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MapSVG);
+
+exports.default = MapSecondary;
 
 /***/ })
 /******/ ]);
