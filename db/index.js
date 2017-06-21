@@ -2,7 +2,7 @@
 
 var Sequelize = require('sequelize');
 
-//MAMP connection
+// //MAMP connection for gallery
 var db = new Sequelize('veniceMamp', 'root', 'root', {
   dialect: 'mysql',
 	socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
@@ -31,9 +31,10 @@ var db = new Sequelize('veniceMamp', 'root', 'root', {
 // });
 
 
+//for heroku - postgreSQL with local clone for download
 
-// var databaseURI = 'postgres://localhost:5432/forecast';
-// //var databaseURI = process.env.DATABASE_URL; //process for heroku node
+//var databaseURI = 'postgres://localhost:5432/veniceMamp';
+//var databaseURI = process.env.DATABASE_URL; //process for heroku node
 
 // var db = new Sequelize(databaseURI, {
 //   define: {

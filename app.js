@@ -1,6 +1,3 @@
-//-----------ONLY FOR SEEDING!-------------------
-//const seed = require('./db/seed.js');
-
 //-----------ALL OTHER-------------------
 const Sequelize = require('sequelize');
 const path = require('path');
@@ -53,6 +50,7 @@ const db = require('./db');
 //const fsP = Promise.promisify(fs.readFile);
 
 const port = 3000;
+//const port = process.env.PORT;
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -80,7 +78,6 @@ app.use('/api', require('./routes/index.js'));
 //catch all react-router front-end routes and direct to index
 var validFrontendRoutes = ['/', '/map', '/Venice', '/Venice-Edit'];
 var indexPath = path.join(__dirname, 'browser', 'index.html');
-console.log(__dirname, indexPath);
 validFrontendRoutes.forEach(function (stateRoute) {
   app.get(stateRoute, function (req, res) {
     res.sendFile(indexPath);

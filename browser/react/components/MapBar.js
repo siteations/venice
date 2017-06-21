@@ -6,22 +6,23 @@ import IconButton from 'material-ui/IconButton';
 
 import {updatePanelNone, updatePanelSmall, updatePanelLarge, updatePanelStart, updatePanelMid} from '../action-creators/optionActions.js';
 //connect later?
-import {addSelectLayer, deleteSelectLayer, addAllLayers, addHoverSite} from '../action-creators/siteActions.js';
+import {addSelectLayer, deleteSelectLayer, addAllLayers, addHoverSite, setSpecPanel} from '../action-creators/siteActions.js';
 
 //
 
 let mapButtons=[
 	{cn:"nIcon flex center middle", v:"intro", src:'/img/intro-01.svg' },
-	{cn:"nIcon flex center middle", v:"all layers", src:"/img/all-layers-01.svg" },
 	{cn:"nIcon flex center middle", v:"maps", src:"/img/maps-01.svg" },
 	{cn:"nSpc", v:'navigate', src:" " },
 	{cn:"nIcon flex center middle", v:"panel", src:"/img/arrow1-01.svg" },
 	{cn:"nIcon flex center middle", v:"panel large", src:"/img/arrow2-01.svg" },
-	{cn:"nSpcSm", v:'navigate', src:" " },
+	{cn:"nSpc", v:'navigate', src:" " },
+	{cn:"nIcon flex center middle", v:"all layers", src:"/img/all-layers-01.svg" },
 	{cn:"nIcon flex center middle", v:"parish churches", src:"/img/parish-01.svg" },
 	{cn:"nIcon flex center middle", v:"bascilica", src:"/img/bascilica-01.svg" },
 	{cn:"nIcon flex center middle", v:"plague churches", src:"/img/plague-01.svg" },
-	{cn:"nIcon flex center middle", v:"monastery, convents", src:"/img/convent-01.svg" },
+	{cn:"nIcon flex center middle", v:"monastery", src:"/img/culture-01.svg" },
+	{cn:"nIcon flex center middle", v:"convents", src:"/img/convent-01.svg" },
 	{cn:"nIcon flex center middle", v:"non-catholic communities", src:"/img/non-catholic-01.svg" },
 	{cn:"nIcon flex center middle", v:"processions", src:"/img/ritual-01.svg" },
 	{cn:"nIcon flex center middle", v:"cultural", src:"/img/culture-01.svg" },
@@ -91,9 +92,9 @@ class MapBar extends Component{
 		let val=e.target.attributes.value.value;
 		console.log('reading panel?', val);
 
-		if (this.props.options.panelStart){
-			this.props.panelStart();
-		}
+		// if (this.props.options.panelStart){
+		// 	this.props.panelStart();
+		// }
 
 		//panel options
 		if (val === 'panel' && this.props.options.panelNone){
@@ -108,19 +109,35 @@ class MapBar extends Component{
 			this.props.panelNone();
 		}
 
-		//intro options
+		//map/intro/biblio options
+		else if ((val === 'maps' || val === 'intro' || val === 'bibliography') && (this.props.options.panelNone || this.props.options.panelSmall)){
+			this.props.panelLarge();
+			this.props.setSpecPanel(val);
+
+		} else if ((val === 'maps' || val === 'intro' || val === 'bibliography') && this.props.options.panelLarge){
+			if (val !== this.props.sites.specLayer){
+				this.props.setSpecPanel(val);
+			} else {
+				this.props.panelNone();
+				this.props.setSpecPanel('');
+			}
+		}
 
 		//layer addition/subtractions dispatch
-		if (val==='all layers' && this.props.sites.currLayers.length !== this.props.sites.allLayers.length){
+		else if (val==='all layers' && this.props.sites.currLayers.length !== this.props.sites.allLayers.length){
 			this.props.loadSelectAll('add');
+			this.props.setSpecPanel('');
 
 		} else if (val==='all layers' && this.props.sites.currLayers.length === this.props.sites.allLayers.length){
 			this.props.loadSelectAll('clear');
-		} else if (val!=='panel' && val!=='panel large' && val!=='intro' && val!=='biblio'){ //individual layers
+			this.props.setSpecPanel('');
+		} else if (val!=='panel' && val!=='panel large' && val!=='intro' && val!=='biblio' && val!=='maps'){ //individual layers
 			if (this.props.sites.currLayers.indexOf(val.split(', ')[0])<0){ //not in add
 					this.props.addSelectOne(val);
+					this.props.setSpecPanel('');
 			} else { //in layers, so remove...
 					this.props.deleteSelectOne(val);
+					this.props.setSpecPanel('');
 			}
 		}
 
@@ -196,7 +213,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setHoverLabel: (layer) => {
     	dispatch(addHoverSite(layer));
-    }
+    },
+    setSpecPanel: (type) => {
+    	dispatch(setSpecPanel(type));
+    },
 
   }
 }

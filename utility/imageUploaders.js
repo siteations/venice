@@ -3,7 +3,7 @@ const fs = require('fs');
 const writeFile = Promise.promisify(fs.writeFile);
 
 //set up alt version for web...
-var secretAWS = require('../secret.js');
+/*var secretAWS = require('../secret.js');
 var AWS = require('aws-sdk');
 
 AWS.config = new AWS.Config();
@@ -30,7 +30,7 @@ var ImageUploaderAWS = function(options) { //AWS collection
   var putObjectPromise = s3.putObject(params).promise();
   return putObjectPromise;
 
-}
+}*/
 
 var ImageUploader = function(options) { //local collection
   console.log(options)
@@ -45,6 +45,6 @@ var ImageUploader = function(options) { //local collection
 }
 
 module.exports = {
-    ImageUploaderAWS,
+    //ImageUploaderAWS,
     ImageUploader,
   };
