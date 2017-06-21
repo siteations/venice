@@ -3,7 +3,6 @@
 # dependencies
 /node_modules/**
 /browser/layouts/**
-/public/img/barbari/**
 
 # any security with seed info
 /db/seeds/CirTest.js
