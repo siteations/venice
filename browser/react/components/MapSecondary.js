@@ -379,7 +379,7 @@ class MapSVG extends Component {
 
 	    	   		<g className="workingTiles" >
                         {tiles &&
-                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="" opacity={1} action=""/>
+                            <ClipTiles data={tiles} name='barbari' wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="" opacity={1} action=""/>
     	    	   		}
 	    	   		</g>
 	    	   		<g className="allLabelGeneral" >

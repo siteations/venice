@@ -411,13 +411,13 @@ class MapSVG extends Component {
 
 	    	   		<g className="workingTiles" >
     	    	   		{tiles &&
-                            <BackgroundTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} color={this.props.options.color} />
+                            <BackgroundTiles data={tiles} name='novacco' wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} color={this.props.options.color} />
                         }
                         {this.props.options.anno &&
                             <BackgroundMask wSize={this.props.map.windowSize} color={this.props.options.color} />
                         }
                         {tiles && this.props.options.anno &&
-                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="url(#myClip)" opacity={1} action=""/>
+                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} name='novacco' tSize={this.props.map.tileSize} clip="url(#myClip)" opacity={1} action=""/>
     	    	   		}
 	    	   		</g>
 
