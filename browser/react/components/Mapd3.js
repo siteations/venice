@@ -73,13 +73,13 @@ class MapSVG extends Component {
         this.props.setWinSize([width, height]);
         this.props.setPanelOffset(panelW); // for recenter;
 
-        if (width<this.props.map.windowSize[0]){
-            this.props.setOffsetsR([xOff + panelW , yOff]);
-            this.props.setCurrOffsets([xOffR + panelW , yOffR]);
-        } else {
+        // if (width<this.props.map.windowSize[0]){
+        //     this.props.setOffsetsR([xOff + panelW , yOff]);
+        //     this.props.setCurrOffsets([xOffR + panelW , yOffR]);
+        // } else {
             this.props.setOffsetsR([xOff + panelW, yOff]);
             this.props.setCurrOffsets([xOffR + panelW , yOffR]);
-        }
+        // }
         this.props.setCenterScreen([width/2, height/2]);
 
         if (this.props.map.xyOffsets[0]===0){
@@ -373,7 +373,12 @@ class MapSVG extends Component {
     	return (
 
     	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
-    	   <div className="offset" onMouseDown = {e=>this.mouseLoc(e)}
+        {this.props.sites.specLayer==='maps' &&
+              <div>
+              <h2 className="BornholmSandvig pad10" > Cartographic comparisons: Murlano's Map (1670)</h2>
+              </div>
+        }
+    	   <div className="offset border3" onMouseDown = {e=>this.mouseLoc(e)}
            onMouseUp = {e=>this.mouseLoc(e)}
            onMouseMove = {e=>this.drag(e)}
            onWheel = {e=>this.zoomScroll(e)}
@@ -381,7 +386,7 @@ class MapSVG extends Component {
            onClick={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault()}
            >
 
-	    	   <svg width={this.props.map.windowSize[0]} height={this.props.map.windowSize[1]} xmlnsXlink='http://www.w3.org/1999/xlink' >
+	    	   <svg width={this.props.map.windowSize[0]} height={(this.props.sites.specLayer==='maps')? this.props.map.windowSize[1]*.7 : this.props.map.windowSize[1]} xmlnsXlink='http://www.w3.org/1999/xlink' >
 	    	   		<defs>
                         <filter id="greyscale">
                             <feColorMatrix type="saturate" values="0" />

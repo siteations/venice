@@ -478,6 +478,10 @@ a:hover {
 	box-shadow: 0 0 3px #808080;
 }
 
+.noPad {
+	padding:0px;
+}
+
 .bImg {
 	width: 20px;
 	height: 20px;
@@ -507,6 +511,10 @@ a:hover {
 
 .pad10 {
 	padding: 0px 10px;
+}
+
+.border3 {
+	border: double 3px #e6e1d3;
 }
 
 .editOps {

@@ -19,6 +19,7 @@ import { ClipTiles, BackgroundTiles, BackgroundMask, Underlay } from './TileVari
 
  import { setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
 
+
 class MapSVG extends Component {
 	constructor(props) {
         super(props);
@@ -32,59 +33,86 @@ class MapSVG extends Component {
             labelClick: false,
             labelT:'',
             labelS:'',
-
         };
         this.mouseLoc=this.mouseLoc.bind(this);
-        this.refSize=this.refSize.bind(this);
+        // this.refSize=this.refSize.bind(this);
         this.zoom = this.zoom.bind(this);
         this.zoomTo = this.zoomTo.bind(this);
         this.loadPanel = this.loadPanel.bind(this);
         this.addCenter = this.addCenter.bind(this);
-        //this.flyTo
-        //this.other
+        this.setSite=this.setSite.bind(this);
+        this.flyToSingle=this.flyToSingle.bind(this);
+    }
+
+    setSite(e){
+        e.preventDefault();
+        let siteId = e.target.attributes.value.value.split('-')[0];
+        let siteZoom = e.target.attributes.value.value.split('-')[1];
+        this.props.updateSite(siteId);
+
+        let site = this.props.sites.allSites.filter(site=> +site.id === +siteId)[0];
+        let siteCent = [site.cx, site.cy];
+        this.props.setTitles(site.name.split('.'));
+
+        let obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+siteId);
+        this.props.updateNarrative(obj[0]);
+
+        this.flyToSingle(siteZoom, siteCent);
 
     }
 
-    componentDidMount() {
-        // window.addEventListener("resize", this.refSize);
-        // this.refSize();
-        // this.props.getLayers(this.props.sites.currLayers);
-        // this.props.getAllDetailsNarratives();
+    flyToSingle(zoom, newCenter){
+        var win = this.props.map.windowSize;
+        let panel = this.props.panel.panelSize;
+
+        let offset = centerRescaled(zoom, newCenter, win, 128);
+
+        this.props.setOffsetsR([offset.x, offset.y]);
+        this.props.setCurrOffsets([offset.x, offset.y]);
+        this.props.setCurrZoom(+zoom);
+        this.props.setCurrTilesize(128);
     }
 
-    refSize(){
-        let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-        let width = sele.clientWidth;
-        let panelW = (this.props.map.windowSize[0]-width)/2;
-        //if (panelW <= 0){ panelW = 0; } else { panelW *= 0.5; };
+    // componentDidMount() {
+    //     // window.addEventListener("resize", this.refSize);
+    //     // this.refSize();
+    //     // this.props.getLayers(this.props.sites.currLayers);
+    //     // this.props.getAllDetailsNarratives();
+    // }
 
-        // if (width<this.props.map.windowSize[0]){
-        //     width=this.props.map.windowSize[0];
-        // };
-        let height = sele.clientHeight;
-        let [xOff, yOff] = this.props.map.xyOffsets;
-        let [xOffR, yOffR] = this.props.map.xyOffsetsR;
+    // refSize(){
+    //     let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+    //     let width = sele.clientWidth;
+    //     let panelW = (this.props.map.windowSize[0]-width)/2;
+    //     //if (panelW <= 0){ panelW = 0; } else { panelW *= 0.5; };
 
-        this.props.setWindowOffsets([sele.offsetLeft, sele.offsetTop]);
-        this.props.setWinSize([width, height]);
-        this.props.setPanelOffset(panelW); // for recenter;
+    //     // if (width<this.props.map.windowSize[0]){
+    //     //     width=this.props.map.windowSize[0];
+    //     // };
+    //     let height = sele.clientHeight;
+    //     let [xOff, yOff] = this.props.map.xyOffsets;
+    //     let [xOffR, yOffR] = this.props.map.xyOffsetsR;
 
-        if (width<this.props.map.windowSize[0]){
-            this.props.setOffsetsR([panelW - xOff  , yOff]);
-            this.props.setCurrOffsets([panelW- xOffR , yOffR]);
-        } else {
-            this.props.setOffsetsR([xOff + panelW, yOff]);
-            this.props.setCurrOffsets([xOffR + panelW , yOffR]);
-        }
-        this.props.setCenterScreen([width/2, height/2]);
+    //     this.props.setWindowOffsets([sele.offsetLeft, sele.offsetTop]);
+    //     this.props.setWinSize([width, height]);
+    //     this.props.setPanelOffset(panelW); // for recenter;
 
-        if (this.props.map.xyOffsets[0]===0){
-            let w=this.props.map.tileSize*(scaleOps[this.props.map.currZoom][0]+1), h =this.props.map.tileSize*(scaleOps[this.props.map.currZoom][1]+1);
+    //     // if (width<this.props.map.windowSize[0]){
+    //     //     this.props.setOffsetsR([xOff + panelW , yOff]);
+    //     //     this.props.setCurrOffsets([xOffR + panelW , yOffR]);
+    //     // } else {
+    //     this.props.setOffsetsR([xOff + panelW, yOff]);
+    //     this.props.setCurrOffsets([xOffR + panelW , yOffR]);
+    //     // }
+    //     this.props.setCenterScreen([width/2, height/2]);
 
-            this.props.setCurrOffsets([(width-w)/-2,(height-h)/-2]);
-            this.props.setOffsetsR([(width-w)/-2,(height-h)/-2]);
-        }
-    }
+    //     if (this.props.map.xyOffsets[0]===0){
+    //         let w=this.props.map.tileSize*(scaleOps[this.props.map.currZoom][0]+1), h =this.props.map.tileSize*(scaleOps[this.props.map.currZoom][1]+1);
+
+    //         this.props.setCurrOffsets([(width-w)/-2,(height-h)/-2]);
+    //         this.props.setOffsetsR([(width-w)/-2,(height-h)/-2]);
+    //     }
+    // }
 
     mouseLoc(e) {
     	e.preventDefault();
@@ -359,7 +387,7 @@ class MapSVG extends Component {
     	return (
 
     	<div className={this.props.baseClass} id="mapVarWin" >
-    	   <div className="offset"
+    	   <div className="offset border3"
            onMouseDown = {e=>this.mouseLoc(e)}
            onMouseUp = {e=>this.mouseLoc(e)}
            onMouseMove = {e=>this.drag(e)}
@@ -386,7 +414,6 @@ class MapSVG extends Component {
 	   				</g>
 	    	   </svg>
     	   </div>
-           {/*<MapOptions actions={{zoom: this.zoom }} />*/}
     	 </div>
 
     	)

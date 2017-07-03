@@ -5,6 +5,7 @@ import {Tooltip} from 'react-lightweight-tooltip';
 import IconButton from 'material-ui/IconButton';
 
 import {updatePanelNone, updatePanelSmall, updatePanelLarge, updatePanelStart, updatePanelMid} from '../action-creators/optionActions.js';
+import {updateColor, updateAnno, updateDetail} from '../action-creators/optionActions.js';
 //connect later?
 import {addSelectLayer, deleteSelectLayer, addAllLayers, addHoverSite, setSpecPanel} from '../action-creators/siteActions.js';
 
@@ -113,13 +114,26 @@ class MapBar extends Component{
 		else if ((val === 'maps' || val === 'intro' || val === 'bibliography') && (this.props.options.panelNone || this.props.options.panelSmall)){
 			this.props.panelLarge();
 			this.props.setSpecPanel(val);
+			if (val === 'maps' ) {
+				this.props.setColor(true);
+				this.props.setAnno(false);
+				this.props.setDetail(false);
+			}
 
 		} else if ((val === 'maps' || val === 'intro' || val === 'bibliography') && this.props.options.panelLarge){
 			if (val !== this.props.sites.specLayer){
 				this.props.setSpecPanel(val);
+				if (val === 'maps' ) {
+					this.props.setColor(true);
+					this.props.setAnno(false);
+					this.props.setDetail(false);
+				}
 			} else {
 				this.props.panelNone();
 				this.props.setSpecPanel('');
+					this.props.setColor(false);
+					this.props.setAnno(true);
+					this.props.setDetail(true);
 			}
 		}
 
@@ -216,6 +230,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setSpecPanel: (type) => {
     	dispatch(setSpecPanel(type));
+    },
+    setColor: (bool) => {
+      dispatch(updateColor(bool));
+    },
+    setAnno: (bool) => {
+      dispatch(updateAnno(bool));
+    },
+    setDetail: (bool) => {
+        dispatch(updateDetail(bool));
     },
 
   }
