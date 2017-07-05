@@ -22,7 +22,7 @@ const Header = ((props) => {
 	return (
 	        <div className="row flex bottom header">
                         <div className="col-lg-1 flex">
-                                <a href="http://localhost:80"><img className='logo' src="/img/the-newberry-small.png" /></a>
+                                <a href=""><img className='logo' src="/img/the-newberry-small.png" /></a>
                                 <IconMenu
                                       iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                                       anchorOrigin={{horizontal: 'left', vertical: 'top'}}
@@ -34,8 +34,8 @@ const Header = ((props) => {
                               </IconMenu>
                         </div>
                         <div className="col-lg-4 bottom">
-                                <h1 className="BornholmSandvig closerT">Religious Life In Venice</h1>
-                                <h5  className="closerB ">subtitle, dates, context</h5>
+                                <h1 className="BornholmSandvig closerT">Religious Life in Venice</h1>
+                                <h5  className="closerB ">Mapping Early Modern Cosmopolitanism</h5>
                         </div>
 	        	<div className="col-lg-3">
         			<h4 className="BornholmSandvig closerT text-right ">Layers Shown:</h4>
