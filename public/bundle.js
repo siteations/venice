@@ -17565,7 +17565,7 @@ var Header = function Header(props) {
       { className: 'col-lg-1 flex' },
       _react2.default.createElement(
         'a',
-        { href: 'http://localhost:80' },
+        { href: '' },
         _react2.default.createElement('img', { className: 'logo', src: '/img/the-newberry-small.png' })
       ),
       _react2.default.createElement(
@@ -17590,12 +17590,12 @@ var Header = function Header(props) {
       _react2.default.createElement(
         'h1',
         { className: 'BornholmSandvig closerT' },
-        'Religious Life In Venice'
+        'Religious Life in Venice'
       ),
       _react2.default.createElement(
         'h5',
         { className: 'closerB ' },
-        'subtitle, dates, context'
+        'testing'
       )
     ),
     _react2.default.createElement(
