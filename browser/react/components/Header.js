@@ -35,7 +35,7 @@ const Header = ((props) => {
                         </div>
                         <div className="col-lg-4 bottom">
                                 <h1 className="BornholmSandvig closerT">Religious Life in Venice</h1>
-                                <h5  className="closerB ">Mapping Early Modern Cosmopolitanism </h5>
+                                <h5  className="closerB ">testing</h5>
                         </div>
 	        	<div className="col-lg-3">
         			<h4 className="BornholmSandvig closerT text-right ">Layers Shown:</h4>
