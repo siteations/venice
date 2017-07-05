@@ -3,6 +3,9 @@
 # dependencies
 /node_modules/**
 /browser/layouts/**
+/public/img/demo1762/**
+/public/img/fracho/**
+/public/img/section/**
 
 # any security with seed info
 /db/seeds/CirTest.js
