@@ -17595,7 +17595,7 @@ var Header = function Header(props) {
       _react2.default.createElement(
         'h5',
         { className: 'closerB ' },
-        'testing'
+        'Mapping Early Modern Cosmopolitanism'
       )
     ),
     _react2.default.createElement(
