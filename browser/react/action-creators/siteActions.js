@@ -380,7 +380,31 @@ export const addHoverSite = (layer) => dispatch =>{
 	dispatch(addHoverLayer(layer));
 }
 
+export const deleteSite = (id) => dispatch => {
+	axios.delete(`/api/site/${id}`)
+			.then(responses => {
+				return responses.data;
+			})
+			.then((results) => {
+			console.log(results);
+			dispatch(loadSites());
+			})
+			.catch(console.log);
+}
+
 //-----------detail editing dispatches------------------------
+export const deleteDetail = (id) => dispatch => {
+	axios.delete(`/api/details/${id}`)
+			.then(responses => {
+				return responses.data;
+			})
+			.then((results) => {
+				console.log(results);
+			dispatch(reloadDetails());
+			})
+			.catch(console.log);
+}
+
 
 export const reloadDetails = () => dispatch => {
 	axios.get('/api/details')
@@ -453,7 +477,43 @@ export const reloadImages = () => dispatch => {
 			.catch(console.log);
 }
 
+export const deleteImages = (id) => dispatch => {
+	axios.delete(`/api/images/${id}`)
+			.then(responses => {
+				return responses.data;
+			})
+			.then((results) => {
+			dispatch(reloadImages());
+			})
+			.catch(console.log);
+}
+
+
 //-----------narrative & detail general dispatches------------------------
+
+export const deleteNarrative = (id) => dispatch => {
+	axios.delete(`/api/narratives/${id}`)
+			.then(responses => {
+				return responses.data;
+			})
+			.then((narratives) => {
+				console.log(narratives);
+			dispatch(reloadNarratives());
+			})
+			.catch(console.log);
+}
+
+export const deleteBiblio = (id) => dispatch => {
+		axios.delete(`/api/biblio/${id}`)
+			.then(responses => {
+				return responses.data;
+			})
+			.then((bib) => {
+				console.log(bib);
+			dispatch(reloadBiblio());
+			})
+			.catch(console.log);
+}
 
 export const reloadNarratives = () => dispatch => {
 	axios.get('/api/narratives')

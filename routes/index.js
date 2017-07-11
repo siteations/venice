@@ -79,6 +79,21 @@ router.post('/details', (req, res, next)=>{
 		});
 });
 
+router.delete('/details/:id', (req, res, next)=>{
+		Details.findById(req.params.id)
+		.then(siteList=>{
+			//check for narrative, details (optional)
+			//check for tour entries with site id... must be removed
+			return siteList.destroy();
+		})
+		.then(results=> {
+				res.send({message: `detail ${req.params.id} removed, deleted from all tours`});
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
 //-------------------------narratives--------------------------
 
 router.get('/narratives', (req, res, next)=>{
@@ -109,6 +124,21 @@ router.put('/narratives/:id', (req, res, next)=>{
 			.then(results=> {
 				res.send(results.data);
 			})
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
+router.delete('/narratives/:id', (req, res, next)=>{
+		Narratives.findById(req.params.id)
+		.then(siteList=>{
+			//check for narrative, details (optional)
+			//check for tour entries with site id... must be removed
+			return siteList.destroy();
+		})
+		.then(results=> {
+				res.send({message: `narrative ${req.params.id} removed, deleted from all tours`});
 		})
 		.catch(err=>{
 			next(err);
@@ -156,6 +186,21 @@ router.post('/images-files', (req, res, next)=> { //to aws storage or local publ
 	  }).catch(console.log);
 
 
+});
+
+router.delete('/images/:id', (req, res, next)=>{
+		Images.findById(req.params.id)
+		.then(siteList=>{
+			//check for narrative, details (optional)
+			//check for tour entries with site id... must be removed
+			return siteList.destroy();
+		})
+		.then(results=> {
+				res.send({message: `images ${req.params.id} removed, deleted from all tours`});
+		})
+		.catch(err=>{
+			next(err);
+		});
 });
 
 //-------------------------tours--------------------------
@@ -214,6 +259,20 @@ router.post('/biblio', (req, res, next)=>{
 			next(err);
 		});
 });
+
+router.delete('/biblio/:id', (req, res, next)=>{
+
+		Biblio.findById(req.params.id)
+		.then(tourList=>{
+			return tourList.destroy();
+		}).then(() => {
+			res.send({message: req.params.id+' removed'});
+		})
+		.catch(err=>{
+			next(err);
+		});
+});
+
 
 //-------------authorization----------------------
 

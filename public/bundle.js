@@ -1195,7 +1195,7 @@ module.exports = ExecutionEnvironment;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.addBibliography = exports.editNarrative = exports.addNarrative = exports.resetSaved = exports.addNewSiteRadius = exports.addNewSiteCenter = exports.editSite = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.addBiblio = exports.getDetailsNarratives = exports.reloadBiblio = exports.reloadNarratives = exports.reloadImages = exports.addImage = exports.addDetail = exports.reloadDetails = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.saved = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getGenBiblio = exports.getAllSites = exports.SAVED = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_BIB = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
+exports.addBibliography = exports.editNarrative = exports.addNarrative = exports.resetSaved = exports.addNewSiteRadius = exports.addNewSiteCenter = exports.editSite = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.addBiblio = exports.getDetailsNarratives = exports.reloadBiblio = exports.reloadNarratives = exports.deleteBiblio = exports.deleteNarrative = exports.deleteImages = exports.reloadImages = exports.addImage = exports.addDetail = exports.reloadDetails = exports.deleteDetail = exports.deleteSite = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.saved = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getGenBiblio = exports.getAllSites = exports.SAVED = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_BIB = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
 
 var _axios = __webpack_require__(85);
 
@@ -1600,7 +1600,28 @@ var addHoverSite = exports.addHoverSite = function addHoverSite(layer) {
 	};
 };
 
+var deleteSite = exports.deleteSite = function deleteSite(id) {
+	return function (dispatch) {
+		_axios2.default.delete('/api/site/' + id).then(function (responses) {
+			return responses.data;
+		}).then(function (results) {
+			console.log(results);
+			dispatch(loadSites());
+		}).catch(console.log);
+	};
+};
+
 //-----------detail editing dispatches------------------------
+var deleteDetail = exports.deleteDetail = function deleteDetail(id) {
+	return function (dispatch) {
+		_axios2.default.delete('/api/details/' + id).then(function (responses) {
+			return responses.data;
+		}).then(function (results) {
+			console.log(results);
+			dispatch(reloadDetails());
+		}).catch(console.log);
+	};
+};
 
 var reloadDetails = exports.reloadDetails = function reloadDetails() {
 	return function (dispatch) {
@@ -1663,7 +1684,39 @@ var reloadImages = exports.reloadImages = function reloadImages() {
 	};
 };
 
+var deleteImages = exports.deleteImages = function deleteImages(id) {
+	return function (dispatch) {
+		_axios2.default.delete('/api/images/' + id).then(function (responses) {
+			return responses.data;
+		}).then(function (results) {
+			dispatch(reloadImages());
+		}).catch(console.log);
+	};
+};
+
 //-----------narrative & detail general dispatches------------------------
+
+var deleteNarrative = exports.deleteNarrative = function deleteNarrative(id) {
+	return function (dispatch) {
+		_axios2.default.delete('/api/narratives/' + id).then(function (responses) {
+			return responses.data;
+		}).then(function (narratives) {
+			console.log(narratives);
+			dispatch(reloadNarratives());
+		}).catch(console.log);
+	};
+};
+
+var deleteBiblio = exports.deleteBiblio = function deleteBiblio(id) {
+	return function (dispatch) {
+		_axios2.default.delete('/api/biblio/' + id).then(function (responses) {
+			return responses.data;
+		}).then(function (bib) {
+			console.log(bib);
+			dispatch(reloadBiblio());
+		}).catch(console.log);
+	};
+};
 
 var reloadNarratives = exports.reloadNarratives = function reloadNarratives() {
 	return function (dispatch) {
@@ -3575,511 +3628,6 @@ module.exports = ReactCurrentOwner;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-
-
-var _assign = __webpack_require__(16);
-
-var PooledClass = __webpack_require__(52);
-
-var emptyFunction = __webpack_require__(26);
-var warning = __webpack_require__(12);
-
-var didWarnForAddedNewProperty = false;
-var isProxySupported = typeof Proxy === 'function';
-
-var shouldBeReleasedProperties = ['dispatchConfig', '_targetInst', 'nativeEvent', 'isDefaultPrevented', 'isPropagationStopped', '_dispatchListeners', '_dispatchInstances'];
-
-/**
- * @interface Event
- * @see http://www.w3.org/TR/DOM-Level-3-Events/
- */
-var EventInterface = {
-  type: null,
-  target: null,
-  // currentTarget is set when dispatching; no use in copying it here
-  currentTarget: emptyFunction.thatReturnsNull,
-  eventPhase: null,
-  bubbles: null,
-  cancelable: null,
-  timeStamp: function (event) {
-    return event.timeStamp || Date.now();
-  },
-  defaultPrevented: null,
-  isTrusted: null
-};
-
-/**
- * Synthetic events are dispatched by event plugins, typically in response to a
- * top-level event delegation handler.
- *
- * These systems should generally use pooling to reduce the frequency of garbage
- * collection. The system should check `isPersistent` to determine whether the
- * event should be released into the pool after being dispatched. Users that
- * need a persisted event should invoke `persist`.
- *
- * Synthetic events (and subclasses) implement the DOM Level 3 Events API by
- * normalizing browser quirks. Subclasses do not necessarily have to implement a
- * DOM interface; custom application-specific events can also subclass this.
- *
- * @param {object} dispatchConfig Configuration used to dispatch this event.
- * @param {*} targetInst Marker identifying the event target.
- * @param {object} nativeEvent Native browser event.
- * @param {DOMEventTarget} nativeEventTarget Target node.
- */
-function SyntheticEvent(dispatchConfig, targetInst, nativeEvent, nativeEventTarget) {
-  if (process.env.NODE_ENV !== 'production') {
-    // these have a getter/setter for warnings
-    delete this.nativeEvent;
-    delete this.preventDefault;
-    delete this.stopPropagation;
-  }
-
-  this.dispatchConfig = dispatchConfig;
-  this._targetInst = targetInst;
-  this.nativeEvent = nativeEvent;
-
-  var Interface = this.constructor.Interface;
-  for (var propName in Interface) {
-    if (!Interface.hasOwnProperty(propName)) {
-      continue;
-    }
-    if (process.env.NODE_ENV !== 'production') {
-      delete this[propName]; // this has a getter/setter for warnings
-    }
-    var normalize = Interface[propName];
-    if (normalize) {
-      this[propName] = normalize(nativeEvent);
-    } else {
-      if (propName === 'target') {
-        this.target = nativeEventTarget;
-      } else {
-        this[propName] = nativeEvent[propName];
-      }
-    }
-  }
-
-  var defaultPrevented = nativeEvent.defaultPrevented != null ? nativeEvent.defaultPrevented : nativeEvent.returnValue === false;
-  if (defaultPrevented) {
-    this.isDefaultPrevented = emptyFunction.thatReturnsTrue;
-  } else {
-    this.isDefaultPrevented = emptyFunction.thatReturnsFalse;
-  }
-  this.isPropagationStopped = emptyFunction.thatReturnsFalse;
-  return this;
-}
-
-_assign(SyntheticEvent.prototype, {
-
-  preventDefault: function () {
-    this.defaultPrevented = true;
-    var event = this.nativeEvent;
-    if (!event) {
-      return;
-    }
-
-    if (event.preventDefault) {
-      event.preventDefault();
-    } else if (typeof event.returnValue !== 'unknown') {
-      // eslint-disable-line valid-typeof
-      event.returnValue = false;
-    }
-    this.isDefaultPrevented = emptyFunction.thatReturnsTrue;
-  },
-
-  stopPropagation: function () {
-    var event = this.nativeEvent;
-    if (!event) {
-      return;
-    }
-
-    if (event.stopPropagation) {
-      event.stopPropagation();
-    } else if (typeof event.cancelBubble !== 'unknown') {
-      // eslint-disable-line valid-typeof
-      // The ChangeEventPlugin registers a "propertychange" event for
-      // IE. This event does not support bubbling or cancelling, and
-      // any references to cancelBubble throw "Member not found".  A
-      // typeof check of "unknown" circumvents this issue (and is also
-      // IE specific).
-      event.cancelBubble = true;
-    }
-
-    this.isPropagationStopped = emptyFunction.thatReturnsTrue;
-  },
-
-  /**
-   * We release all dispatched `SyntheticEvent`s after each event loop, adding
-   * them back into the pool. This allows a way to hold onto a reference that
-   * won't be added back into the pool.
-   */
-  persist: function () {
-    this.isPersistent = emptyFunction.thatReturnsTrue;
-  },
-
-  /**
-   * Checks if this event should be released back into the pool.
-   *
-   * @return {boolean} True if this should not be released, false otherwise.
-   */
-  isPersistent: emptyFunction.thatReturnsFalse,
-
-  /**
-   * `PooledClass` looks for `destructor` on each instance it releases.
-   */
-  destructor: function () {
-    var Interface = this.constructor.Interface;
-    for (var propName in Interface) {
-      if (process.env.NODE_ENV !== 'production') {
-        Object.defineProperty(this, propName, getPooledWarningPropertyDefinition(propName, Interface[propName]));
-      } else {
-        this[propName] = null;
-      }
-    }
-    for (var i = 0; i < shouldBeReleasedProperties.length; i++) {
-      this[shouldBeReleasedProperties[i]] = null;
-    }
-    if (process.env.NODE_ENV !== 'production') {
-      Object.defineProperty(this, 'nativeEvent', getPooledWarningPropertyDefinition('nativeEvent', null));
-      Object.defineProperty(this, 'preventDefault', getPooledWarningPropertyDefinition('preventDefault', emptyFunction));
-      Object.defineProperty(this, 'stopPropagation', getPooledWarningPropertyDefinition('stopPropagation', emptyFunction));
-    }
-  }
-
-});
-
-SyntheticEvent.Interface = EventInterface;
-
-if (process.env.NODE_ENV !== 'production') {
-  if (isProxySupported) {
-    /*eslint-disable no-func-assign */
-    SyntheticEvent = new Proxy(SyntheticEvent, {
-      construct: function (target, args) {
-        return this.apply(target, Object.create(target.prototype), args);
-      },
-      apply: function (constructor, that, args) {
-        return new Proxy(constructor.apply(that, args), {
-          set: function (target, prop, value) {
-            if (prop !== 'isPersistent' && !target.constructor.Interface.hasOwnProperty(prop) && shouldBeReleasedProperties.indexOf(prop) === -1) {
-              process.env.NODE_ENV !== 'production' ? warning(didWarnForAddedNewProperty || target.isPersistent(), 'This synthetic event is reused for performance reasons. If you\'re ' + 'seeing this, you\'re adding a new property in the synthetic event object. ' + 'The property is never released. See ' + 'https://fb.me/react-event-pooling for more information.') : void 0;
-              didWarnForAddedNewProperty = true;
-            }
-            target[prop] = value;
-            return true;
-          }
-        });
-      }
-    });
-    /*eslint-enable no-func-assign */
-  }
-}
-/**
- * Helper to reduce boilerplate when creating subclasses.
- *
- * @param {function} Class
- * @param {?object} Interface
- */
-SyntheticEvent.augmentClass = function (Class, Interface) {
-  var Super = this;
-
-  var E = function () {};
-  E.prototype = Super.prototype;
-  var prototype = new E();
-
-  _assign(prototype, Class.prototype);
-  Class.prototype = prototype;
-  Class.prototype.constructor = Class;
-
-  Class.Interface = _assign({}, Super.Interface, Interface);
-  Class.augmentClass = Super.augmentClass;
-
-  PooledClass.addPoolingTo(Class, PooledClass.fourArgumentPooler);
-};
-
-PooledClass.addPoolingTo(SyntheticEvent, PooledClass.fourArgumentPooler);
-
-module.exports = SyntheticEvent;
-
-/**
-  * Helper to nullify syntheticEvent instance properties when destructing
-  *
-  * @param {object} SyntheticEvent
-  * @param {String} propName
-  * @return {object} defineProperty object
-  */
-function getPooledWarningPropertyDefinition(propName, getVal) {
-  var isFunction = typeof getVal === 'function';
-  return {
-    configurable: true,
-    set: set,
-    get: get
-  };
-
-  function set(val) {
-    var action = isFunction ? 'setting the method' : 'setting the property';
-    warn(action, 'This is effectively a no-op');
-    return val;
-  }
-
-  function get() {
-    var action = isFunction ? 'accessing the method' : 'accessing the property';
-    var result = isFunction ? 'This is a no-op function' : 'This is set to null';
-    warn(action, result);
-    return getVal;
-  }
-
-  function warn(action, result) {
-    var warningCondition = false;
-    process.env.NODE_ENV !== 'production' ? warning(warningCondition, 'This synthetic event is reused for performance reasons. If you\'re seeing this, ' + 'you\'re %s `%s` on a released/nullified synthetic event. %s. ' + 'If you must keep the original synthetic event around, use event.persist(). ' + 'See https://fb.me/react-event-pooling for more information.', action, propName, result) : void 0;
-  }
-}
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _getPrototypeOf = __webpack_require__(5);
-
-var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-var _classCallCheck2 = __webpack_require__(3);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = __webpack_require__(4);
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _possibleConstructorReturn2 = __webpack_require__(7);
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = __webpack_require__(6);
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-var _typeof2 = __webpack_require__(58);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-var _keys = __webpack_require__(109);
-
-var _keys2 = _interopRequireDefault(_keys);
-
-var _objectWithoutProperties2 = __webpack_require__(10);
-
-var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
-
-var _assign = __webpack_require__(177);
-
-var _assign2 = _interopRequireDefault(_assign);
-
-exports.withOptions = withOptions;
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(2);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _shallowEqual = __webpack_require__(76);
-
-var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
-
-var _warning = __webpack_require__(17);
-
-var _warning2 = _interopRequireDefault(_warning);
-
-var _supports = __webpack_require__(627);
-
-var supports = _interopRequireWildcard(_supports);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var defaultEventOptions = {
-  capture: false,
-  passive: false
-};
-/* eslint-disable prefer-spread */
-
-function mergeDefaultEventOptions(options) {
-  return (0, _assign2.default)({}, defaultEventOptions, options);
-}
-
-function getEventListenerArgs(eventName, callback, options) {
-  var args = [eventName, callback];
-  args.push(supports.passiveOption ? options : options.capture);
-  return args;
-}
-
-function on(target, eventName, callback, options) {
-  if (supports.addEventListener) {
-    target.addEventListener.apply(target, getEventListenerArgs(eventName, callback, options));
-  } else if (supports.attachEvent) {
-    // IE8+ Support
-    target.attachEvent('on' + eventName, function () {
-      callback.call(target);
-    });
-  }
-}
-
-function off(target, eventName, callback, options) {
-  if (supports.removeEventListener) {
-    target.removeEventListener.apply(target, getEventListenerArgs(eventName, callback, options));
-  } else if (supports.detachEvent) {
-    // IE8+ Support
-    target.detachEvent('on' + eventName, callback);
-  }
-}
-
-function forEachListener(props, iteratee) {
-  var children = props.children,
-      target = props.target,
-      eventProps = (0, _objectWithoutProperties3.default)(props, ['children', 'target']);
-
-
-  (0, _keys2.default)(eventProps).forEach(function (name) {
-    if (name.substring(0, 2) !== 'on') {
-      return;
-    }
-
-    var prop = eventProps[name];
-    var type = typeof prop === 'undefined' ? 'undefined' : (0, _typeof3.default)(prop);
-    var isObject = type === 'object';
-    var isFunction = type === 'function';
-
-    if (!isObject && !isFunction) {
-      return;
-    }
-
-    var capture = name.substr(-7).toLowerCase() === 'capture';
-    var eventName = name.substring(2).toLowerCase();
-    eventName = capture ? eventName.substring(0, eventName.length - 7) : eventName;
-
-    if (isObject) {
-      iteratee(eventName, prop.handler, prop.options);
-    } else {
-      iteratee(eventName, prop, mergeDefaultEventOptions({ capture: capture }));
-    }
-  });
-}
-
-function withOptions(handler, options) {
-  process.env.NODE_ENV !== "production" ? (0, _warning2.default)(options, 'react-event-listener: Should be specified options in withOptions.') : void 0;
-
-  return {
-    handler: handler,
-    options: mergeDefaultEventOptions(options)
-  };
-}
-
-var EventListener = function (_Component) {
-  (0, _inherits3.default)(EventListener, _Component);
-
-  function EventListener() {
-    (0, _classCallCheck3.default)(this, EventListener);
-    return (0, _possibleConstructorReturn3.default)(this, (EventListener.__proto__ || (0, _getPrototypeOf2.default)(EventListener)).apply(this, arguments));
-  }
-
-  (0, _createClass3.default)(EventListener, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.addListeners();
-    }
-  }, {
-    key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(nextProps) {
-      return !(0, _shallowEqual2.default)(this.props, nextProps);
-    }
-  }, {
-    key: 'componentWillUpdate',
-    value: function componentWillUpdate() {
-      this.removeListeners();
-    }
-  }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      this.addListeners();
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.removeListeners();
-    }
-  }, {
-    key: 'addListeners',
-    value: function addListeners() {
-      this.applyListeners(on);
-    }
-  }, {
-    key: 'removeListeners',
-    value: function removeListeners() {
-      this.applyListeners(off);
-    }
-  }, {
-    key: 'applyListeners',
-    value: function applyListeners(onOrOff) {
-      var target = this.props.target;
-
-
-      if (target) {
-        var element = target;
-
-        if (typeof target === 'string') {
-          element = window[target];
-        }
-
-        forEachListener(this.props, onOrOff.bind(null, element));
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return this.props.children || null;
-    }
-  }]);
-  return EventListener;
-}(_react.Component);
-
-process.env.NODE_ENV !== "production" ? EventListener.propTypes = {
-  /**
-   * You can provide a single child too.
-   */
-  children: _propTypes2.default.element,
-  /**
-   * The DOM target to listen to.
-   */
-  target: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.string]).isRequired
-} : void 0;
-exports.default = EventListener;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -4409,6 +3957,511 @@ var removeTourEntry = exports.removeTourEntry = function removeTourEntry(id) {
 		}).catch(console.log);
 	};
 };
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+
+
+var _assign = __webpack_require__(16);
+
+var PooledClass = __webpack_require__(52);
+
+var emptyFunction = __webpack_require__(26);
+var warning = __webpack_require__(12);
+
+var didWarnForAddedNewProperty = false;
+var isProxySupported = typeof Proxy === 'function';
+
+var shouldBeReleasedProperties = ['dispatchConfig', '_targetInst', 'nativeEvent', 'isDefaultPrevented', 'isPropagationStopped', '_dispatchListeners', '_dispatchInstances'];
+
+/**
+ * @interface Event
+ * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ */
+var EventInterface = {
+  type: null,
+  target: null,
+  // currentTarget is set when dispatching; no use in copying it here
+  currentTarget: emptyFunction.thatReturnsNull,
+  eventPhase: null,
+  bubbles: null,
+  cancelable: null,
+  timeStamp: function (event) {
+    return event.timeStamp || Date.now();
+  },
+  defaultPrevented: null,
+  isTrusted: null
+};
+
+/**
+ * Synthetic events are dispatched by event plugins, typically in response to a
+ * top-level event delegation handler.
+ *
+ * These systems should generally use pooling to reduce the frequency of garbage
+ * collection. The system should check `isPersistent` to determine whether the
+ * event should be released into the pool after being dispatched. Users that
+ * need a persisted event should invoke `persist`.
+ *
+ * Synthetic events (and subclasses) implement the DOM Level 3 Events API by
+ * normalizing browser quirks. Subclasses do not necessarily have to implement a
+ * DOM interface; custom application-specific events can also subclass this.
+ *
+ * @param {object} dispatchConfig Configuration used to dispatch this event.
+ * @param {*} targetInst Marker identifying the event target.
+ * @param {object} nativeEvent Native browser event.
+ * @param {DOMEventTarget} nativeEventTarget Target node.
+ */
+function SyntheticEvent(dispatchConfig, targetInst, nativeEvent, nativeEventTarget) {
+  if (process.env.NODE_ENV !== 'production') {
+    // these have a getter/setter for warnings
+    delete this.nativeEvent;
+    delete this.preventDefault;
+    delete this.stopPropagation;
+  }
+
+  this.dispatchConfig = dispatchConfig;
+  this._targetInst = targetInst;
+  this.nativeEvent = nativeEvent;
+
+  var Interface = this.constructor.Interface;
+  for (var propName in Interface) {
+    if (!Interface.hasOwnProperty(propName)) {
+      continue;
+    }
+    if (process.env.NODE_ENV !== 'production') {
+      delete this[propName]; // this has a getter/setter for warnings
+    }
+    var normalize = Interface[propName];
+    if (normalize) {
+      this[propName] = normalize(nativeEvent);
+    } else {
+      if (propName === 'target') {
+        this.target = nativeEventTarget;
+      } else {
+        this[propName] = nativeEvent[propName];
+      }
+    }
+  }
+
+  var defaultPrevented = nativeEvent.defaultPrevented != null ? nativeEvent.defaultPrevented : nativeEvent.returnValue === false;
+  if (defaultPrevented) {
+    this.isDefaultPrevented = emptyFunction.thatReturnsTrue;
+  } else {
+    this.isDefaultPrevented = emptyFunction.thatReturnsFalse;
+  }
+  this.isPropagationStopped = emptyFunction.thatReturnsFalse;
+  return this;
+}
+
+_assign(SyntheticEvent.prototype, {
+
+  preventDefault: function () {
+    this.defaultPrevented = true;
+    var event = this.nativeEvent;
+    if (!event) {
+      return;
+    }
+
+    if (event.preventDefault) {
+      event.preventDefault();
+    } else if (typeof event.returnValue !== 'unknown') {
+      // eslint-disable-line valid-typeof
+      event.returnValue = false;
+    }
+    this.isDefaultPrevented = emptyFunction.thatReturnsTrue;
+  },
+
+  stopPropagation: function () {
+    var event = this.nativeEvent;
+    if (!event) {
+      return;
+    }
+
+    if (event.stopPropagation) {
+      event.stopPropagation();
+    } else if (typeof event.cancelBubble !== 'unknown') {
+      // eslint-disable-line valid-typeof
+      // The ChangeEventPlugin registers a "propertychange" event for
+      // IE. This event does not support bubbling or cancelling, and
+      // any references to cancelBubble throw "Member not found".  A
+      // typeof check of "unknown" circumvents this issue (and is also
+      // IE specific).
+      event.cancelBubble = true;
+    }
+
+    this.isPropagationStopped = emptyFunction.thatReturnsTrue;
+  },
+
+  /**
+   * We release all dispatched `SyntheticEvent`s after each event loop, adding
+   * them back into the pool. This allows a way to hold onto a reference that
+   * won't be added back into the pool.
+   */
+  persist: function () {
+    this.isPersistent = emptyFunction.thatReturnsTrue;
+  },
+
+  /**
+   * Checks if this event should be released back into the pool.
+   *
+   * @return {boolean} True if this should not be released, false otherwise.
+   */
+  isPersistent: emptyFunction.thatReturnsFalse,
+
+  /**
+   * `PooledClass` looks for `destructor` on each instance it releases.
+   */
+  destructor: function () {
+    var Interface = this.constructor.Interface;
+    for (var propName in Interface) {
+      if (process.env.NODE_ENV !== 'production') {
+        Object.defineProperty(this, propName, getPooledWarningPropertyDefinition(propName, Interface[propName]));
+      } else {
+        this[propName] = null;
+      }
+    }
+    for (var i = 0; i < shouldBeReleasedProperties.length; i++) {
+      this[shouldBeReleasedProperties[i]] = null;
+    }
+    if (process.env.NODE_ENV !== 'production') {
+      Object.defineProperty(this, 'nativeEvent', getPooledWarningPropertyDefinition('nativeEvent', null));
+      Object.defineProperty(this, 'preventDefault', getPooledWarningPropertyDefinition('preventDefault', emptyFunction));
+      Object.defineProperty(this, 'stopPropagation', getPooledWarningPropertyDefinition('stopPropagation', emptyFunction));
+    }
+  }
+
+});
+
+SyntheticEvent.Interface = EventInterface;
+
+if (process.env.NODE_ENV !== 'production') {
+  if (isProxySupported) {
+    /*eslint-disable no-func-assign */
+    SyntheticEvent = new Proxy(SyntheticEvent, {
+      construct: function (target, args) {
+        return this.apply(target, Object.create(target.prototype), args);
+      },
+      apply: function (constructor, that, args) {
+        return new Proxy(constructor.apply(that, args), {
+          set: function (target, prop, value) {
+            if (prop !== 'isPersistent' && !target.constructor.Interface.hasOwnProperty(prop) && shouldBeReleasedProperties.indexOf(prop) === -1) {
+              process.env.NODE_ENV !== 'production' ? warning(didWarnForAddedNewProperty || target.isPersistent(), 'This synthetic event is reused for performance reasons. If you\'re ' + 'seeing this, you\'re adding a new property in the synthetic event object. ' + 'The property is never released. See ' + 'https://fb.me/react-event-pooling for more information.') : void 0;
+              didWarnForAddedNewProperty = true;
+            }
+            target[prop] = value;
+            return true;
+          }
+        });
+      }
+    });
+    /*eslint-enable no-func-assign */
+  }
+}
+/**
+ * Helper to reduce boilerplate when creating subclasses.
+ *
+ * @param {function} Class
+ * @param {?object} Interface
+ */
+SyntheticEvent.augmentClass = function (Class, Interface) {
+  var Super = this;
+
+  var E = function () {};
+  E.prototype = Super.prototype;
+  var prototype = new E();
+
+  _assign(prototype, Class.prototype);
+  Class.prototype = prototype;
+  Class.prototype.constructor = Class;
+
+  Class.Interface = _assign({}, Super.Interface, Interface);
+  Class.augmentClass = Super.augmentClass;
+
+  PooledClass.addPoolingTo(Class, PooledClass.fourArgumentPooler);
+};
+
+PooledClass.addPoolingTo(SyntheticEvent, PooledClass.fourArgumentPooler);
+
+module.exports = SyntheticEvent;
+
+/**
+  * Helper to nullify syntheticEvent instance properties when destructing
+  *
+  * @param {object} SyntheticEvent
+  * @param {String} propName
+  * @return {object} defineProperty object
+  */
+function getPooledWarningPropertyDefinition(propName, getVal) {
+  var isFunction = typeof getVal === 'function';
+  return {
+    configurable: true,
+    set: set,
+    get: get
+  };
+
+  function set(val) {
+    var action = isFunction ? 'setting the method' : 'setting the property';
+    warn(action, 'This is effectively a no-op');
+    return val;
+  }
+
+  function get() {
+    var action = isFunction ? 'accessing the method' : 'accessing the property';
+    var result = isFunction ? 'This is a no-op function' : 'This is set to null';
+    warn(action, result);
+    return getVal;
+  }
+
+  function warn(action, result) {
+    var warningCondition = false;
+    process.env.NODE_ENV !== 'production' ? warning(warningCondition, 'This synthetic event is reused for performance reasons. If you\'re seeing this, ' + 'you\'re %s `%s` on a released/nullified synthetic event. %s. ' + 'If you must keep the original synthetic event around, use event.persist(). ' + 'See https://fb.me/react-event-pooling for more information.', action, propName, result) : void 0;
+  }
+}
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _getPrototypeOf = __webpack_require__(5);
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(3);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(4);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = __webpack_require__(7);
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(6);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _typeof2 = __webpack_require__(58);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+var _keys = __webpack_require__(109);
+
+var _keys2 = _interopRequireDefault(_keys);
+
+var _objectWithoutProperties2 = __webpack_require__(10);
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _assign = __webpack_require__(177);
+
+var _assign2 = _interopRequireDefault(_assign);
+
+exports.withOptions = withOptions;
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _shallowEqual = __webpack_require__(76);
+
+var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
+
+var _warning = __webpack_require__(17);
+
+var _warning2 = _interopRequireDefault(_warning);
+
+var _supports = __webpack_require__(627);
+
+var supports = _interopRequireWildcard(_supports);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var defaultEventOptions = {
+  capture: false,
+  passive: false
+};
+/* eslint-disable prefer-spread */
+
+function mergeDefaultEventOptions(options) {
+  return (0, _assign2.default)({}, defaultEventOptions, options);
+}
+
+function getEventListenerArgs(eventName, callback, options) {
+  var args = [eventName, callback];
+  args.push(supports.passiveOption ? options : options.capture);
+  return args;
+}
+
+function on(target, eventName, callback, options) {
+  if (supports.addEventListener) {
+    target.addEventListener.apply(target, getEventListenerArgs(eventName, callback, options));
+  } else if (supports.attachEvent) {
+    // IE8+ Support
+    target.attachEvent('on' + eventName, function () {
+      callback.call(target);
+    });
+  }
+}
+
+function off(target, eventName, callback, options) {
+  if (supports.removeEventListener) {
+    target.removeEventListener.apply(target, getEventListenerArgs(eventName, callback, options));
+  } else if (supports.detachEvent) {
+    // IE8+ Support
+    target.detachEvent('on' + eventName, callback);
+  }
+}
+
+function forEachListener(props, iteratee) {
+  var children = props.children,
+      target = props.target,
+      eventProps = (0, _objectWithoutProperties3.default)(props, ['children', 'target']);
+
+
+  (0, _keys2.default)(eventProps).forEach(function (name) {
+    if (name.substring(0, 2) !== 'on') {
+      return;
+    }
+
+    var prop = eventProps[name];
+    var type = typeof prop === 'undefined' ? 'undefined' : (0, _typeof3.default)(prop);
+    var isObject = type === 'object';
+    var isFunction = type === 'function';
+
+    if (!isObject && !isFunction) {
+      return;
+    }
+
+    var capture = name.substr(-7).toLowerCase() === 'capture';
+    var eventName = name.substring(2).toLowerCase();
+    eventName = capture ? eventName.substring(0, eventName.length - 7) : eventName;
+
+    if (isObject) {
+      iteratee(eventName, prop.handler, prop.options);
+    } else {
+      iteratee(eventName, prop, mergeDefaultEventOptions({ capture: capture }));
+    }
+  });
+}
+
+function withOptions(handler, options) {
+  process.env.NODE_ENV !== "production" ? (0, _warning2.default)(options, 'react-event-listener: Should be specified options in withOptions.') : void 0;
+
+  return {
+    handler: handler,
+    options: mergeDefaultEventOptions(options)
+  };
+}
+
+var EventListener = function (_Component) {
+  (0, _inherits3.default)(EventListener, _Component);
+
+  function EventListener() {
+    (0, _classCallCheck3.default)(this, EventListener);
+    return (0, _possibleConstructorReturn3.default)(this, (EventListener.__proto__ || (0, _getPrototypeOf2.default)(EventListener)).apply(this, arguments));
+  }
+
+  (0, _createClass3.default)(EventListener, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.addListeners();
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps) {
+      return !(0, _shallowEqual2.default)(this.props, nextProps);
+    }
+  }, {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate() {
+      this.removeListeners();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.addListeners();
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.removeListeners();
+    }
+  }, {
+    key: 'addListeners',
+    value: function addListeners() {
+      this.applyListeners(on);
+    }
+  }, {
+    key: 'removeListeners',
+    value: function removeListeners() {
+      this.applyListeners(off);
+    }
+  }, {
+    key: 'applyListeners',
+    value: function applyListeners(onOrOff) {
+      var target = this.props.target;
+
+
+      if (target) {
+        var element = target;
+
+        if (typeof target === 'string') {
+          element = window[target];
+        }
+
+        forEachListener(this.props, onOrOff.bind(null, element));
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return this.props.children || null;
+    }
+  }]);
+  return EventListener;
+}(_react.Component);
+
+process.env.NODE_ENV !== "production" ? EventListener.propTypes = {
+  /**
+   * You can provide a single child too.
+   */
+  children: _propTypes2.default.element,
+  /**
+   * The DOM target to listen to.
+   */
+  target: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.string]).isRequired
+} : void 0;
+exports.default = EventListener;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 40 */
@@ -6073,7 +6126,7 @@ var _reactDom = __webpack_require__(13);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactEventListener = __webpack_require__(38);
+var _reactEventListener = __webpack_require__(39);
 
 var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
@@ -7279,7 +7332,7 @@ module.exports = ReactReconciler;
 
 
 
-var SyntheticEvent = __webpack_require__(37);
+var SyntheticEvent = __webpack_require__(38);
 
 var getEventTarget = __webpack_require__(155);
 
@@ -14011,7 +14064,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactEventListener = __webpack_require__(38);
+var _reactEventListener = __webpack_require__(39);
 
 var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
@@ -17198,7 +17251,7 @@ var _siteActions = __webpack_require__(23);
 
 var _panelActions = __webpack_require__(46);
 
-var _optionActions = __webpack_require__(39);
+var _optionActions = __webpack_require__(37);
 
 var _mapActions = __webpack_require__(107);
 
@@ -17666,7 +17719,7 @@ var _IconButton = __webpack_require__(43);
 
 var _IconButton2 = _interopRequireDefault(_IconButton);
 
-var _optionActions = __webpack_require__(39);
+var _optionActions = __webpack_require__(37);
 
 var _siteActions = __webpack_require__(23);
 
@@ -17914,7 +17967,7 @@ var _cirTest = __webpack_require__(87);
 
 var _mapActions = __webpack_require__(107);
 
-var _optionActions = __webpack_require__(39);
+var _optionActions = __webpack_require__(37);
 
 var _siteActions = __webpack_require__(23);
 
@@ -36714,7 +36767,7 @@ var _redux = __webpack_require__(105);
 
 var _mapActions = __webpack_require__(107);
 
-var _optionActions = __webpack_require__(39);
+var _optionActions = __webpack_require__(37);
 
 var _siteActions = __webpack_require__(23);
 
@@ -37335,6 +37388,8 @@ var _reactRedux = __webpack_require__(18);
 
 var _siteActions = __webpack_require__(23);
 
+var _optionActions = __webpack_require__(37);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37353,19 +37408,11 @@ var FormD = function (_Component) {
 
     _this.state = {
       verify: false,
+      typeSelected: false,
+      type: '',
+      elementId: '',
+      elementFull: []
 
-      imageId: 0,
-      narrativeId: 0,
-
-      narrative: {},
-      image: {},
-
-      author: '',
-      title: '',
-      published: '',
-      physical: '',
-      page: '',
-      link: ''
     };
     _this.submission = _this.submission.bind(_this);
     _this.update = _this.update.bind(_this);
@@ -37373,6 +37420,7 @@ var FormD = function (_Component) {
     _this.updateImg = _this.updateImg.bind(_this);
     _this.save = _this.save.bind(_this);
     _this.reset = _this.reset.bind(_this);
+    _this.changeForm = _this.changeForm.bind(_this);
     return _this;
   }
 
@@ -37385,18 +37433,25 @@ var FormD = function (_Component) {
     key: 'save',
     value: function save(e) {
       e.preventDefault();
-      var biblioObj = {
-        imageId: this.state.imageId,
-        narrativeId: this.state.narrativeId,
-        author: this.state.author,
-        title: this.state.title,
-        published: this.state.published,
-        physical: this.state.physical,
-        page: this.state.page,
-        link: this.state.link
-      };
+      var id = this.state.elementId;
+      var choice = this.state.type;
 
-      this.props.addBiblio(biblioObj);
+      if (choice === 'site') {
+        this.props.deleteSite(id);
+      };
+      if (choice === 'detail') {
+        this.props.deleteDetail(id);
+      };
+      if (choice === 'narrative') {
+        this.props.deleteNarrative(id);
+      };
+      if (choice === 'image') {
+        this.props.deleteImage(id);
+      };
+      // if (choice === 'tour'){ this.props.deleteTour() };
+      if (choice === 'biblio') {
+        this.props.deleteBiblio(id);
+      };
     }
   }, {
     key: 'submission',
@@ -37412,19 +37467,10 @@ var FormD = function (_Component) {
       e.preventDefault();
       var obj = {
         verify: false,
-
-        imageId: 0,
-        narrativeId: 0,
-
-        narrative: {},
-        image: {},
-
-        author: '',
-        title: '',
-        published: '',
-        physical: '',
-        page: '',
-        link: ''
+        typeSelected: false,
+        type: '',
+        elementId: '',
+        elementFull: []
       };
 
       this.setState(obj);
@@ -37458,28 +37504,255 @@ var FormD = function (_Component) {
     key: 'updateOptions',
     value: function updateOptions(e, type) {
       e.preventDefault();
-      var id = document.getElementById('narrOptions').value;
-      var narrative = this.props.sites.genNarratives.filter(function (narr) {
-        return +narr.id === +id;
-      })[0];
-      var obj = {
-        narrativeId: id,
-        narrative: narrative
+      var id = document.getElementById('delObj').value;
+      this.setState({ elementId: id });
+
+      var choiceObj;
+      if (this.state.type === 'site') {
+        choiceObj = this.props.sites.allSites;
+      };
+      if (this.state.type === 'detail') {
+        choiceObj = this.props.sites.genDetails;
+      };
+      if (this.state.type === 'narrative') {
+        choiceObj = this.props.sites.genNarratives;
+      };
+      if (this.state.type === 'image') {
+        choiceObj = this.props.sites.genImages;
+      };
+      if (this.state.type === 'tour') {
+        choiceObj = this.props.options.allTours;
+      };
+      if (this.state.type === 'biblio') {
+        choiceObj = this.props.sites.genBiblio;
       };
 
-      this.setState(obj);
+      var selected = choiceObj.filter(function (item) {
+        return item.id = id;
+      })[0];
+
+      var elementKeys = Object.keys(selected);
+      var selArr = [];
+
+      elementKeys.forEach(function (key) {
+        selArr.push(key + ': ' + selected[key] + ' ');
+      });
+
+      console.log(selArr);
+
+      this.setState({ elementFull: selArr, verify: true });
+    }
+  }, {
+    key: 'changeForm',
+    value: function changeForm(e) {
+      e.preventDefault();
+      var choice = e.target.value;
+      this.setState({ type: choice, typeSelected: true });
+      if (choice === 'site') {
+        this.props.loadSites();
+      };
+      if (choice === 'detail') {
+        this.props.reloadDetails();
+      };
+      if (choice === 'narrative') {
+        this.props.reloadNarratives();
+      };
+      if (choice === 'image') {
+        this.props.reloadImages();
+      };
+      if (choice === 'tour') {
+        this.props.getAllTours();
+      };
+      if (choice === 'biblio') {
+        this.props.reloadBiblio();
+      };
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
+      var choiceObj;
+      var elementKeys;
+      var elementsNum;
+      if (this.state.typeSelected === true) {
+        if (this.state.type === 'site') {
+          choiceObj = this.props.sites.allSites;
+        };
+        if (this.state.type === 'detail') {
+          choiceObj = this.props.sites.genDetails;
+        };
+        if (this.state.type === 'narrative') {
+          choiceObj = this.props.sites.genNarratives;
+        };
+        if (this.state.type === 'image') {
+          choiceObj = this.props.sites.genImages;
+        };
+        if (this.state.type === 'tour') {
+          choiceObj = this.props.options.allTours;
+        };
+        if (this.state.type === 'biblio') {
+          choiceObj = this.props.sites.genBiblio;
+        };
+
+        elementKeys = Object.keys(choiceObj[0]);
+        elementsNum = elementKeys.length;
+
+        choiceObj = choiceObj.map(function (item) {
+          var itemString = '';
+          elementKeys.forEach(function (key) {
+            itemString = itemString.concat(key + ': ' + item[key] + ', ');
+          });
+          return { id: item.id, string: itemString };
+        });
+        console.log(choiceObj);
+      }
 
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
-          'p',
+          'div',
           null,
-          ' form to delete any database entry coming soon '
+          _react2.default.createElement(
+            'h4',
+            { className: 'BornholmSandvig' },
+            'Select Element Type To Load'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn btn-default marg10', value: 'site', onClick: function onClick(e) {
+                return _this2.changeForm(e);
+              } },
+            'Site'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn btn-default marg10', value: 'detail', onClick: function onClick(e) {
+                return _this2.changeForm(e);
+              } },
+            'Detail'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn btn-default marg10', value: 'narrative', onClick: function onClick(e) {
+                return _this2.changeForm(e);
+              } },
+            'Narrative'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn btn-default marg10', value: 'image', onClick: function onClick(e) {
+                return _this2.changeForm(e);
+              } },
+            'Image'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn btn-default marg10', value: 'tour', onClick: function onClick(e) {
+                return _this2.changeForm(e);
+              } },
+            'Tour'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn btn-default marg10', value: 'biblio', onClick: function onClick(e) {
+                return _this2.changeForm(e);
+              } },
+            'Bibliography'
+          )
+        ),
+        this.state.typeSelected && _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Choose one ',
+            this.state.type,
+            ' in the following drop-down'
+          ),
+          _react2.default.createElement(
+            'form',
+            null,
+            _react2.default.createElement(
+              'label',
+              { className: 'underline' },
+              'Select for deletion: '
+            ),
+            _react2.default.createElement(
+              'select',
+              { onChange: function onChange(e) {
+                  return _this2.updateOptions(e);
+                }, id: 'delObj', style: { width: '80%' } },
+              choiceObj && choiceObj.map(function (item, i) {
+                return _react2.default.createElement(
+                  'option',
+                  { value: item.id, key: 'delete' + i },
+                  item.string
+                );
+              })
+            ),
+            _react2.default.createElement('br', null)
+          )
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('br', null),
+        this.state.verify && _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h4',
+            { className: 'BornholmSandvig' },
+            'Verify Before Deletion'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            ' either accept (below) or correct & review again'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'editOps' },
+            _react2.default.createElement(
+              'ul',
+              null,
+              this.state.elementFull && this.state.elementFull.map(function (item) {
+                return _react2.default.createElement(
+                  'li',
+                  null,
+                  _react2.default.createElement(
+                    'em',
+                    null,
+                    item.split(':')[0]
+                  ),
+                  ': ',
+                  item.split(':')[1]
+                );
+              })
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'You must click below to save edits to database'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.save(e);
+                } },
+              'Delete'
+            ),
+            ' or ',
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.reset(e);
+                } },
+              'Reset'
+            )
+          )
         )
       );
     }
@@ -37502,9 +37775,42 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     resetSaved: function resetSaved() {
       dispatch((0, _siteActions.resetSaved)());
     },
-    // addBiblio: (biblioObj) => {
-    //   dispatch(addBibliography(biblioObj));
-    // },
+    //-----------loading values to delete---------------
+    loadSites: function loadSites() {
+      dispatch((0, _siteActions.loadSites)());
+    },
+    reloadDetails: function reloadDetails() {
+      dispatch((0, _siteActions.reloadDetails)());
+    },
+    reloadNarratives: function reloadNarratives() {
+      dispatch((0, _siteActions.reloadNarratives)());
+    },
+    reloadImages: function reloadImages() {
+      dispatch((0, _siteActions.reloadImages)());
+    },
+    getAllTours: function getAllTours() {
+      dispatch((0, _optionActions.getAllToursThemes)());
+    },
+    reloadBiblio: function reloadBiblio() {
+      dispatch((0, _siteActions.reloadBiblio)());
+    },
+    //-----------dispatch delete actions---------------
+    deleteSite: function deleteSite(id) {
+      dispatch((0, _siteActions.deleteSite)(id));
+    },
+    deleteDetail: function deleteDetail(id) {
+      dispatch((0, _siteActions.deleteDetail)(id));
+    },
+    deleteNarrative: function deleteNarrative(id) {
+      dispatch((0, _siteActions.deleteNarrative)(id));
+    },
+    deleteImages: function deleteImages(id) {
+      dispatch((0, _siteActions.deleteImages)(id));
+    },
+    deleteBiblio: function deleteBiblio(id) {
+      dispatch((0, _siteActions.deleteBiblio)(id));
+    },
+
     editNarrative: function (_editNarrative) {
       function editNarrative(_x, _x2) {
         return _editNarrative.apply(this, arguments);
@@ -37520,6 +37826,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     })
   };
 };
+
+//import {deleteSite, deleteDetail, deleteNarrative, deleteImages, deleteBiblio,  resetSaved, addBibliography, loadSites, reloadDetails, reloadNarratives, reloadImages, reloadBiblio,  } from '../action-creators/siteActions.js';
+
+//import {getAllToursThemes} from '../action-creators/optionActions.js';
 
 var FormDelete = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormD);
 
@@ -39608,7 +39918,7 @@ var _reactRedux = __webpack_require__(18);
 
 var _siteActions = __webpack_require__(23);
 
-var _optionActions = __webpack_require__(39);
+var _optionActions = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40278,7 +40588,7 @@ var _rawTiles = __webpack_require__(70);
 
 var _siteActions = __webpack_require__(23);
 
-var _optionActions = __webpack_require__(39);
+var _optionActions = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40444,7 +40754,7 @@ var _rawTiles = __webpack_require__(70);
 
 var _siteActions = __webpack_require__(23);
 
-var _optionActions = __webpack_require__(39);
+var _optionActions = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40619,7 +40929,7 @@ var _reactDom = __webpack_require__(13);
 
 var _reactRedux = __webpack_require__(18);
 
-var _optionActions = __webpack_require__(39);
+var _optionActions = __webpack_require__(37);
 
 var _reactTapEventPlugin = __webpack_require__(271);
 
@@ -52080,7 +52390,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactEventListener = __webpack_require__(38);
+var _reactEventListener = __webpack_require__(39);
 
 var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
@@ -53892,7 +54202,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactEventListener = __webpack_require__(38);
+var _reactEventListener = __webpack_require__(39);
 
 var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
@@ -54553,7 +54863,7 @@ var _reactDom = __webpack_require__(13);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactEventListener = __webpack_require__(38);
+var _reactEventListener = __webpack_require__(39);
 
 var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
@@ -55223,7 +55533,7 @@ var _reactDom = __webpack_require__(13);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactEventListener = __webpack_require__(38);
+var _reactEventListener = __webpack_require__(39);
 
 var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
@@ -63846,7 +64156,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactEventListener = __webpack_require__(38);
+var _reactEventListener = __webpack_require__(39);
 
 var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
@@ -66319,7 +66629,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactEventListener = __webpack_require__(38);
+var _reactEventListener = __webpack_require__(39);
 
 var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
@@ -69991,7 +70301,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactEventListener = __webpack_require__(38);
+var _reactEventListener = __webpack_require__(39);
 
 var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
@@ -71323,7 +71633,7 @@ var EventPropagators = __webpack_require__(67);
 var ExecutionEnvironment = __webpack_require__(22);
 var ReactDOMComponentTree = __webpack_require__(20);
 var ReactUpdates = __webpack_require__(35);
-var SyntheticEvent = __webpack_require__(37);
+var SyntheticEvent = __webpack_require__(38);
 
 var getEventTarget = __webpack_require__(155);
 var isEventSupported = __webpack_require__(156);
@@ -78436,7 +78746,7 @@ var EventPropagators = __webpack_require__(67);
 var ExecutionEnvironment = __webpack_require__(22);
 var ReactDOMComponentTree = __webpack_require__(20);
 var ReactInputSelection = __webpack_require__(250);
-var SyntheticEvent = __webpack_require__(37);
+var SyntheticEvent = __webpack_require__(38);
 
 var getActiveElement = __webpack_require__(197);
 var isTextInputElement = __webpack_require__(259);
@@ -78636,7 +78946,7 @@ var EventPropagators = __webpack_require__(67);
 var ReactDOMComponentTree = __webpack_require__(20);
 var SyntheticAnimationEvent = __webpack_require__(605);
 var SyntheticClipboardEvent = __webpack_require__(606);
-var SyntheticEvent = __webpack_require__(37);
+var SyntheticEvent = __webpack_require__(38);
 var SyntheticFocusEvent = __webpack_require__(609);
 var SyntheticKeyboardEvent = __webpack_require__(611);
 var SyntheticMouseEvent = __webpack_require__(100);
@@ -78862,7 +79172,7 @@ module.exports = SimpleEventPlugin;
 
 
 
-var SyntheticEvent = __webpack_require__(37);
+var SyntheticEvent = __webpack_require__(38);
 
 /**
  * @interface Event
@@ -78906,7 +79216,7 @@ module.exports = SyntheticAnimationEvent;
 
 
 
-var SyntheticEvent = __webpack_require__(37);
+var SyntheticEvent = __webpack_require__(38);
 
 /**
  * @interface Event
@@ -78949,7 +79259,7 @@ module.exports = SyntheticClipboardEvent;
 
 
 
-var SyntheticEvent = __webpack_require__(37);
+var SyntheticEvent = __webpack_require__(38);
 
 /**
  * @interface Event
@@ -79072,7 +79382,7 @@ module.exports = SyntheticFocusEvent;
 
 
 
-var SyntheticEvent = __webpack_require__(37);
+var SyntheticEvent = __webpack_require__(38);
 
 /**
  * @interface Event
@@ -79253,7 +79563,7 @@ module.exports = SyntheticTouchEvent;
 
 
 
-var SyntheticEvent = __webpack_require__(37);
+var SyntheticEvent = __webpack_require__(38);
 
 /**
  * @interface Event
