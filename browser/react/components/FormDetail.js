@@ -96,7 +96,7 @@ class FormDe extends Component { // so this will be an update to site table, add
     };
 
     this.props.addDetail(imgObj, detailObj);
-    this.props.editSite(siteObj, this.state.coreId);
+    this.props.editSite(this.state.coreId, siteObj);
 
   }
 
@@ -212,8 +212,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updatePanelSize: (size,ratio) => {
       dispatch(setPanelSizing(size,ratio));
     },
-    editSite: (siteObj, id) => {
-      dispatch(editSite(siteObj, id));
+    editSite: (id, siteObj) => {
+      dispatch(editSite(id, siteObj));
     },
     addDetail: (imgObj, detailObj) => {
       dispatch(addDetail(imgObj, detailObj));

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import {deleteSite, deleteDetail, deleteNarrative, deleteImages, deleteBiblio, resetSaved, addBibliography, loadSites, reloadDetails, reloadNarratives, reloadImages, reloadBiblio,  } from '../action-creators/siteActions.js';
 
-import {getAllToursThemes} from '../action-creators/optionActions.js';
+import {getAllToursThemes, deleteTour } from '../action-creators/optionActions.js';
 
 
 
@@ -44,7 +44,7 @@ class FormD extends Component {
     if (choice === 'detail'){ this.props.deleteDetail(id) };
     if (choice === 'narrative'){ this.props.deleteNarrative(id) };
     if (choice === 'image'){ this.props.deleteImage(id) };
-    // if (choice === 'tour'){ this.props.deleteTour() };
+    if (choice === 'tour'){ this.props.deleteTour(id) };
     if (choice === 'biblio'){ this.props.deleteBiblio(id) };
 
   }
@@ -104,8 +104,9 @@ class FormD extends Component {
       if (this.state.type === 'tour'){ choiceObj = this.props.options.allTours };
       if (this.state.type === 'biblio'){ choiceObj = this.props.sites.genBiblio };
 
+      if (this.state.type !== 'tour'){
     var selected = choiceObj.filter(item=>{
-      return item.id = id;
+      return +item.id === +id;
     })[0];
 
     var elementKeys = Object.keys(selected);
@@ -117,7 +118,12 @@ class FormD extends Component {
 
     console.log(selArr);
 
-    this.setState({elementFull:selArr, verify: true});
+      this.setState({elementFull:selArr, verify: true});
+    } else {
+      let stringArr = this.props.options.allTours[id].map(obj=>JSON.stringify(obj));
+      this.setState({elementFull:stringArr, verify: true});
+      console.log({elementFull:stringArr, verify: true});
+    }
 
   }
 
@@ -147,17 +153,34 @@ class FormD extends Component {
       if (this.state.type === 'tour'){ choiceObj = this.props.options.allTours };
       if (this.state.type === 'biblio'){ choiceObj = this.props.sites.genBiblio };
 
-      elementKeys = Object.keys(choiceObj[0]);
-      elementsNum = elementKeys.length;
+      if (this.state.type !== 'tour'){
+        elementKeys = Object.keys(choiceObj[0]);
 
-      choiceObj = choiceObj.map(item=>{
+        choiceObj = choiceObj.map(item=>{
         var itemString='';
-        elementKeys.forEach(key=>{
-          itemString = itemString.concat(`${key}: ${item[key]}, `);
+          elementKeys.forEach(key=>{
+            itemString = itemString.concat(`${key}: ${item[key]}, `);
+          })
+           return {id:item.id, string:itemString};
         })
-         return {id:item.id, string:itemString};
-      })
-      console.log(choiceObj);
+      } else if (this.state.type === 'tour' && choiceObj !== {} ){
+        elementKeys = Object.keys(choiceObj);
+        var elementKeys2 = Object.keys(choiceObj['1'][0]);
+
+        var finalArr = elementKeys.map(key=>{
+          var itemString='';
+          choiceObj[key].forEach(elem=>{
+
+            elementKeys2.forEach(spec=>{
+              itemString = itemString.concat(`${spec}: ${elem[spec]}, `);
+            })
+            itemString +=' ; ';
+          })
+          return {id:key, string:itemString}
+        })
+        finalArr.unshift({id:null, string:'select a tour'});
+        console.log(finalArr);
+      }
     }
 
   	return (
@@ -168,11 +191,10 @@ class FormD extends Component {
           <button className="btn btn-default marg10" value="detail" onClick={e=>this.changeForm(e)} >Detail</button>
           <button className="btn btn-default marg10" value="narrative" onClick={e=>this.changeForm(e)} >Narrative</button>
           <button className="btn btn-default marg10" value="image" onClick={e=>this.changeForm(e)} >Image</button>
-          <button className="btn btn-default marg10" value="tour" onClick={e=>this.changeForm(e)} >Tour</button>
           <button className="btn btn-default marg10" value="biblio" onClick={e=>this.changeForm(e)} >Bibliography</button>
           </div>
 
-          {this.state.typeSelected &&
+          {this.state.typeSelected && this.state.type !== 'tour' &&
               <div>
               <br/>
                 <p>Choose one {this.state.type} in the following drop-down</p>
@@ -191,10 +213,30 @@ class FormD extends Component {
             </form>
               </div>
           }
-          <br/>
-          <br/>
-          {this.state.verify &&
+          {this.state.typeSelected && this.state.type === 'tour' && this.props.options.allTours !== {} &&
               <div>
+              <br/>
+                <p>Choose one {this.state.type} in the following drop-down</p>
+            <form>
+              <label className='underline' >Select for deletion: </label>
+                  <select onChange={e=>this.updateOptions(e)} id="delObj" style={{width:'80%'}} >
+                  {finalArr &&
+                    finalArr.map((item, i)=>{
+                      return (
+                      <option value={item.id} key={'delete'+i}>{item.string}
+                      </option>
+                      )
+                    })
+                  }
+                  </select><br/>
+            </form>
+              </div>
+          }
+
+          <br/>
+          <br/>
+          {this.state.verify && this.state.type !== 'tour' &&
+            <div>
               <h4 className="BornholmSandvig">Verify Before Deletion</h4>
               <p> either accept (below) or correct & review again</p>
                 <div className="editOps">
@@ -207,7 +249,22 @@ class FormD extends Component {
                 <button className="btn btn-default" onClick={e=>this.save(e)}>Delete</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
 
                 </div>
-              </div>
+            </div>
+            }
+            {this.state.verify && this.state.type === 'tour' && this.props.options.allTours !== {} &&
+            <div>
+              <h4 className="BornholmSandvig">Verify Before Deletion</h4>
+              <p> either accept (below) or correct & review again</p>
+                <div className="editOps">
+                The tour includes:
+                {this.state.elementFull &&
+                  this.state.elementFull.map(item=><p>{item}</p>)
+                }
+                <p>You must click below to save edits to database</p>
+                <button className="btn btn-default" onClick={e=>this.save(e)}>Delete</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
+
+                </div>
+            </div>
             }
           </div>
   	)}
@@ -262,6 +319,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     deleteBiblio: (id) => {
       dispatch(deleteBiblio(id));
+    },
+    deleteTour: (id) => {
+      console.log('got here in delete tour');
+      dispatch(deleteTour(id));
     },
 
     editNarrative: (editObj, id) => {

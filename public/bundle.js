@@ -1195,7 +1195,7 @@ module.exports = ExecutionEnvironment;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.addBibliography = exports.editNarrative = exports.addNarrative = exports.resetSaved = exports.addNewSiteRadius = exports.addNewSiteCenter = exports.editSite = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.addBiblio = exports.getDetailsNarratives = exports.reloadBiblio = exports.reloadNarratives = exports.deleteBiblio = exports.deleteNarrative = exports.deleteImages = exports.reloadImages = exports.addImage = exports.addDetail = exports.reloadDetails = exports.deleteDetail = exports.deleteSite = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.saved = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getGenBiblio = exports.getAllSites = exports.SAVED = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_BIB = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
+exports.addBibliography = exports.editNarrative = exports.addNarrative = exports.resetSaved = exports.addNewSiteRadius = exports.addNewSiteCenter = exports.editSite = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.addBiblio = exports.getDetailsNarratives = exports.reloadBiblio = exports.reloadNarratives = exports.editBiblio = exports.deleteBiblio = exports.deleteNarrative = exports.editImages = exports.deleteImages = exports.reloadImages = exports.addImage = exports.addDetail = exports.reloadDetails = exports.editDetail = exports.deleteDetail = exports.deleteSite = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.saved = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getGenBiblio = exports.getAllSites = exports.SAVED = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_BIB = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
 
 var _axios = __webpack_require__(85);
 
@@ -1623,6 +1623,17 @@ var deleteDetail = exports.deleteDetail = function deleteDetail(id) {
 	};
 };
 
+var editDetail = exports.editDetail = function editDetail(id, obj) {
+	return function (dispatch) {
+		_axios2.default.put('/api/details/' + id, obj).then(function (responses) {
+			return responses.data;
+		}).then(function (results) {
+			console.log(results);
+			dispatch(reloadDetails());
+		}).catch(console.log);
+	};
+};
+
 var reloadDetails = exports.reloadDetails = function reloadDetails() {
 	return function (dispatch) {
 		_axios2.default.get('/api/details').then(function (responses) {
@@ -1694,6 +1705,16 @@ var deleteImages = exports.deleteImages = function deleteImages(id) {
 	};
 };
 
+var editImages = exports.editImages = function editImages(id, obj) {
+	return function (dispatch) {
+		_axios2.default.put('/api/images/' + id, obj).then(function (responses) {
+			return responses.data;
+		}).then(function (results) {
+			dispatch(reloadImages());
+		}).catch(console.log);
+	};
+};
+
 //-----------narrative & detail general dispatches------------------------
 
 var deleteNarrative = exports.deleteNarrative = function deleteNarrative(id) {
@@ -1710,6 +1731,17 @@ var deleteNarrative = exports.deleteNarrative = function deleteNarrative(id) {
 var deleteBiblio = exports.deleteBiblio = function deleteBiblio(id) {
 	return function (dispatch) {
 		_axios2.default.delete('/api/biblio/' + id).then(function (responses) {
+			return responses.data;
+		}).then(function (bib) {
+			console.log(bib);
+			dispatch(reloadBiblio());
+		}).catch(console.log);
+	};
+};
+
+var editBiblio = exports.editBiblio = function editBiblio(id) {
+	return function (dispatch) {
+		_axios2.default.put('/api/biblio/' + id, obj).then(function (responses) {
 			return responses.data;
 		}).then(function (bib) {
 			console.log(bib);
@@ -1842,7 +1874,7 @@ var addNewSite = exports.addNewSite = function addNewSite(siteObj) {
 	};
 };
 
-var editSite = exports.editSite = function editSite(siteObj, id) {
+var editSite = exports.editSite = function editSite(id, siteObj) {
 	return function (dispatch) {
 		console.log('pre-put', siteObj);
 
@@ -1891,7 +1923,7 @@ var addNarrative = exports.addNarrative = function addNarrative(narrObj) {
 	};
 };
 
-var editNarrative = exports.editNarrative = function editNarrative(siteObj, id) {
+var editNarrative = exports.editNarrative = function editNarrative(id, siteObj) {
 	return function (dispatch) {
 		console.log('pre-put', siteObj);
 
@@ -1938,7 +1970,7 @@ var addBibliography = exports.addBibliography = function addBibliography(biblioO
 
 var _prodInvariant = __webpack_require__(55);
 
-var ReactCurrentOwner = __webpack_require__(36);
+var ReactCurrentOwner = __webpack_require__(37);
 
 var invariant = __webpack_require__(11);
 var warning = __webpack_require__(12);
@@ -3335,305 +3367,12 @@ exports.default = EnhancedButton;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-
-
-var _prodInvariant = __webpack_require__(15),
-    _assign = __webpack_require__(16);
-
-var CallbackQueue = __webpack_require__(243);
-var PooledClass = __webpack_require__(52);
-var ReactFeatureFlags = __webpack_require__(248);
-var ReactReconciler = __webpack_require__(68);
-var Transaction = __webpack_require__(101);
-
-var invariant = __webpack_require__(11);
-
-var dirtyComponents = [];
-var updateBatchNumber = 0;
-var asapCallbackQueue = CallbackQueue.getPooled();
-var asapEnqueued = false;
-
-var batchingStrategy = null;
-
-function ensureInjected() {
-  !(ReactUpdates.ReactReconcileTransaction && batchingStrategy) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates: must inject a reconcile transaction class and batching strategy') : _prodInvariant('123') : void 0;
-}
-
-var NESTED_UPDATES = {
-  initialize: function () {
-    this.dirtyComponentsLength = dirtyComponents.length;
-  },
-  close: function () {
-    if (this.dirtyComponentsLength !== dirtyComponents.length) {
-      // Additional updates were enqueued by componentDidUpdate handlers or
-      // similar; before our own UPDATE_QUEUEING wrapper closes, we want to run
-      // these new updates so that if A's componentDidUpdate calls setState on
-      // B, B will update before the callback A's updater provided when calling
-      // setState.
-      dirtyComponents.splice(0, this.dirtyComponentsLength);
-      flushBatchedUpdates();
-    } else {
-      dirtyComponents.length = 0;
-    }
-  }
-};
-
-var UPDATE_QUEUEING = {
-  initialize: function () {
-    this.callbackQueue.reset();
-  },
-  close: function () {
-    this.callbackQueue.notifyAll();
-  }
-};
-
-var TRANSACTION_WRAPPERS = [NESTED_UPDATES, UPDATE_QUEUEING];
-
-function ReactUpdatesFlushTransaction() {
-  this.reinitializeTransaction();
-  this.dirtyComponentsLength = null;
-  this.callbackQueue = CallbackQueue.getPooled();
-  this.reconcileTransaction = ReactUpdates.ReactReconcileTransaction.getPooled(
-  /* useCreateElement */true);
-}
-
-_assign(ReactUpdatesFlushTransaction.prototype, Transaction, {
-  getTransactionWrappers: function () {
-    return TRANSACTION_WRAPPERS;
-  },
-
-  destructor: function () {
-    this.dirtyComponentsLength = null;
-    CallbackQueue.release(this.callbackQueue);
-    this.callbackQueue = null;
-    ReactUpdates.ReactReconcileTransaction.release(this.reconcileTransaction);
-    this.reconcileTransaction = null;
-  },
-
-  perform: function (method, scope, a) {
-    // Essentially calls `this.reconcileTransaction.perform(method, scope, a)`
-    // with this transaction's wrappers around it.
-    return Transaction.perform.call(this, this.reconcileTransaction.perform, this.reconcileTransaction, method, scope, a);
-  }
-});
-
-PooledClass.addPoolingTo(ReactUpdatesFlushTransaction);
-
-function batchedUpdates(callback, a, b, c, d, e) {
-  ensureInjected();
-  return batchingStrategy.batchedUpdates(callback, a, b, c, d, e);
-}
-
-/**
- * Array comparator for ReactComponents by mount ordering.
- *
- * @param {ReactComponent} c1 first component you're comparing
- * @param {ReactComponent} c2 second component you're comparing
- * @return {number} Return value usable by Array.prototype.sort().
- */
-function mountOrderComparator(c1, c2) {
-  return c1._mountOrder - c2._mountOrder;
-}
-
-function runBatchedUpdates(transaction) {
-  var len = transaction.dirtyComponentsLength;
-  !(len === dirtyComponents.length) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Expected flush transaction\'s stored dirty-components length (%s) to match dirty-components array length (%s).', len, dirtyComponents.length) : _prodInvariant('124', len, dirtyComponents.length) : void 0;
-
-  // Since reconciling a component higher in the owner hierarchy usually (not
-  // always -- see shouldComponentUpdate()) will reconcile children, reconcile
-  // them before their children by sorting the array.
-  dirtyComponents.sort(mountOrderComparator);
-
-  // Any updates enqueued while reconciling must be performed after this entire
-  // batch. Otherwise, if dirtyComponents is [A, B] where A has children B and
-  // C, B could update twice in a single batch if C's render enqueues an update
-  // to B (since B would have already updated, we should skip it, and the only
-  // way we can know to do so is by checking the batch counter).
-  updateBatchNumber++;
-
-  for (var i = 0; i < len; i++) {
-    // If a component is unmounted before pending changes apply, it will still
-    // be here, but we assume that it has cleared its _pendingCallbacks and
-    // that performUpdateIfNecessary is a noop.
-    var component = dirtyComponents[i];
-
-    // If performUpdateIfNecessary happens to enqueue any new updates, we
-    // shouldn't execute the callbacks until the next render happens, so
-    // stash the callbacks first
-    var callbacks = component._pendingCallbacks;
-    component._pendingCallbacks = null;
-
-    var markerName;
-    if (ReactFeatureFlags.logTopLevelRenders) {
-      var namedComponent = component;
-      // Duck type TopLevelWrapper. This is probably always true.
-      if (component._currentElement.type.isReactTopLevelWrapper) {
-        namedComponent = component._renderedComponent;
-      }
-      markerName = 'React update: ' + namedComponent.getName();
-      console.time(markerName);
-    }
-
-    ReactReconciler.performUpdateIfNecessary(component, transaction.reconcileTransaction, updateBatchNumber);
-
-    if (markerName) {
-      console.timeEnd(markerName);
-    }
-
-    if (callbacks) {
-      for (var j = 0; j < callbacks.length; j++) {
-        transaction.callbackQueue.enqueue(callbacks[j], component.getPublicInstance());
-      }
-    }
-  }
-}
-
-var flushBatchedUpdates = function () {
-  // ReactUpdatesFlushTransaction's wrappers will clear the dirtyComponents
-  // array and perform any updates enqueued by mount-ready handlers (i.e.,
-  // componentDidUpdate) but we need to check here too in order to catch
-  // updates enqueued by setState callbacks and asap calls.
-  while (dirtyComponents.length || asapEnqueued) {
-    if (dirtyComponents.length) {
-      var transaction = ReactUpdatesFlushTransaction.getPooled();
-      transaction.perform(runBatchedUpdates, null, transaction);
-      ReactUpdatesFlushTransaction.release(transaction);
-    }
-
-    if (asapEnqueued) {
-      asapEnqueued = false;
-      var queue = asapCallbackQueue;
-      asapCallbackQueue = CallbackQueue.getPooled();
-      queue.notifyAll();
-      CallbackQueue.release(queue);
-    }
-  }
-};
-
-/**
- * Mark a component as needing a rerender, adding an optional callback to a
- * list of functions which will be executed once the rerender occurs.
- */
-function enqueueUpdate(component) {
-  ensureInjected();
-
-  // Various parts of our code (such as ReactCompositeComponent's
-  // _renderValidatedComponent) assume that calls to render aren't nested;
-  // verify that that's the case. (This is called by each top-level update
-  // function, like setState, forceUpdate, etc.; creation and
-  // destruction of top-level components is guarded in ReactMount.)
-
-  if (!batchingStrategy.isBatchingUpdates) {
-    batchingStrategy.batchedUpdates(enqueueUpdate, component);
-    return;
-  }
-
-  dirtyComponents.push(component);
-  if (component._updateBatchNumber == null) {
-    component._updateBatchNumber = updateBatchNumber + 1;
-  }
-}
-
-/**
- * Enqueue a callback to be run at the end of the current batching cycle. Throws
- * if no updates are currently being performed.
- */
-function asap(callback, context) {
-  !batchingStrategy.isBatchingUpdates ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates.asap: Can\'t enqueue an asap callback in a context whereupdates are not being batched.') : _prodInvariant('125') : void 0;
-  asapCallbackQueue.enqueue(callback, context);
-  asapEnqueued = true;
-}
-
-var ReactUpdatesInjection = {
-  injectReconcileTransaction: function (ReconcileTransaction) {
-    !ReconcileTransaction ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates: must provide a reconcile transaction class') : _prodInvariant('126') : void 0;
-    ReactUpdates.ReactReconcileTransaction = ReconcileTransaction;
-  },
-
-  injectBatchingStrategy: function (_batchingStrategy) {
-    !_batchingStrategy ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates: must provide a batching strategy') : _prodInvariant('127') : void 0;
-    !(typeof _batchingStrategy.batchedUpdates === 'function') ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates: must provide a batchedUpdates() function') : _prodInvariant('128') : void 0;
-    !(typeof _batchingStrategy.isBatchingUpdates === 'boolean') ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates: must provide an isBatchingUpdates boolean attribute') : _prodInvariant('129') : void 0;
-    batchingStrategy = _batchingStrategy;
-  }
-};
-
-var ReactUpdates = {
-  /**
-   * React references `ReactReconcileTransaction` using this property in order
-   * to allow dependency injection.
-   *
-   * @internal
-   */
-  ReactReconcileTransaction: null,
-
-  batchedUpdates: batchedUpdates,
-  enqueueUpdate: enqueueUpdate,
-  flushBatchedUpdates: flushBatchedUpdates,
-  injection: ReactUpdatesInjection,
-  asap: asap
-};
-
-module.exports = ReactUpdates;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-
-
-/**
- * Keeps track of the current owner.
- *
- * The current owner is the component who should own any components that are
- * currently being constructed.
- */
-var ReactCurrentOwner = {
-
-  /**
-   * @internal
-   * @type {ReactComponent}
-   */
-  current: null
-
-};
-
-module.exports = ReactCurrentOwner;
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.removeTourEntry = exports.addTourEntry = exports.getAllToursThemes = exports.updatePanelMid = exports.updatePanelLarge = exports.updatePanelSmall = exports.updatePanelNone = exports.updatePanelStart = exports.togglePlay = exports.updateDetail = exports.updateAnno = exports.updateColor = exports.optionReducer = exports.getTour = exports.getAllTours = exports.setPanelMid = exports.setPanelLarge = exports.setPanelSmall = exports.setPanelNone = exports.setPanelStart = exports.setKeyFocus = exports.setKeyList = exports.setAnnoZoom = exports.setAnno = exports.playTour = exports.setColor = exports.GET_CURR_TOUR = exports.GET_ALL_TOURS = exports.PLAY_TOUR = exports.SET_PANEL_MID = exports.SET_PANEL_LARGE = exports.SET_PANEL_SMALL = exports.SET_PANEL_NONE = exports.SET_PANEL_START = exports.SET_KEY_FOCUS = exports.SET_KEY_LIST = exports.SET_ANNO_ZOOM = exports.SET_ANNO = exports.SET_COLOR = undefined;
+exports.deleteTour = exports.removeTourEntry = exports.addTourEntry = exports.getAllToursThemes = exports.updatePanelMid = exports.updatePanelLarge = exports.updatePanelSmall = exports.updatePanelNone = exports.updatePanelStart = exports.togglePlay = exports.updateDetail = exports.updateAnno = exports.updateColor = exports.optionReducer = exports.getTour = exports.getAllTours = exports.setPanelMid = exports.setPanelLarge = exports.setPanelSmall = exports.setPanelNone = exports.setPanelStart = exports.setKeyFocus = exports.setKeyList = exports.setAnnoZoom = exports.setAnno = exports.playTour = exports.setColor = exports.GET_CURR_TOUR = exports.GET_ALL_TOURS = exports.PLAY_TOUR = exports.SET_PANEL_MID = exports.SET_PANEL_LARGE = exports.SET_PANEL_SMALL = exports.SET_PANEL_NONE = exports.SET_PANEL_START = exports.SET_KEY_FOCUS = exports.SET_KEY_LIST = exports.SET_ANNO_ZOOM = exports.SET_ANNO = exports.SET_COLOR = undefined;
 
 var _axios = __webpack_require__(85);
 
@@ -3957,6 +3696,311 @@ var removeTourEntry = exports.removeTourEntry = function removeTourEntry(id) {
 		}).catch(console.log);
 	};
 };
+
+var deleteTour = exports.deleteTour = function deleteTour(id) {
+	return function (dispatch) {
+
+		console.log('also got to before call');
+		_axios2.default.delete('/api/tours/all/' + id).then(function (responses) {
+			return responses.data;
+		}).then(function (site) {
+			dispatch(getAllToursThemes());
+		}).catch(console.log);
+	};
+};
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+
+
+var _prodInvariant = __webpack_require__(15),
+    _assign = __webpack_require__(16);
+
+var CallbackQueue = __webpack_require__(243);
+var PooledClass = __webpack_require__(52);
+var ReactFeatureFlags = __webpack_require__(248);
+var ReactReconciler = __webpack_require__(68);
+var Transaction = __webpack_require__(101);
+
+var invariant = __webpack_require__(11);
+
+var dirtyComponents = [];
+var updateBatchNumber = 0;
+var asapCallbackQueue = CallbackQueue.getPooled();
+var asapEnqueued = false;
+
+var batchingStrategy = null;
+
+function ensureInjected() {
+  !(ReactUpdates.ReactReconcileTransaction && batchingStrategy) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates: must inject a reconcile transaction class and batching strategy') : _prodInvariant('123') : void 0;
+}
+
+var NESTED_UPDATES = {
+  initialize: function () {
+    this.dirtyComponentsLength = dirtyComponents.length;
+  },
+  close: function () {
+    if (this.dirtyComponentsLength !== dirtyComponents.length) {
+      // Additional updates were enqueued by componentDidUpdate handlers or
+      // similar; before our own UPDATE_QUEUEING wrapper closes, we want to run
+      // these new updates so that if A's componentDidUpdate calls setState on
+      // B, B will update before the callback A's updater provided when calling
+      // setState.
+      dirtyComponents.splice(0, this.dirtyComponentsLength);
+      flushBatchedUpdates();
+    } else {
+      dirtyComponents.length = 0;
+    }
+  }
+};
+
+var UPDATE_QUEUEING = {
+  initialize: function () {
+    this.callbackQueue.reset();
+  },
+  close: function () {
+    this.callbackQueue.notifyAll();
+  }
+};
+
+var TRANSACTION_WRAPPERS = [NESTED_UPDATES, UPDATE_QUEUEING];
+
+function ReactUpdatesFlushTransaction() {
+  this.reinitializeTransaction();
+  this.dirtyComponentsLength = null;
+  this.callbackQueue = CallbackQueue.getPooled();
+  this.reconcileTransaction = ReactUpdates.ReactReconcileTransaction.getPooled(
+  /* useCreateElement */true);
+}
+
+_assign(ReactUpdatesFlushTransaction.prototype, Transaction, {
+  getTransactionWrappers: function () {
+    return TRANSACTION_WRAPPERS;
+  },
+
+  destructor: function () {
+    this.dirtyComponentsLength = null;
+    CallbackQueue.release(this.callbackQueue);
+    this.callbackQueue = null;
+    ReactUpdates.ReactReconcileTransaction.release(this.reconcileTransaction);
+    this.reconcileTransaction = null;
+  },
+
+  perform: function (method, scope, a) {
+    // Essentially calls `this.reconcileTransaction.perform(method, scope, a)`
+    // with this transaction's wrappers around it.
+    return Transaction.perform.call(this, this.reconcileTransaction.perform, this.reconcileTransaction, method, scope, a);
+  }
+});
+
+PooledClass.addPoolingTo(ReactUpdatesFlushTransaction);
+
+function batchedUpdates(callback, a, b, c, d, e) {
+  ensureInjected();
+  return batchingStrategy.batchedUpdates(callback, a, b, c, d, e);
+}
+
+/**
+ * Array comparator for ReactComponents by mount ordering.
+ *
+ * @param {ReactComponent} c1 first component you're comparing
+ * @param {ReactComponent} c2 second component you're comparing
+ * @return {number} Return value usable by Array.prototype.sort().
+ */
+function mountOrderComparator(c1, c2) {
+  return c1._mountOrder - c2._mountOrder;
+}
+
+function runBatchedUpdates(transaction) {
+  var len = transaction.dirtyComponentsLength;
+  !(len === dirtyComponents.length) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Expected flush transaction\'s stored dirty-components length (%s) to match dirty-components array length (%s).', len, dirtyComponents.length) : _prodInvariant('124', len, dirtyComponents.length) : void 0;
+
+  // Since reconciling a component higher in the owner hierarchy usually (not
+  // always -- see shouldComponentUpdate()) will reconcile children, reconcile
+  // them before their children by sorting the array.
+  dirtyComponents.sort(mountOrderComparator);
+
+  // Any updates enqueued while reconciling must be performed after this entire
+  // batch. Otherwise, if dirtyComponents is [A, B] where A has children B and
+  // C, B could update twice in a single batch if C's render enqueues an update
+  // to B (since B would have already updated, we should skip it, and the only
+  // way we can know to do so is by checking the batch counter).
+  updateBatchNumber++;
+
+  for (var i = 0; i < len; i++) {
+    // If a component is unmounted before pending changes apply, it will still
+    // be here, but we assume that it has cleared its _pendingCallbacks and
+    // that performUpdateIfNecessary is a noop.
+    var component = dirtyComponents[i];
+
+    // If performUpdateIfNecessary happens to enqueue any new updates, we
+    // shouldn't execute the callbacks until the next render happens, so
+    // stash the callbacks first
+    var callbacks = component._pendingCallbacks;
+    component._pendingCallbacks = null;
+
+    var markerName;
+    if (ReactFeatureFlags.logTopLevelRenders) {
+      var namedComponent = component;
+      // Duck type TopLevelWrapper. This is probably always true.
+      if (component._currentElement.type.isReactTopLevelWrapper) {
+        namedComponent = component._renderedComponent;
+      }
+      markerName = 'React update: ' + namedComponent.getName();
+      console.time(markerName);
+    }
+
+    ReactReconciler.performUpdateIfNecessary(component, transaction.reconcileTransaction, updateBatchNumber);
+
+    if (markerName) {
+      console.timeEnd(markerName);
+    }
+
+    if (callbacks) {
+      for (var j = 0; j < callbacks.length; j++) {
+        transaction.callbackQueue.enqueue(callbacks[j], component.getPublicInstance());
+      }
+    }
+  }
+}
+
+var flushBatchedUpdates = function () {
+  // ReactUpdatesFlushTransaction's wrappers will clear the dirtyComponents
+  // array and perform any updates enqueued by mount-ready handlers (i.e.,
+  // componentDidUpdate) but we need to check here too in order to catch
+  // updates enqueued by setState callbacks and asap calls.
+  while (dirtyComponents.length || asapEnqueued) {
+    if (dirtyComponents.length) {
+      var transaction = ReactUpdatesFlushTransaction.getPooled();
+      transaction.perform(runBatchedUpdates, null, transaction);
+      ReactUpdatesFlushTransaction.release(transaction);
+    }
+
+    if (asapEnqueued) {
+      asapEnqueued = false;
+      var queue = asapCallbackQueue;
+      asapCallbackQueue = CallbackQueue.getPooled();
+      queue.notifyAll();
+      CallbackQueue.release(queue);
+    }
+  }
+};
+
+/**
+ * Mark a component as needing a rerender, adding an optional callback to a
+ * list of functions which will be executed once the rerender occurs.
+ */
+function enqueueUpdate(component) {
+  ensureInjected();
+
+  // Various parts of our code (such as ReactCompositeComponent's
+  // _renderValidatedComponent) assume that calls to render aren't nested;
+  // verify that that's the case. (This is called by each top-level update
+  // function, like setState, forceUpdate, etc.; creation and
+  // destruction of top-level components is guarded in ReactMount.)
+
+  if (!batchingStrategy.isBatchingUpdates) {
+    batchingStrategy.batchedUpdates(enqueueUpdate, component);
+    return;
+  }
+
+  dirtyComponents.push(component);
+  if (component._updateBatchNumber == null) {
+    component._updateBatchNumber = updateBatchNumber + 1;
+  }
+}
+
+/**
+ * Enqueue a callback to be run at the end of the current batching cycle. Throws
+ * if no updates are currently being performed.
+ */
+function asap(callback, context) {
+  !batchingStrategy.isBatchingUpdates ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates.asap: Can\'t enqueue an asap callback in a context whereupdates are not being batched.') : _prodInvariant('125') : void 0;
+  asapCallbackQueue.enqueue(callback, context);
+  asapEnqueued = true;
+}
+
+var ReactUpdatesInjection = {
+  injectReconcileTransaction: function (ReconcileTransaction) {
+    !ReconcileTransaction ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates: must provide a reconcile transaction class') : _prodInvariant('126') : void 0;
+    ReactUpdates.ReactReconcileTransaction = ReconcileTransaction;
+  },
+
+  injectBatchingStrategy: function (_batchingStrategy) {
+    !_batchingStrategy ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates: must provide a batching strategy') : _prodInvariant('127') : void 0;
+    !(typeof _batchingStrategy.batchedUpdates === 'function') ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates: must provide a batchedUpdates() function') : _prodInvariant('128') : void 0;
+    !(typeof _batchingStrategy.isBatchingUpdates === 'boolean') ? process.env.NODE_ENV !== 'production' ? invariant(false, 'ReactUpdates: must provide an isBatchingUpdates boolean attribute') : _prodInvariant('129') : void 0;
+    batchingStrategy = _batchingStrategy;
+  }
+};
+
+var ReactUpdates = {
+  /**
+   * React references `ReactReconcileTransaction` using this property in order
+   * to allow dependency injection.
+   *
+   * @internal
+   */
+  ReactReconcileTransaction: null,
+
+  batchedUpdates: batchedUpdates,
+  enqueueUpdate: enqueueUpdate,
+  flushBatchedUpdates: flushBatchedUpdates,
+  injection: ReactUpdatesInjection,
+  asap: asap
+};
+
+module.exports = ReactUpdates;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+
+
+/**
+ * Keeps track of the current owner.
+ *
+ * The current owner is the component who should own any components that are
+ * currently being constructed.
+ */
+var ReactCurrentOwner = {
+
+  /**
+   * @internal
+   * @type {ReactComponent}
+   */
+  current: null
+
+};
+
+module.exports = ReactCurrentOwner;
 
 /***/ }),
 /* 38 */
@@ -5566,7 +5610,7 @@ module.exports = React;
 
 var _assign = __webpack_require__(16);
 
-var ReactCurrentOwner = __webpack_require__(36);
+var ReactCurrentOwner = __webpack_require__(37);
 
 var warning = __webpack_require__(12);
 var canDefineProperty = __webpack_require__(104);
@@ -15470,10 +15514,10 @@ module.exports = ReactErrorUtils;
 
 var _prodInvariant = __webpack_require__(15);
 
-var ReactCurrentOwner = __webpack_require__(36);
+var ReactCurrentOwner = __webpack_require__(37);
 var ReactInstanceMap = __webpack_require__(84);
 var ReactInstrumentation = __webpack_require__(32);
-var ReactUpdates = __webpack_require__(35);
+var ReactUpdates = __webpack_require__(36);
 
 var invariant = __webpack_require__(11);
 var warning = __webpack_require__(12);
@@ -17251,7 +17295,7 @@ var _siteActions = __webpack_require__(23);
 
 var _panelActions = __webpack_require__(46);
 
-var _optionActions = __webpack_require__(37);
+var _optionActions = __webpack_require__(35);
 
 var _mapActions = __webpack_require__(107);
 
@@ -17719,7 +17763,7 @@ var _IconButton = __webpack_require__(43);
 
 var _IconButton2 = _interopRequireDefault(_IconButton);
 
-var _optionActions = __webpack_require__(37);
+var _optionActions = __webpack_require__(35);
 
 var _siteActions = __webpack_require__(23);
 
@@ -17967,7 +18011,7 @@ var _cirTest = __webpack_require__(87);
 
 var _mapActions = __webpack_require__(107);
 
-var _optionActions = __webpack_require__(37);
+var _optionActions = __webpack_require__(35);
 
 var _siteActions = __webpack_require__(23);
 
@@ -32180,7 +32224,7 @@ var _assign = __webpack_require__(16);
 
 var LinkedValueUtils = __webpack_require__(147);
 var ReactDOMComponentTree = __webpack_require__(20);
-var ReactUpdates = __webpack_require__(35);
+var ReactUpdates = __webpack_require__(36);
 
 var warning = __webpack_require__(12);
 
@@ -32653,7 +32697,7 @@ var DOMLazyTree = __webpack_require__(65);
 var DOMProperty = __webpack_require__(45);
 var React = __webpack_require__(53);
 var ReactBrowserEventEmitter = __webpack_require__(99);
-var ReactCurrentOwner = __webpack_require__(36);
+var ReactCurrentOwner = __webpack_require__(37);
 var ReactDOMComponentTree = __webpack_require__(20);
 var ReactDOMContainerInfo = __webpack_require__(571);
 var ReactDOMFeatureFlags = __webpack_require__(573);
@@ -32663,7 +32707,7 @@ var ReactInstrumentation = __webpack_require__(32);
 var ReactMarkupChecksum = __webpack_require__(593);
 var ReactReconciler = __webpack_require__(68);
 var ReactUpdateQueue = __webpack_require__(150);
-var ReactUpdates = __webpack_require__(35);
+var ReactUpdates = __webpack_require__(36);
 
 var emptyObject = __webpack_require__(75);
 var instantiateReactComponent = __webpack_require__(258);
@@ -33682,7 +33726,7 @@ module.exports = setTextContent;
 
 var _prodInvariant = __webpack_require__(15);
 
-var ReactCurrentOwner = __webpack_require__(36);
+var ReactCurrentOwner = __webpack_require__(37);
 var REACT_ELEMENT_TYPE = __webpack_require__(587);
 
 var getIteratorFn = __webpack_require__(621);
@@ -34795,7 +34839,7 @@ module.exports = REACT_ELEMENT_TYPE;
 
 
 
-var ReactCurrentOwner = __webpack_require__(36);
+var ReactCurrentOwner = __webpack_require__(37);
 var ReactComponentTreeHook = __webpack_require__(24);
 var ReactElement = __webpack_require__(54);
 
@@ -35126,7 +35170,7 @@ module.exports = getIteratorFn;
 
 var _prodInvariant = __webpack_require__(55);
 
-var ReactCurrentOwner = __webpack_require__(36);
+var ReactCurrentOwner = __webpack_require__(37);
 var REACT_ELEMENT_TYPE = __webpack_require__(273);
 
 var getIteratorFn = __webpack_require__(276);
@@ -36767,7 +36811,7 @@ var _redux = __webpack_require__(105);
 
 var _mapActions = __webpack_require__(107);
 
-var _optionActions = __webpack_require__(37);
+var _optionActions = __webpack_require__(35);
 
 var _siteActions = __webpack_require__(23);
 
@@ -37388,7 +37432,7 @@ var _reactRedux = __webpack_require__(18);
 
 var _siteActions = __webpack_require__(23);
 
-var _optionActions = __webpack_require__(37);
+var _optionActions = __webpack_require__(35);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37448,7 +37492,9 @@ var FormD = function (_Component) {
       if (choice === 'image') {
         this.props.deleteImage(id);
       };
-      // if (choice === 'tour'){ this.props.deleteTour() };
+      if (choice === 'tour') {
+        this.props.deleteTour(id);
+      };
       if (choice === 'biblio') {
         this.props.deleteBiblio(id);
       };
@@ -37527,20 +37573,28 @@ var FormD = function (_Component) {
         choiceObj = this.props.sites.genBiblio;
       };
 
-      var selected = choiceObj.filter(function (item) {
-        return item.id = id;
-      })[0];
+      if (this.state.type !== 'tour') {
+        var selected = choiceObj.filter(function (item) {
+          return +item.id === +id;
+        })[0];
 
-      var elementKeys = Object.keys(selected);
-      var selArr = [];
+        var elementKeys = Object.keys(selected);
+        var selArr = [];
 
-      elementKeys.forEach(function (key) {
-        selArr.push(key + ': ' + selected[key] + ' ');
-      });
+        elementKeys.forEach(function (key) {
+          selArr.push(key + ': ' + selected[key] + ' ');
+        });
 
-      console.log(selArr);
+        console.log(selArr);
 
-      this.setState({ elementFull: selArr, verify: true });
+        this.setState({ elementFull: selArr, verify: true });
+      } else {
+        var stringArr = this.props.options.allTours[id].map(function (obj) {
+          return JSON.stringify(obj);
+        });
+        this.setState({ elementFull: stringArr, verify: true });
+        console.log({ elementFull: stringArr, verify: true });
+      }
     }
   }, {
     key: 'changeForm',
@@ -37595,17 +37649,34 @@ var FormD = function (_Component) {
           choiceObj = this.props.sites.genBiblio;
         };
 
-        elementKeys = Object.keys(choiceObj[0]);
-        elementsNum = elementKeys.length;
+        if (this.state.type !== 'tour') {
+          elementKeys = Object.keys(choiceObj[0]);
 
-        choiceObj = choiceObj.map(function (item) {
-          var itemString = '';
-          elementKeys.forEach(function (key) {
-            itemString = itemString.concat(key + ': ' + item[key] + ', ');
+          choiceObj = choiceObj.map(function (item) {
+            var itemString = '';
+            elementKeys.forEach(function (key) {
+              itemString = itemString.concat(key + ': ' + item[key] + ', ');
+            });
+            return { id: item.id, string: itemString };
           });
-          return { id: item.id, string: itemString };
-        });
-        console.log(choiceObj);
+        } else if (this.state.type === 'tour' && choiceObj !== {}) {
+          elementKeys = Object.keys(choiceObj);
+          var elementKeys2 = Object.keys(choiceObj['1'][0]);
+
+          var finalArr = elementKeys.map(function (key) {
+            var itemString = '';
+            choiceObj[key].forEach(function (elem) {
+
+              elementKeys2.forEach(function (spec) {
+                itemString = itemString.concat(spec + ': ' + elem[spec] + ', ');
+              });
+              itemString += ' ; ';
+            });
+            return { id: key, string: itemString };
+          });
+          finalArr.unshift({ id: null, string: 'select a tour' });
+          console.log(finalArr);
+        }
       }
 
       return _react2.default.createElement(
@@ -37649,20 +37720,13 @@ var FormD = function (_Component) {
           ),
           _react2.default.createElement(
             'button',
-            { className: 'btn btn-default marg10', value: 'tour', onClick: function onClick(e) {
-                return _this2.changeForm(e);
-              } },
-            'Tour'
-          ),
-          _react2.default.createElement(
-            'button',
             { className: 'btn btn-default marg10', value: 'biblio', onClick: function onClick(e) {
                 return _this2.changeForm(e);
               } },
             'Bibliography'
           )
         ),
-        this.state.typeSelected && _react2.default.createElement(
+        this.state.typeSelected && this.state.type !== 'tour' && _react2.default.createElement(
           'div',
           null,
           _react2.default.createElement('br', null),
@@ -37697,9 +37761,44 @@ var FormD = function (_Component) {
             _react2.default.createElement('br', null)
           )
         ),
+        this.state.typeSelected && this.state.type === 'tour' && this.props.options.allTours !== {} && _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Choose one ',
+            this.state.type,
+            ' in the following drop-down'
+          ),
+          _react2.default.createElement(
+            'form',
+            null,
+            _react2.default.createElement(
+              'label',
+              { className: 'underline' },
+              'Select for deletion: '
+            ),
+            _react2.default.createElement(
+              'select',
+              { onChange: function onChange(e) {
+                  return _this2.updateOptions(e);
+                }, id: 'delObj', style: { width: '80%' } },
+              finalArr && finalArr.map(function (item, i) {
+                return _react2.default.createElement(
+                  'option',
+                  { value: item.id, key: 'delete' + i },
+                  item.string
+                );
+              })
+            ),
+            _react2.default.createElement('br', null)
+          )
+        ),
         _react2.default.createElement('br', null),
         _react2.default.createElement('br', null),
-        this.state.verify && _react2.default.createElement(
+        this.state.verify && this.state.type !== 'tour' && _react2.default.createElement(
           'div',
           null,
           _react2.default.createElement(
@@ -37732,6 +37831,52 @@ var FormD = function (_Component) {
                 );
               })
             ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'You must click below to save edits to database'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.save(e);
+                } },
+              'Delete'
+            ),
+            ' or ',
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.reset(e);
+                } },
+              'Reset'
+            )
+          )
+        ),
+        this.state.verify && this.state.type === 'tour' && this.props.options.allTours !== {} && _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h4',
+            { className: 'BornholmSandvig' },
+            'Verify Before Deletion'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            ' either accept (below) or correct & review again'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'editOps' },
+            'The tour includes:',
+            this.state.elementFull && this.state.elementFull.map(function (item) {
+              return _react2.default.createElement(
+                'p',
+                null,
+                item
+              );
+            }),
             _react2.default.createElement(
               'p',
               null,
@@ -37809,6 +37954,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     },
     deleteBiblio: function deleteBiblio(id) {
       dispatch((0, _siteActions.deleteBiblio)(id));
+    },
+    deleteTour: function deleteTour(id) {
+      console.log('got here in delete tour');
+      dispatch((0, _optionActions.deleteTour)(id));
     },
 
     editNarrative: function (_editNarrative) {
@@ -37985,7 +38134,7 @@ var FormDe = function (_Component) {
       };
 
       this.props.addDetail(imgObj, detailObj);
-      this.props.editSite(siteObj, this.state.coreId);
+      this.props.editSite(this.state.coreId, siteObj);
     }
   }, {
     key: 'uploadImg',
@@ -38251,8 +38400,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     updatePanelSize: function updatePanelSize(size, ratio) {
       dispatch((0, _panelActions.setPanelSizing)(size, ratio));
     },
-    editSite: function editSite(siteObj, id) {
-      dispatch((0, _siteActions.editSite)(siteObj, id));
+    editSite: function editSite(id, siteObj) {
+      dispatch((0, _siteActions.editSite)(id, siteObj));
     },
     addDetail: function addDetail(imgObj, detailObj) {
       dispatch((0, _siteActions.addDetail)(imgObj, detailObj));
@@ -38291,6 +38440,8 @@ var _reactRedux = __webpack_require__(18);
 
 var _siteActions = __webpack_require__(23);
 
+var _optionActions = __webpack_require__(35);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38309,26 +38460,21 @@ var FormEd = function (_Component) {
 
     _this.state = {
       verify: false,
+      confirm: false,
+      typeSelected: false,
+      type: '',
+      elementId: '',
+      elementFull: [],
+      elementAdjusted: {}
 
-      imageId: 0,
-      narrativeId: 0,
-
-      narrative: {},
-      image: {},
-
-      author: '',
-      title: '',
-      published: '',
-      physical: '',
-      page: '',
-      link: ''
     };
-    _this.submission = _this.submission.bind(_this);
+    _this.submit = _this.submit.bind(_this);
     _this.update = _this.update.bind(_this);
     _this.updateOptions = _this.updateOptions.bind(_this);
     _this.updateImg = _this.updateImg.bind(_this);
     _this.save = _this.save.bind(_this);
     _this.reset = _this.reset.bind(_this);
+    _this.changeForm = _this.changeForm.bind(_this);
     return _this;
   }
 
@@ -38341,24 +38487,34 @@ var FormEd = function (_Component) {
     key: 'save',
     value: function save(e) {
       e.preventDefault();
-      var biblioObj = {
-        imageId: this.state.imageId,
-        narrativeId: this.state.narrativeId,
-        author: this.state.author,
-        title: this.state.title,
-        published: this.state.published,
-        physical: this.state.physical,
-        page: this.state.page,
-        link: this.state.link
-      };
+      var id = this.state.elementId;
+      var choice = this.state.type;
+      var obj = this.state.elementAdjusted;
 
-      this.props.addBiblio(biblioObj);
+      if (choice === 'site') {
+        this.props.editSite(id, obj);
+      };
+      if (choice === 'detail') {
+        this.props.editDetail(id, obj);
+      };
+      if (choice === 'narrative') {
+        this.props.editNarrative(id, obj);
+      };
+      if (choice === 'image') {
+        this.props.editImage(id, obj);
+      };
+      if (choice === 'tour') {
+        this.props.editTour(id, obj);
+      };
+      if (choice === 'biblio') {
+        this.props.editBiblio(id, obj);
+      };
     }
   }, {
-    key: 'submission',
-    value: function submission(e) {
+    key: 'submit',
+    value: function submit(e) {
       e.preventDefault();
-      this.setState({ verify: true });
+      this.setState({ confirm: true });
       console.log('form submission', this.state);
       // should open a verification panel
     }
@@ -38368,19 +38524,12 @@ var FormEd = function (_Component) {
       e.preventDefault();
       var obj = {
         verify: false,
-
-        imageId: 0,
-        narrativeId: 0,
-
-        narrative: {},
-        image: {},
-
-        author: '',
-        title: '',
-        published: '',
-        physical: '',
-        page: '',
-        link: ''
+        confirm: false,
+        typeSelected: false,
+        type: '',
+        elementId: '',
+        elementFull: [],
+        elementAdjusted: {}
       };
 
       this.setState(obj);
@@ -38392,7 +38541,7 @@ var FormEd = function (_Component) {
 
       var input = e.target.value;
       var type = e.target.attributes.id.value;
-      var obj = {};obj[type] = input;
+      var obj = this.state.elementAdjusted;obj[type] = input;
 
       this.setState(obj);
     }
@@ -38414,28 +38563,311 @@ var FormEd = function (_Component) {
     key: 'updateOptions',
     value: function updateOptions(e, type) {
       e.preventDefault();
-      var id = document.getElementById('narrOptions').value;
-      var narrative = this.props.sites.genNarratives.filter(function (narr) {
-        return +narr.id === +id;
-      })[0];
-      var obj = {
-        narrativeId: id,
-        narrative: narrative
+      var id = document.getElementById('delObj').value;
+      this.setState({ elementId: id });
+
+      var choiceObj;
+      if (this.state.type === 'site') {
+        choiceObj = this.props.sites.allSites;
+      };
+      if (this.state.type === 'detail') {
+        choiceObj = this.props.sites.genDetails;
+      };
+      if (this.state.type === 'narrative') {
+        choiceObj = this.props.sites.genNarratives;
+      };
+      if (this.state.type === 'image') {
+        choiceObj = this.props.sites.genImages;
+      };
+      if (this.state.type === 'biblio') {
+        choiceObj = this.props.sites.genBiblio;
       };
 
-      this.setState(obj);
+      var selected = choiceObj.filter(function (item) {
+        return +item.id === +id;
+      })[0];
+
+      var elementKeys = Object.keys(selected);
+      var selArr = [];
+
+      elementKeys.forEach(function (key) {
+        selArr.push({ key: key, value: selected[key] });
+      });
+
+      console.log(selArr);
+
+      this.setState({ elementFull: selArr, verify: true });
+    }
+  }, {
+    key: 'changeForm',
+    value: function changeForm(e) {
+      e.preventDefault();
+      var choice = e.target.value;
+      this.setState({ type: choice, typeSelected: true });
+      if (choice === 'site') {
+        this.props.loadSites();
+      };
+      if (choice === 'detail') {
+        this.props.reloadDetails();
+      };
+      if (choice === 'narrative') {
+        this.props.reloadNarratives();
+      };
+      if (choice === 'image') {
+        this.props.reloadImages();
+      };
+      if (choice === 'tour') {
+        this.props.getAllTours();
+      };
+      if (choice === 'biblio') {
+        this.props.reloadBiblio();
+      };
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
+      var choiceObj;
+      var elementKeys;
+      var elementsNum;
+      if (this.state.typeSelected === true) {
+        if (this.state.type === 'site') {
+          choiceObj = this.props.sites.allSites;
+        };
+        if (this.state.type === 'detail') {
+          choiceObj = this.props.sites.genDetails;
+        };
+        if (this.state.type === 'narrative') {
+          choiceObj = this.props.sites.genNarratives;
+        };
+        if (this.state.type === 'image') {
+          choiceObj = this.props.sites.genImages;
+        };
+        if (this.state.type === 'tour') {
+          choiceObj = this.props.options.allTours;
+        };
+        if (this.state.type === 'biblio') {
+          choiceObj = this.props.sites.genBiblio;
+        };
+
+        elementKeys = Object.keys(choiceObj[0]);
+
+        choiceObj = choiceObj.map(function (item) {
+          // var itemString='';
+          //   elementKeys.forEach(key=>{
+          //     itemString = itemString.concat(`${key}: ${item[key]}, `);
+          //   })
+          return { id: item.id, string: JSON.stringify(item) };
+        });
+        // } else if (this.state.type === 'tour' && choiceObj !== {} ){
+        //   elementKeys = Object.keys(choiceObj);
+        //   var elementKeys2 = Object.keys(choiceObj['1'][0]);
+
+        //   var finalArr = elementKeys.map(key=>{
+        //     var itemString='';
+        //     choiceObj[key].forEach(elem=>{
+
+        //       elementKeys2.forEach(spec=>{
+        //         itemString = itemString.concat(`${spec}: ${elem[spec]}, `);
+        //       })
+        //       itemString +=' ; ';
+        //     })
+        //     return {id:key, string:itemString}
+        //   })
+        //   finalArr.unshift({id:null, string:'select a tour'});
+        //   console.log(finalArr);
+        // }
+      }
 
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
-          'p',
+          'div',
           null,
-          ' form to edit any database entry coming soon '
+          _react2.default.createElement(
+            'h4',
+            { className: 'BornholmSandvig' },
+            'Select Element Type To Load'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn btn-default marg10', value: 'site', onClick: function onClick(e) {
+                return _this2.changeForm(e);
+              } },
+            'Site'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn btn-default marg10', value: 'detail', onClick: function onClick(e) {
+                return _this2.changeForm(e);
+              } },
+            'Detail'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn btn-default marg10', value: 'narrative', onClick: function onClick(e) {
+                return _this2.changeForm(e);
+              } },
+            'Narrative'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn btn-default marg10', value: 'image', onClick: function onClick(e) {
+                return _this2.changeForm(e);
+              } },
+            'Image'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn btn-default marg10', value: 'biblio', onClick: function onClick(e) {
+                return _this2.changeForm(e);
+              } },
+            'Bibliography'
+          )
+        ),
+        this.state.typeSelected && _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Choose one ',
+            this.state.type,
+            ' in the following drop-down'
+          ),
+          _react2.default.createElement(
+            'form',
+            null,
+            _react2.default.createElement(
+              'label',
+              { className: 'underline' },
+              'Select for Editing: '
+            ),
+            _react2.default.createElement(
+              'select',
+              { onChange: function onChange(e) {
+                  return _this2.updateOptions(e);
+                }, id: 'delObj', style: { width: '80%' } },
+              choiceObj && choiceObj.map(function (item, i) {
+                return _react2.default.createElement(
+                  'option',
+                  { value: item.id, key: 'delete' + i },
+                  item.string
+                );
+              })
+            ),
+            _react2.default.createElement('br', null)
+          )
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('br', null),
+        this.state.verify && _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h4',
+            { className: 'BornholmSandvig' },
+            'Review Changes'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            ' either accept (below) or correct & review again'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'editOps' },
+            _react2.default.createElement(
+              'form',
+              null,
+              this.state.elementFull && this.state.elementFull.map(function (item) {
+                return _react2.default.createElement(
+                  'div',
+                  null,
+                  _react2.default.createElement(
+                    'label',
+                    { className: 'underline' },
+                    item.key,
+                    ':'
+                  ),
+                  _react2.default.createElement('input', { className: 'form-control', id: item.key, onChange: function onChange(e) {
+                      return _this2.update(e);
+                    }, placeholder: item.value }),
+                  _react2.default.createElement('br', null)
+                );
+              })
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'You must click below to preview edits, for confirmation'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.submit(e);
+                } },
+              'Submit'
+            ),
+            ' or ',
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.reset(e);
+                } },
+              'Reset'
+            )
+          )
+        ),
+        this.state.confirm && _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h4',
+            { className: 'BornholmSandvig' },
+            'Verify Before Updating Database'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            ' either accept (below) or correct & review again'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'editOps' },
+            this.state.elementAdjusted && _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'p',
+                null,
+                JSON.stringify(this.state.elementAdjusted)
+              )
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'You must click below to process edits'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.save(e);
+                } },
+              'Save Edits'
+            ),
+            ' or ',
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', onClick: function onClick(e) {
+                  return _this2.reset(e);
+                } },
+              'Reset'
+            )
+          )
         )
       );
     }
@@ -38457,9 +38889,51 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
   return {
     resetSaved: function resetSaved() {
       dispatch((0, _siteActions.resetSaved)());
+    },
+    //-----------loading values to delete---------------
+    loadSites: function loadSites() {
+      dispatch((0, _siteActions.loadSites)());
+    },
+    reloadDetails: function reloadDetails() {
+      dispatch((0, _siteActions.reloadDetails)());
+    },
+    reloadNarratives: function reloadNarratives() {
+      dispatch((0, _siteActions.reloadNarratives)());
+    },
+    reloadImages: function reloadImages() {
+      dispatch((0, _siteActions.reloadImages)());
+    },
+    getAllTours: function getAllTours() {
+      dispatch((0, _optionActions.getAllToursThemes)());
+    },
+    reloadBiblio: function reloadBiblio() {
+      dispatch((0, _siteActions.reloadBiblio)());
+    },
+    //-----------dispatch delete actions---------------
+    editSite: function editSite(id, obj) {
+      dispatch((0, _siteActions.editSite)(id, obj));
+    },
+    editDetail: function editDetail(id, obj) {
+      dispatch((0, _siteActions.editDetail)(id, obj));
+    },
+    editNarrative: function editNarrative(id, obj) {
+      dispatch((0, _siteActions.editNarrative)(id, obj));
+    },
+    editImages: function editImages(id, obj) {
+      dispatch((0, _siteActions.editImages)(id, obj));
+    },
+    editBiblio: function editBiblio(id, obj) {
+      dispatch((0, _siteActions.editBiblio)(id, obj));
+    },
+    editTour: function editTour(id, obj) {
+      dispatch((0, _optionActions.editTour)(id, obj));
     }
   };
 };
+
+//import {editSite, deleteDetail, deleteNarrative, deleteImages, deleteBiblio,  resetSaved, addBibliography, loadSites, reloadDetails, reloadNarratives, reloadImages, reloadBiblio,  } from '../action-creators/siteActions.js';
+
+//import {getAllToursThemes} from '../action-creators/optionActions.js';
 
 var FormEdit = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormEd);
 
@@ -39918,7 +40392,7 @@ var _reactRedux = __webpack_require__(18);
 
 var _siteActions = __webpack_require__(23);
 
-var _optionActions = __webpack_require__(37);
+var _optionActions = __webpack_require__(35);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40588,7 +41062,7 @@ var _rawTiles = __webpack_require__(70);
 
 var _siteActions = __webpack_require__(23);
 
-var _optionActions = __webpack_require__(37);
+var _optionActions = __webpack_require__(35);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40754,7 +41228,7 @@ var _rawTiles = __webpack_require__(70);
 
 var _siteActions = __webpack_require__(23);
 
-var _optionActions = __webpack_require__(37);
+var _optionActions = __webpack_require__(35);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40929,7 +41403,7 @@ var _reactDom = __webpack_require__(13);
 
 var _reactRedux = __webpack_require__(18);
 
-var _optionActions = __webpack_require__(37);
+var _optionActions = __webpack_require__(35);
 
 var _reactTapEventPlugin = __webpack_require__(271);
 
@@ -41520,14 +41994,14 @@ var PanelEdit = function (_Component) {
               { className: 'btn btn-default marg10', value: 'edit', onClick: function onClick(e) {
                   return _this2.changeForm(e);
                 } },
-              'Edit Existing (Any Element)'
+              'Edit Existing'
             ),
             _react2.default.createElement(
               'button',
               { className: 'btn btn-default marg10', value: 'delete', onClick: function onClick(e) {
                   return _this2.changeForm(e);
                 } },
-              'Delete Existing (Any Element)'
+              'Delete Existing'
             )
           ),
           _react2.default.createElement('br', null),
@@ -71632,7 +72106,7 @@ var EventPluginHub = __webpack_require__(66);
 var EventPropagators = __webpack_require__(67);
 var ExecutionEnvironment = __webpack_require__(22);
 var ReactDOMComponentTree = __webpack_require__(20);
-var ReactUpdates = __webpack_require__(35);
+var ReactUpdates = __webpack_require__(36);
 var SyntheticEvent = __webpack_require__(38);
 
 var getEventTarget = __webpack_require__(155);
@@ -72807,7 +73281,7 @@ var _prodInvariant = __webpack_require__(15),
 
 var React = __webpack_require__(53);
 var ReactComponentEnvironment = __webpack_require__(148);
-var ReactCurrentOwner = __webpack_require__(36);
+var ReactCurrentOwner = __webpack_require__(37);
 var ReactErrorUtils = __webpack_require__(149);
 var ReactInstanceMap = __webpack_require__(84);
 var ReactInstrumentation = __webpack_require__(32);
@@ -73716,7 +74190,7 @@ var ReactDOMComponentTree = __webpack_require__(20);
 var ReactDefaultInjection = __webpack_require__(586);
 var ReactMount = __webpack_require__(251);
 var ReactReconciler = __webpack_require__(68);
-var ReactUpdates = __webpack_require__(35);
+var ReactUpdates = __webpack_require__(36);
 var ReactVersion = __webpack_require__(601);
 
 var findDOMNode = __webpack_require__(618);
@@ -75007,7 +75481,7 @@ var _prodInvariant = __webpack_require__(15),
 var DOMPropertyOperations = __webpack_require__(244);
 var LinkedValueUtils = __webpack_require__(147);
 var ReactDOMComponentTree = __webpack_require__(20);
-var ReactUpdates = __webpack_require__(35);
+var ReactUpdates = __webpack_require__(36);
 
 var invariant = __webpack_require__(11);
 var warning = __webpack_require__(12);
@@ -75961,7 +76435,7 @@ var _prodInvariant = __webpack_require__(15),
 
 var LinkedValueUtils = __webpack_require__(147);
 var ReactDOMComponentTree = __webpack_require__(20);
-var ReactUpdates = __webpack_require__(35);
+var ReactUpdates = __webpack_require__(36);
 
 var invariant = __webpack_require__(11);
 var warning = __webpack_require__(12);
@@ -76749,7 +77223,7 @@ module.exports = ReactDebugTool;
 
 var _assign = __webpack_require__(16);
 
-var ReactUpdates = __webpack_require__(35);
+var ReactUpdates = __webpack_require__(36);
 var Transaction = __webpack_require__(101);
 
 var emptyFunction = __webpack_require__(26);
@@ -76980,7 +77454,7 @@ var EventListener = __webpack_require__(195);
 var ExecutionEnvironment = __webpack_require__(22);
 var PooledClass = __webpack_require__(52);
 var ReactDOMComponentTree = __webpack_require__(20);
-var ReactUpdates = __webpack_require__(35);
+var ReactUpdates = __webpack_require__(36);
 
 var getEventTarget = __webpack_require__(155);
 var getUnboundedScrollPosition = __webpack_require__(380);
@@ -77180,7 +77654,7 @@ var ReactComponentEnvironment = __webpack_require__(148);
 var ReactEmptyComponent = __webpack_require__(247);
 var ReactBrowserEventEmitter = __webpack_require__(99);
 var ReactHostComponent = __webpack_require__(249);
-var ReactUpdates = __webpack_require__(35);
+var ReactUpdates = __webpack_require__(36);
 
 var ReactInjection = {
   Component: ReactComponentEnvironment.injection,
@@ -77316,7 +77790,7 @@ var ReactComponentEnvironment = __webpack_require__(148);
 var ReactInstanceMap = __webpack_require__(84);
 var ReactInstrumentation = __webpack_require__(32);
 
-var ReactCurrentOwner = __webpack_require__(36);
+var ReactCurrentOwner = __webpack_require__(37);
 var ReactReconciler = __webpack_require__(68);
 var ReactChildReconciler = __webpack_require__(566);
 
@@ -79895,7 +80369,7 @@ module.exports = dangerousStyleValue;
 
 var _prodInvariant = __webpack_require__(15);
 
-var ReactCurrentOwner = __webpack_require__(36);
+var ReactCurrentOwner = __webpack_require__(37);
 var ReactDOMComponentTree = __webpack_require__(20);
 var ReactInstanceMap = __webpack_require__(84);
 

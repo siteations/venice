@@ -405,6 +405,18 @@ export const deleteDetail = (id) => dispatch => {
 			.catch(console.log);
 }
 
+export const editDetail = (id, obj) => dispatch => {
+	axios.put(`/api/details/${id}`, obj)
+			.then(responses => {
+				return responses.data;
+			})
+			.then((results) => {
+				console.log(results);
+			dispatch(reloadDetails());
+			})
+			.catch(console.log);
+}
+
 
 export const reloadDetails = () => dispatch => {
 	axios.get('/api/details')
@@ -488,6 +500,16 @@ export const deleteImages = (id) => dispatch => {
 			.catch(console.log);
 }
 
+export const editImages = (id, obj) => dispatch => {
+	axios.put(`/api/images/${id}`, obj)
+			.then(responses => {
+				return responses.data;
+			})
+			.then((results) => {
+			dispatch(reloadImages());
+			})
+			.catch(console.log);
+}
 
 //-----------narrative & detail general dispatches------------------------
 
@@ -505,6 +527,19 @@ export const deleteNarrative = (id) => dispatch => {
 
 export const deleteBiblio = (id) => dispatch => {
 		axios.delete(`/api/biblio/${id}`)
+			.then(responses => {
+				return responses.data;
+			})
+			.then((bib) => {
+				console.log(bib);
+			dispatch(reloadBiblio());
+			})
+			.catch(console.log);
+}
+
+
+export const editBiblio = (id) => dispatch => {
+		axios.put(`/api/biblio/${id}`, obj)
 			.then(responses => {
 				return responses.data;
 			})
@@ -634,7 +669,7 @@ export const addNewSite = (siteObj) => dispatch => {
 	   .catch(console.log);
 }
 
-export const editSite = (siteObj, id) => dispatch => {
+export const editSite = (id, siteObj) => dispatch => {
 	console.log('pre-put', siteObj);
 
 	axios.put(`/api/sites/${id}`, siteObj)
@@ -680,7 +715,7 @@ export const addNarrative = (narrObj) => dispatch => {
 
 }
 
-export const editNarrative = (siteObj, id) => dispatch => {
+export const editNarrative = (id, siteObj) => dispatch => {
 	console.log('pre-put', siteObj);
 
 	axios.put(`/api/narratives/${id}`, siteObj)
