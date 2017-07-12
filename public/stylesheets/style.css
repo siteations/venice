@@ -168,7 +168,7 @@ a:hover {
     height: 100vh;
     padding: 10px 20px 20px 20px;
     /*overflow: hidden;*/
-    overflow-y: scroll;
+    overflow-y: hidden;
 		overflow-x: hidden;
     background-color: #f4f2ec;
 }

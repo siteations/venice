@@ -55,9 +55,9 @@ class MapOps extends Component {
 
 	return (
 	        <div className="mtypeFull center-block text-center">
-                <button className="btn btn-default btn-sm bIconSm" onClick={e=>this.props.actions.zoom(e, 'in')}><span className="glyphicon glyphicon-plus" onClick={e=>this.props.actions.zoom(e, 'in')}></span></button>
+                <button className="btn btn-default btn-sm bIconSm" onTouchTap={e=>this.props.actions.zoom(e, 'in')}><span className="glyphicon glyphicon-plus" onTouchTap={e=>this.props.actions.zoom(e, 'in')}></span></button>
                 <br/>
-                <button className="btn btn-default btn-sm bIconSm" onClick={e=>this.props.actions.zoom(e, 'out')}><span className="glyphicon glyphicon-minus" onClick={e=>this.props.actions.zoom(e, 'out')}></span></button>
+                <button className="btn btn-default btn-sm bIconSm" onTouchTap={e=>this.props.actions.zoom(e, 'out')}><span className="glyphicon glyphicon-minus" onTouchTap={e=>this.props.actions.zoom(e, 'out')}></span></button>
                 <h5>zoom</h5>
                 <br/>
                 <div style={styles.root}>

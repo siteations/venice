@@ -38,7 +38,7 @@ export const ClipTiles = (props) => {
                                     clipPath = {props.clip}
                                     opacity={props.opacity}
                                     key={`clipTile${i}`}
-                                    onDoubleClick={props.action}
+                                    //onDoubleClick={props.action}
                             />
                             )
                     }
