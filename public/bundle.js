@@ -1602,7 +1602,7 @@ var addHoverSite = exports.addHoverSite = function addHoverSite(layer) {
 
 var deleteSite = exports.deleteSite = function deleteSite(id) {
 	return function (dispatch) {
-		_axios2.default.delete('/api/site/' + id).then(function (responses) {
+		_axios2.default.delete('/api/sites/' + id).then(function (responses) {
 			return responses.data;
 		}).then(function (results) {
 			console.log(results);
@@ -37490,7 +37490,7 @@ var FormD = function (_Component) {
         this.props.deleteNarrative(id);
       };
       if (choice === 'image') {
-        this.props.deleteImage(id);
+        this.props.deleteImages(id);
       };
       if (choice === 'tour') {
         this.props.deleteTour(id);
@@ -37498,6 +37498,8 @@ var FormD = function (_Component) {
       if (choice === 'biblio') {
         this.props.deleteBiblio(id);
       };
+
+      this.reset();
     }
   }, {
     key: 'submission',
@@ -37509,8 +37511,8 @@ var FormD = function (_Component) {
     }
   }, {
     key: 'reset',
-    value: function reset(e) {
-      e.preventDefault();
+    value: function reset() {
+      //e.preventDefault();
       var obj = {
         verify: false,
         typeSelected: false,
@@ -37850,6 +37852,11 @@ var FormD = function (_Component) {
                   return _this2.reset(e);
                 } },
               'Reset'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'form automatically clears on successful delete'
             )
           )
         ),
@@ -37896,6 +37903,12 @@ var FormD = function (_Component) {
                   return _this2.reset(e);
                 } },
               'Reset'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              _react2.default.createElement('br', null),
+              'form automatically clears on successful delete'
             )
           )
         )

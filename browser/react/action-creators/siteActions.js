@@ -381,7 +381,7 @@ export const addHoverSite = (layer) => dispatch =>{
 }
 
 export const deleteSite = (id) => dispatch => {
-	axios.delete(`/api/site/${id}`)
+	axios.delete(`/api/sites/${id}`)
 			.then(responses => {
 				return responses.data;
 			})

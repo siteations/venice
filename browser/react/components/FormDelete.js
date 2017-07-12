@@ -43,9 +43,11 @@ class FormD extends Component {
     if (choice === 'site'){ this.props.deleteSite(id) };
     if (choice === 'detail'){ this.props.deleteDetail(id) };
     if (choice === 'narrative'){ this.props.deleteNarrative(id) };
-    if (choice === 'image'){ this.props.deleteImage(id) };
+    if (choice === 'image'){ this.props.deleteImages(id) };
     if (choice === 'tour'){ this.props.deleteTour(id) };
     if (choice === 'biblio'){ this.props.deleteBiblio(id) };
+
+    this.reset();
 
   }
 
@@ -56,8 +58,8 @@ class FormD extends Component {
     // should open a verification panel
   }
 
-  reset(e){
-    e.preventDefault();
+  reset(){
+    //e.preventDefault();
     let obj = {
           verify: false,
           typeSelected: false,
@@ -247,6 +249,7 @@ class FormD extends Component {
                 </ul>
                 <p>You must click below to save edits to database</p>
                 <button className="btn btn-default" onClick={e=>this.save(e)}>Delete</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
+                <p>form automatically clears on successful delete</p>
 
                 </div>
             </div>
@@ -262,6 +265,7 @@ class FormD extends Component {
                 }
                 <p>You must click below to save edits to database</p>
                 <button className="btn btn-default" onClick={e=>this.save(e)}>Delete</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
+                <p><br/>form automatically clears on successful delete</p>
 
                 </div>
             </div>
