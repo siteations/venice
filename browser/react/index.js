@@ -81,12 +81,6 @@ render(
        <div>
   		<Route exact path="/Venice" component={App} />
   		<Route exact path="/Venice-Edit" component={App} />
-		  {/* <Route path="/templates" component={Templates} />
-		  <Route path="/about" component={About} /> {/* //about tabs should hold intro, directions, usecases
-		  <Route path="/profile/:user" component={User} />
-		  <Route path="/preview" component={Preview} /> {/* //about tabs should hold user's templates (created), user's templates (favorites), sidebar contact info/media preferences, other?
-	       <Route path='/live' component={Live} /> //only holds the page preview w/ the top nav bar
-	   		*/}
 	     </div>
      </Router>
    </Provider>,

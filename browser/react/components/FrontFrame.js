@@ -7,15 +7,17 @@ import Footer from './Footer.js';
 import MapBar from './MapBar.js';
 import MapSVG from './Mapd3.js';
 import Panel from './Panel.js';
+import PanelOps from './PanelOps.js';
+import MapOptions from './MapOptions.js';
 
 import {Preload} from 'react-preload';
-import {tilepreload} from '../plug-ins/rawTiles.js';
+//import {tilepreload} from '../plug-ins/rawTiles.js';
 
 import {loadLayers, loadSites, addAllLayers, loadFiltered } from '../action-creators/siteActions.js';
 import {getAllToursThemes} from '../action-creators/optionActions.js';
 
 
-var images = tilepreload();
+//var images = tilepreload();
 //console.log(images);
 
 var loadingIndicator = (<div>Loading...</div>);
@@ -30,9 +32,6 @@ class Frame extends Component {
 			button: 'navigate',
 			select: false,
 			selected: [],
-			layers: ["monastery", "convent", "non-catholic"], // just for testing purposes, hook into actions
-			//["ritual", "monastery", "convent", "bascilica", "non-catholic", "plague", "parish"]
-			// need to set up redux and link layers together...
 		};
 		this.hoverName=this.hoverName.bind(this);
 		this.nav=this.nav.bind(this);
@@ -72,6 +71,7 @@ class Frame extends Component {
 			        </div>
 			        {this.props.options.panelNone && this.props.options.panelStart &&
 			        	<div className="flex between">
+			        		<MapOptions />
 				        	<MapSVG baseClass="mFullO mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
 				        	<div className="panelClose">
@@ -80,6 +80,7 @@ class Frame extends Component {
 			        }
 			        {this.props.options.panelNone && !this.props.options.panelStart &&
 			        	<div className="flex between">
+			        		<MapOptions />
 				        	<MapSVG baseClass="mFull mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
 				        	<div className="panelClose">
@@ -88,6 +89,7 @@ class Frame extends Component {
 			        }
 			        {this.props.options.panelSmall && this.props.options.panelMid &&
 			        	<div className="flex between">
+			        		<MapOptions />
 				        	<MapSVG baseClass="mPart mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
 				        	<Panel baseClass="panelOpen" />
@@ -95,6 +97,7 @@ class Frame extends Component {
 			        }
 			        {this.props.options.panelSmall && !this.props.options.panelMid &&
 			        	<div className="flex between">
+			        		<MapOptions />
 				        	<MapSVG baseClass="mPart mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
 				        	<Panel baseClass="panelOpenPart" />
@@ -102,18 +105,46 @@ class Frame extends Component {
 			        }
 			        {this.props.options.panelLarge && this.props.options.panelMid &&
 			        	<div className="flex between">
+			        		<MapOptions />
 				        	<MapSVG baseClass="mQuarter mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<Panel baseClass="panelLargePart" />
+				        	{this.props.sites.specLayer === '' &&
+				        		<Panel baseClass="panelLargePart" />
+				        	}
+				        	{this.props.sites.specLayer !== '' &&
+				        		<PanelOps baseClass="panelLargePart noPad" />
+				        	}
 			        	</div>
 			        }
 			        {this.props.options.panelLarge && !this.props.options.panelMid &&
 			        	<div className="flex between">
+			        		<MapOptions />
 				        	<MapSVG baseClass="mQuarter mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<Panel baseClass="panelLarge" />
+				        	{this.props.sites.specLayer === '' &&
+				        		<Panel baseClass="panelLarge" />
+				        	}
+				        	{this.props.sites.specLayer !== '' &&
+				        		<PanelOps baseClass="panelLarge noPad" />
+				        	}
 			        	</div>
 			        }
+			        {/*this.props.options.panelLarge && this.props.options.panelMid && this.props.sites.specLayer !== '' &&
+			        	<div className="flex between">
+			        		<MapOptions />
+				        	<MapSVG baseClass="mQuarter mainMaps" />
+				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
+				        	<PanelOps baseClass="panelLargePart noPad" />
+			        	</div>
+			        }
+			        {this.props.options.panelLarge && !this.props.options.panelMid && this.props.sites.specLayer !== '' &&
+			        	<div className="flex between">
+			        		<MapOptions />
+				        	<MapSVG baseClass="mQuarter mainMaps" />
+				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
+				        	<PanelOps baseClass="panelLarge noPad" />
+			        	</div>
+			        */}
 			        </div>
 			        <Footer />
 			    </div>

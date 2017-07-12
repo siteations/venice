@@ -62,9 +62,9 @@ class MapSVG extends Component {
         let panelW = (this.props.map.windowSize[0]-width)/2;
         //if (panelW <= 0){ panelW = 0; } else { panelW *= 0.5; };
 
-        if (width<this.props.map.windowSize[0]){
-            width=this.props.map.windowSize[0];
-        };
+        // if (width<this.props.map.windowSize[0]){
+        //     width=this.props.map.windowSize[0];
+        // };
         let height = sele.clientHeight;
         let [xOff, yOff] = this.props.map.xyOffsets;
         let [xOffR, yOffR] = this.props.map.xyOffsetsR;
@@ -72,8 +72,14 @@ class MapSVG extends Component {
         this.props.setWindowOffsets([sele.offsetLeft, sele.offsetTop]);
         this.props.setWinSize([width, height]);
         this.props.setPanelOffset(panelW); // for recenter;
-        // this.props.setOffsetsR([xOff - panelW, yOff]);
-        // this.props.setCurrOffsets([xOffR - panelW, yOffR]);
+
+        if (width<this.props.map.windowSize[0]){
+            this.props.setOffsetsR([xOff + panelW , yOff]);
+            this.props.setCurrOffsets([xOffR + panelW , yOffR]);
+        } else {
+            this.props.setOffsetsR([xOff + panelW, yOff]);
+            this.props.setCurrOffsets([xOffR + panelW , yOffR]);
+        }
         this.props.setCenterScreen([width/2, height/2]);
 
         if (this.props.map.xyOffsets[0]===0){
@@ -367,7 +373,10 @@ class MapSVG extends Component {
     	return (
 
     	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
-    	   <div className="offset" onMouseDown = {e=>this.mouseLoc(e)}  onMouseUp = {e=>this.mouseLoc(e)} onMouseMove = {e=>this.drag(e)} onWheel = {e=>this.zoomScroll(e)}
+    	   <div className="offset" onMouseDown = {e=>this.mouseLoc(e)}
+           onMouseUp = {e=>this.mouseLoc(e)}
+           onMouseMove = {e=>this.drag(e)}
+           onWheel = {e=>this.zoomScroll(e)}
            onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, 'none') : e => this.addCenter(e, 'center') }
            onClick={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault()}
            >
@@ -402,13 +411,13 @@ class MapSVG extends Component {
 
 	    	   		<g className="workingTiles" >
     	    	   		{tiles &&
-                            <BackgroundTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} color={this.props.options.color} />
+                            <BackgroundTiles data={tiles} name='novacco' wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} color={this.props.options.color} />
                         }
                         {this.props.options.anno &&
                             <BackgroundMask wSize={this.props.map.windowSize} color={this.props.options.color} />
                         }
                         {tiles && this.props.options.anno &&
-                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="url(#myClip)" opacity={1} action=""/>
+                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} name='novacco' tSize={this.props.map.tileSize} clip="url(#myClip)" opacity={1} action=""/>
     	    	   		}
 	    	   		</g>
 
@@ -464,9 +473,7 @@ class MapSVG extends Component {
 	   				</g>
 	    	   </svg>
     	   </div>
-
-           <MapOptions actions={{zoom: this.zoom }} />
-           {/*<LayersOptions />*/}
+           {/*<MapOptions actions={{zoom: this.zoom }} />*/}
     	 </div>
 
     	)

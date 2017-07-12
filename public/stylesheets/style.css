@@ -118,18 +118,18 @@ a:hover {
 }
 
 @keyframes openingPPart{
-    0%   {width: 60%;}
+    0%   {width: 50%;}
     100% {width: 30%;}
 }
 
 @keyframes openingPL{
     0%   {width: 0%;}
-    100% {width: 60%;}
+    100% {width: 50%;}
 }
 
 @keyframes openingPLPart{
     0%   {width: 30%;}
-    100% {width: 60%;}
+    100% {width: 50%;}
 }
 
 @keyframes closingP{
@@ -138,28 +138,28 @@ a:hover {
 }
 
 @keyframes closingPL{
-    0%   {width: 70%;}
+    0%   {width: 65%;}
     100% {width: 0%;}
 }
 
 @keyframes openingM{
-    0%   {width: 94.75%;}
-    100% {width: 70%;}
+    0%   {width: 90%;}
+    100% {width: 65%;}
 }
 
 @keyframes openingMQ{
-    0%   {width: 70%;}
-    100% {width: 40%;}
+    0%   {width: 90%;}
+    100% {width: 50%;}
 }
 
 @keyframes closingMQ{
-    0%   {width: 40%;}
-    100% {width: 70%;}
+    0%   {width: 50%;}
+    100% {width: 65%;}
 }
 
 @keyframes closingM{
-    0%   {width: 70%;}
-    100% {width: 94.75%;}
+    0%   {width: 65%;}
+    100% {width: 90%;}
 }
 
 /* The element to apply the animation to */
@@ -266,8 +266,8 @@ a:hover {
 }
 
 .intPanel {
-	position: absolute;
-	top: 108px;
+	/*position: absolute;
+	top: 108px;*/
 	background-color: rgba(230, 225, 211, .75);
 	padding: 5px;
 	padding-top: 8px;
@@ -317,7 +317,7 @@ a:hover {
 	border:double 3px #e6e1d3;
 	background-color: #ffffff;
 	margin-top: 10px;
-	min-width: 94.75%;
+	min-width: 90%;
 	min-height: 652px;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
@@ -327,7 +327,7 @@ a:hover {
 	border:double 3px #e6e1d3;
 	background-color: #ffffff;
 	margin-top: 10px;
-	width: 70%;
+	width: 65%;
 	min-height: 652px;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
@@ -340,7 +340,7 @@ a:hover {
 	border:double 3px #e6e1d3;
 	background-color: #ffffff;
 	margin-top: 10px;
-	width: 70%;
+	width: 65%;
 	min-height: 652px;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
@@ -353,7 +353,7 @@ a:hover {
 	border:double 3px #e6e1d3;
 	background-color: #ffffff;
 	margin-top: 10px;
-	width: 70%;
+	width: 65%;
 	min-height: 652px;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
@@ -409,13 +409,18 @@ a:hover {
 	background-color: #f4f2ec;
 	/*background-color: #ffffff;*/
 	margin-top: 10px;
-	width: 70%;
+	width: 65%;
 	overflow-y: scroll;
+	overflow-x: hidden;
 	min-height: 652px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingPL;
     animation-duration: .25s;
     animation-fill-mode: forwards;
+}
+
+.noPad {
+	padding:0px;
 }
 
 .panelLargePart {
@@ -424,8 +429,9 @@ a:hover {
 	background-color: #f4f2ec;
 	/*background-color: #ffffff;*/
 	margin-top: 10px;
-	width: 70%;
+	width: 65%;
 	overflow-y: scroll;
+	overflow-x: hidden;
 	min-height: 652px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingPLPart;
@@ -509,7 +515,18 @@ a:hover {
 	border-radius: 5px;
 }
 
+.whiteBackground {
+	background-color: #ffffff;
+}
 
+.overlayWhite {
+	background-color: #ffffff;
+	opacity: 0.45;
+}
+
+.overlayText {
+	padding: 10px;
+}
 
 .rotate {
 	-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */

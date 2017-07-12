@@ -37,6 +37,7 @@ export const GET_CURR_LAYERS= 'GET_CURR_LAYERS';
 export const ADD_CURR_LAYERS='ADD_CURR_LAYERS';
 export const RESET_CURR_LAYERS='RESET_CURR_LAYERS';
 export const SET_HOVER_LAYER='SET_HOVER_LAYER';
+export const SET_SPEC_LAYER='SET_SPEC_LAYER';
 
 export const SET_CENTER = 'SET_CENTER';
 export const SET_RADIUS = 'SET_RADIUS';
@@ -162,6 +163,13 @@ export const addHoverLayer = (layer) => {
 	};
 };
 
+export const setSpecLayer = (type) => {
+	return {
+		type: SET_SPEC_LAYER,
+		layer: type
+	};
+};
+
 export const addNewSiteGeo1 = (x, y, px, py) =>{
 	return {
 		type: SET_CENTER,
@@ -198,9 +206,10 @@ const initSites = {
 	minorId: 0,
 	clusterId: 0,
 
-	allLayers:['parish churches',"bascilica", "plague churches", "monastery, convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption" ], //arr of strings
+	allLayers:['parish churches',"bascilica", "plague churches", "monastery", "convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption" ], //arr of strings
 	currLayers: [], //arr of strings
 	hoverLayer: ' ',
+	specLayer:'',
 
 	newCx : 0,
 	newX :0,
@@ -302,6 +311,10 @@ export const siteReducer = (prevState = initSites, action) => {
 		newState.hoverLayer = action.layer;
 		break;
 
+	case SET_SPEC_LAYER:
+		newState.specLayer = action.layer;
+		break;
+
 	case SAVED:
 		newState.saved = action.bool;
 		break;
@@ -347,6 +360,10 @@ export const loadFilteredSites = (layerArr) => dispatch => { //
 
 export const updateSite = (site)=> dispatch =>{
 	dispatch(getCurrSite(site));
+}
+
+export const setSpecPanel = (type)=> dispatch =>{
+	dispatch(setSpecLayer(type));
 }
 
 export const overlayDetails = (bool) => dispatch =>{
@@ -636,18 +653,8 @@ export const addAllLayers = (layers) => dispatch => { //load all/clear all to se
 	let cirLayers = [];
 
 	if (layers==='add'){
-		const allSites = axios.get('/api/sites')
-			.then(responses => {
-				return responses.data;
-			})
-	    .then((sites) => {
-
-			sites.forEach(circle=>{
-		    		if (cirLayers.indexOf(circle.type) === -1){cirLayers.push(circle.type)};
-				})
-			dispatch(getCurrLayers(cirLayers));
-			})
-	   .catch(console.log);
+		let layers = ['parish churches',"bascilica", "plague churches", "monastery", "convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption" ];
+			dispatch(getCurrLayers(layers));
 	} else {
 		dispatch(getCurrLayers(cirLayers));
 	};

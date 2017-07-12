@@ -9,13 +9,13 @@ import MapSVG from './Mapd3.js';
 import PanelForm from './Panelform.js';
 
 import {Preload} from 'react-preload';
-import {tilepreload} from '../plug-ins/rawTiles.js';
+//import {tilepreload} from '../plug-ins/rawTiles.js';
 
 import {loadLayers, loadSites, addAllLayers, loadFiltered } from '../action-creators/siteActions.js';
 import {getAllToursThemes} from '../action-creators/optionActions.js';
 
 
-var images = tilepreload();
+//var images = tilepreload();
 //console.log(images);
 
 var loadingIndicator = (<div>Loading...</div>);
