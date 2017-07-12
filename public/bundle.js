@@ -18360,6 +18360,8 @@ var MapSVG = function (_Component) {
                 x = e.changedTouches[0].clientX;y = e.changedTouches[0].clientY;
             };
 
+            console.log('startend ', e);
+
             var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
             var mousePos = [x - sele.offsetLeft, y - sele.offsetTop];
             this.setState({ mouseDivloc: mousePos });
@@ -18382,7 +18384,7 @@ var MapSVG = function (_Component) {
                 x = e.targetTouches[0].clientX;y = e.targetTouches[0].clientY;
             };
 
-            console.log(e.targetTouches);
+            console.log('drag ', e);
 
             var _props$map$xyOffsetsR2 = _slicedToArray(this.props.map.xyOffsetsR, 2),
                 lastX = _props$map$xyOffsetsR2[0],
@@ -18736,17 +18738,11 @@ var MapSVG = function (_Component) {
                             return _this2.drag(e);
                         } //onMouseMove
                         //regular mouse
-                        , onMouseDown: function onMouseDown(e) {
-                            return _this2.mouseLoc(e);
-                        },
-                        onMouseUp: function onMouseUp(e) {
-                            return _this2.mouseLoc(e);
-                        },
-                        onMouseMove: function onMouseMove(e) {
-                            return _this2.drag(e);
-                        },
+                        // onMouseDown = {e=>this.mouseLoc(e)}
+                        // onMouseUp = {e=>this.mouseLoc(e)}
+                        // onMouseMove = {e=>this.drag(e)}
 
-                        onWheel: function onWheel(e) {
+                        , onWheel: function onWheel(e) {
                             return _this2.zoomScroll(e);
                         } // what can be substituted for the touch-pad scroll
                         //only for the form edits - leave on site -

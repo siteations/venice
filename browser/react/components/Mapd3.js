@@ -96,6 +96,8 @@ class MapSVG extends Component {
         if (e.type==='mouseup' || e.type==="mousedown"){ x=e.clientX; y=e.clientY };
         if (e.type==='touchstart' || e.type==="touchend"){ x=e.changedTouches[0].clientX; y=e.changedTouches[0].clientY };
 
+        console.log('startend ', e);
+
     	let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
     	var mousePos = [x-sele.offsetLeft, y-sele.offsetTop];
     	this.setState({mouseDivloc: mousePos});
@@ -113,7 +115,7 @@ class MapSVG extends Component {
         if (e.type==='mousemove'){ x=e.clientX; y=e.clientY };
         if (e.type==='touchmove'){ x=e.targetTouches[0].clientX; y=e.targetTouches[0].clientY };
 
-        console.log(e.targetTouches);
+        console.log('drag ', e);
 
     	let [lastX, lastY] = this.props.map.xyOffsetsR;
     	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
@@ -387,9 +389,9 @@ class MapSVG extends Component {
            onTouchEnd = {e=>this.mouseLoc(e)} //onMouseUp
            onTouchMove = {e=>this.drag(e)} //onMouseMove
            //regular mouse
-           onMouseDown = {e=>this.mouseLoc(e)}
-           onMouseUp = {e=>this.mouseLoc(e)}
-           onMouseMove = {e=>this.drag(e)}
+           // onMouseDown = {e=>this.mouseLoc(e)}
+           // onMouseUp = {e=>this.mouseLoc(e)}
+           // onMouseMove = {e=>this.drag(e)}
 
            onWheel = {e=>this.zoomScroll(e)} // what can be substituted for the touch-pad scroll
            //only for the form edits - leave on site -
