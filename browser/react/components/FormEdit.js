@@ -44,9 +44,11 @@ constructor(props) {
     if (choice === 'site'){ this.props.editSite(id, obj) };
     if (choice === 'detail'){ this.props.editDetail(id, obj) };
     if (choice === 'narrative'){ this.props.editNarrative(id, obj) };
-    if (choice === 'image'){ this.props.editImage(id, obj) };
+    if (choice === 'image'){ this.props.editImages(id, obj) };
     if (choice === 'tour'){ this.props.editTour(id, obj) };
     if (choice === 'biblio'){ this.props.editBiblio(id, obj) };
+
+    this.reset();
 
   }
 
@@ -57,8 +59,7 @@ constructor(props) {
     // should open a verification panel
   }
 
-  reset(e){
-    e.preventDefault();
+  reset(){
     let obj = {
           verify: false,
           confirm: false,
@@ -246,6 +247,7 @@ constructor(props) {
                 }
                 <p>You must click below to process edits</p>
                 <button className="btn btn-default" onClick={e=>this.save(e)}>Save Edits</button> or <button className="btn btn-default" onClick={e=> this.reset(e)}>Reset</button>
+                <p><br/> form will reset on successful edit</p>
 
                 </div>
             </div>

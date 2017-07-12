@@ -538,7 +538,7 @@ export const deleteBiblio = (id) => dispatch => {
 }
 
 
-export const editBiblio = (id) => dispatch => {
+export const editBiblio = (id, obj) => dispatch => {
 		axios.put(`/api/biblio/${id}`, obj)
 			.then(responses => {
 				return responses.data;

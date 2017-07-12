@@ -1739,7 +1739,7 @@ var deleteBiblio = exports.deleteBiblio = function deleteBiblio(id) {
 	};
 };
 
-var editBiblio = exports.editBiblio = function editBiblio(id) {
+var editBiblio = exports.editBiblio = function editBiblio(id, obj) {
 	return function (dispatch) {
 		_axios2.default.put('/api/biblio/' + id, obj).then(function (responses) {
 			return responses.data;
@@ -38514,7 +38514,7 @@ var FormEd = function (_Component) {
         this.props.editNarrative(id, obj);
       };
       if (choice === 'image') {
-        this.props.editImage(id, obj);
+        this.props.editImages(id, obj);
       };
       if (choice === 'tour') {
         this.props.editTour(id, obj);
@@ -38522,6 +38522,8 @@ var FormEd = function (_Component) {
       if (choice === 'biblio') {
         this.props.editBiblio(id, obj);
       };
+
+      this.reset();
     }
   }, {
     key: 'submit',
@@ -38533,8 +38535,7 @@ var FormEd = function (_Component) {
     }
   }, {
     key: 'reset',
-    value: function reset(e) {
-      e.preventDefault();
+    value: function reset() {
       var obj = {
         verify: false,
         confirm: false,
@@ -38879,6 +38880,12 @@ var FormEd = function (_Component) {
                   return _this2.reset(e);
                 } },
               'Reset'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              _react2.default.createElement('br', null),
+              ' form will reset on successful edit'
             )
           )
         )
