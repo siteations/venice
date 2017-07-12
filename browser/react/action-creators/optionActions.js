@@ -305,3 +305,19 @@ export const removeTourEntry = (id) => dispatch => {
 	   .catch(console.log);
 
 }
+
+export const deleteTour = (id) => dispatch => {
+
+	console.log('also got to before call')
+	axios.delete(`/api/tours/all/${id}`)
+			.then(responses => {
+				return responses.data;
+			})
+	    .then((site) => {
+	    dispatch(getAllToursThemes());
+			})
+	   .catch(console.log);
+
+}
+
+
