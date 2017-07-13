@@ -180,8 +180,7 @@ a:hover {
 .container-fluid {
     width: 100%;
     height: 100vh;
-    padding: 10px 20px 20px 20px;
-    /*overflow: hidden;*/
+    padding: 10px 20px 10px 20px;
     overflow-y: hidden;
 		overflow-x: hidden;
     background-color: #f4f2ec;
@@ -233,6 +232,7 @@ a:hover {
 	background-color: #d8d0ba;
 	padding-bottom: 10px;
 	box-shadow: 0 0 3px #808080;
+	margin-bottom: 0px !important;
 }
 
 .footer {
@@ -531,6 +531,8 @@ a:hover {
 
 .border3 {
 	border: double 3px #e6e1d3;
+	padding:0px;
+	margin:0px;
 }
 
 .editOps {

@@ -9,6 +9,8 @@ import {updateColor, updateAnno, updateDetail} from '../action-creators/optionAc
 //connect later?
 import {addSelectLayer, deleteSelectLayer, addAllLayers, addHoverSite, setSpecPanel} from '../action-creators/siteActions.js';
 
+import {updateOffsets, updateOffsetsResidual } from '../action-creators/mapActions.js';
+
 //
 
 let mapButtons=[
@@ -68,7 +70,9 @@ const toolstyles = {
 class MapBar extends Component{
 	constructor(props){
 		super(props);
-		this.state={};
+		this.state={
+			y:0,
+		};
 		this.layerPanel= this.layerPanel.bind(this);
 		this.layerOver =this.layerOver.bind(this);
 		this.layerOut = this.layerOut.bind(this);
@@ -118,6 +122,12 @@ class MapBar extends Component{
 				this.props.setColor(true);
 				this.props.setAnno(false);
 				this.props.setDetail(false);
+				//really?
+					var offs=this.props.map.xyOffsets;
+					this.setState({y:offs[1]});
+					if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
+					console.log(offs);
+				//
 			}
 
 		} else if ((val === 'maps' || val === 'intro' || val === 'bibliography') && this.props.options.panelLarge){
@@ -127,6 +137,13 @@ class MapBar extends Component{
 					this.props.setColor(true);
 					this.props.setAnno(false);
 					this.props.setDetail(false);
+					//really?
+					var offs=this.props.map.xyOffsets;
+					this.setState({y:offs[1]});
+					if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
+					console.log(offs);
+
+					//
 				}
 			} else {
 				this.props.panelNone();
@@ -134,6 +151,11 @@ class MapBar extends Component{
 					this.props.setColor(false);
 					this.props.setAnno(true);
 					this.props.setDetail(true);
+
+					var offs=this.props.map.xyOffsets;
+					var y = this.state.y;
+					offs[1]=y ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);
+					console.log(offs);
 			}
 		}
 
@@ -239,6 +261,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setDetail: (bool) => {
         dispatch(updateDetail(bool));
+    },
+    setCurrOffsets: (offsets) => {
+      dispatch(updateOffsets(offsets));
+    },
+    setOffsetsR: (offsets) => {
+        dispatch(updateOffsetsResidual(offsets));
     },
 
   }

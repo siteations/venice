@@ -31,7 +31,7 @@ class PanelMap extends Component {
   render(){
 
   	return (
-  	     <div className="pad10">
+  	     <div className="pad10" style={{overflow:'scroll', height: `${this.props.map.windowSize[1]*.175}px`}}>
 				    <h5><span className="Trenda-Bold">Image: </span>,
               <span className="small"> author <a href=""><em>title</em></a> published, location, page</span>
             </h5>

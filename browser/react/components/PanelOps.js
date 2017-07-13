@@ -34,10 +34,12 @@ class PanelB extends Component {
                 //<MapSecondary height={1} width={1} />
 
     return (
-         <div className={`whiteBackground ${this.props.baseClass}`} id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`}}>
+         <div className={`whiteBackground ${this.props.baseClass}`} id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`, overflow: 'hidden' }}>
             {this.props.sites.specLayer==='maps' &&
-              <div>
+            <div>
+              <div style={{height: `${this.props.map.windowSize[1]*.1}px`}}>
               <h2 className="BornholmSandvig pad10" > with Barbari (1500), Fracho (1580), and others.</h2>
+              </div>
               <div className="whiteBackground">
                 <MapSecondary height={.7} width={1} />
               </div>

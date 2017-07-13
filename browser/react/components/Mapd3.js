@@ -8,6 +8,7 @@ import { spacingFrame } from '../plug-ins/rawDetails.js';
 import { ClipTiles, BackgroundTiles, BackgroundMask, Underlay } from './TileVariants.js';
 import DetailOver from './AnnoVariants.js';
 import MapOptions from './MapOptions.js';
+import Tour from './Tour.js';
 
 
 //---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
@@ -380,8 +381,8 @@ class MapSVG extends Component {
 
     	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
         {this.props.sites.specLayer==='maps' &&
-              <div>
-              <h2 className="BornholmSandvig pad10" > Cartographic comparisons: Murlano's Map (1670)</h2>
+              <div style={{height: `${this.props.map.windowSize[1]*.1}px`}}>
+              <h2 className="BornholmSandvig pad10" > Cartographic Elements: Murlano's Map (1670)</h2>
               </div>
         }
     	   <div className="offset border3"
@@ -498,7 +499,12 @@ class MapSVG extends Component {
 	   				</g>
 	    	   </svg>
     	   </div>
-           {/*<MapOptions actions={{zoom: this.zoom }} />*/}
+           {this.props.sites.specLayer==='maps' &&
+              <div className="">
+              <h5 className="BornholmSandvig pad10" > Cartographic Tour: </h5>
+              <Tour type="maps" />
+              </div>
+            }
     	 </div>
 
     	)

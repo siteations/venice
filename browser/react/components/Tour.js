@@ -9,8 +9,6 @@ import {  setTitlesCore, setTitle, setNarr } from '../action-creators/panelActio
 import { togglePlay, updatePanelSmall } from '../action-creators/optionActions.js';
 import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
 
-import Tour from './Tour.js';
-
 //connect later to store;
 
 
@@ -146,17 +144,37 @@ class FooterSlides extends Component {
 
     render(){
 
+    console.log(this.props.type);
     var tour = this.props.options.allTours[this.props.options.currTour];
 
 	return (
-	        <div className="row footer">
-            {this.props.sites.specLayer === '' &&
-                <Tour type="bottom" />
-            }
-            {this.props.sites.specLayer !== '' &&
-                <Contact />
-            }
-	        </div>
+                  <div className="flex center">
+                       <div className="nIcon flex center middle" value=""><span value="play" className="glyphicon glyphicon-chevron-left" onTouchTap={(e)=>this.animate(e)} onClick={(e)=>this.animate(e)} ></span>
+                        </div>
+                        {tour &&
+                            tour.map(site=>{
+                            return <div className={(site.siteId===this.props.sites.currSite)? 'bIconSelected text-center' : 'bIcon  text-center'}
+                                value={site.siteId+'-'+site.zoom}
+                                key = {site.siteId+'-'+site.zoom}
+                                onTouchTap={e=>this.setSite(e)}
+                                onClick={e=>this.setSite(e)}>{site.siteId}
+                                </div>
+                        })}
+                        <div className="nIcon flex center middle" value=""><span value="play" className="glyphicon glyphicon-chevron-right" onTouchTap={(e)=>this.animate(e)} onClick={(e)=>this.animate(e)} ></span>
+                        </div>
+                        {this.props.type === "bottom" &&
+                        <div className="l20">
+                                <h4 className="BornholmSandvig closerT">tour of venice religious experience</h4>
+                                <p className="closerB">click thumbnails for a guided sites & narratives</p>
+                                <p className="sButtons">secondary options and images for fullscreen tablet view</p>
+                        </div>
+                        }
+                        {this.props.type === "bottom" &&
+                        <Contact />
+                        }
+
+
+                  </div>
 	        )
     }
 }
@@ -203,6 +221,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 }}
 
-const Footer = connect(mapStateToProps, mapDispatchToProps)(FooterSlides);
+const Tour = connect(mapStateToProps, mapDispatchToProps)(FooterSlides);
 
-export default Footer;
+export default Tour;
