@@ -58,8 +58,8 @@ class PanelEdit extends Component {
           <button className="btn btn-default marg10" value="image" onClick={e=>this.changeForm(e)} >Image</button>
           <button className="btn btn-default marg10" value="tour" onClick={e=>this.changeForm(e)} >Tour</button>
           <button className="btn btn-default marg10" value="biblio" onClick={e=>this.changeForm(e)} >Bibliography</button>
-          <button className="btn btn-default marg10" value="edit" onClick={e=>this.changeForm(e)} >Edit Existing (Any Element)</button>
-          <button className="btn btn-default marg10" value="delete" onClick={e=>this.changeForm(e)} >Delete Existing (Any Element)</button>
+          <button className="btn btn-default marg10" value="edit" onClick={e=>this.changeForm(e)} >Edit Existing</button>
+          <button className="btn btn-default marg10" value="delete" onClick={e=>this.changeForm(e)} >Delete Existing</button>
          </div>
          <br/>
          {this.state.panelform === 'narrative' &&

@@ -33,15 +33,16 @@ dialect: 'mysql',
 
 //for heroku - postgreSQL with local clone for download
 
-//var databaseURI = 'postgres://localhost:5432/veniceMamp';
+var databaseURI = 'postgres://localhost:5432/veniceMamp';
 //var databaseURI = process.env.DATABASE_URL; //process for heroku node
 
-// var db = new Sequelize(databaseURI, {
-//   define: {
-//     timestamps: false,
-//     underscored: true
-//   },
-//   logging: false
-// });
+var db = new Sequelize(databaseURI, {
+  define: {
+    timestamps: false,
+    underscored: true
+  },
+  logging: false
+});
+
 
 module.exports = db;
