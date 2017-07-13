@@ -582,6 +582,10 @@ a:hover {
 	box-shadow: 0 0 3px #808080;
 }
 
+.inlineBlock {
+	display: inline-block;
+}
+
 .bIcon:active {
 	background-color: #ffffff;
 	border: solid 2px #352c1a;

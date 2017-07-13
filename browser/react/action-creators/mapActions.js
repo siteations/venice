@@ -1,4 +1,4 @@
-
+import mapSites from '../pre-db/mapSites.js';
 
 // //-------------------CONSTANTS
 
@@ -19,6 +19,9 @@ export const SET_CENTER = 'SET_CENTER'; // need to write
 //navigate to site
 //export const SET_CENTER_ZOOM = 'SET_CENTER_ZOOM';
 export const SET_CENTER_SCREEN = 'SET_CENTER_SCREEN';
+
+export const SET_MAPTOUR_ALL = 'SET_MAPTOUR_ALL';
+export const SET_MAPSITE = 'SET_MAPSITE';
 
 
 //PANEL REDUCER ? FOR OPEN/CLOSED
@@ -89,6 +92,20 @@ export const setCenterScreen = (centerScr) => {
 	};
 };
 
+export const setMapTourAll = () => {
+	return {
+		type: SET_MAPTOUR_ALL,
+		mapSites
+	};
+};
+
+export const setMapSite = (site) => {
+	return {
+		type: SET_MAPSITE,
+		site
+	};
+};
+
 
 //-------------------reducers && initial info
 
@@ -103,6 +120,9 @@ const initMap = {
 	xyOffsetsR: [0,0], //x, y
 	xyCenter: [0,0], //x, y
 	focusCenter: [0,0], //x, y
+
+	mapTourAll: mapSites,
+	mapSite: mapSites[0],
 
 };
 
@@ -147,6 +167,14 @@ export const mapReducer = (prevState = initMap, action) => {
 
 	case SET_CENTER_SCREEN:
 		newState.xyCenter = action.centerScr;
+		break;
+
+	case SET_MAPSITE:
+		newState.mapSite = action.site;
+		break;
+
+	case SET_MAPTOUR_ALL:
+		newState.mapTourAll = action.mapSites;
 		break;
 
 	default:
@@ -197,68 +225,10 @@ export const updateWindowOffsets = offsets => dispatch => {
   dispatch(setWindowOffsets(offsets));
 };
 
-// export const detailVoyage = (voyage) => {
+export const setMapTours = () => dispatch => {
+	dispatch(setMapTourAll());
+}
 
-// 	  let start = voyage.Start;
-// 	  let end = voyage.End;
-// 	  var dates =[];
-// 	  for (let i=+start; i<=+end+1; i++){dates.push(i);};
-
-// 	voyage.Dates = dates;
-// 	voyage.Length = dates.length;
-
-// 	return dispatch => {
-// 		//dispatch(selectVoyage(voyage));
-// 	};
-// };
-
-
-// export const filterCrew = (crew) => { //filters crew into this voyage and other voyages
-
-// 	//insert into selectCrew...
-// 	let currentCnt=0;
-// 	let years =[];
-
-// 	crew.forEach(member=>{
-// 		if (+member.Fstart === +member.Dyear){
-// 			member.voyage = 'current';
-// 			currentCnt++;
-// 		} else {
-// 		if (years.indexOf(+member.Dyear)===-1){
-// 				years.push(+member.Dyear);
-// 			};
-// 			member.voyage = 'other';
-// 		}
-
-// 	})
-
-// 	console.log(years, crew[0].Fstart);
-// 	var diff;
-// 	if (currentCnt===0 && years.length===1){
-// 		crew.forEach(member=> { member.voyage = 'current'; });
-// 	} else if (currentCnt===0 && years.length > 1){
-// 		diff = years.map(year=> {
-// 			return Math.abs(+year - +crew[0].Fstart);
-// 		});
-// 		var year = years[diff.indexOf(Math.min(...diff))];
-
-// 		crew.forEach(member=>{ if (year === +member.Dyear){
-// 			member.voyage = 'current';
-// 			//console.log(member.Fstart, member.Dyear);
-// 			};
-// 		});
-// 	};
-
-// 	var crewC = crew.filter(member=> {return member.voyage === 'current';});
-// 	var crewr = crew.filter(member=> {return member.voyage !== 'current';});
-
-// 	return dispatch => {
-// 		// dispatch(selectCrew(crewC));
-// 		// dispatch(otherCrews(crewOther));
-// 		// dispatch(extendVoyages(years));
-// 	};
-// };
-
-
-
-
+export const setMapSiteOne = (site) => dispatch => {
+	dispatch(setMapSite(site));
+}

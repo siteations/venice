@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import Contact from './Contact.js';
 
+import mapSites from '../pre-db/mapSites.js';
+
 import { centerRescaled, tiling, scaleOps, sitesFiltered } from '../plug-ins/rawTiles.js';
 import {updateSite} from '../action-creators/siteActions.js';
 import {  setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
@@ -30,6 +32,23 @@ class FooterSlides extends Component {
         this.props.updateSite(siteId);
 
         let site = this.props.sites.allSites.filter(site=> +site.id === +siteId)[0];
+        let siteCent = [site.cx, site.cy];
+        this.props.setTitles(site.name.split('.'));
+
+        let obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+siteId);
+        this.props.updateNarrative(obj[0]);
+
+        this.flyToSingle(siteZoom, siteCent);
+
+    }
+
+    setSiteMap(e){
+        e.preventDefault();
+        let siteId = e.target.attributes.value.value.split('-')[0];
+        let siteZoom = e.target.attributes.value.value.split('-')[1];
+        //this.props.updateSite(siteId);
+
+        let site = mapSites.filter(site=> +site.id === +siteId)[0];
         let siteCent = [site.cx, site.cy];
         this.props.setTitles(site.name.split('.'));
 
@@ -144,8 +163,9 @@ class FooterSlides extends Component {
 
     render(){
 
-    console.log(this.props.type);
     var tour = this.props.options.allTours[this.props.options.currTour];
+
+    //need to set up alternate/hardcoded tour...
 
 	return (
                   <div className="flex center">
