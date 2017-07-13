@@ -389,9 +389,9 @@ class MapSVG extends Component {
            onTouchEnd = {e=>this.mouseLoc(e)} //onMouseUp
            onTouchMove = {e=>this.drag(e)} //onMouseMove
            //regular mouse
-           // onMouseDown = {e=>this.mouseLoc(e)}
-           // onMouseUp = {e=>this.mouseLoc(e)}
-           // onMouseMove = {e=>this.drag(e)}
+           onMouseDown = {e=>this.mouseLoc(e)}
+           onMouseUp = {e=>this.mouseLoc(e)}
+           onMouseMove = {e=>this.drag(e)}
 
            onWheel = {e=>this.zoomScroll(e)} // what can be substituted for the touch-pad scroll
            //only for the form edits - leave on site -
