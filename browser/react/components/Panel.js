@@ -31,23 +31,23 @@ class PanelBase extends Component {
   }
 
   render(){
-  	let obj, image;
+  	var obj, image;
   	(this.props.panel.narrObj)? obj=this.props.panel.narrObj : obj={};
 
     let images = this.props.sites.genImages.filter(images => +images.narrativeId === +obj.id);
     let biblio = this.props.sites.genBiblio.filter(bib => +bib.narrativeId === +obj.id);
-  	console.log(images, biblio);
+  	console.log(images, biblio, obj);
 
   	return (
   	     <div className={this.props.baseClass} ref="sizeP" id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`}}>
-				    <h2 className="BornholmSandvig" >{this.props.panel.title}</h2>
-				    <h4>{this.props.panel.subtitle}</h4>
-				    <h3 className="BornholmSandvig">{obj.title}</h3>
+				    <h2 className="BornholmSandvig" >{(this.props.panel.title)? this.props.panel.title : 'Venice Title (Intro)'}</h2>
+				    <h4>{(this.props.panel.subtitle)? this.props.panel.subtitle : 'Secondary Elements'}</h4>
+				    <h3 className="BornholmSandvig">{(obj.title)? obj.title : 'intro remarks here'}</h3>
               {images.length > 0 &&
                 <Imagetrey image={images} onAnimationEnd={e=> this.refSize(e)} width={this.props.panel.imageWidth} height={(this.props.map.windowSize[1]+6)*0.65} />
               }
 				    <br/>
-				    <p>{obj.text}</p>
+				    <p>{(obj.text)? obj.text : 'introductory paragraph, followed by interaction instructions (zoom, click, maps, etc.)'}</p>
 				    <br/>
             {biblio.length > 0  &&
 				    <p className="Trenda-Bold">Sources: </p>

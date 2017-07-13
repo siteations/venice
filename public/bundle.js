@@ -3083,9 +3083,9 @@ var initOptions = {
 	currKeyList: [],
 	currKeyFocus: 0, //id of open options
 
-	panelStart: true,
-	panelNone: true,
-	panelSmall: false,
+	panelStart: false,
+	panelNone: false,
+	panelSmall: true,
 	panelLarge: false,
 	panelMid: false,
 
@@ -18467,8 +18467,6 @@ var MapSVG = function (_Component) {
                 x = e.changedTouches[0].clientX;y = e.changedTouches[0].clientY;
             };
 
-            console.log('startend ', e);
-
             var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
             var mousePos = [x - sele.offsetLeft, y - sele.offsetTop];
             this.setState({ mouseDivloc: mousePos });
@@ -18490,8 +18488,6 @@ var MapSVG = function (_Component) {
             if (e.type === 'touchmove') {
                 x = e.targetTouches[0].clientX;y = e.targetTouches[0].clientY;
             };
-
-            console.log('drag ', e);
 
             var _props$map$xyOffsetsR2 = _slicedToArray(this.props.map.xyOffsetsR, 2),
                 lastX = _props$map$xyOffsetsR2[0],
@@ -42619,8 +42615,7 @@ var PanelBase = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var obj = void 0,
-          image = void 0;
+      var obj, image;
       this.props.panel.narrObj ? obj = this.props.panel.narrObj : obj = {};
 
       var images = this.props.sites.genImages.filter(function (images) {
@@ -42629,7 +42624,7 @@ var PanelBase = function (_Component) {
       var biblio = this.props.sites.genBiblio.filter(function (bib) {
         return +bib.narrativeId === +obj.id;
       });
-      console.log(images, biblio);
+      console.log(images, biblio, obj);
 
       return _react2.default.createElement(
         'div',
@@ -42639,17 +42634,17 @@ var PanelBase = function (_Component) {
         _react2.default.createElement(
           'h2',
           { className: 'BornholmSandvig' },
-          this.props.panel.title
+          this.props.panel.title ? this.props.panel.title : 'Venice Title (Intro)'
         ),
         _react2.default.createElement(
           'h4',
           null,
-          this.props.panel.subtitle
+          this.props.panel.subtitle ? this.props.panel.subtitle : 'Secondary Elements'
         ),
         _react2.default.createElement(
           'h3',
           { className: 'BornholmSandvig' },
-          obj.title
+          obj.title ? obj.title : 'intro remarks here'
         ),
         images.length > 0 && _react2.default.createElement(_ImageSlider2.default, { image: images, onAnimationEnd: function onAnimationEnd(e) {
             return _this2.refSize(e);
@@ -42658,7 +42653,7 @@ var PanelBase = function (_Component) {
         _react2.default.createElement(
           'p',
           null,
-          obj.text
+          obj.text ? obj.text : 'introductory paragraph, followed by interaction instructions (zoom, click, maps, etc.)'
         ),
         _react2.default.createElement('br', null),
         biblio.length > 0 && _react2.default.createElement(

@@ -122,9 +122,9 @@ const initOptions = {
 	currKeyList: [],
 	currKeyFocus: 0, //id of open options
 
-	panelStart: true,
-	panelNone: true,
-	panelSmall: false,
+	panelStart: false,
+	panelNone: false,
+	panelSmall: true,
 	panelLarge: false,
 	panelMid: false,
 
