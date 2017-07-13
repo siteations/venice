@@ -54,6 +54,20 @@
 
 @font-face {font-family: 'Trenda-SemiboldIt';src: url('../webfonts/337B00_4_0.eot');src: url('../webfonts/337B00_4_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/337B00_4_0.woff2') format('woff2'),url('../webfonts/337B00_4_0.woff') format('woff'),url('../webfonts/337B00_4_0.ttf') format('truetype');}
 
+@viewport{
+    width: 'device-width';
+    zoom: 1.0;
+    -ms-content-zooming: none;
+    user-scalable: no;
+}
+
+@-ms-viewport{
+    width: 'device-width';
+    zoom: 1.0;
+    -ms-content-zooming: none;
+    user-zoom: fixed;
+}
+
 
 /* web fonts above, basic useage below */
 
