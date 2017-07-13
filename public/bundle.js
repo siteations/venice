@@ -18777,6 +18777,7 @@ var MapSVG = function (_Component) {
                             _react2.default.createElement(
                                 'clipPath',
                                 { id: 'myClip' },
+                                '// ',
                                 cirNew && cirNew.map(function (d, i) {
                                     return _react2.default.createElement('circle', { stroke: '#000000', cx: d.cx, cy: d.cy, r: d.r, key: 'circClip' + i });
                                 })
