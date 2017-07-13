@@ -405,7 +405,7 @@ class MapSVG extends Component {
                             <feColorMatrix type="saturate" values="0" />
                         </filter>
 	    	   			<clipPath id="myClip">
-	    	   				{cirNew &&
+	    	   				// {cirNew &&
 	    	   					cirNew.map((d,i) => <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} key={`circClip${i}`}/>)
 	    	   				}
 					    </clipPath>

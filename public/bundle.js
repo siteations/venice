@@ -18738,11 +18738,17 @@ var MapSVG = function (_Component) {
                             return _this2.drag(e);
                         } //onMouseMove
                         //regular mouse
-                        // onMouseDown = {e=>this.mouseLoc(e)}
-                        // onMouseUp = {e=>this.mouseLoc(e)}
-                        // onMouseMove = {e=>this.drag(e)}
+                        , onMouseDown: function onMouseDown(e) {
+                            return _this2.mouseLoc(e);
+                        },
+                        onMouseUp: function onMouseUp(e) {
+                            return _this2.mouseLoc(e);
+                        },
+                        onMouseMove: function onMouseMove(e) {
+                            return _this2.drag(e);
+                        },
 
-                        , onWheel: function onWheel(e) {
+                        onWheel: function onWheel(e) {
                             return _this2.zoomScroll(e);
                         } // what can be substituted for the touch-pad scroll
                         //only for the form edits - leave on site -
