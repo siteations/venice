@@ -31,7 +31,7 @@ const Detail = (props)=>{
 					    		{/*<circle stroke="#ffffff" className="circHL" cx={clipDetails[i].cx} cy={clipDetails[i].cy} r={clipDetails[i].r} />*/}
 					    		<rect stroke="#ffffff"
                   className="circHL"
-                  x={clipDetails[i].x} y={clipDetails[i].y} rx={clipDetails[i].rx} ry={clipDetails[i].ry} width={clipDetails[i].width} height={clipDetails[i].height} id={d.id} onClick={e=> action(e)}/>
+                  x={clipDetails[i].x} y={clipDetails[i].y} rx={clipDetails[i].rx} ry={clipDetails[i].ry} width={clipDetails[i].width} height={clipDetails[i].height} id={d.id} onTouchTap={e=> action(e)} onClick={e=> action(e)} />
 					    		<text x={d.x-10} y={clipDetails[i].cy} className="textSHLR" fontSize={12} >{d.nameH}</text>
   	      		</g>
   	      		)

@@ -174,7 +174,7 @@ class MapBar extends Component{
 		        			};
 
 		        			return (
-										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onClick={this.layerPanel}>
+										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onTouchTap={this.layerPanel} onClick={this.layerPanel} >
 											<Tooltip content={'toggle '+ each.v} styles={toolstyles}>
 											{each.src !== ' ' &&
 												<img src={each.src} className={imgClass} value={each.v} />

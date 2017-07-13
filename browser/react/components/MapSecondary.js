@@ -393,7 +393,7 @@ class MapSVG extends Component {
            onMouseMove = {e=>this.drag(e)}
            onWheel = {e=>this.zoomScroll(e)}
            onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, 'none') : e => this.addCenter(e, 'center') }
-           onClick={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault()}
+           onTouchTap={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault()}
            >
 
 	    	   <svg width={this.props.map.windowSize[0]*this.props.width} height={this.props.map.windowSize[1]*this.props.height} xmlnsXlink='http://www.w3.org/1999/xlink' >

@@ -92,13 +92,16 @@ class MapSVG extends Component {
 
     mouseLoc(e) {
     	e.preventDefault();
+        var x, y;
+        if (e.type==='mouseup' || e.type==="mousedown"){ x=e.clientX; y=e.clientY };
+        if (e.type==='touchstart' || e.type==="touchend"){ x=e.changedTouches[0].clientX; y=e.changedTouches[0].clientY };
 
     	let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-    	var mousePos = [e.clientX-sele.offsetLeft, e.clientY-sele.offsetTop];
+    	var mousePos = [x-sele.offsetLeft, y-sele.offsetTop];
     	this.setState({mouseDivloc: mousePos});
 
-    	(e.type === 'mousedown')? this.setState({drag: 'start'}) : this.setState({drag: ''})
-    	if (e.type === 'mouseup') {
+    	(e.type === 'mousedown'|| e.type==='touchstart')? this.setState({drag: 'start'}) : this.setState({drag: ''});
+    	if (e.type === 'mouseup'|| e.type==='touchend') {
             this.setState({mouseLast: mousePos});
             this.props.setOffsetsR(this.props.map.xyOffsets);
         };
@@ -106,11 +109,14 @@ class MapSVG extends Component {
 
     drag(e) {
     	e.preventDefault();
+        var x, y;
+        if (e.type==='mousemove'){ x=e.clientX; y=e.clientY };
+        if (e.type==='touchmove'){ x=e.targetTouches[0].clientX; y=e.targetTouches[0].clientY };
 
     	let [lastX, lastY] = this.props.map.xyOffsetsR;
     	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
     	//var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
-        var mousePos = [e.clientX-sele.offsetLeft, e.clientY-sele.offsetTop];
+        var mousePos = [x-sele.offsetLeft, y-sele.offsetTop];
     	let offX = this.state.mouseDivloc[0] - mousePos[0] + lastX;
     	let offY = this.state.mouseDivloc[1] - mousePos[1] + lastY;
 
@@ -378,10 +384,22 @@ class MapSVG extends Component {
               <h2 className="BornholmSandvig pad10" > Cartographic comparisons: Murlano's Map (1670)</h2>
               </div>
         }
-    	   <div className="offset border3" onMouseDown = {e=>this.mouseLoc(e)}
+    	   <div className="offset border3"
+           //multi-touch for mobile device
+           onTouchStart = {e=>this.mouseLoc(e)} //onMouseDown
+           onTouchEnd = {e=>this.mouseLoc(e)} //onMouseUp
+           onTouchMove = {e=>this.drag(e)} //onMouseMove
+           //onScroll={e=>console.log(e.type, e.detail)}
+
+           //regular mouse or touch as click
+           onMouseDown = {e=>this.mouseLoc(e)}
            onMouseUp = {e=>this.mouseLoc(e)}
            onMouseMove = {e=>this.drag(e)}
            onWheel = {e=>this.zoomScroll(e)}
+           //use buttons for zoom on surface or screen(?)
+
+
+           //only for the form edits - leave on site -
            onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, 'none') : e => this.addCenter(e, 'center') }
            onClick={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault()}
            >
@@ -392,7 +410,7 @@ class MapSVG extends Component {
                             <feColorMatrix type="saturate" values="0" />
                         </filter>
 	    	   			<clipPath id="myClip">
-	    	   				{cirNew &&
+	    	   				// {cirNew &&
 	    	   					cirNew.map((d,i) => <circle stroke="#000000" cx={d.cx} cy={d.cy} r={d.r} key={`circClip${i}`}/>)
 	    	   				}
 					    </clipPath>
@@ -441,10 +459,12 @@ class MapSVG extends Component {
                                     id={d.id}
                                     key={`site${d.id}`}
                                     stroke={(+this.props.sites.currSite === +d.id)? '#ffffff':'#d8d0ba'}
-                                    onMouseOver = {e=>this.showLabel(e)}
-                                    onMouseOut={''/*e=>this.hideLabel(e)*/}
+                                    //onMouseOver = {e=>this.showLabel(e)}
+                                    //onMouseOut={''/*e=>this.hideLabel(e)*/}
+                                    onTouchTap={ e=>this.setLabel(e)}
                                     onClick={ e=>this.setLabel(e)}
-                                    onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, +d.id) : e=> e.preventDefault() } />
+                                    onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, +d.id) : e=> e.preventDefault() }
+                                    />
 
 	   						    )
 	   					})
