@@ -91,7 +91,7 @@ class MapSVG extends Component {
     }
 
     mouseLoc(e) {
-    	////e.preventDefault();
+    	e.preventDefault();
         var x, y;
         if (e.type==='mouseup' || e.type==="mousedown"){ x=e.clientX; y=e.clientY };
         if (e.type==='touchstart' || e.type==="touchend"){ x=e.changedTouches[0].clientX; y=e.changedTouches[0].clientY };
@@ -110,7 +110,7 @@ class MapSVG extends Component {
     }
 
     drag(e) {
-    	////e.preventDefault();
+    	e.preventDefault();
         var x, y;
         if (e.type==='mousemove'){ x=e.clientX; y=e.clientY };
         if (e.type==='touchmove'){ x=e.targetTouches[0].clientX; y=e.targetTouches[0].clientY };
@@ -133,7 +133,7 @@ class MapSVG extends Component {
     }
 
     zoomScroll(e) {
-    	//e.preventDefault();
+    	e.preventDefault();
     	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
         var mousePos = [e.clientX-sele.offsetLeft, e.clientY-sele.offsetTop];
     	/*
@@ -168,7 +168,7 @@ class MapSVG extends Component {
     }
 
     zoom(e, type){
-        //e.preventDefault();
+        e.preventDefault();
         let multiplier;
         if (type==='in'){
             multiplier=2;
@@ -198,7 +198,7 @@ class MapSVG extends Component {
     }
 
     zoomDC(e, type){
-        //e.preventDefault();
+        e.preventDefault();
         let multiplier;
         if (type==='in'){
             multiplier=2;
@@ -229,7 +229,7 @@ class MapSVG extends Component {
     }
 
     zoomTo(e, id){ // rework to parallel basic scroll zoom...
-        //e.preventDefault();
+        e.preventDefault();
 
         this.props.updateSite(id);
         let site = this.props.sites.allSites.filter(site=>site.id === +id)[0];
@@ -265,12 +265,12 @@ class MapSVG extends Component {
     }
 
     flyTo(e){
-        //e.preventDefault();
+        e.preventDefault();
 
     }
 
     showLabel(e){
-    	//e.preventDefault();
+    	e.preventDefault();
     	let name = e.target.attributes.value.value.split('.');
         let siteId = e.target.attributes.id.value;
         this.props.setTitles(name);
@@ -284,7 +284,7 @@ class MapSVG extends Component {
     }
 
     hideLabel(e){
-    	//e.preventDefault();
+    	e.preventDefault();
         if (this.props.sites.currSiteOn===false){
     	this.props.setTitles('', '');
         this.props.updateSite(0);
@@ -292,7 +292,7 @@ class MapSVG extends Component {
     }
 
     setLabel(e){
-        //e.preventDefault();
+        e.preventDefault();
         //if (this.state.labelClick===false){
         this.showLabel(e)
         this.props.overlayDetails(true);
@@ -302,7 +302,7 @@ class MapSVG extends Component {
     }
 
     loadPanel(e, source){
-        //e.preventDefault();
+        e.preventDefault();
         if (source ==='core') {
             let subsiteId = this.props.sites.currSite;
             let obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+subsiteId);
@@ -319,7 +319,7 @@ class MapSVG extends Component {
     }
 
     selectShowPanel(e, id){
-        //e.preventDefault();
+        e.preventDefault();
 
         if (this.props.options.panelNone){
             this.props.panelSmall();
@@ -336,7 +336,7 @@ class MapSVG extends Component {
     }
 
     addCenter(e, type){
-        //e.preventDefault(); //reverse logic of top
+        e.preventDefault(); //reverse logic of top
 
         var mouseX = e.clientX-this.props.map.windowOffsets[0], mouseY = e.clientY-this.props.map.windowOffsets[1];
 
@@ -384,16 +384,20 @@ class MapSVG extends Component {
 
     	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
     	   <div className="offset"
-           //multi-touch
+           //multi-touch for mobile device
            onTouchStart = {e=>this.mouseLoc(e)} //onMouseDown
            onTouchEnd = {e=>this.mouseLoc(e)} //onMouseUp
            onTouchMove = {e=>this.drag(e)} //onMouseMove
-           //regular mouse
+           //onScroll={e=>console.log(e.type, e.detail)}
+
+           //regular mouse or touch as click
            onMouseDown = {e=>this.mouseLoc(e)}
            onMouseUp = {e=>this.mouseLoc(e)}
            onMouseMove = {e=>this.drag(e)}
+           onWheel = {e=>this.zoomScroll(e)}
+           //use buttons for zoom on surface or screen(?)
 
-           onWheel = {e=>this.zoomScroll(e)} // what can be substituted for the touch-pad scroll
+
            //only for the form edits - leave on site -
            onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, 'none') : e => this.addCenter(e, 'center') }
            onClick={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault()}
@@ -457,6 +461,7 @@ class MapSVG extends Component {
                                     //onMouseOver = {e=>this.showLabel(e)}
                                     //onMouseOut={''/*e=>this.hideLabel(e)*/}
                                     onTouchTap={ e=>this.setLabel(e)}
+                                    onClick={ e=>this.setLabel(e)}
                                     onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, +d.id) : e=> e.preventDefault() }
                                     />
 
