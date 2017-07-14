@@ -32,7 +32,7 @@ const Contact = (props)=>{
           </div>
             </div>
         </div>
-        <div id="block-block-62" className="block block-block address last even">
+        <div id="block-block-62" className="block block-block address last even" style={{marginTop:'1em'}} >
             <div className="inner">
               <div className="content">
                 <ul>

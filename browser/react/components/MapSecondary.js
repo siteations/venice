@@ -35,11 +35,10 @@ class MapSVG extends Component {
             labelS:'',
         };
         this.mouseLoc=this.mouseLoc.bind(this);
-        // this.refSize=this.refSize.bind(this);
+
         this.zoom = this.zoom.bind(this);
         this.zoomTo = this.zoomTo.bind(this);
-        this.loadPanel = this.loadPanel.bind(this);
-        this.addCenter = this.addCenter.bind(this);
+
         this.setSite=this.setSite.bind(this);
         this.flyToSingle=this.flyToSingle.bind(this);
     }
@@ -115,35 +114,41 @@ class MapSVG extends Component {
     // }
 
     mouseLoc(e) {
-    	e.preventDefault();
+        e.preventDefault();
+        var x, y;
+        if (e.type==='mouseup' || e.type==="mousedown"){ x=e.clientX; y=e.clientY };
+        if (e.type==='touchstart' || e.type==="touchend"){ x=e.changedTouches[0].clientX; y=e.changedTouches[0].clientY };
 
-    	let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-    	var mousePos = [e.clientX-sele.offsetLeft, e.clientY-sele.offsetTop];
-    	this.setState({mouseDivloc: mousePos});
+        let sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+        var mousePos = [x-sele.offsetLeft, y-sele.offsetTop];
+        this.setState({mouseDivloc: mousePos});
 
-    	(e.type === 'mousedown')? this.setState({drag: 'start'}) : this.setState({drag: ''})
-    	if (e.type === 'mouseup') {
+        (e.type === 'mousedown'|| e.type==='touchstart')? this.setState({drag: 'start'}) : this.setState({drag: ''});
+        if (e.type === 'mouseup'|| e.type==='touchend') {
             this.setState({mouseLast: mousePos});
             this.props.setOffsetsR(this.props.map.xyOffsets);
         };
     }
 
     drag(e) {
-    	e.preventDefault();
+        e.preventDefault();
+        var x, y;
+        if (e.type==='mousemove'){ x=e.clientX; y=e.clientY };
+        if (e.type==='touchmove'){ x=e.targetTouches[0].clientX; y=e.targetTouches[0].clientY };
 
-    	let [lastX, lastY] = this.props.map.xyOffsetsR;
-    	var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
-    	//var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
-        var mousePos = [e.clientX-sele.offsetLeft, e.clientY-sele.offsetTop];
-    	let offX = this.state.mouseDivloc[0] - mousePos[0] + lastX;
-    	let offY = this.state.mouseDivloc[1] - mousePos[1] + lastY;
+        let [lastX, lastY] = this.props.map.xyOffsetsR;
+        var sele = window.document.getElementById("mapWin").attributes[0].ownerElement;
+        //var mousePos = [e.screenX-sele.offsetLeft, e.screenY-sele.offsetTop];
+        var mousePos = [x-sele.offsetLeft, y-sele.offsetTop];
+        let offX = this.state.mouseDivloc[0] - mousePos[0] + lastX;
+        let offY = this.state.mouseDivloc[1] - mousePos[1] + lastY;
 
-    	if (this.state.drag === 'start') {
-    		this.setState({drag:'drag'});
+        if (this.state.drag === 'start') {
+            this.setState({drag:'drag'});
             this.props.setCurrOffsets(this.props.map.xyOffsetsR);
-    	}	else if (this.state.drag === 'drag'){
-    		this.props.setCurrOffsets([offX, offY]);
-    	}
+        }   else if (this.state.drag === 'drag'){
+            this.props.setCurrOffsets([offX, offY]);
+        }
     }
 
     zoomScroll(e) {
@@ -278,11 +283,6 @@ class MapSVG extends Component {
         }
     }
 
-    flyTo(e){
-        e.preventDefault();
-
-    }
-
     showLabel(e){
     	e.preventDefault();
     	let name = e.target.attributes.value.value.split('.');
@@ -315,68 +315,6 @@ class MapSVG extends Component {
         //}
     }
 
-    loadPanel(e, source){
-        e.preventDefault();
-        if (source ==='core') {
-            let subsiteId = this.props.sites.currSite;
-            let obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+subsiteId);
-            let clustId = obj[0].clusterId;
-            this.props.setDetailId( 0 , clustId);
-        } else {
-            let subsiteId = e.target.attributes.id.value;
-            let clustId = this.props.sites.genDetails.filter(detail => +detail.id === +subsiteId)[0].clusterId;
-            var obj = this.props.sites.genNarratives.filter(narr => +narr.minorId===+subsiteId && +narr.clusterId===+clustId)[0];
-            if (obj===undefined) {obj={}};
-            this.props.setDetailId(+subsiteId, clustId);
-            this.props.updateNarrative(obj);
-        }
-    }
-
-    selectShowPanel(e, id){
-        e.preventDefault();
-
-        if (this.props.options.panelNone){
-            this.props.panelSmall();
-        };
-
-        this.zoomTo(e, id);
-
-        this.showLabel(e)
-        this.props.overlayDetails(true);
-        this.loadPanel(e,'core');
-
-        //more mouse elements here...
-
-    }
-
-    addCenter(e, type){
-        e.preventDefault(); //reverse logic of top
-
-        var mouseX = e.clientX-this.props.map.windowOffsets[0], mouseY = e.clientY-this.props.map.windowOffsets[1];
-
-        let curX = mouseX+this.props.map.xyOffsets[0], curY = mouseY+this.props.map.xyOffsets[1]
-        let zoom = this.props.map.currZoom, pix = this.props.map.tileSize;
-        let {x,y} = reverseCenter(zoom, [curX, curY], pix);
-
-
-        if (type==='center' && this.props.sites.newCx===0){
-            this.props.addNewSiteCenter(Math.floor(x), Math.floor(y), Math.floor(mouseX), Math.floor(mouseY));
-        } else if (type==='center' && this.props.sites.newCx!==0){
-            this.props.addNewSiteCenter(0, 0, 0, 0);
-            this.props.addNewSiteRadius(0, 0);
-        } else if (type==='radius'){
-            //get xDif, yDif and take roots
-            let xDif = x-this.props.sites.newCx, yDif = y-this.props.sites.newCy;
-            let x2 = Math.pow(xDif, 2), y2 = Math.pow(yDif, 2);
-
-            let sx = Math.pow(mouseX-this.props.sites.newX, 2), sy = Math.pow(mouseY-this.props.sites.newY, 2);
-            let radScreen = Math.pow((sx+sy), .5);
-            let radius = Math.pow((x2+y2), .5);
-
-            this.props.addNewSiteRadius(Math.floor(radius), Math.floor(radScreen));
-
-        }
-    }
 
     render(){
 
@@ -384,16 +322,24 @@ class MapSVG extends Component {
 
     	const tiles = tiling(this.props.map.currZoom, this.props.map.tileSize, this.props.map.windowSize, this.props.map.xyOffsets);
 
+        //this.props.map.mapSite.mapName
+
     	return (
 
     	<div className={this.props.baseClass} id="mapVarWin" >
     	   <div className="offset border3"
+
+          //multi-touch for mobile device
+           onTouchStart = {e=>this.mouseLoc(e)} //onMouseDown
+           onTouchEnd = {e=>this.mouseLoc(e)} //onMouseUp
+           onTouchMove = {e=>this.drag(e)} //onMouseMove
+           //onScroll={e=>console.log(e.type, e.detail)}
+
            onMouseDown = {e=>this.mouseLoc(e)}
            onMouseUp = {e=>this.mouseLoc(e)}
            onMouseMove = {e=>this.drag(e)}
            onWheel = {e=>this.zoomScroll(e)}
-           onDoubleClick={(this.props.user === null || this.props.user.message)? (e)=>this.selectShowPanel(e, 'none') : e => this.addCenter(e, 'center') }
-           onTouchTap={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault()}
+
            >
 
 	    	   <svg width={this.props.map.windowSize[0]*this.props.width} height={this.props.map.windowSize[1]*this.props.height} xmlnsXlink='http://www.w3.org/1999/xlink' >
@@ -403,11 +349,11 @@ class MapSVG extends Component {
                         </filter>
 	    	   		</defs>
 
-                    <Underlay tSize={this.props.map.tileSize} currZoom={this.props.map.currZoom} xyOffsets={this.props.map.xyOffsets} color={this.props.options.color} />
+                    <Underlay tSize={this.props.map.tileSize} currZoom={this.props.map.currZoom} xyOffsets={this.props.map.xyOffsets} name={this.props.map.mapSite.mapName} color={this.props.options.color} />
 
 	    	   		<g className="workingTiles" >
                         {tiles &&
-                            <ClipTiles data={tiles} name='barbari' wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="" opacity={1} action=""/>
+                            <ClipTiles data={tiles} name={this.props.map.mapSite.mapName} wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} clip="" opacity={1} action=""/>
     	    	   		}
 	    	   		</g>
 	    	   		<g className="allLabelGeneral" >

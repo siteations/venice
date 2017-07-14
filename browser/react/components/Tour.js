@@ -9,7 +9,7 @@ import { centerRescaled, tiling, scaleOps, sitesFiltered } from '../plug-ins/raw
 import {updateSite} from '../action-creators/siteActions.js';
 import {  setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
 import { togglePlay, updatePanelSmall } from '../action-creators/optionActions.js';
-import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
+import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset, setMapTours, setMapSiteOne} from '../action-creators/mapActions.js';
 
 //connect later to store;
 
@@ -18,43 +18,86 @@ class FooterSlides extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tourId: 0
+            tourId: 0,
+            siteId: 1,
+            hiOff: 0,
         };
         this.setSite=this.setSite.bind(this);
         this.flyToSingle=this.flyToSingle.bind(this);
         this.animate = this.animate.bind(this);
+        this.setPrior = this.setPrior.bind(this);
+        this.setNext = this.setNext.bind(this);
+    }
+
+    componentDidMount(){
+
+    }
+
+    setPrior(e){
+        e.preventDefault();
+        var curr = this.props.map.mapSite.id;
+        var before;
+
+        if (+curr=== 1){
+            before = this.props.map.mapTourAll.length-1;
+        } else {
+            before = +curr - 1;
+        }
+
+        let site = this.props.map.mapTourAll.filter(items=>{
+            return items.id === before;
+        })[0];
+
+        console.log(site);
+        (site===undefined)? site=this.props.map.mapTourAll[0]: site=site ;
+        this.props.setMapSite(site);
+        this.flyToSingle(site.scale, [site.x, site.y]);
+    }
+
+    setNext(e){
+        e.preventDefault();
+        let curr= this.props.map.mapSite.id;
+        var before;
+
+        if (+curr=== this.props.map.mapTourAll.length-1){
+            before = 1;
+        } else {
+            before = +curr + 1;
+        }
+
+        let site = this.props.map.mapTourAll.filter(items=>{
+            return items.id === before;
+        })[0];
+
+        (site===undefined)? site=this.props.map.mapTourAll[0]: site=site ;
+        this.props.setMapSite(site);
+        this.flyToSingle(site.scale, [site.x, site.y]);
+
     }
 
     setSite(e){
         e.preventDefault();
-        let siteId = e.target.attributes.value.value.split('-')[0];
-        let siteZoom = e.target.attributes.value.value.split('-')[1];
-        this.props.updateSite(siteId);
+        var siteId = e.target.attributes.value.value;
+        console.log(siteId, e.target);
 
-        let site = this.props.sites.allSites.filter(site=> +site.id === +siteId)[0];
-        let siteCent = [site.cx, site.cy];
-        this.props.setTitles(site.name.split('.'));
+        if (this.props.type !== 'maps'){
+            this.props.updateSite(siteId);
 
-        let obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+siteId);
-        this.props.updateNarrative(obj[0]);
+            var site = this.props.sites.allSites.filter(site=> +site.id === +siteId)[0];
+            var siteZoom = this.props.options.allTours[this.props.options.currTour].filter(item=>item.siteId===siteId)[0].zoom;
+            var siteCent = [site.cx, site.cy];
+            this.props.setTitles(site.name.split('.'));
 
-        this.flyToSingle(siteZoom, siteCent);
+            var obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+siteId);
+            this.props.updateNarrative(obj[0]);
+        } else {
+            var site = this.props.map.mapTourAll.filter(site=> +site.id === +siteId)[0];
+            var siteCent = [site.x, site.y];
+            var siteZoom = site.scale;
 
-    }
+        }
 
-    setSiteMap(e){
-        e.preventDefault();
-        let siteId = e.target.attributes.value.value.split('-')[0];
-        let siteZoom = e.target.attributes.value.value.split('-')[1];
-        //this.props.updateSite(siteId);
-
-        let site = mapSites.filter(site=> +site.id === +siteId)[0];
-        let siteCent = [site.cx, site.cy];
-        this.props.setTitles(site.name.split('.'));
-
-        let obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+siteId);
-        this.props.updateNarrative(obj[0]);
-
+        this.props.setMapSite(site);
         this.flyToSingle(siteZoom, siteCent);
 
     }
@@ -69,9 +112,11 @@ class FooterSlides extends Component {
 
         let offset = centerRescaled(zoom, newCenter, win, 128);
         //console.log('zooms: ', this.props.map.currZoom, zoom, 'pixels: ', this.props.map.tileSize, 128, 'offsets: ', this.props.map.xyOffsets, offset);
+        let sele = window.document.getElementById("mapWin").attributes[0].ownerElement.childNodes[1].clientHeight;
+        var number=sele*.2;
 
-        this.props.setOffsetsR([offset.x, offset.y]);
-        this.props.setCurrOffsets([offset.x, offset.y]);
+        this.props.setOffsetsR([offset.x, offset.y+number]);
+        this.props.setCurrOffsets([offset.x, offset.y+number]);
         this.props.setCurrZoom(+zoom);
         this.props.setCurrTilesize(128);
         //current zoom and tile size... allows for conversion
@@ -163,24 +208,40 @@ class FooterSlides extends Component {
 
     render(){
 
+    if (this.props.type !== 'maps'){
     var tour = this.props.options.allTours[this.props.options.currTour];
+    } else {
+    var tour = this.props.map.mapTourAll;
+    }
 
     //need to set up alternate/hardcoded tour...
 
 	return (
                   <div className="flex center">
-                       <div className="nIcon flex center middle" value=""><span value="play" className="glyphicon glyphicon-chevron-left" onTouchTap={(e)=>this.animate(e)} onClick={(e)=>this.animate(e)} ></span>
+                       <div className="nIcon flex center middle" ><span value="play" className="glyphicon glyphicon-chevron-left" onTouchTap={(e)=>this.setPrior(e)} onClick={(e)=>this.setPrior(e)} ></span>
                         </div>
-                        {tour &&
+                        {tour && this.props.type === "bottom" &&
                             tour.map(site=>{
                             return <div className={(site.siteId===this.props.sites.currSite)? 'bIconSelected text-center' : 'bIcon  text-center'}
-                                value={site.siteId+'-'+site.zoom}
-                                key = {site.siteId+'-'+site.zoom}
+                                value={site.siteId}
+                                key = {site.siteId}
                                 onTouchTap={e=>this.setSite(e)}
                                 onClick={e=>this.setSite(e)}>{site.siteId}
                                 </div>
                         })}
-                        <div className="nIcon flex center middle" value=""><span value="play" className="glyphicon glyphicon-chevron-right" onTouchTap={(e)=>this.animate(e)} onClick={(e)=>this.animate(e)} ></span>
+                        {tour && this.props.type === "maps" &&
+                            tour.map(site=>{
+                            return <div className={(site.siteId===this.props.sites.currSite)? 'bIconSelected text-center' : 'bIcon  text-center'}
+                                value={site.id}
+                                key = {site.id}
+                                onTouchTap={e=>this.setSite(e)}
+                                onClick={e=>this.setSite(e)}>
+                                <img src={site.src}
+                                style={{borderRadius: '5px'}}
+                                value={site.id} />
+                                </div>
+                        })}
+                        <div className="nIcon flex center middle" ><span value="play" className="glyphicon glyphicon-chevron-right" onTouchTap={(e)=>this.setNext(e)} onClick={(e)=>this.setNext(e)} ></span>
                         </div>
                         {this.props.type === "bottom" &&
                         <div className="l20">
@@ -238,6 +299,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     panelSmall: () => {
       dispatch(updatePanelSmall());
+    },
+    setMapSite: (site) => {
+    dispatch(setMapSiteOne(site));
     },
 }}
 

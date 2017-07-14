@@ -170,6 +170,7 @@ export const mapReducer = (prevState = initMap, action) => {
 		break;
 
 	case SET_MAPSITE:
+		console.log(action.site);
 		newState.mapSite = action.site;
 		break;
 
@@ -227,8 +228,8 @@ export const updateWindowOffsets = offsets => dispatch => {
 
 export const setMapTours = () => dispatch => {
 	dispatch(setMapTourAll());
-}
+};
 
 export const setMapSiteOne = (site) => dispatch => {
 	dispatch(setMapSite(site));
-}
+};

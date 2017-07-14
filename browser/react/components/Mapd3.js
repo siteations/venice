@@ -431,7 +431,7 @@ class MapSVG extends Component {
                         }
 	    	   		</defs>
 
-                    <Underlay tSize={this.props.map.tileSize} currZoom={this.props.map.currZoom} xyOffsets={this.props.map.xyOffsets} color={this.props.options.color} />
+                    <Underlay tSize={this.props.map.tileSize} currZoom={this.props.map.currZoom} xyOffsets={this.props.map.xyOffsets} name="novacco"color={this.props.options.color} />
 
 	    	   		<g className="workingTiles" >
     	    	   		{tiles &&

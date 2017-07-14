@@ -30,18 +30,20 @@ class PanelMap extends Component {
 
   render(){
 
+    let obj = this.props.map.mapSite;
+
   	return (
   	     <div className="pad10" style={{overflowY:'scroll', overflowX:'hidden', height: `${this.props.map.windowSize[1]*.175}px`}}>
           <div className="row ">
             <div className="col-md-3">
 				    <h5 className="BornholmSandvig pad10">
-              Author/Map name
+              {obj.name.split('.')[1]}
               </h5>
             </div>
             <div className="col-md-9">
               <h5>
-                <span className="Trenda-Bold">Image: </span>,
-                <span className="small"> author <a href=""><em>title</em></a> published, location, page, to be variables from JSON tour
+                <span className="Trenda-Bold">{obj.author}, {obj.date}</span>,
+                <span className=""> {obj.publisher} {obj.physical}
                 </span>
               </h5>
             </div>
@@ -49,11 +51,11 @@ class PanelMap extends Component {
 
             <div className="row">
               <div className="col-md-3 center-block text-center">
-                <div className="bIcon text-center inlineBlock" > grand canal </div>
-                <span>site name</span>
+                <div className="bIcon text-center inlineBlock" ><img src={obj.src} style={{borderRadius: '5px'}}/></div>
+                <span>{obj.detail}</span>
               </div>
               <div className="col-md-9">
-    				    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    				    <p>{obj.narrative}</p>
     				    <br/>
               </div>
             </div>
