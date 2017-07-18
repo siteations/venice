@@ -25,7 +25,7 @@ let mapButtons=[
 	{cn:"nIcon flex center middle", v:"bascilica", src:"/img/bascilica-01.svg" },
 	{cn:"nIcon flex center middle", v:"plague churches", src:"/img/plague-01.svg" },
 	{cn:"nIcon flex center middle", v:"monastery", src:"/img/culture-01.svg" },
-	{cn:"nIcon flex center middle", v:"convents", src:"/img/convent-01.svg" },
+	{cn:"nIcon flex center middle", v:"convent", src:"/img/convent-01.svg" },
 	{cn:"nIcon flex center middle", v:"non-catholic communities", src:"/img/non-catholic-01.svg" },
 	{cn:"nIcon flex center middle", v:"processions", src:"/img/ritual-01.svg" },
 	{cn:"nIcon flex center middle", v:"cultural", src:"/img/culture-01.svg" },

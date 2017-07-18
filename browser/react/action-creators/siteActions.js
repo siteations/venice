@@ -10,7 +10,7 @@ import Promise from 'bluebird';
 
 //-------------------CONSTANTS
 
-const	layerAll = ['parish churches',"bascilica", "plague churches", "monastery", "convents", "non-catholic communities", "processions", "printing", "textual consumption" ];
+const	layerAll = ['parish churches',"bascilica", "plague churches", "monastery", "convent", "non-catholic communities", "processions", "printing", "textual consumption" ];
 
 //SITE REDUCER
 

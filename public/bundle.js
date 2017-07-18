@@ -1147,7 +1147,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //-------------------CONSTANTS
 
-var layerAll = ['parish churches', "bascilica", "plague churches", "monastery", "convents", "non-catholic communities", "processions", "printing", "textual consumption"];
+var layerAll = ['parish churches', "bascilica", "plague churches", "monastery", "convent", "non-catholic communities", "processions", "printing", "textual consumption"];
 
 //SITE REDUCER
 
@@ -18559,7 +18559,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 //
 
-var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", src: '/img/intro-01.svg' }, { cn: "nIcon flex center middle", v: "maps", src: "/img/maps-01.svg" }, { cn: "nSpc", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "panel", src: "/img/arrow1-01.svg" }, { cn: "nIcon flex center middle", v: "panel large", src: "/img/arrow2-01.svg" }, { cn: "nSpc", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "all layers", src: "/img/all-layers-01.svg" }, { cn: "nIcon flex center middle", v: "parish churches", src: "/img/parish-01.svg" }, { cn: "nIcon flex center middle", v: "bascilica", src: "/img/bascilica-01.svg" }, { cn: "nIcon flex center middle", v: "plague churches", src: "/img/plague-01.svg" }, { cn: "nIcon flex center middle", v: "monastery", src: "/img/culture-01.svg" }, { cn: "nIcon flex center middle", v: "convents", src: "/img/convent-01.svg" }, { cn: "nIcon flex center middle", v: "non-catholic communities", src: "/img/non-catholic-01.svg" }, { cn: "nIcon flex center middle", v: "processions", src: "/img/ritual-01.svg" }, { cn: "nIcon flex center middle", v: "cultural", src: "/img/culture-01.svg" }, { cn: "nIcon flex center middle", v: "printing", src: "/img/books-01.svg" }, { cn: "nIcon flex center middle", v: "textual consumption", src: "/img/ephemera-01.svg" }, { cn: "nSpcSm", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "bibliography", src: "/img/menu-01.svg" }];
+var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", src: '/img/intro-01.svg' }, { cn: "nIcon flex center middle", v: "maps", src: "/img/maps-01.svg" }, { cn: "nSpc", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "panel", src: "/img/arrow1-01.svg" }, { cn: "nIcon flex center middle", v: "panel large", src: "/img/arrow2-01.svg" }, { cn: "nSpc", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "all layers", src: "/img/all-layers-01.svg" }, { cn: "nIcon flex center middle", v: "parish churches", src: "/img/parish-01.svg" }, { cn: "nIcon flex center middle", v: "bascilica", src: "/img/bascilica-01.svg" }, { cn: "nIcon flex center middle", v: "plague churches", src: "/img/plague-01.svg" }, { cn: "nIcon flex center middle", v: "monastery", src: "/img/culture-01.svg" }, { cn: "nIcon flex center middle", v: "convent", src: "/img/convent-01.svg" }, { cn: "nIcon flex center middle", v: "non-catholic communities", src: "/img/non-catholic-01.svg" }, { cn: "nIcon flex center middle", v: "processions", src: "/img/ritual-01.svg" }, { cn: "nIcon flex center middle", v: "cultural", src: "/img/culture-01.svg" }, { cn: "nIcon flex center middle", v: "printing", src: "/img/books-01.svg" }, { cn: "nIcon flex center middle", v: "textual consumption", src: "/img/ephemera-01.svg" }, { cn: "nSpcSm", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "bibliography", src: "/img/menu-01.svg" }];
 
 var toolstyles = {
 	wrapper: {
@@ -19348,7 +19348,7 @@ var MapSVG = function (_Component) {
                     _react2.default.createElement(
                         'h2',
                         { className: 'BornholmSandvig pad10' },
-                        ' Cartographic Elements: Murlano\'s Map (1670)'
+                        ' Cartographic Elements: Murlano Map (1670)'
                     )
                 ),
                 _react2.default.createElement(
