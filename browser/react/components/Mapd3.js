@@ -382,7 +382,7 @@ class MapSVG extends Component {
     	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
         {this.props.sites.specLayer==='maps' &&
               <div style={{height: `${this.props.map.windowSize[1]*.1}px`}}>
-              <h2 className="BornholmSandvig pad10" > Cartographic Elements: Murlano's Map (1670)</h2>
+              <h2 className="BornholmSandvig pad10" > Cartographic Elements: Murlano Map (1670)</h2>
               </div>
         }
     	   <div className="offset border3"
