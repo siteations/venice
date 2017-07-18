@@ -52,14 +52,14 @@ class PanelEdit extends Component {
           <p>*web session are not persistent, refresh to log-out</p>
          <div className="">
           <h4 className="BornholmSandvig">Add or Edit</h4>
-          <button className="btn btn-default marg10" value="site" onClick={e=>this.changeForm(e)} >Site</button>
-          <button className="btn btn-default marg10" value="detail" onClick={e=>this.changeForm(e)} >Detail</button>
-          <button className="btn btn-default marg10" value="narrative" onClick={e=>this.changeForm(e)} >Narrative</button>
-          <button className="btn btn-default marg10" value="image" onClick={e=>this.changeForm(e)} >Image</button>
-          <button className="btn btn-default marg10" value="tour" onClick={e=>this.changeForm(e)} >Tour</button>
-          <button className="btn btn-default marg10" value="biblio" onClick={e=>this.changeForm(e)} >Bibliography</button>
-          <button className="btn btn-default marg10" value="edit" onClick={e=>this.changeForm(e)} >Edit Existing</button>
-          <button className="btn btn-default marg10" value="delete" onClick={e=>this.changeForm(e)} >Delete Existing</button>
+          <button className="btn btn-default marg10" value="site" onTouchTap={e=>this.changeForm(e)} >Site</button>
+          <button className="btn btn-default marg10" value="detail" onTouchTap={e=>this.changeForm(e)} >Detail</button>
+          <button className="btn btn-default marg10" value="narrative" onTouchTap={e=>this.changeForm(e)} >Narrative</button>
+          <button className="btn btn-default marg10" value="image" onTouchTap={e=>this.changeForm(e)} >Image</button>
+          <button className="btn btn-default marg10" value="tour" onTouchTap={e=>this.changeForm(e)} >Tour</button>
+          <button className="btn btn-default marg10" value="biblio" onTouchTap={e=>this.changeForm(e)} >Bibliography</button>
+          <button className="btn btn-default marg10" value="edit" onTouchTap={e=>this.changeForm(e)} >Edit Existing</button>
+          <button className="btn btn-default marg10" value="delete" onTouchTap={e=>this.changeForm(e)} >Delete Existing</button>
          </div>
          <br/>
          {this.state.panelform === 'narrative' &&

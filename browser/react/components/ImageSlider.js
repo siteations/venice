@@ -31,6 +31,7 @@ class Image extends Component {
   }
 
   switchImg(e){
+    e.preventDefault();
   	let ind = +this.state.active;
   	let index = +e.target.id.split(' ')[1];
 
@@ -52,9 +53,9 @@ class Image extends Component {
 					{this.props.image.length > 1 &&
 						this.props.image.map((image, i)=>{
 							if(i===this.state.active){
-								return <span id={`slider ${i}`} className="fa fa-circle pad10" value="i" onClick={e=>this.switchImg(e)} ></span>
+								return <span id={`slider ${i}`} className="fa fa-circle pad10" value="i" onTouchTap={e=>this.switchImg(e)} onClick={e=>this.switchImg(e)}></span>
 							} else {
-								return <span id={`slider ${i}`} className="fa fa-circle-o pad10" value="i" onClick={e=>this.switchImg(e)} ></span>
+								return <span id={`slider ${i}`} className="fa fa-circle-o pad10" value="i" onTouchTap={e=>this.switchImg(e)} onClick={e=>this.switchImg(e)}></span>
 							}
 						})
 					}

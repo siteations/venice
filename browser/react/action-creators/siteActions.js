@@ -10,6 +10,8 @@ import Promise from 'bluebird';
 
 //-------------------CONSTANTS
 
+const	layerAll = ['parish churches',"bascilica", "plague churches", "monastery", "convent", "non-catholic communities", "processions", "printing", "textual consumption" ];
+
 //SITE REDUCER
 
 //layers all & selected, sites all & selected
@@ -32,7 +34,7 @@ export const GET_CURR_IMGS = 'GET_CURR_IMGS';
 export const SET_MINOR_ID = 'SET_MINOR_ID';
 
 //layers all & selected for filteration
-export const GET_All_LAYERS= 'GET_All_LAYERS';
+export const GET_ALL_LAYERS= 'GET_All_LAYERS';
 export const GET_CURR_LAYERS= 'GET_CURR_LAYERS';
 export const ADD_CURR_LAYERS='ADD_CURR_LAYERS';
 export const RESET_CURR_LAYERS='RESET_CURR_LAYERS';
@@ -130,7 +132,7 @@ export const getCurrImgs = (images) => {
 
 export const getAllLayers = (layers) => {
 	return {
-		type: GET_All_LAYERS,
+		type: GET_ALL_LAYERS,
 		layers: layers
 	};
 };
@@ -206,8 +208,8 @@ const initSites = {
 	minorId: 0,
 	clusterId: 0,
 
-	allLayers:['parish churches',"bascilica", "plague churches", "monastery", "convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption" ], //arr of strings
-	currLayers: [], //arr of strings
+	allLayers: layerAll, //arr of strings
+	currLayers: layerAll, //arr of strings
 	hoverLayer: ' ',
 	specLayer:'',
 
@@ -284,8 +286,8 @@ export const siteReducer = (prevState = initSites, action) => {
 		newState.clusterId = action.objId[1];
 		break;
 
-	case GET_All_LAYERS:
-		//newState.allLayers = action.layers;
+	case GET_ALL_LAYERS:
+		newState.allLayers = action.layers;
 		break;
 
 	case GET_CURR_LAYERS:
@@ -650,13 +652,13 @@ export const deleteSelectLayer = (layer) => dispatch => { //add and load
 
 //HARD CODING UNTIL WE ACTUALLY HAVE ALL THE LAYERS SET
 export const addAllLayers = (layers) => dispatch => { //load all/clear all to select
-	let cirLayers = [];
+
+	console.log('add or clear', layers);
 
 	if (layers==='add'){
-		let layers = ['parish churches',"bascilica", "plague churches", "monastery", "convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption" ];
-			dispatch(getCurrLayers(layers));
+			dispatch(getCurrLayers(layerAll));
 	} else {
-		dispatch(getCurrLayers(cirLayers));
+		dispatch(getCurrLayers([]));
 	};
 }
 
