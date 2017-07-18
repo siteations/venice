@@ -7,6 +7,7 @@ import Footer from './Footer.js';
 import MapBar from './MapBar.js';
 import MapSVG from './Mapd3.js';
 import PanelForm from './Panelform.js';
+import MapOptions from './MapOptions.js';
 
 import {Preload} from 'react-preload';
 //import {tilepreload} from '../plug-ins/rawTiles.js';
@@ -71,6 +72,7 @@ class FrameEd extends Component {
 			        <div id="container">
 			        </div>
 			        	<div className="flex between">
+			        		<MapOptions />
 				        	<MapSVG baseClass="mPart mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
 				        	<PanelForm baseClass="panelOpen" />

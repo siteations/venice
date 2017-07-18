@@ -58,6 +58,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ 'type': '*/*',limit: '20mb' }));
 app.use(express.static('./browser/'));
 app.use(express.static('./public/'));
+// app.use(express.static('./storymap/'));
+// app.use(express.static('./timeline/'));
+// app.use(express.static('./audio/'));
+// app.use(express.static('./broadsides/'));
 app.use(express.static('./public/stylesheets/'));
 app.use(express.static('./public/bootstrap/'));
 app.use(express.static('./public/img/'));
@@ -74,6 +78,26 @@ app.use(session({
 
 //-----------API ROUTES-------------------
 app.use('/api', require('./routes/index.js'));
+
+// app.get('/storymap', (req,res,next)=> {
+//   var indexPathStory = path.join(__dirname, '/storymap', 'index.html');
+//   res.sendFile(indexPathStory);
+// });
+
+// app.get('/timeline', (req,res,next)=> {
+//   var indexPathStory = path.join(__dirname, '/timeline', 'index.html');
+//   res.sendFile(indexPathStory);
+// });
+
+// app.get('/broadsides', (req,res,next)=> {
+//   var indexPathStory = path.join(__dirname, '/broadsides', 'index.html');
+//   res.sendFile(indexPathStory);
+// });
+
+// app.get('/audio', (req,res,next)=> {
+//   var indexPathStory = path.join(__dirname, '/audio', 'index.html');
+//   res.sendFile(indexPathStory);
+// });
 
 //catch all react-router front-end routes and direct to index
 var validFrontendRoutes = ['/', '/map', '/Venice', '/Venice-Edit'];

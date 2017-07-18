@@ -26,12 +26,12 @@ class Frame extends Component {
 	constructor(props){
 		super(props);
 		this.state= {
-			start: true,
-			intro: false,
-			geo: false,
+			// start: false,
+			// intro: false,
+			// geo: false,
 			button: 'navigate',
-			select: false,
-			selected: [],
+			// select: false,
+			// selected: [],
 		};
 		this.hoverName=this.hoverName.bind(this);
 		this.nav=this.nav.bind(this);

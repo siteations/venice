@@ -5,8 +5,11 @@ import {Tooltip} from 'react-lightweight-tooltip';
 import IconButton from 'material-ui/IconButton';
 
 import {updatePanelNone, updatePanelSmall, updatePanelLarge, updatePanelStart, updatePanelMid} from '../action-creators/optionActions.js';
+import {updateColor, updateAnno, updateDetail} from '../action-creators/optionActions.js';
 //connect later?
 import {addSelectLayer, deleteSelectLayer, addAllLayers, addHoverSite, setSpecPanel} from '../action-creators/siteActions.js';
+
+import {updateOffsets, updateOffsetsResidual } from '../action-creators/mapActions.js';
 
 //
 
@@ -22,7 +25,7 @@ let mapButtons=[
 	{cn:"nIcon flex center middle", v:"bascilica", src:"/img/bascilica-01.svg" },
 	{cn:"nIcon flex center middle", v:"plague churches", src:"/img/plague-01.svg" },
 	{cn:"nIcon flex center middle", v:"monastery", src:"/img/culture-01.svg" },
-	{cn:"nIcon flex center middle", v:"convents", src:"/img/convent-01.svg" },
+	{cn:"nIcon flex center middle", v:"convent", src:"/img/convent-01.svg" },
 	{cn:"nIcon flex center middle", v:"non-catholic communities", src:"/img/non-catholic-01.svg" },
 	{cn:"nIcon flex center middle", v:"processions", src:"/img/ritual-01.svg" },
 	{cn:"nIcon flex center middle", v:"cultural", src:"/img/culture-01.svg" },
@@ -67,7 +70,9 @@ const toolstyles = {
 class MapBar extends Component{
 	constructor(props){
 		super(props);
-		this.state={};
+		this.state={
+			y:0,
+		};
 		this.layerPanel= this.layerPanel.bind(this);
 		this.layerOver =this.layerOver.bind(this);
 		this.layerOut = this.layerOut.bind(this);
@@ -90,6 +95,7 @@ class MapBar extends Component{
 	layerPanel(e){
 		e.preventDefault();
 		let val=e.target.attributes.value.value;
+
 		console.log('reading panel?', val);
 
 		// if (this.props.options.panelStart){
@@ -113,13 +119,44 @@ class MapBar extends Component{
 		else if ((val === 'maps' || val === 'intro' || val === 'bibliography') && (this.props.options.panelNone || this.props.options.panelSmall)){
 			this.props.panelLarge();
 			this.props.setSpecPanel(val);
+			if (val === 'maps' ) {
+				this.props.setColor(true);
+				this.props.setAnno(false);
+				this.props.setDetail(false);
+				//really?
+					var offs=this.props.map.xyOffsets;
+					this.setState({y:offs[1]});
+					if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
+					console.log(offs);
+				//
+			}
 
 		} else if ((val === 'maps' || val === 'intro' || val === 'bibliography') && this.props.options.panelLarge){
 			if (val !== this.props.sites.specLayer){
 				this.props.setSpecPanel(val);
+				if (val === 'maps' ) {
+					this.props.setColor(true);
+					this.props.setAnno(false);
+					this.props.setDetail(false);
+					//really?
+					var offs=this.props.map.xyOffsets;
+					this.setState({y:offs[1]});
+					if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
+					console.log(offs);
+
+					//
+				}
 			} else {
 				this.props.panelNone();
 				this.props.setSpecPanel('');
+					this.props.setColor(false);
+					this.props.setAnno(true);
+					this.props.setDetail(true);
+
+					var offs=this.props.map.xyOffsets;
+					var y = this.state.y;
+					offs[1]=y ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);
+					console.log(offs);
 			}
 		}
 
@@ -132,7 +169,7 @@ class MapBar extends Component{
 			this.props.loadSelectAll('clear');
 			this.props.setSpecPanel('');
 		} else if (val!=='panel' && val!=='panel large' && val!=='intro' && val!=='biblio' && val!=='maps'){ //individual layers
-			if (this.props.sites.currLayers.indexOf(val.split(', ')[0])<0){ //not in add
+			if (this.props.sites.currLayers.indexOf(val)<0){ //not in add
 					this.props.addSelectOne(val);
 					this.props.setSpecPanel('');
 			} else { //in layers, so remove...
@@ -160,7 +197,7 @@ class MapBar extends Component{
 		        			};
 
 		        			return (
-										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onClick={this.layerPanel}>
+										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onTouchTap={this.layerPanel} >
 											<Tooltip content={'toggle '+ each.v} styles={toolstyles}>
 											{each.src !== ' ' &&
 												<img src={each.src} className={imgClass} value={each.v} />
@@ -216,6 +253,21 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setSpecPanel: (type) => {
     	dispatch(setSpecPanel(type));
+    },
+    setColor: (bool) => {
+      dispatch(updateColor(bool));
+    },
+    setAnno: (bool) => {
+      dispatch(updateAnno(bool));
+    },
+    setDetail: (bool) => {
+        dispatch(updateDetail(bool));
+    },
+    setCurrOffsets: (offsets) => {
+      dispatch(updateOffsets(offsets));
+    },
+    setOffsetsR: (offsets) => {
+        dispatch(updateOffsetsResidual(offsets));
     },
 
   }

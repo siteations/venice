@@ -38,7 +38,7 @@ export const ClipTiles = (props) => {
                                     clipPath = {props.clip}
                                     opacity={props.opacity}
                                     key={`clipTile${i}`}
-                                    onDoubleClick={props.action}
+                                    //onDoubleClick={props.action}
                             />
                             )
                     }
@@ -101,7 +101,7 @@ export const Underlay = (props) => {
     //props.wSize, props.color
     return(
            <image
-            xlinkHref = {`/img/novacco_color_0804.jpg`}
+            xlinkHref = {`/img/${props.name}.jpg`}
                 width={props.tSize*(scaleOps[props.currZoom][0]+1)}
                     height={props.tSize*(scaleOps[props.currZoom][1]+1)}
                     x = { -1 * props.xyOffsets[0] }

@@ -19,16 +19,16 @@ var Sequelize = require('sequelize');
 // })
 
 //nonMAMP connection
-// var db = new Sequelize('venice', 'root', '', {
-// host: 'localhost',
-// dialect: 'mysql',
+var db = new Sequelize('venice', 'root', '', {
+host: 'localhost',
+dialect: 'mysql',
 
-//   pool: {
-//     max: 5,
-//     min: 0,
-//     idle: 10000
-//   }
-// });
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  }
+});
 
 
 //for heroku - postgreSQL with local clone for download

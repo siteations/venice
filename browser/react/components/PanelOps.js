@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { setPanelSizing } from '../action-creators/panelActions.js';
 
 import MapSecondary from './MapSecondary.js';
+import MapDescriptions from './MapDescriptions.js';
 
 class PanelB extends Component {
 	constructor(props) {
@@ -33,15 +34,16 @@ class PanelB extends Component {
                 //<MapSecondary height={1} width={1} />
 
     return (
-         <div className={this.props.baseClass} id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`}}>
+         <div className={`whiteBackground ${this.props.baseClass}`} id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`, overflow: 'hidden' }}>
             {this.props.sites.specLayer==='maps' &&
-              <div>
-              <div className="whiteBackground">
-                <MapSecondary height={.8} width={1} />
+            <div>
+              <div style={{height: `${this.props.map.windowSize[1]*.1}px`}}>
+              <h2 className="BornholmSandvig pad10" >{this.props.map.mapSite.name.split('.')[0]}</h2>
               </div>
-              <h2 className="BornholmSandvig" >Cartographic comparisons</h2>
-              <h4>details</h4>
-              <p>elaborations</p>
+              <div className="whiteBackground">
+                <MapSecondary height={.7} width={1} />
+              </div>
+                <MapDescriptions />
               </div>
           }
 

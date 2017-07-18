@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
+import Contact from './Contact.js';
 
 import { centerRescaled, tiling, scaleOps, sitesFiltered } from '../plug-ins/rawTiles.js';
 import {updateSite} from '../action-creators/siteActions.js';
 import {  setTitlesCore, setTitle, setNarr } from '../action-creators/panelActions.js';
 import { togglePlay, updatePanelSmall } from '../action-creators/optionActions.js';
 import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
+
+import Tour from './Tour.js';
 
 //connect later to store;
 
@@ -147,35 +150,12 @@ class FooterSlides extends Component {
 
 	return (
 	        <div className="row footer">
-                  <div className="row flex center">
-                        {tour &&
-                            tour.map(site=>{
-                            return <div className={(site.siteId===this.props.sites.currSite)? 'bIconSelected text-center' : 'bIcon  text-center'}
-                                value={site.siteId+'-'+site.zoom}
-                                key = {site.siteId+'-'+site.zoom}
-                                onClick={e=>this.setSite(e)}>{site.siteId}</div>
-                        })}
-                        {!this.props.options.playTour &&
-                            <div className="nIcon flex center middle" value=""><span value="play" className="fa fa-play" onClick={(e)=>this.animate(e)}></span></div>
-                        }
-                        {this.props.options.playTour &&
-                            <div className="nIcon flex center middle" value=""><span value="pause" className="fa fa-pause" onClick={(e)=>this.animate(e)}></span></div>
-                        }
-                        <p>(with zoom)</p>
-                        {!this.props.options.playTour &&
-                            <div className="nIcon flex center middle" value=""><span value="play" className="fa fa-play opacity25" onClick={(e)=>this.animate(e, 'out')}></span></div>
-                        }
-                        {this.props.options.playTour &&
-                            <div className="nIcon flex center middle" value=""><span value="pause" className="fa fa-pause opacity25" onClick={(e)=>this.animate(e, 'out')}></span></div>
-                        }
-                        <p className="opacity25">(no zoom)</p>
-                        <div className="l20">
-                                <h4 className="BornholmSandvig closerT">tour of venice religious experience</h4>
-                                <p className="closerB">click thumbnails for a guided sites & narratives</p>
-                                <p className="sButtons">secondary options and images for fullscreen tablet view</p>
-                        </div>
-                  </div>
-                <p className="closerB">copyright and institutional information here</p>
+            {this.props.sites.specLayer === '' &&
+                <Tour type="bottom" />
+            }
+            {this.props.sites.specLayer !== '' &&
+                <Contact />
+            }
 	        </div>
 	        )
     }
