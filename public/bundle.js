@@ -1125,7 +1125,7 @@ module.exports = ReactDOMComponentTree;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.addBibliography = exports.editNarrative = exports.addNarrative = exports.resetSaved = exports.addNewSiteRadius = exports.addNewSiteCenter = exports.editSite = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.addBiblio = exports.getDetailsNarratives = exports.reloadBiblio = exports.reloadNarratives = exports.editBiblio = exports.deleteBiblio = exports.deleteNarrative = exports.editImages = exports.deleteImages = exports.reloadImages = exports.addImage = exports.addDetail = exports.reloadDetails = exports.editDetail = exports.deleteDetail = exports.deleteSite = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.setSpecPanel = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.saved = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.setSpecLayer = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getGenBiblio = exports.getAllSites = exports.SAVED = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_SPEC_LAYER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_All_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_BIB = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
+exports.addBibliography = exports.editNarrative = exports.addNarrative = exports.resetSaved = exports.addNewSiteRadius = exports.addNewSiteCenter = exports.editSite = exports.addNewSite = exports.addAllLayers = exports.deleteSelectLayer = exports.setDetailId = exports.addSelectLayer = exports.addBiblio = exports.getDetailsNarratives = exports.reloadBiblio = exports.reloadNarratives = exports.editBiblio = exports.deleteBiblio = exports.deleteNarrative = exports.editImages = exports.deleteImages = exports.reloadImages = exports.addImage = exports.addDetail = exports.reloadDetails = exports.editDetail = exports.deleteDetail = exports.deleteSite = exports.addHoverSite = exports.loadLayers = exports.loadFiltered = exports.overlayDetails = exports.setSpecPanel = exports.updateSite = exports.loadFilteredSites = exports.loadSites = exports.siteReducer = exports.saved = exports.addNewSiteGeo2 = exports.addNewSiteGeo1 = exports.setSpecLayer = exports.addHoverLayer = exports.resetCurrLayers = exports.addCurrLayers = exports.getCurrLayers = exports.getAllLayers = exports.getCurrImgs = exports.getGenImages = exports.getGenNarratives = exports.getGenDetails = exports.getCurrNarr = exports.getCurrDetail = exports.getCurrSiteZoom = exports.getCurrSite = exports.getFilteredSites = exports.setMinorId = exports.getGenBiblio = exports.getAllSites = exports.SAVED = exports.SET_RADIUS = exports.SET_CENTER = exports.SET_SPEC_LAYER = exports.SET_HOVER_LAYER = exports.RESET_CURR_LAYERS = exports.ADD_CURR_LAYERS = exports.GET_CURR_LAYERS = exports.GET_ALL_LAYERS = exports.SET_MINOR_ID = exports.GET_CURR_IMGS = exports.GET_GEN_BIB = exports.GET_GEN_IMG = exports.GET_GEN_NARR = exports.GET_GEN_DETAIL = exports.GET_CURR_NARR = exports.GET_CURR_DETAIL = exports.GET_CURR_SITEZOOM = exports.GET_CURR_SITE = exports.GET_FILTERED_SITES = exports.GET_ALL_SITES = undefined;
 
 var _axios = __webpack_require__(86);
 
@@ -1146,6 +1146,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // var imageTest = imageSeed;
 
 //-------------------CONSTANTS
+
+var layerAll = ['parish churches', "bascilica", "plague churches", "monastery", "convents", "non-catholic communities", "processions", "printing", "textual consumption"];
 
 //SITE REDUCER
 
@@ -1169,7 +1171,7 @@ var GET_CURR_IMGS = exports.GET_CURR_IMGS = 'GET_CURR_IMGS';
 var SET_MINOR_ID = exports.SET_MINOR_ID = 'SET_MINOR_ID';
 
 //layers all & selected for filteration
-var GET_All_LAYERS = exports.GET_All_LAYERS = 'GET_All_LAYERS';
+var GET_ALL_LAYERS = exports.GET_ALL_LAYERS = 'GET_All_LAYERS';
 var GET_CURR_LAYERS = exports.GET_CURR_LAYERS = 'GET_CURR_LAYERS';
 var ADD_CURR_LAYERS = exports.ADD_CURR_LAYERS = 'ADD_CURR_LAYERS';
 var RESET_CURR_LAYERS = exports.RESET_CURR_LAYERS = 'RESET_CURR_LAYERS';
@@ -1267,7 +1269,7 @@ var getCurrImgs = exports.getCurrImgs = function getCurrImgs(images) {
 
 var getAllLayers = exports.getAllLayers = function getAllLayers(layers) {
 	return {
-		type: GET_All_LAYERS,
+		type: GET_ALL_LAYERS,
 		layers: layers
 	};
 };
@@ -1343,8 +1345,8 @@ var initSites = {
 	minorId: 0,
 	clusterId: 0,
 
-	allLayers: ['parish churches', "bascilica", "plague churches", "monastery", "convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption"], //arr of strings
-	currLayers: [], //arr of strings
+	allLayers: layerAll, //arr of strings
+	currLayers: layerAll, //arr of strings
 	hoverLayer: ' ',
 	specLayer: '',
 
@@ -1424,8 +1426,8 @@ var siteReducer = exports.siteReducer = function siteReducer() {
 			newState.clusterId = action.objId[1];
 			break;
 
-		case GET_All_LAYERS:
-			//newState.allLayers = action.layers;
+		case GET_ALL_LAYERS:
+			newState.allLayers = action.layers;
 			break;
 
 		case GET_CURR_LAYERS:
@@ -1788,13 +1790,13 @@ var deleteSelectLayer = exports.deleteSelectLayer = function deleteSelectLayer(l
 var addAllLayers = exports.addAllLayers = function addAllLayers(layers) {
 	return function (dispatch) {
 		//load all/clear all to select
-		var cirLayers = [];
+
+		console.log('add or clear', layers);
 
 		if (layers === 'add') {
-			var _layers = ['parish churches', "bascilica", "plague churches", "monastery", "convents", "non-catholic communities", "processions", "cultural", "printing", "textual consumption"];
-			dispatch(getCurrLayers(_layers));
+			dispatch(getCurrLayers(layerAll));
 		} else {
-			dispatch(getCurrLayers(cirLayers));
+			dispatch(getCurrLayers([]));
 		};
 	};
 };
@@ -18629,6 +18631,7 @@ var MapBar = function (_Component) {
 		value: function layerPanel(e) {
 			e.preventDefault();
 			var val = e.target.attributes.value.value;
+
 			console.log('reading panel?', val);
 
 			// if (this.props.options.panelStart){
@@ -18705,7 +18708,7 @@ var MapBar = function (_Component) {
 						this.props.setSpecPanel('');
 					} else if (val !== 'panel' && val !== 'panel large' && val !== 'intro' && val !== 'biblio' && val !== 'maps') {
 						//individual layers
-						if (this.props.sites.currLayers.indexOf(val.split(', ')[0]) < 0) {
+						if (this.props.sites.currLayers.indexOf(val) < 0) {
 							//not in add
 							this.props.addSelectOne(val);
 							this.props.setSpecPanel('');
@@ -18738,7 +18741,7 @@ var MapBar = function (_Component) {
 
 					return _react2.default.createElement(
 						'div',
-						{ className: each.cn, key: i + 'navbutton', value: each.v, onMouseOver: _this2.layerOver, onMouseOut: _this2.layerOut, onTouchTap: _this2.layerPanel, onClick: _this2.layerPanel },
+						{ className: each.cn, key: i + 'navbutton', value: each.v, onMouseOver: _this2.layerOver, onMouseOut: _this2.layerOut, onTouchTap: _this2.layerPanel },
 						_react2.default.createElement(
 							_reactLightweightTooltip.Tooltip,
 							{ content: 'toggle ' + each.v, styles: toolstyles },

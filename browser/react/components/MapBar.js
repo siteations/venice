@@ -95,6 +95,7 @@ class MapBar extends Component{
 	layerPanel(e){
 		e.preventDefault();
 		let val=e.target.attributes.value.value;
+
 		console.log('reading panel?', val);
 
 		// if (this.props.options.panelStart){
@@ -168,7 +169,7 @@ class MapBar extends Component{
 			this.props.loadSelectAll('clear');
 			this.props.setSpecPanel('');
 		} else if (val!=='panel' && val!=='panel large' && val!=='intro' && val!=='biblio' && val!=='maps'){ //individual layers
-			if (this.props.sites.currLayers.indexOf(val.split(', ')[0])<0){ //not in add
+			if (this.props.sites.currLayers.indexOf(val)<0){ //not in add
 					this.props.addSelectOne(val);
 					this.props.setSpecPanel('');
 			} else { //in layers, so remove...
@@ -196,7 +197,7 @@ class MapBar extends Component{
 		        			};
 
 		        			return (
-										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onTouchTap={this.layerPanel} onClick={this.layerPanel} >
+										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onTouchTap={this.layerPanel} >
 											<Tooltip content={'toggle '+ each.v} styles={toolstyles}>
 											{each.src !== ' ' &&
 												<img src={each.src} className={imgClass} value={each.v} />
