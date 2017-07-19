@@ -10,7 +10,7 @@ import Promise from 'bluebird';
 
 //-------------------CONSTANTS
 
-const	layerAll = ['parish churches',"bascilica", "plague churches", "monastery", "convent", "non-catholic communities", "processions", "printing", "textual consumption" ];
+const	layersFullList = ['parish churches',"bascilica", "plague churches", "monastery", "convent", "non-catholic communities", "processions", "printing", "textual consumption" ];
 
 //SITE REDUCER
 
@@ -130,14 +130,16 @@ export const getCurrImgs = (images) => {
 	};
 };
 
-export const getAllLayers = (layers) => {
+export const getAllLayers = () => {
 	return {
 		type: GET_ALL_LAYERS,
-		layers: layers
+		layers: layersFullList,
 	};
 };
 
 export const getCurrLayers = (layers) => {
+	console.log('almost', layers);
+
 	return {
 		type: GET_CURR_LAYERS,
 		layers: layers
@@ -208,8 +210,8 @@ const initSites = {
 	minorId: 0,
 	clusterId: 0,
 
-	allLayers: layerAll, //arr of strings
-	currLayers: layerAll, //arr of strings
+	allLayers: layersFullList.slice(), //arr of strings
+	currLayers: layersFullList.slice(), //arr of strings
 	hoverLayer: ' ',
 	specLayer:'',
 
@@ -653,10 +655,10 @@ export const deleteSelectLayer = (layer) => dispatch => { //add and load
 //HARD CODING UNTIL WE ACTUALLY HAVE ALL THE LAYERS SET
 export const addAllLayers = (layers) => dispatch => { //load all/clear all to select
 
-	console.log('add or clear', layers);
+	console.log('add or clear', layers, layersFullList);
 
 	if (layers==='add'){
-			dispatch(getCurrLayers(layerAll));
+			dispatch(getCurrLayers(layersFullList.slice()));
 	} else {
 		dispatch(getCurrLayers([]));
 	};

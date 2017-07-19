@@ -33,7 +33,7 @@ class PanelMap extends Component {
     let obj = this.props.map.mapSite;
 
   	return (
-  	     <div className="pad10" style={{overflowY:'scroll', overflowX:'hidden', height: `${this.props.map.windowSize[1]*.175}px`}}>
+  	     <div className="pad10" style={{overflowY:'scroll', overflowX:'hidden', height: `${this.props.map.windowSize[1]*.205}px`}}>
           <div className="row ">
             <div className="col-md-3">
 				    <h5 className="BornholmSandvig pad10">

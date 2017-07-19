@@ -17,7 +17,7 @@ const Contact = (props)=>{
 
 	return (
 
-          <footer id="footer" className="region region-footer" style={{marginLeft: '100px', marginTop: '20px'}}>
+          <footer id="footer" className="region region-footer" style={{marginTop: '20px'}}>
           <div id="block-menu-block-2" className="block-block address last even" role="navigation">
           <div className="inner">
 

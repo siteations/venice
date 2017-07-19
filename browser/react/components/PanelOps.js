@@ -37,8 +37,8 @@ class PanelB extends Component {
          <div className={`whiteBackground ${this.props.baseClass}`} id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`, overflow: 'hidden' }}>
             {this.props.sites.specLayer==='maps' &&
             <div>
-              <div style={{height: `${this.props.map.windowSize[1]*.1}px`}}>
-              <h2 className="BornholmSandvig pad10" >{this.props.map.mapSite.name.split('.')[0]}</h2>
+              <div style={{height: `${this.props.map.windowSize[1]*.06}px`}}>
+              <h3 className="BornholmSandvig pad10" >{this.props.map.mapSite.name.split('.')[0]}</h3>
               </div>
               <div className="whiteBackground">
                 <MapSecondary height={.7} width={1} />

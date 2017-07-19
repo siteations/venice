@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Chip from 'material-ui/Chip';
+import LayersList from './LayersList.js';
 
 
 const styles = {
@@ -23,7 +24,7 @@ const Header = ((props) => {
 	        <div className="row flex bottom header">
                         <div className="col-lg-1 flex">
                                 <a href=""><img className='logo' src="/img/the-newberry-small.png" /></a>
-                                <IconMenu
+                                {/*<IconMenu
                                       iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                                       anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                                       targetOrigin={{horizontal: 'left', vertical: 'top'}}
@@ -31,19 +32,26 @@ const Header = ((props) => {
                                       <MenuItem primaryText="things" />
                                       <MenuItem primaryText="go here" />
                                       <MenuItem primaryText="for menu" />
-                              </IconMenu>
+                              </IconMenu>*/}
                         </div>
                         <div className="col-lg-4 bottom">
                                 <h1 className="BornholmSandvig closerT">Religious Life in Venice</h1>
                                 <h5  className="closerB ">Mapping Early Modern Cosmopolitanism</h5>
                         </div>
-	        	<div className="col-lg-3">
-        			<h4 className="BornholmSandvig closerT text-right ">Layers Shown:</h4>
+	        	{/*<div className="col-lg-1">
+        			<h4 className="BornholmSandvig closerT text-right ">Layers:</h4>
         			<p className="closerB text-right"> </p>
-        		</div>
-                        <div className="col-lg-4">
-                                <h5 className="BornholmSandvig closerT">{props.sites.currLayers.join(', ')}</h5>
-                                <p className="closerB"> </p>
+        		</div>*/}
+                        <div className="col-lg-7">
+                          <div className="row flex around" style={{marginBottom:'5px'}}>
+                            <button className="btn btn-default ">Introduction</button>
+                            <button className="btn btn-default ">Religious Practice, Situated</button>
+                            <button className="btn btn-default ">Cartographic Context</button>
+                            <button className="btn btn-default ">Bibliography</button>
+                            <button className="btn btn-default ">About</button>
+                            <button className="btn btn-default ">Religious Change</button>
+                          </div>
+                        <LayersList layers={props.sites.currLayers} type="span" />
                         </div>
 	        </div>
 	        )

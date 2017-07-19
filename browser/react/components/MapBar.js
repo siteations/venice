@@ -7,11 +7,31 @@ import IconButton from 'material-ui/IconButton';
 import {updatePanelNone, updatePanelSmall, updatePanelLarge, updatePanelStart, updatePanelMid} from '../action-creators/optionActions.js';
 import {updateColor, updateAnno, updateDetail} from '../action-creators/optionActions.js';
 //connect later?
-import {addSelectLayer, deleteSelectLayer, addAllLayers, addHoverSite, setSpecPanel} from '../action-creators/siteActions.js';
+import {addSelectLayer, deleteSelectLayer, addAllLayers, addHoverSite, setSpecPanel, updateSite} from '../action-creators/siteActions.js';
 
 import {updateOffsets, updateOffsetsResidual } from '../action-creators/mapActions.js';
 
-//
+import {setNarr, setTitlesCore} from '../action-creators/panelActions.js';
+
+export const panelsOther = {
+	intro: {
+		title: ['Religious Life in Venice','An Introduction'],
+		obj:{text:['various paragraphs of text', 'describing the core issues', 'addressed in the overall map', '100-200 words as necessary.'],},
+	},
+	bibliography: {
+		title: ['Religious Life in Venice','A Bibliography'],
+		obj: {text:['adjust to pull in bibliography entries', 'here', 'for', 'display.'],},
+	},
+	credits: {
+		title: ['Religious Life in Venice','About & Credits'],
+		obj: {text:['adjust to pull in researcher credits', 'here', 'for', 'display.'],},
+	},
+	guide: {
+		title: ['Religious Life in Venice','Navigation Guide'],
+		obj: {text:['adjust to show images of', 'annotated buttons', 'and other content', 'to aid in navigating display.'],},
+	},
+
+}
 
 let mapButtons=[
 	{cn:"nIcon flex center middle", v:"intro", src:'/img/intro-01.svg' },
@@ -28,11 +48,11 @@ let mapButtons=[
 	{cn:"nIcon flex center middle", v:"convent", src:"/img/convent-01.svg" },
 	{cn:"nIcon flex center middle", v:"non-catholic communities", src:"/img/non-catholic-01.svg" },
 	{cn:"nIcon flex center middle", v:"processions", src:"/img/ritual-01.svg" },
-	{cn:"nIcon flex center middle", v:"cultural", src:"/img/culture-01.svg" },
 	{cn:"nIcon flex center middle", v:"printing", src:"/img/books-01.svg" },
 	{cn:"nIcon flex center middle", v:"textual consumption", src:"/img/ephemera-01.svg" },
 	{cn:"nSpcSm", v:'navigate', src:" " },
 	{cn:"nIcon flex center middle", v:"bibliography", src:"/img/menu-01.svg" },
+	{cn:"nIcon flex center middle", v:"credits", src:"/img/menu-01.svg" },
 ];
 
 const toolstyles = {
@@ -98,9 +118,6 @@ class MapBar extends Component{
 
 		console.log('reading panel?', val);
 
-		// if (this.props.options.panelStart){
-		// 	this.props.panelStart();
-		// }
 
 		//panel options
 		if (val === 'panel' && this.props.options.panelNone){
@@ -115,8 +132,30 @@ class MapBar extends Component{
 			this.props.panelNone();
 		}
 
+		else if ((val === 'intro' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelNone)){
+			this.props.panelSmall();
+			this.props.setSpecPanel(val);
+			this.props.updateSite(0);
+			this.props.setTitles(panelsOther[val].title);
+			this.props.updateNarrative(panelsOther[val].obj);
+		}
+		else if ((val === 'intro' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelLarge)){
+			this.props.panelSmall();
+			this.props.setSpecPanel(val);
+			this.props.updateSite(0);
+			this.props.setTitles(panelsOther[val].title);
+			this.props.updateNarrative(panelsOther[val].obj);
+		}
+
+		else if ((val === 'intro' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelSmall)){
+			this.props.setSpecPanel(val);
+			this.props.updateSite(0);
+			this.props.setTitles(panelsOther[val].title);
+			this.props.updateNarrative(panelsOther[val].obj);
+		}
+
 		//map/intro/biblio options
-		else if ((val === 'maps' || val === 'intro' || val === 'bibliography') && (this.props.options.panelNone || this.props.options.panelSmall)){
+		else if ((val === 'maps') && (this.props.options.panelNone || this.props.options.panelSmall)){
 			this.props.panelLarge();
 			this.props.setSpecPanel(val);
 			if (val === 'maps' ) {
@@ -131,7 +170,7 @@ class MapBar extends Component{
 				//
 			}
 
-		} else if ((val === 'maps' || val === 'intro' || val === 'bibliography') && this.props.options.panelLarge){
+		} else if ((val === 'maps') && this.props.options.panelLarge){
 			if (val !== this.props.sites.specLayer){
 				this.props.setSpecPanel(val);
 				if (val === 'maps' ) {
@@ -147,7 +186,7 @@ class MapBar extends Component{
 					//
 				}
 			} else {
-				this.props.panelNone();
+				this.props.panelSmall();
 				this.props.setSpecPanel('');
 					this.props.setColor(false);
 					this.props.setAnno(true);
@@ -161,14 +200,14 @@ class MapBar extends Component{
 		}
 
 		//layer addition/subtractions dispatch
-		else if (val==='all layers' && this.props.sites.currLayers.length !== this.props.sites.allLayers.length){
+		else if (val==='all layers' && this.props.sites.currLayers.length === 0){
 			this.props.loadSelectAll('add');
 			this.props.setSpecPanel('');
 
-		} else if (val==='all layers' && this.props.sites.currLayers.length === this.props.sites.allLayers.length){
+		} else if (val==='all layers' && this.props.sites.currLayers.length > 0){
 			this.props.loadSelectAll('clear');
 			this.props.setSpecPanel('');
-		} else if (val!=='panel' && val!=='panel large' && val!=='intro' && val!=='biblio' && val!=='maps'){ //individual layers
+		} else if (val!=='panel' && val!=='panel large' && val!=='intro' && val!=='biblio' && val!=='maps'&& val!=='credits'){ //individual layers
 			if (this.props.sites.currLayers.indexOf(val)<0){ //not in add
 					this.props.addSelectOne(val);
 					this.props.setSpecPanel('');
@@ -268,6 +307,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setOffsetsR: (offsets) => {
         dispatch(updateOffsetsResidual(offsets));
+    },
+    updateSite: (site) => {
+    	dispatch(updateSite(site));
+    },
+    setTitles: (name) => {
+        dispatch(setTitlesCore(name));
+    },
+    updateNarrative: (obj) => {
+        dispatch(setNarr(obj));
     },
 
   }

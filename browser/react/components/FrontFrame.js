@@ -9,6 +9,8 @@ import MapSVG from './Mapd3.js';
 import Panel from './Panel.js';
 import PanelOps from './PanelOps.js';
 import MapOptions from './MapOptions.js';
+import Nav from './Nav.js';
+import Header2 from './Header2.js';
 
 import {Preload} from 'react-preload';
 //import {tilepreload} from '../plug-ins/rawTiles.js';
@@ -65,7 +67,8 @@ class Frame extends Component {
 
 		return (
 		        <div>
-			        <Header />
+		        	<Nav />
+			        <Header2 />
 			        <div className="row">
 			        <div id="container">
 			        </div>
@@ -100,7 +103,7 @@ class Frame extends Component {
 			        		<MapOptions />
 				        	<MapSVG baseClass="mPart mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<Panel baseClass="panelOpenPart" />
+				        	<Panel baseClass="panelOpen" />
 			        	</div>
 			        }
 			        {this.props.options.panelLarge && this.props.options.panelMid &&

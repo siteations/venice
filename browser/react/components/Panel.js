@@ -10,7 +10,9 @@ import {imageSeries} from '../pre-db/cirTest.js';
 class PanelBase extends Component {
 	constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+          site: this.props.sites.currSite,
+        }
   }
 
   componentDidMount() {
@@ -32,6 +34,8 @@ class PanelBase extends Component {
 
   render(){
   	var obj, image;
+    var other = true;
+    if (this.props.sites.currSite === '0'){other=false};
   	(this.props.panel.narrObj)? obj=this.props.panel.narrObj : obj={};
 
     let images = this.props.sites.genImages.filter(images => +images.narrativeId === +obj.id);
@@ -40,17 +44,24 @@ class PanelBase extends Component {
 
   	return (
   	     <div className={this.props.baseClass} ref="sizeP" id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`}}>
-				    <h2 className="BornholmSandvig" >{(this.props.panel.title)? this.props.panel.title : 'Venice Title (Intro)'}</h2>
-				    <h4>{(this.props.panel.subtitle)? this.props.panel.subtitle : 'Secondary Elements'}</h4>
-				    <h3 className="BornholmSandvig">{(obj.title)? obj.title : 'intro remarks here'}</h3>
+				    <h3 className="BornholmSandvig" >{(this.props.panel.title && other)? this.props.panel.title : 'Introduction, Biblio, or Credits'}</h3>
+				    <h5>{(this.props.panel.subtitle && other)? this.props.panel.subtitle : 'Secondary Elements'}</h5>
+				    <h4 className="BornholmSandvig">{(obj.title && other)? obj.title : 'intro remarks here'}</h4>
               {images.length > 0 &&
                 <Imagetrey image={images} onAnimationEnd={e=> this.refSize(e)} width={this.props.panel.imageWidth} height={(this.props.map.windowSize[1]+6)*0.65} />
               }
 				    <br/>
-				    <p>{(obj.text)? obj.text : 'introductory paragraph, followed by interaction instructions (zoom, click, maps, etc.)'}</p>
+            {obj.text && typeof(obj.text)==='string' &&
+              <p>{obj.text}</p>
+            }
+            {obj.text && typeof(obj.text)==='object' &&
+              obj.text.map(lines=>{
+                return <p>{lines}</p>
+              })
+            }
 				    <br/>
             {biblio.length > 0  &&
-				    <p className="Trenda-Bold">Sources: </p>
+				      <p className="Trenda-Bold">Sources: </p>
             }
             <ul>
             {biblio.length > 0 &&
@@ -62,10 +73,9 @@ class PanelBase extends Component {
             </ul>
             <br/>
             {obj.researcherName &&
-            <p><span className="Trenda-Bold">Narrative Credits: </span> {obj.researcherName}, {obj.researcherTitle}, {obj.researcherAffiliation}.</p>
+              <p><span className="Trenda-Bold">Narrative Credits: </span> {obj.researcherName}, {obj.researcherTitle}, {obj.researcherAffiliation}.</p>
             }
 				</div>
-
   	)
 
   }
