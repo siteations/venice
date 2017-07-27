@@ -123,7 +123,7 @@ class FooterSlides extends Component {
     setNext(e){
         e.preventDefault();
         let currSet = this.state.tourSeries;
-        let max = Math.ceil(this.props.map.mapTourAll.length / 7);
+        var max = Math.ceil(this.props.map.mapTourAll.length / 7);
 
         currSet++;
 
@@ -154,7 +154,7 @@ class FooterSlides extends Component {
             this.props.updateSite(siteId);
 
             var site = this.props.sites.allSites.filter(site=> +site.id === +siteId)[0];
-            var siteZoom = this.props.options.allTours[this.props.options.currTour].filter(item=>item.siteId===siteId)[0].zoom;
+            var siteZoom = this.props.options.allTours[this.props.options.currTour].filter(item=>+item.siteId===+siteId)[0].zoom;
             var siteCent = [site.cx, site.cy];
             this.props.setTitles(site.name.split('.'));
 
@@ -182,7 +182,11 @@ class FooterSlides extends Component {
 
         let offset = centerRescaled(zoom, newCenter, win, 128);
         //console.log('zooms: ', this.props.map.currZoom, zoom, 'pixels: ', this.props.map.tileSize, 128, 'offsets: ', this.props.map.xyOffsets, offset);
-        let sele = window.document.getElementById("mapWin").attributes[0].ownerElement.childNodes[1].clientHeight;
+        if (this.props.type !== 'maps'){
+        var sele = window.document.getElementById("mapWin").attributes[0].ownerElement.childNodes[0].clientHeight;
+        } else {
+        var sele = window.document.getElementById("mapWin").attributes[0].ownerElement.childNodes[1].clientHeight;
+        }
         var number=sele*.2;
 
         this.props.setOffsetsR([offset.x, offset.y+number]);
