@@ -253,7 +253,8 @@ a:hover {
 
 @media (max-width: 1440px) {
 	.mainMaps {
-		height: 681px;
+		height: 710px;
+		/*681*/
 	}
 }
 @media (min-width: 1441px) {
@@ -365,7 +366,7 @@ a:hover {
 	background-color: #ffffff;
 	margin-top: 10px;
 	width: 65%;
-	min-height: 681px;
+	min-height: 710px;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
 	animation-name: closingM;
@@ -378,7 +379,7 @@ a:hover {
 	background-color: #ffffff;
 	margin-top: 10px;
 	width: 65%;
-	min-height: 681px;
+	min-height: 710px;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
 	animation-name: openingM;
@@ -391,7 +392,7 @@ a:hover {
 	background-color: #ffffff;
 	margin-top: 10px;
 	width: 65%;
-	min-height: 681px;
+	min-height: 710px;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
 	animation-name: openingMQ;
@@ -405,7 +406,7 @@ a:hover {
 	background-color: #f4f2ec;
 	/*background-color: #ffffff;*/
 	margin-top: 10px;
-	min-height: 681px;
+	min-height: 710px;
 	width: 0%;
 	visibility: hidden;
 }
@@ -416,7 +417,7 @@ a:hover {
 	background-color: #f4f2ec;
 	/*background-color: #ffffff;*/
 	margin-top: 10px;
-	min-height: 681px;
+	min-height: 710px;
 	width: 0%;
 	overflow-y: scroll;
 	box-shadow: 0 0 3px #808080;
@@ -431,7 +432,7 @@ a:hover {
 	background-color: #f4f2ec;
 	/*background-color: #ffffff;*/
 	margin-top: 10px;
-	min-height: 681px;
+	min-height: 710px;
 	width: 60%;
 	overflow-y: scroll;
 	box-shadow: 0 0 3px #808080;
@@ -449,7 +450,7 @@ a:hover {
 	width: 65%;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	min-height: 681px;
+	min-height: 710px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingPL;
     animation-duration: .25s;
@@ -469,7 +470,7 @@ a:hover {
 	width: 65%;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	min-height: 681px;
+	min-height: 710px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingPLPart;
     animation-duration: .25s;
@@ -484,7 +485,7 @@ a:hover {
 	width: 30%;
 	overflow: hidden;
 	visibility: visible;
-	min-height: 681px;
+	min-height: 710px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: closingP;
     animation-duration: .25s;
@@ -494,7 +495,7 @@ a:hover {
 .mtypeFull {
 	border:double 3px #ffffff;
 	padding:5px;
-	min-height: 652px;
+	min-height: 710px;
 	background-color: #e6e1d3;
 	margin-top: 10px;
 	width: 4.5%;
@@ -752,4 +753,9 @@ select {
 
 li{
 	line-height: 1.25em;
+}
+
+.large {
+	font-size: 1rem;
+	line-height: 1.6rem;
 }

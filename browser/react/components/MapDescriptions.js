@@ -57,7 +57,12 @@ class PanelMap extends Component {
                 <span>{obj.detail}</span>
               </div>
               <div className="col-md-9">
+                {obj.id>2 &&
     				    <p>{obj.narrative}</p>
+                }
+                {obj.id<3 &&
+                <p className="large">{obj.narrative}</p>
+                }
     				    <br/>
               </div>
             </div>

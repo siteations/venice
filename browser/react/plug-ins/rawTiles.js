@@ -80,7 +80,7 @@ export const centerRescaled = (zoom, newCenter, winSize,tilesize) => {
 
     let centerX = winSize[0]/2 - x, centerY = winSize[1]/2 - y;
 
-    console.log(xPerc, yPerc, xFull, yFull, x, y, winSize[0]/2, winSize[1]/2);
+    //console.log(xPerc, yPerc, xFull, yFull, x, y, winSize[0]/2, winSize[1]/2);
 
     return {
       x: -1*centerX,
