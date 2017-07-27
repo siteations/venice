@@ -44469,8 +44469,6 @@ var PanelBase = function (_Component) {
           ' ',
           obj.researcherName,
           ', ',
-          obj.researcherTitle,
-          ', ',
           obj.researcherAffiliation,
           '.'
         )

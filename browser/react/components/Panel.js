@@ -73,7 +73,7 @@ class PanelBase extends Component {
             </ul>
             <br/>
             {obj.researcherName &&
-              <p><span className="Trenda-Bold">Narrative Credits: </span> {obj.researcherName}, {obj.researcherTitle}, {obj.researcherAffiliation}.</p>
+              <p><span className="Trenda-Bold">Narrative Credits: </span> {obj.researcherName}, {obj.researcherAffiliation}.</p>
             }
 				</div>
   	)
