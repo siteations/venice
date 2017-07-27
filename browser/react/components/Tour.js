@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import Contact from './Contact.js';
+import {Tooltip} from 'react-lightweight-tooltip';
 
 import mapSites from '../pre-db/mapSites.js';
 
@@ -13,6 +14,38 @@ import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen,
 
 //connect later to store;
 
+const toolstyles = {
+    wrapper: {
+      cursor: 'pointer'
+    },
+    content: {
+    backgroundColor: '#d8d0ba',
+    color: 'black',
+  },
+  tooltip: {
+    backgroundColor: '#d8d0ba',
+    borderRadius: '10px',
+    position: 'absolute',
+    zIndex: '99',
+    background: '#000',
+    bottom: '0%',
+    left: '0%',
+    padding: '5px',
+    transform: 'translateX(25%) translateY(50%)',
+  },
+  arrow: {
+    position: 'absolute',
+    width: '0',
+    height: '0',
+    bottom: '25%',
+    right: '203%',
+    marginRight: '-6px',
+    borderTop: 'solid transparent 8px',
+    borderBottom: 'solid transparent 8px',
+    borderLeft: 'solid transparent 8px',
+  },
+};
+
 
 class FooterSlides extends Component {
     constructor(props) {
@@ -21,12 +54,15 @@ class FooterSlides extends Component {
             tourId: 0,
             siteId: 1,
             hiOff: 0,
+            tourSets: 7,
+            tourSeries: 1,
         };
         this.setSite=this.setSite.bind(this);
         this.flyToSingle=this.flyToSingle.bind(this);
         this.animate = this.animate.bind(this);
         this.setPrior = this.setPrior.bind(this);
         this.setNext = this.setNext.bind(this);
+        this.resetStart = this.resetStart.bind(this);
     }
 
     componentDidMount(){
@@ -54,25 +90,59 @@ class FooterSlides extends Component {
         this.flyToSingle(site.scale, [site.x, site.y]);
     }
 
-    setNext(e){
-        e.preventDefault();
-        let curr= this.props.map.mapSite.id;
-        var before;
+    resetStart(e){
 
-        if (+curr=== this.props.map.mapTourAll.length-1){
-            before = 1;
-        } else {
-            before = +curr + 1;
-        }
-
-        let site = this.props.map.mapTourAll.filter(items=>{
-            return items.id === before;
-        })[0];
-
-        (site===undefined)? site=this.props.map.mapTourAll[0]: site=site ;
+        let site=this.props.map.mapTourAll[0];
         this.props.setMapSite(site);
         this.flyToSingle(site.scale, [site.x, site.y]);
+        this.setState({tourSeries: 1});
 
+    }
+
+    // setNext(e){
+    //     e.preventDefault();
+    //     let curr= this.props.map.mapSite.id;
+    //     var before;
+
+    //     if (+curr=== this.props.map.mapTourAll.length-1){
+    //         before = 1;
+    //     } else {
+    //         before = +curr + 1;
+    //     }
+
+    //     let site = this.props.map.mapTourAll.filter(items=>{
+    //         return items.id === before;
+    //     })[0];
+
+    //     (site===undefined)? site=this.props.map.mapTourAll[0]: site=site ;
+    //     this.props.setMapSite(site);
+    //     this.flyToSingle(site.scale, [site.x, site.y]);
+
+    // }
+
+    setNext(e){
+        e.preventDefault();
+        let currSet = this.state.tourSeries;
+        let max = Math.ceil(this.props.map.mapTourAll.length / 7);
+
+        currSet++;
+
+        if (currSet <= max){
+            this.setState({tourSeries: currSet});
+        } else {
+            this.setState({tourSeries: 1});
+        }
+
+        if (currSet===1){
+            var site=this.props.map.mapTourAll[0];
+        } else if (currSet===2){
+            var site=this.props.map.mapTourAll[7];
+        } else if (currSet===3){
+            var site=this.props.map.mapTourAll[14];
+        }
+
+        this.props.setMapSite(site);
+        this.flyToSingle(site.scale, [site.x, site.y]);
     }
 
     setSite(e){
@@ -90,7 +160,7 @@ class FooterSlides extends Component {
 
             var obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+siteId);
             this.props.updateNarrative(obj[0]);
-        } else {
+        } else { // if maps
             var site = this.props.map.mapTourAll.filter(site=> +site.id === +siteId)[0];
             var siteCent = [site.x, site.y];
             var siteZoom = site.scale;
@@ -209,16 +279,32 @@ class FooterSlides extends Component {
     render(){
 
     if (this.props.type !== 'maps'){
-    var tour = this.props.options.allTours[this.props.options.currTour];
+    var basetour = this.props.options.allTours[this.props.options.currTour];
+    //var tour = basetour.slice(0,7);
     } else {
-    var tour = this.props.map.mapTourAll;
+    var basetour = this.props.map.mapTourAll;
+    //var tour = basetour.slice(0,7);
     }
+
+    if (basetour && basetour.length>7 && this.state.tourSeries===1){
+        var tour = basetour.slice(0,7);
+    } else if (basetour && basetour.length>7 && this.state.tourSeries===2){
+        var tour = basetour.slice(7,14);
+    } else if (basetour && basetour.length>7 && this.state.tourSeries===3){
+        var tour = basetour.slice(14,21);
+    }
+
+    console.log(tour, basetour);
+
 
     //need to set up alternate/hardcoded tour...
 
 	return (
                   <div className="flex center">
-                       <div className="nIcon flex center middle" ><span value="play" className="glyphicon glyphicon-chevron-left" onTouchTap={(e)=>this.setPrior(e)} onClick={(e)=>this.setPrior(e)} ></span>
+                       <div className="nIcon flex center middle" >
+                        <Tooltip content='return to start' styles={toolstyles}>
+                        <span value="play" className="glyphicon glyphicon glyphicon-step-backward" onTouchTap={(e)=>this.resetStart(e)} ></span>
+                        </Tooltip>
                         </div>
                         {tour && this.props.type === "bottom" &&
                             tour.map(site=>{
@@ -234,14 +320,16 @@ class FooterSlides extends Component {
                             return <div className={(site.siteId===this.props.sites.currSite)? 'bIconSelected text-center' : 'bIcon  text-center'}
                                 value={site.id}
                                 key = {site.id}
-                                onTouchTap={e=>this.setSite(e)}
-                                onClick={e=>this.setSite(e)}>
+                                onTouchTap={e=>this.setSite(e)} >
                                 <img src={site.src}
                                 style={{borderRadius: '5px'}}
                                 value={site.id} />
                                 </div>
                         })}
-                        <div className="nIcon flex center middle" ><span value="play" className="glyphicon glyphicon-chevron-right" onTouchTap={(e)=>this.setNext(e)} onClick={(e)=>this.setNext(e)} ></span>
+                        <div className="nIcon flex center middle" >
+                        <Tooltip content='load more sites' styles={toolstyles}>
+                        <span value="play" className="glyphicon glyphicon-chevron-right" onTouchTap={(e)=>this.setNext(e)} ></span>
+                        </Tooltip>
                         </div>
                         {this.props.type === "bottom" &&
                         <div className="l20">

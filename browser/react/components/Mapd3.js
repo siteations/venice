@@ -382,7 +382,7 @@ class MapSVG extends Component {
     	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
         {this.props.sites.specLayer==='maps' &&
               <div style={{height: `${this.props.map.windowSize[1]*.06}px`}}>
-              <h3 className="BornholmSandvig pad10" > Cartographic Elements: Murlano Map (1670)</h3>
+              <h3 className="BornholmSandvig pad10" > Cartographic Elements: Merlo Map (1676)</h3>
               </div>
         }
     	   <div className="offset border3"
@@ -431,17 +431,17 @@ class MapSVG extends Component {
                         }
 	    	   		</defs>
 
-                    <Underlay tSize={this.props.map.tileSize} currZoom={this.props.map.currZoom} xyOffsets={this.props.map.xyOffsets} name="novacco"color={this.props.options.color} />
+                    <Underlay tSize={this.props.map.tileSize} currZoom={this.props.map.currZoom} xyOffsets={this.props.map.xyOffsets} name="merlo" color={this.props.options.color} />
 
 	    	   		<g className="workingTiles" >
     	    	   		{tiles &&
-                            <BackgroundTiles data={tiles} name='novacco' wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} color={this.props.options.color} />
+                            <BackgroundTiles data={tiles} name='merlo' wSize={this.props.map.windowSize} tSize={this.props.map.tileSize} color={this.props.options.color} />
                         }
                         {this.props.options.anno &&
                             <BackgroundMask wSize={this.props.map.windowSize} color={this.props.options.color} />
                         }
                         {tiles && this.props.options.anno &&
-                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} name='novacco' tSize={this.props.map.tileSize} clip="url(#myClip)" opacity={1} action=""/>
+                            <ClipTiles data={tiles} wSize={this.props.map.windowSize} name='merlo' tSize={this.props.map.tileSize} clip="url(#myClip)" opacity={1} action=""/>
     	    	   		}
 	    	   		</g>
 
@@ -501,7 +501,7 @@ class MapSVG extends Component {
     	   </div>
            {this.props.sites.specLayer==='maps' &&
               <div className="">
-              <h5 className="BornholmSandvig pad10" > Cartographic Tour: </h5>
+              <h5 className="BornholmSandvig pad10" > Cartographic Tour: <span className="Trenda-Regular">Site {this.props.map.mapSite.id} of {this.props.map.mapTourAll.length}, {this.props.map.mapSite.author}</span></h5>
               <Tour type="maps" />
               </div>
             }

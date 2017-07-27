@@ -32,18 +32,26 @@ class PanelB extends Component {
 
   render(){
                 //<MapSecondary height={1} width={1} />
+                console.log(this.props.map.mapSite);
 
     return (
          <div className={`whiteBackground ${this.props.baseClass}`} id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`, overflow: 'hidden' }}>
             {this.props.sites.specLayer==='maps' &&
             <div>
               <div style={{height: `${this.props.map.windowSize[1]*.06}px`}}>
-              <h3 className="BornholmSandvig pad10" >{this.props.map.mapSite.name.split('.')[0]}</h3>
+              <h3 className="BornholmSandvig pad10" >{this.props.map.mapSite.name}</h3>
               </div>
+              {this.props.map.mapSite.id > 2 &&
               <div className="whiteBackground">
                 <MapSecondary height={.7} width={1} />
               </div>
-                <MapDescriptions />
+              }
+              {this.props.map.mapSite.id > 2 &&
+                <MapDescriptions size="norm" />
+              }
+              {this.props.map.mapSite.id < 3 &&
+                <MapDescriptions size="full" />
+              }
               </div>
           }
 

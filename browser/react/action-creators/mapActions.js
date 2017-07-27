@@ -121,8 +121,8 @@ const initMap = {
 	xyCenter: [0,0], //x, y
 	focusCenter: [0,0], //x, y
 
-	mapTourAll: mapSites,
-	mapSite: mapSites[0],
+	mapTourAll: mapSites.slice(),
+	mapSite: mapSites.slice()[0],
 
 };
 

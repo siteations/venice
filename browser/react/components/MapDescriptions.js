@@ -31,18 +31,20 @@ class PanelMap extends Component {
   render(){
 
     let obj = this.props.map.mapSite;
+    var height = this.props.map.windowSize[1]*.205;
+    if (this.props.size==='full') { height = this.props.map.windowSize[1]*.805};
 
   	return (
-  	     <div className="pad10" style={{overflowY:'scroll', overflowX:'hidden', height: `${this.props.map.windowSize[1]*.205}px`}}>
+  	     <div className="pad10" style={{overflowY:'scroll', overflowX:'hidden', height: `${height}px`}}>
           <div className="row ">
             <div className="col-md-3">
 				    <h5 className="BornholmSandvig pad10">
-              {obj.name.split('.')[1]}
+              {obj.author}, {obj.date}
               </h5>
             </div>
             <div className="col-md-9">
-              <h5>
-                <span className="Trenda-Bold">{obj.author}, {obj.date}</span>,
+              <h5 className="small">
+                <span className="Trenda-Bold">{obj.title}</span>,
                 <span className=""> {obj.publisher} {obj.physical}
                 </span>
               </h5>

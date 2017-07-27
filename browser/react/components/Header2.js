@@ -58,7 +58,7 @@ class Header2 extends Component {
   return (
 	        <div className="row flex bottom header">
                         <div className="col-xs-8">
-                                <h2 className="closerT"><span className="BornholmSandvig">Religious Life in Venice </span><span className="small texta" style={{color: '#352c1a'}}> Mapping Early Modern Cosmopolitanism</span></h2>
+                                <h2 className="closerT"><span className="BornholmSandvig">Merlo's Map </span><span className="small texta" style={{color: '#352c1a'}}> The Religious Geography of Venice</span></h2>
                           <LayersList layers={this.props.sites.currLayers} type="span" />
                         </div>
                         <div className="col-xs-4">

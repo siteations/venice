@@ -35,8 +35,8 @@ const Header = ((props) => {
                               </IconMenu>*/}
                         </div>
                         <div className="col-lg-4 bottom">
-                                <h1 className="BornholmSandvig closerT">Religious Life in Venice</h1>
-                                <h5  className="closerB ">Mapping Early Modern Cosmopolitanism</h5>
+                                <h1 className="BornholmSandvig closerT">Merlo's Map</h1>
+                                <h5  className="closerB "> The Religious Geography of Venice</h5>
                         </div>
 	        	{/*<div className="col-lg-1">
         			<h4 className="BornholmSandvig closerT text-right ">Layers:</h4>
