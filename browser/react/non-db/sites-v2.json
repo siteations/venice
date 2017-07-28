@@ -200,21 +200,11 @@
     "clusterId": null
 },
 {
-    "id": 50,
-    "cx": 13439,
-    "cy": 5096,
-    "r": 234,
-    "name": "Tarabotti’s Convent. Sant’Anna in Castello",
-    "type": "convent",
-    "cluster": false,
-    "clusterId": 0
-},
-{
     "id": 12,
     "cx": 7271,
     "cy": 4563,
     "r": 450,
-    "name": "Basilica of patron saint of Venice. Basilica di San Marco (connected to doge's palace)",
+    "name": "Basilica of patron saint of Venice.basilica di San Marco (connected to doge's palace)",
     "type": "basilica",
     "cluster": false,
     "clusterId": null
@@ -296,6 +286,16 @@
     "r": 212,
     "name": "A Printing Hub.Merceria",
     "type": "printing",
+    "cluster": false,
+    "clusterId": 0
+},
+{
+    "id": 50,
+    "cx": 13439,
+    "cy": 5096,
+    "r": 234,
+    "name": "Tarabotti?.Sant'Anna in Castello",
+    "type": "convent",
     "cluster": false,
     "clusterId": 0
 },

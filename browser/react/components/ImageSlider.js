@@ -49,7 +49,7 @@ class Image extends Component {
 				<img src={this.props.image[this.state.active].src} style={{width:`${this.state.widthImg}px`}} onLoad={e=>this.getSize(e)} onChange={e=>this.getSize(e)}/>
 			</div>
 			<div className="row m10">
-				<div className="col-xs-4 col-xs-offset-4 text-center">
+				<div className="col-xs-8 col-xs-offset-2 text-center">
 					{this.props.image.length > 1 &&
 						this.props.image.map((image, i)=>{
 							if(i===this.state.active){
