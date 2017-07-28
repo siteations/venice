@@ -37692,7 +37692,8 @@ var App = function (_Component) {
 				_react2.default.createElement(
 					'div',
 					{ className: 'container-fluid ' },
-					this.props.location.pathname === '/' && _react2.default.createElement(_FrontFrame2.default, null)
+					this.props.location.pathname === '/Venice' && _react2.default.createElement(_FrontFrame2.default, null),
+					this.props.location.pathname === '/Venice-Edit' && _react2.default.createElement(_FrameEdit2.default, null)
 				)
 			);
 		}
@@ -45166,7 +45167,8 @@ const onVesselEnter = (nextRouterState) => {
 		_react2.default.createElement(
 			'div',
 			null,
-			_react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _App2.default })
+			_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice', component: _App2.default }),
+			_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice-Edit', component: _App2.default })
 		)
 	)
 ), document.getElementById('app'));
