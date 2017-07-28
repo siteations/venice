@@ -47,9 +47,9 @@ class App extends Component {
 				{this.props.location.pathname === '/' &&
 					<Frame />
 				}
-				{/*this.props.location.pathname === '/Venice-Edit' &&
+				{this.props.location.pathname === '/Venice-Edit' &&
 					<FrameEdit />
-				*/}
+				}
 				</div>
 				</MuiThemeProvider>
 		)
