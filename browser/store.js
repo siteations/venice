@@ -3,6 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import rootReducer from './react/action-creators/rootReducer';
+//import rootReducer from './react/action-creators/rootReducerNDB';
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

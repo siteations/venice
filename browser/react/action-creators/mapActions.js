@@ -1,4 +1,6 @@
-import mapSites from '../pre-db/mapSites.js';
+import mapSites from '../non-db/mapSites.js';
+
+//DATABASE AND NON-DATABASE VERSION ARE THE SAME
 
 // //-------------------CONSTANTS
 

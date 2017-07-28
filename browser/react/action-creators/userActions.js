@@ -1,3 +1,5 @@
+//only useful in credentials/log-in workflow
+
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 

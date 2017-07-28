@@ -79,8 +79,8 @@ render(
    <Provider store={store}>
      <Router>
        <div>
-  		<Route exact path="/Venice" component={App} />
-  		<Route exact path="/Venice-Edit" component={App} />
+  		<Route path="/" component={App} />
+  		{/*<Route exact path="/Venice-Edit" component={App} />*/}
 	     </div>
      </Router>
    </Provider>,

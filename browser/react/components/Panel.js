@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import Imagetrey from './ImageSlider.js';
 
 import { setPanelSizing } from '../action-creators/panelActions.js';
-import {imageSeries} from '../pre-db/cirTest.js';
+import {imageSeries} from '../non-db/cirTest.js';
+
 
 class PanelBase extends Component {
 	constructor(props) {
@@ -40,19 +41,24 @@ class PanelBase extends Component {
 
     let images = this.props.sites.genImages.filter(images => +images.narrativeId === +obj.id);
     let biblio = this.props.sites.genBiblio.filter(bib => +bib.narrativeId === +obj.id);
-  	console.log(images, biblio, obj);
 
   	return (
   	     <div className={this.props.baseClass} ref="sizeP" id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`}}>
 				    <h3 className="BornholmSandvig" >{(this.props.panel.title && other)? this.props.panel.title : 'Introduction, Biblio, or Credits'}</h3>
 				    <h5>{(this.props.panel.subtitle && other)? this.props.panel.subtitle : 'Secondary Elements'}</h5>
-				    <h4 className="BornholmSandvig">{(obj.title && other)? obj.title : 'intro remarks here'}</h4>
+				    <h4 className="BornholmSandvig">{obj.title}</h4>
               {images.length > 0 &&
                 <Imagetrey image={images} onAnimationEnd={e=> this.refSize(e)} width={this.props.panel.imageWidth} height={(this.props.map.windowSize[1]+6)*0.65} />
               }
 				    <br/>
-            {obj.text && typeof(obj.text)==='string' &&
-              <p>{obj.text}</p>
+            {obj.text && typeof(obj.text)!=='object' &&
+              obj.text.split('/').map((item,i) =>{
+                if (i%2===0){
+                  return <span>{item}</span>
+                } else {
+                  return <span><em>{item}</em></span>
+                }
+              })
             }
             {obj.text && typeof(obj.text)==='object' &&
               obj.text.map(lines=>{
@@ -71,7 +77,6 @@ class PanelBase extends Component {
 
             }
             </ul>
-            <br/>
             {obj.researcherName &&
               <p><span className="Trenda-Bold">Narrative Credits: </span> {obj.researcherName}, {obj.researcherAffiliation}.</p>
             }

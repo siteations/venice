@@ -11,9 +11,15 @@ const Tours = require('../models/tours.js');
 const User = require('../models/user.js');
 const Biblio = require('../models/bibliography.js');
 
+const siteSeed = require('../../browser/react/non-db/sites.json');
+const narrativeSeed = require('../../browser/react/non-db/narratives.json');
+const imageSeed = require('../../browser/react/non-db/images.json');
+const tourSeed = require('../../browser/react/non-db/tours.json');
+const detailSeed = require('../../browser/react/non-db/details.json');
+
 //-------------faked data from pre-db--------------------
 
-const {siteSeed, detailSeed, narrativeSeed, imageSeed, tourSeed, userSeed, biblioSeed } = require ('./cirTest.js');
+const {userSeed, biblioSeed } = require ('./updateSeed.js');
 
 var database = db.sync({force:true}); // for seeding only...
 database.then(()=> { console.log('synced, top-confirmation'); });

@@ -18,17 +18,17 @@ export const spacingFrame = (windowSize, dataCircle, allDetails) => {
 	})
 
 	var height;
-	(windowSize[1]*.75>dataCircle.r*6)? height=dataCircle.r*6 : height=windowSize[1]*.75 ;
-	if (details.length<2) { height=dataCircle.r*1.5 };
+	(windowSize[1]*.75>dataCircle.r*6)? height=dataCircle.r*6 : height=windowSize[1]*.75 ; //
+	//if (details.length<2) { height=dataCircle.r*1.5 };
 
 	var offset;  // this will need adjustment
 	(dataCircle.r/2>20)? offset=20 : offset =  dataCircle.r/2;
-	let size = (height-((details.length-1)*offset))/details.length; //to width, height, radius
+	let size = (height-((3)*offset))/3; //to width, height, radius... constant here: (details.length-1)*offset)/details.length
 	let x= dataCircle.cx-dataCircle.r-offset-size;
 	let cx = dataCircle.cx-dataCircle.r-offset-size/2;
 	let xText = dataCircle.cx-dataCircle.r-offset-size-5;
 
-	let top =dataCircle.cy-height/2;
+	let top = dataCircle.cy-(size*details.length)/2;
 
 	details.forEach((detail,i) =>{
 		let clip={};

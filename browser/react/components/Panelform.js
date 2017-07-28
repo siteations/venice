@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Imagetrey from './ImageSlider.js';
 
 import { setPanelSizing } from '../action-creators/panelActions.js';
-import { imageSeries } from '../pre-db/cirTest.js';
+import { imageSeries } from '../non-db/cirTest.js';
 
 import FormNarrative from './FormNarrative.js';
 import FormDetail from './FormDetail.js';

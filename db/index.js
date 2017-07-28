@@ -33,8 +33,8 @@ var Sequelize = require('sequelize');
 
 //for heroku - postgreSQL with local clone for download
 
-//var databaseURI = 'postgres://localhost:5432/veniceMamp';
-var databaseURI = process.env.DATABASE_URL; //process for heroku node
+var databaseURI = 'postgres://localhost:5432/veniceUpdated'; //update each time the database is updated on heroku
+//var databaseURI = process.env.DATABASE_URL; //process for heroku node
 
 var db = new Sequelize(databaseURI, {
   define: {

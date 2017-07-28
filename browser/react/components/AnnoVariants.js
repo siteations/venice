@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { connect } from 'react-redux';
 
 //---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
-import { cirMain, cirMinor, clusterTest, narrativeTest } from '../pre-db/cirTest.js';
+import { cirMain, cirMinor, clusterTest, narrativeTest } from '../non-db/cirTest.js';
 
 //--------------------------ANNO FRAMEWORK GEOMETRY------------------------------------
 

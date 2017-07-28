@@ -11,14 +11,6 @@ const mapNames= {
 	none: 'no map',
 }
 
-//Georg Braun; Frans Hogenberg: Civitates Orbis Terrarum, Band 1, 1572 (Ausgabe Beschreibung vnd Contrafactur der vornembster Stät der Welt, Köln 1582; [VD16-B7188)
-
-//Map of Venice contained in the Libro di Benedetto Bordone published in 1528
-
-//Giacomo Frácho - Universitätsbibliothek Salzburg, G 66 III (aus dem ehemaligen Wolf-Dietrich-Klebeband Städtebilder; alte Signatur: V.4.A.14);
-
-//carte de Venis au XVe siecle par Erhardum Reüwich de Trajecto et Bernhard von Breydenbach
-
 const mapSites = [
 // presuming auto start, just click to advance, update tour
 	{

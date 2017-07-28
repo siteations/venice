@@ -1,6 +1,8 @@
 //OPTIONS REDUCER
-import axios from 'axios';
-import Promise from 'bluebird';
+// import axios from 'axios';
+// import Promise from 'bluebird';
+
+import * as tourArray from '../non-db/tours.json';
 
 import {saved} from './siteActions.js'; //aws version
 
@@ -153,7 +155,7 @@ export const optionReducer = (prevState = initOptions, action) => {
 		break;
 
 	case GET_CURR_TOUR:
-		newState.currTour = action.tourId;
+		newState.currTour = action.tour;
 		break;
 
 	case SET_ANNO:
@@ -255,14 +257,10 @@ export const updatePanelMid = () => dispatch =>{
 
 
 export const getAllToursThemes = () => dispatch => {
-	const allTours = axios.get('/api/tours')
-			.then(responses => {
-				return responses.data;
-			})
-			.then((results) => {
+
 			var tours={}; //arr to object
 
-	    results.forEach(site=>{
+	    tourArray.forEach(site=>{
 
 	      if (tours[site.tourId]){
 	        var arr = tours[site.tourId];
@@ -273,56 +271,22 @@ export const getAllToursThemes = () => dispatch => {
 	    });
 
 			dispatch(getAllTours(tours));
-		})
-		.catch(console.log);
 
-}
-
-export const setCurrTour = (tour) => dispatch => {
-	console.log('gothere', tour);
-	dispatch(getTour(tour));
 }
 
 export const addTourEntry = (obj) => dispatch => {
 
-	axios.post('/api/tours', obj)
-			.then(responses => {
-				return responses.data;
-			})
-	    .then((site) => {
-	    dispatch(getAllToursThemes());
-	    dispatch(saved(true));
-			})
-	   .catch(console.log);
-
+		//no action - residual function
 }
 
 export const removeTourEntry = (id) => dispatch => {
 
-	axios.delete(`/api/tours/${id}`)
-			.then(responses => {
-				return responses.data;
-			})
-	    .then((site) => {
-	    dispatch(getAllToursThemes());
-	    dispatch(saved(true));
-			})
-	   .catch(console.log);
-
+		//no action - residual function
 }
 
 export const deleteTour = (id) => dispatch => {
 
-	console.log('also got to before call')
-	axios.delete(`/api/tours/all/${id}`)
-			.then(responses => {
-				return responses.data;
-			})
-	    .then((site) => {
-	    dispatch(getAllToursThemes());
-			})
-	   .catch(console.log);
-
+		//no action - residual function
 }
 
 

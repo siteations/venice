@@ -12,7 +12,7 @@ import Tour from './Tour.js';
 
 
 //---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
-import {cirMain} from '../pre-db/cirTest.js';
+import {cirMain} from '../non-db/cirTest.js';
 
 
 //---------------------------ACTION for DISPATCH---------------------------

@@ -9,7 +9,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Chip from 'material-ui/Chip';
 import LayersList from './LayersList.js';
 
-import {panelsOther} from './MapBar.js';
+import {panelsOther} from '../non-db/panelsOther.js';
 
 import {updatePanelNone, updatePanelSmall, updatePanelLarge, updatePanelStart, updatePanelMid} from '../action-creators/optionActions.js';
 import {updateColor, updateAnno, updateDetail} from '../action-creators/optionActions.js';
@@ -32,6 +32,9 @@ const styles = {
 class Header2 extends Component {
     constructor(props){
     super(props);
+    this.state={
+      y:0,
+    };
     this.changePanel= this.changePanel.bind(this);
   }
 
@@ -47,6 +50,39 @@ class Header2 extends Component {
       this.props.updateSite(0);
       this.props.setTitles(panelsOther[val].title);
       this.props.updateNarrative(panelsOther[val].obj);
+
+    } else if (val === 'sites'){
+      //12 is san marco
+
+      let site = this.props.sites.allSites.filter(site=>{
+        return +site.id === 12
+      })[0];
+      let narrative = this.props.sites.genNarratives.filter(site=>{
+        return +site.coreId === 12
+      })[0];
+
+      this.props.updateSite(12);
+      this.props.setTitles(site.name.split('.'));
+      this.props.updateNarrative(narrative);
+
+    } else if (val === 'maps'){
+
+      this.props.panelLarge();
+      this.props.setSpecPanel(val);
+
+      if (val === 'maps' ) {
+        this.props.setColor(true);
+        this.props.setAnno(false);
+        this.props.setDetail(false);
+        //really?
+          var offs=this.props.map.xyOffsets;
+          this.setState({y:offs[1]});
+          if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
+          console.log(offs);
+        //
+      }
+
+
     }
 
 

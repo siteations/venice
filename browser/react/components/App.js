@@ -44,12 +44,12 @@ class App extends Component {
 		return (
 		    <MuiThemeProvider muiTheme={muiTheme} >
 				<div className="container-fluid ">
-				{this.props.location.pathname === '/Venice' &&
+				{this.props.location.pathname === '/' &&
 					<Frame />
 				}
-				{this.props.location.pathname === '/Venice-Edit' &&
+				{/*this.props.location.pathname === '/Venice-Edit' &&
 					<FrameEdit />
-				}
+				*/}
 				</div>
 				</MuiThemeProvider>
 		)

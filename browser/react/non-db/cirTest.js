@@ -32,7 +32,11 @@ export const detailSeed = [
 	{id:1, nameH: 'Customs', srcThumb:'/img/placeholder_01sm.jpg', clusterId: 1, },
 	{id:2, nameH: 'Publications', srcThumb:'/img/placeholder_02sm.jpg', clusterId: 1, },
 	{id:3, nameH: 'Observations', srcThumb:'/img/placeholder_03sm.jpg', clusterId: 1, },
-	{id:4, nameH: 'Dress', srcThumb:'/img/placeholder_05sm.jpg', clusterId: 1, }
+	{id:4, nameH: 'Dress', srcThumb:'/img/placeholder_05sm.jpg', clusterId: 1, },
+	{id:5, nameH: 'Test', srcThumb:'/img/placeholder_01sm.jpg', clusterId: 2, },
+	{id:6, nameH: 'Test', srcThumb:'/img/placeholder_02sm.jpg', clusterId: 2, },
+	{id:7, nameH: 'Test', srcThumb:'/img/placeholder_03sm.jpg', clusterId: 3, }
+
 ];
 
 

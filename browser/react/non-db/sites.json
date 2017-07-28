@@ -1,0 +1,311 @@
+[
+{
+    "id": 1,
+    "cx": 9335,
+    "cy": 5672,
+    "r": 740,
+    "name": "Marriage of the Sea.Bissona Serenissima",
+    "type": "processions",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 2,
+    "cx": 7668,
+    "cy": 5989,
+    "r": 450,
+    "name": "Benedictine Monastery.San Giorgio Maggiore",
+    "type": "monastery",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 3,
+    "cx": 8687,
+    "cy": 4677,
+    "r": 350,
+    "name": "Benedictine Convent.San Zaccaria",
+    "type": "convent",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 4,
+    "cx": 13535,
+    "cy": 4563,
+    "r": 450,
+    "name": "Basilica (main).San Pietro di Castello",
+    "type": "basilica",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 5,
+    "cx": 9747,
+    "cy": 3541,
+    "r": 350,
+    "name": "Franciscan Church and Monastery.San Francesco della Vigna",
+    "type": "monastery",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 6,
+    "cx": 9446,
+    "cy": 4379,
+    "r": 250,
+    "name": "The Greeks.San Giorgio dei Greci (Sant’Antonin)",
+    "type": "non-catholic communities",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 8,
+    "cx": 7972,
+    "cy": 3242,
+    "r": 350,
+    "name": "Dominican Basilica.Basilica dei Santi Giovanni e Paolo",
+    "type": "basilica",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 9,
+    "cx": 7899,
+    "cy": 3109,
+    "r": 250,
+    "name": "Plague Hospital.Santi Giovanni e Paolo",
+    "type": "plague churches",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 11,
+    "cx": 6696,
+    "cy": 3163,
+    "r": 250,
+    "name": "German Lutherans.Il Fondaco dei Tedeschi",
+    "type": "non-catholic communities",
+    "cluster": true,
+    "clusterId": 1
+},
+{
+    "id": 14,
+    "cx": 4325,
+    "cy": 5150,
+    "r": 350,
+    "name": "Basilica and Plague Church.Santa Maria della Salute",
+    "type": "basilica",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 15,
+    "cx": 4023,
+    "cy": 3900,
+    "r": 250,
+    "name": "Augustinian Church and Monastery.Santo Stefano",
+    "type": "monastery",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 16,
+    "cx": 3074,
+    "cy": 5090,
+    "r": 350,
+    "name": "Augustinian Convent.Spirito Santo",
+    "type": "convent",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 17,
+    "cx": 3271,
+    "cy": 6563,
+    "r": 350,
+    "name": "Basilica and Plague Church.Il Redentore",
+    "type": "basilica",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 19,
+    "cx": 3331,
+    "cy": 3195,
+    "r": 250,
+    "name": "Parish Church.San Pantalon",
+    "type": "parish churches",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 20,
+    "cx": 3693,
+    "cy": 2976,
+    "r": 250,
+    "name": "Plague Church and Scuola (confraternity).San Rocco",
+    "type": "plague churches",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 21,
+    "cx": 3839,
+    "cy": 3065,
+    "r": 350,
+    "name": "Franciscan Basilica.Basilica di Santa Maria Gloriosa dei Frari",
+    "type": "basilica",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 22,
+    "cx": 4071,
+    "cy": 2217,
+    "r": 250,
+    "name": "Spanish Presence.San Geremia",
+    "type": "non-catholic communities",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 24,
+    "cx": 5814,
+    "cy": 1623,
+    "r": 350,
+    "name": "Cistercian.Madonna dell'Orto",
+    "type": "monastery",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 25,
+    "cx": 4941,
+    "cy": 2189,
+    "r": 250,
+    "name": "The Turks.Il Fondaco dei Turchi",
+    "type": "non-catholic communities",
+    "cluster": true,
+    "clusterId": 3
+},
+{
+    "id": 10,
+    "cx": 7674,
+    "cy": 3842,
+    "r": 250,
+    "name": "First Printer in Venice. Santa Maria Formosa",
+    "type": "parish churches",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 12,
+    "cx": 7271,
+    "cy": 4563,
+    "r": 450,
+    "name": "Basilica of patron saint of Venice.basilica di San Marco (connected to doge's palace)",
+    "type": "basilica",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 18,
+    "cx": 1547,
+    "cy": 3674,
+    "r": 250,
+    "name": "Parish Church. San Nicolò dei Mendicoli",
+    "type": "parish churches",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 7,
+    "cx": 8474,
+    "cy": 2043,
+    "r": 250,
+    "name": "Camaldolese. San Michele in Isola",
+    "type": "monastery",
+    "cluster": false,
+    "clusterId": null
+},
+{
+    "id": 23,
+    "cx": 4287,
+    "cy": 1684,
+    "r": 350,
+    "name": "The Jewish Ghetto.Il Ghetto",
+    "type": "non-catholic communities",
+    "cluster": true,
+    "clusterId": 4
+},
+{
+    "id": 34,
+    "cx": 6768,
+    "cy": 3848,
+    "r": 0,
+    "name": "Printing Presses.Merceria",
+    "type": "printing",
+    "cluster": false,
+    "clusterId": 0
+},
+{
+    "id": 38,
+    "cx": 4735,
+    "cy": 2942,
+    "r": 193,
+    "name": "The Humanist Printer.Campo Sant' Agostin",
+    "type": "printing",
+    "cluster": false,
+    "clusterId": 0
+},
+{
+    "id": 44,
+    "cx": 7066,
+    "cy": 3588,
+    "r": 104,
+    "name": "The Sessa Family.Campo San Lio",
+    "type": "textual consumption",
+    "cluster": false,
+    "clusterId": 0
+},
+{
+    "id": 45,
+    "cx": 6486,
+    "cy": 4628,
+    "r": 552,
+    "name": "Holy Week Processions.Piazza San Marco",
+    "type": "processions",
+    "cluster": false,
+    "clusterId": 0
+},
+{
+    "id": 46,
+    "cx": 6655,
+    "cy": 3976,
+    "r": 212,
+    "name": "A Printing Hub.Merceria",
+    "type": "printing",
+    "cluster": false,
+    "clusterId": 0
+},
+{
+    "id": 50,
+    "cx": 13439,
+    "cy": 5096,
+    "r": 234,
+    "name": "Tarabotti?.Sant'Anna in Castello",
+    "type": "convent",
+    "cluster": false,
+    "clusterId": 0
+},
+{
+    "id": 41,
+    "cx": 6386,
+    "cy": 3267,
+    "r": 307,
+    "name": "Printing Markets. Rialto",
+    "type": "textual consumption",
+    "cluster": false,
+    "clusterId": 0
+}]

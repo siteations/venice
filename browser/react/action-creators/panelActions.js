@@ -1,4 +1,4 @@
-
+//DATABASE AND NON-DATABASE VERSION ARE THE SAME
 
 // //-------------------CONSTANTS
 
@@ -58,13 +58,6 @@ export const setImageSizes = (sizes) => {
 	};
 };
 
-// export const setBiblioAll = (biblio) => {
-// 	return {
-// 		type: SET_BIBLIOALL,
-// 		biblio,
-// 	}
-// }
-
 
 //-------------------reducers && initial info
 
@@ -72,11 +65,11 @@ const initPanel = {
 	panelSize: [0,0], //width, height
 	panelRatio: 1, // width/height
 
-	title: '',
-	subtitle: '',
+	title: 'Religious Life in Venice',
+	subtitle: 'An Introduction',
 
 	imageWidth: 0,
-	narrObj: {},
+	narrObj: {text:['various paragraphs of text', 'describing the core issues', 'addressed in the overall map', '100-200 words as necessary.'],},
 	// biblioAll: [],
 };
 
@@ -110,10 +103,6 @@ export const panelReducer = (prevState = initPanel, action) => {
 		newState.narrObj = action.narrObj;
 		break;
 
-	// case SET_BIBLIOALL:
-	// 	newState.biblioAll = action.biblio;
-	// 	break;
-
 	default:
 		return prevState;
 	}
@@ -140,69 +129,3 @@ export const setPanelSizing = (size, ratio) => dispatch => {
 	dispatch(setPanelRatio(ratio));
 	dispatch(setImageSizes(size[0]-20));
 }
-
-// export const detailVoyage = (voyage) => {
-
-// 	  let start = voyage.Start;
-// 	  let end = voyage.End;
-// 	  var dates =[];
-// 	  for (let i=+start; i<=+end+1; i++){dates.push(i);};
-
-// 	voyage.Dates = dates;
-// 	voyage.Length = dates.length;
-
-// 	return dispatch => {
-// 		//dispatch(selectVoyage(voyage));
-// 	};
-// };
-
-
-// export const filterCrew = (crew) => { //filters crew into this voyage and other voyages
-
-// 	//insert into selectCrew...
-// 	let currentCnt=0;
-// 	let years =[];
-
-// 	crew.forEach(member=>{
-// 		if (+member.Fstart === +member.Dyear){
-// 			member.voyage = 'current';
-// 			currentCnt++;
-// 		} else {
-// 		if (years.indexOf(+member.Dyear)===-1){
-// 				years.push(+member.Dyear);
-// 			};
-// 			member.voyage = 'other';
-// 		}
-
-// 	})
-
-// 	console.log(years, crew[0].Fstart);
-// 	var diff;
-// 	if (currentCnt===0 && years.length===1){
-// 		crew.forEach(member=> { member.voyage = 'current'; });
-// 	} else if (currentCnt===0 && years.length > 1){
-// 		diff = years.map(year=> {
-// 			return Math.abs(+year - +crew[0].Fstart);
-// 		});
-// 		var year = years[diff.indexOf(Math.min(...diff))];
-
-// 		crew.forEach(member=>{ if (year === +member.Dyear){
-// 			member.voyage = 'current';
-// 			//console.log(member.Fstart, member.Dyear);
-// 			};
-// 		});
-// 	};
-
-// 	var crewC = crew.filter(member=> {return member.voyage === 'current';});
-// 	var crewr = crew.filter(member=> {return member.voyage !== 'current';});
-
-// 	return dispatch => {
-// 		// dispatch(selectCrew(crewC));
-// 		// dispatch(otherCrews(crewOther));
-// 		// dispatch(extendVoyages(years));
-// 	};
-// };
-
-
-
-

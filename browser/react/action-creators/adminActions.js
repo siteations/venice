@@ -1,3 +1,5 @@
+//ONLY USEFUL FOR THE DATABASE VERSION
+
 import axios from 'axios';
 //import { create as createUser } from './users';
 import { browserHistory } from 'react-router';

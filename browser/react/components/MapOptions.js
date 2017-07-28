@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
+import {Tooltip} from 'react-lightweight-tooltip';
 
-import {updateColor, updateAnno, updateDetail} from '../action-creators/optionActions.js';
+import {updateColor, updateAnno, updateDetail, setCurrTour} from '../action-creators/optionActions.js';
 import { tiling, scaleOps, sitesFiltered, centerRescaled, reverseCenter } from '../plug-ins/rawTiles.js';
 
 import {updateZoom, updateTile, updateOffsets, updateCenter, updateCenterScreen, updateWindow, updateWindowOffsets, updateOffsetsResidual, updatePanelOffset} from '../action-creators/mapActions.js';
@@ -29,6 +30,40 @@ const styles = {
   },
 };
 
+const toolstyles = {
+    wrapper: {
+      cursor: 'pointer'
+    },
+    content: {
+    backgroundColor: '#d8d0ba',
+    color: 'black',
+    fontFamily: 'trenda',
+    fontSize: '.75rem',
+  },
+  tooltip: {
+    backgroundColor: '#d8d0ba',
+    borderRadius: '10px',
+    position: 'absolute',
+    zIndex: '99',
+    background: '#000',
+    bottom: '-100%',
+    left: '225%',
+    padding: '5px',
+    transform: 'translateX(0%)',
+  },
+  arrow: {
+    position: 'absolute',
+    width: '0',
+    height: '0',
+    bottom: '25%',
+    right: '103%',
+    marginLeft: '-6px',
+    borderTop: 'solid transparent 8px',
+    borderBottom: 'solid transparent 8px',
+    borderRight: 'solid transparent 8px',
+  },
+};
+
 class MapOps extends Component {
 	constructor(props) {
         super(props);
@@ -39,6 +74,7 @@ class MapOps extends Component {
         this.detailLayers=this.detailLayers.bind(this);
         this.zoom = this.zoom.bind(this);
         this.zoomReset = this.zoomReset.bind(this);
+        this.setTour = this.setTour.bind(this);
     }
 
     zoom(e, type){
@@ -90,6 +126,14 @@ class MapOps extends Component {
 
     }
 
+    setTour(e){
+        e.preventDefault();
+        var tourId=e.target.attributes.value.value;
+        console.log(tourId);
+        this.props.setCurrTour(tourId);
+
+    }
+
     opacityAlt(e,isInputChecked){
         //e.preventDefault();
         this.props.setColor(isInputChecked);
@@ -111,13 +155,26 @@ class MapOps extends Component {
 
 	return (
 	        <div className="mtypeFull center-block text-center">
+                <h5 style={{fontWeight: 'bold'}}>map</h5>
+                <button className="btn btn-default btn-sm bIconSm" onTouchTap={e=>this.zoom(e, 'in')} onClick={e=>this.zoom(e, 'in')}>
+                    <Tooltip content={'zoom in'} styles={toolstyles}>
+                        <span className="glyphicon glyphicon-plus" onTouchTap={e=>this.zoom(e, 'in')} onClick={e=>this.zoom(e, 'in')} ></span>
+                    </Tooltip>
+                </button>
                 <br/>
-                <button className="btn btn-default btn-sm bIconSm" onTouchTap={e=>this.zoom(e, 'in')} onClick={e=>this.zoom(e, 'in')}><span className="glyphicon glyphicon-plus" onTouchTap={e=>this.zoom(e, 'in')} onClick={e=>this.zoom(e, 'in')} ></span></button>
-                <br/>
-                <button className="btn btn-default btn-sm bIconSm" onTouchTap={e=>this.zoom(e, 'out')} onClick={e=>this.zoom(e, 'out')} ><span className="glyphicon glyphicon-minus" onTouchTap={e=>this.zoom(e, 'out')} onClick={e=>this.zoom(e, 'out')}></span></button>
+                <button className="btn btn-default btn-sm bIconSm" onTouchTap={e=>this.zoom(e, 'out')} onClick={e=>this.zoom(e, 'out')} >
+                    <Tooltip content={'zoom out'} styles={toolstyles}>
+                        <span className="glyphicon glyphicon-minus" onTouchTap={e=>this.zoom(e, 'out')} onClick={e=>this.zoom(e, 'out')}></span>
+                    </Tooltip>
+                </button>
                 <h5>zoom</h5>
-                <button className="btn btn-default btn-sm bIconSm" onTouchTap={e=>this.zoomReset(e)} onClick={e=>this.zoomReset(e)} ><span className="glyphicon glyphicon-resize-small" onTouchTap={e=>this.zoomReset(e)} onClick={e=>this.zoomReset(e)}></span></button>
+                <button className="btn btn-default btn-sm bIconSm" onTouchTap={e=>this.zoomReset(e)} onClick={e=>this.zoomReset(e)} >
+                    <Tooltip content={'reset position'} styles={toolstyles}>
+                        <span className="glyphicon glyphicon-resize-small" onTouchTap={e=>this.zoomReset(e)} onClick={e=>this.zoomReset(e)}></span>
+                    </Tooltip>
+                </button>
                 <h5>fit in<br/>window</h5>
+                <h5><em>reset</em></h5>
                 <br/>
                 <div style={styles.root}>
                     <Toggle onToggle={(e,isInputChecked)=>this.opacityAlt(e,isInputChecked)}/>
@@ -135,6 +192,25 @@ class MapOps extends Component {
                 </div>
                 <h5>local<br/>details</h5>
                 <br/>
+                <h5 style={{fontWeight: 'bold'}}>tours</h5>
+                <button className="btn btn-default btn-sm bIconSm" >
+                    <Tooltip content={'tour all processions'} styles={toolstyles}>
+                        <img src='/img/ritual-01.svg' className='bImg' value='1' onTouchTap={e=>this.setTour(e)} />
+                    </Tooltip>
+                </button>
+                <br/>
+                <button className="btn btn-default btn-sm bIconSm" onTouchTap="">
+                    <Tooltip content={'tour all printing sites'} styles={toolstyles}>
+                        <img src='/img/books-01.svg' className='bImg' value='2' onTouchTap={e=>this.setTour(e)} />
+                    </Tooltip>
+                </button>
+                <br/>
+                <button className="btn btn-default btn-sm bIconSm" onTouchTap="">
+                    <Tooltip content={'tour all basilica'} styles={toolstyles}>
+                        <img src='/img/bascilica-01.svg' className='bImg' value='3' onTouchTap={e=>this.setTour(e)} />
+                    </Tooltip>
+                </button>
+
 
                 {/*
 
@@ -193,6 +269,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setCenterScreen: (center) =>{
         dispatch(updateCenterScreen(center));
+    },
+    setCurrTour: (tourId) => {
+        dispatch(setCurrTour(tourId));
     },
   }
 }

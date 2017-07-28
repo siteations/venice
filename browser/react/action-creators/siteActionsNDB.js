@@ -2,7 +2,10 @@ import axios from 'axios';
 import Promise from 'bluebird';
 //---------------------------PRE-DB / PRE-REDUX PLACEHOLDERS---------------------------
 
-//import * as sites from '../non-db/sites.json';
+import * as sites from '../non-db/sites.json';
+import * as details from '../non-db/details.json';
+import * as images from '../non-db/images.json';
+import * as narratives from '../non-db/narratives.json';
 
 // //var cirMain = siteSeed;
 // var cirMinor = detailSeed;

@@ -42,7 +42,7 @@ let mapButtons=[
 	{cn:"nSpc", v:'navigate', src:" " },
 	{cn:"nIcon flex center middle", v:"all layers", src:"/img/all-layers-01.svg" },
 	{cn:"nIcon flex center middle", v:"parish churches", src:"/img/parish-01.svg" },
-	{cn:"nIcon flex center middle", v:"bascilica", src:"/img/bascilica-01.svg" },
+	{cn:"nIcon flex center middle", v:"basilica", src:"/img/bascilica-01.svg" },
 	{cn:"nIcon flex center middle", v:"plague churches", src:"/img/plague-01.svg" },
 	{cn:"nIcon flex center middle", v:"monastery", src:"/img/culture-01.svg" },
 	{cn:"nIcon flex center middle", v:"convent", src:"/img/convent-01.svg" },
@@ -69,10 +69,10 @@ const toolstyles = {
     position: 'absolute',
     zIndex: '99',
     background: '#000',
-    bottom: '-50%',
-    left: '0%',
+    bottom: '-85%',
+    left: '-10%',
     padding: '5px',
-    transform: 'translateX(-105%)',
+    transform: 'translateX(-110%)',
   },
   arrow: {
     position: 'absolute',
@@ -83,7 +83,8 @@ const toolstyles = {
     marginLeft: '-6px',
     borderTop: 'solid transparent 8px',
     borderBottom: 'solid transparent 8px',
-    borderLeft: 'solid #d8d0ba 8px',
+    borderLeft: 'solid transparent 8px',
+    //borderLeft: 'solid #d8d0ba 8px',
   },
 };
 
@@ -225,21 +226,21 @@ class MapBar extends Component{
 		        	<div className="mtypeFull flexcol center">
 		        		{mapButtons.map((each,i)=>{
 
-		        			let imgClass='bImg';
+		        			let imgClass;
 
 		        			if (this.props.options.panelLarge && each.v ==='panel'){
-		        				imgClass='bImg opacity25';
-		        			} else if (this.props.options.panelLarge && each.v ==='panel large'){
-		        				imgClass='bImg';
+		        				imgClass='opacity25';
+		        			} else if (each.v !== 'maps' && this.props.sites.specLayer === 'maps'){
+		        				imgClass='opacity25';
 		        			} else if ((each.v ==='panel large' && !this.props.options.panelLarge)||(each.v ==='panel' && this.props.options.panelNone)) {
-		        				imgClass='bImg rotate';
+		        				imgClass='rotate';
 		        			};
 
 		        			return (
 										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onTouchTap={this.layerPanel} >
 											<Tooltip content={'toggle '+ each.v} styles={toolstyles}>
 											{each.src !== ' ' &&
-												<img src={each.src} className={imgClass} value={each.v} />
+												<img src={each.src} className={`bImg ${imgClass}`} value={each.v} />
 											}
 											</Tooltip>
 										</div>
