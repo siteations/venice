@@ -44,7 +44,7 @@ class App extends Component {
 		return (
 		    <MuiThemeProvider muiTheme={muiTheme} >
 				<div className="container-fluid ">
-				{this.props.location.pathname === '/' &&
+				{this.props.location.pathname === '/Venice' &&
 					<Frame />
 				}
 				{this.props.location.pathname === '/Venice-Edit' &&
