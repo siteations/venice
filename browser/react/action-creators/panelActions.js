@@ -2,6 +2,8 @@
 
 // //-------------------CONSTANTS
 
+import {panelsOther} from '../non-db/panelsOther.js';
+
 
 //responding to resizing
 export const SET_PANELSIZE = 'SET_PANELSIZE';
@@ -69,7 +71,7 @@ const initPanel = {
 	subtitle: 'An Introduction',
 
 	imageWidth: 0,
-	narrObj: {text:['various paragraphs of text', 'describing the core issues', 'addressed in the overall map', '100-200 words as necessary.'],},
+	narrObj: panelsOther['intro']['obj'],
 	// biblioAll: [],
 };
 

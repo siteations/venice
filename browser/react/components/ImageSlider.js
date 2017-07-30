@@ -61,7 +61,7 @@ class Image extends Component {
 					}
 				</div>
 			</div>
-			<h5><span className="Trenda-Bold">Image: </span>{this.props.image[this.state.active].caption},
+			<h5><span className="Trenda-Bold">Image: </span>{this.props.image[this.state.active].caption}.
 
 			{biblio.length>0 &&
 						<span className="small"> {biblio[0].author} <a href={biblio[0].link}><em>{biblio[0].title}</em></a> {biblio[0].published} {biblio[0].physical} {biblio[0].page}</span>

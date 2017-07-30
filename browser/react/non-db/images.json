@@ -76,5 +76,124 @@
     "narrativeId": 7,
     "src": "/img/TurksSultano%20dei%20turchi_case_w_93_94_pg_375v_376r_o2.png",
     "caption": "Turkish Sultan by Vecellio"
-}
-]
+},
+{
+    "id": 14,
+    "narrativeId": 32,
+    "src": "/img/barbari_novacco_8f_7_crop.jpg",
+    "caption": "Venetie (detail) by Barbari"
+},
+{
+    "id": 15,
+    "narrativeId": 24,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Historia Naturalis by Pliny"
+},
+{
+    "id": 16,
+    "narrativeId": 33,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "De Civitate Dei by Augustine"
+},
+{
+    "id": 17,
+    "narrativeId": 31,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Image to come."
+},
+{
+    "id": 18,
+    "narrativeId": 34,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Le Giocose Moderne et Facetissime by Andrea Calmo"
+},
+{
+    "id": 19,
+    "narrativeId": 35,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Predica del Reverendo Monsignor Cornelio Vescovo di Bitonto by Cornelio Musso"
+},
+{
+    "id": 20,
+    "narrativeId": 36,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "L’arte Oratoria by Francesco Sansovino"
+},
+{
+    "id": 21,
+    "narrativeId": 44,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Le Poesie by Girolamo Preti"
+},
+{
+    "id": 22,
+    "narrativeId": 37,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Sonetti Canzoni & Triomphi by Francesco Petrarca"
+},
+{
+    "id": 23,
+    "narrativeId": 38,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Scotto and Gardano images"
+},
+{
+    "id": 24,
+    "narrativeId": 38,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Scotto and Gardano images 2 (etc.)"
+},
+{
+    "id": 25,
+    "narrativeId": 26,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Opera by Angelo Poliziano"
+},
+{
+    "id": 26,
+    "narrativeId": 39,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Poetae Christiani veteres"
+},
+{
+    "id": 27,
+    "narrativeId": 40,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Works by Juvenal"
+},
+{
+    "id": 28,
+    "narrativeId": 41,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Caelii Lactantii Fermiani diuina-rum institutionum Libri septem by Lactantius. L"
+},
+{
+    "id": 29,
+    "narrativeId": 42,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Epitome Orthographiae by Aldo Manuzio"
+},
+{
+    "id": 30,
+    "narrativeId": 42,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Inscriptiones Antiquae Augustae Vindelicorum"
+},
+{
+    "id": 31,
+    "narrativeId": 27,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Leopold of Austria"
+},
+{
+    "id": 32,
+    "narrativeId": 43,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "Il Terentio Latino by Terence"
+},
+{
+    "id": 33,
+    "narrativeId": 25,
+    "src": "/img/PLACEHOLDER.jpg",
+    "caption": "De Evangelica Praeparatione by Eusebius"
+}]

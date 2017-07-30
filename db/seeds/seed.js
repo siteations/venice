@@ -19,7 +19,7 @@ const detailSeed = require('../../browser/react/non-db/details.json');
 
 //-------------faked data from pre-db--------------------
 
-const {userSeed, biblioSeed } = require ('./updateSeed.js');
+const {userSeed, biblioSeed} = require ('./updateSeed.js');
 
 var database = db.sync({force:true}); // for seeding only...
 database.then(()=> { console.log('synced, top-confirmation'); });

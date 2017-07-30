@@ -1,1 +1,67 @@
-[]
+[
+	{
+		"id":1,
+		"nameH": "Final Publication",
+		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"clusterId": 2
+	},
+	{
+		"id":2,
+		"nameH": "Bertacagno Printshop",
+		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"clusterId": 5
+	},
+	{
+		"id":3,
+		"nameH": "Arrivabene Bookshop",
+		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"clusterId": 5
+	},
+	{
+		"id":4,
+		"nameH": "Griffio Publishers",
+		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"clusterId": 5
+	},
+	{
+		"id":5,
+		"nameH": "Music Printing",
+		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"clusterId": 6
+	},
+	{
+		"id":6,
+		"nameH": "Aldine Devices",
+		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"clusterId": 7
+	},
+	{
+		"id":7,
+		"nameH": "Aldine Italics",
+		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"clusterId": 7
+	},
+	{
+		"id":8,
+		"nameH": "Aldus' Eulogy",
+		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"clusterId": 7
+	},
+	{
+		"id":9,
+		"nameH": "Aldus Press Booklists",
+		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"clusterId": 7
+	},
+	{
+		"id":10,
+		"nameH": "Valgrisi's San Marco Bookshop",
+		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"clusterId": 5
+	},
+	{
+		"id":11,
+		"nameH": "The Signs of the Rialto",
+		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"clusterId": 6
+	}]

@@ -2711,13 +2711,15 @@ var deleteTour = exports.deleteTour = function deleteTour(id) {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-//DATABASE AND NON-DATABASE VERSION ARE THE SAME
+exports.setPanelSizing = exports.setNarr = exports.setTitlesCore = exports.panelReducer = exports.setImageSizes = exports.setNarrObj = exports.setSubtitle = exports.setTitle = exports.setPanelRatio = exports.setPanelSize = exports.SET_IMAGESIZES = exports.SET_NARROBJ = exports.SET_SUBTITLE = exports.SET_TITLE = exports.SET_PANELRATIO = exports.SET_PANELSIZE = undefined;
+
+var _panelsOther = __webpack_require__(333);
+
+//responding to resizing
+var SET_PANELSIZE = exports.SET_PANELSIZE = 'SET_PANELSIZE'; //DATABASE AND NON-DATABASE VERSION ARE THE SAME
 
 // //-------------------CONSTANTS
 
-
-//responding to resizing
-var SET_PANELSIZE = exports.SET_PANELSIZE = 'SET_PANELSIZE';
 var SET_PANELRATIO = exports.SET_PANELRATIO = 'SET_PANELRATIO';
 
 var SET_TITLE = exports.SET_TITLE = 'SET_TITLE';
@@ -2781,7 +2783,7 @@ var initPanel = {
 	subtitle: 'An Introduction',
 
 	imageWidth: 0,
-	narrObj: { text: ['various paragraphs of text', 'describing the core issues', 'addressed in the overall map', '100-200 words as necessary.'] }
+	narrObj: _panelsOther.panelsOther['intro']['obj']
 };
 
 var panelReducer = exports.panelReducer = function panelReducer() {
@@ -8693,7 +8695,7 @@ var Image = function (_Component) {
             'Image: '
           ),
           this.props.image[this.state.active].caption,
-          ',',
+          '.',
           biblio.length > 0 && _react2.default.createElement(
             'span',
             { className: 'small' },
@@ -18907,7 +18909,6 @@ exports.default = LayersList;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.panelsOther = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -18933,6 +18934,8 @@ var _mapActions = __webpack_require__(39);
 
 var _panelActions = __webpack_require__(26);
 
+var _panelsOther = __webpack_require__(333);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18942,26 +18945,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 //connect later?
 
-
-var panelsOther = exports.panelsOther = {
-	intro: {
-		title: ['Religious Life in Venice', 'An Introduction'],
-		obj: { text: ['various paragraphs of text', 'describing the core issues', 'addressed in the overall map', '100-200 words as necessary.'] }
-	},
-	bibliography: {
-		title: ['Religious Life in Venice', 'A Bibliography'],
-		obj: { text: ['adjust to pull in bibliography entries', 'here', 'for', 'display.'] }
-	},
-	credits: {
-		title: ['Religious Life in Venice', 'About & Credits'],
-		obj: { text: ['adjust to pull in researcher credits', 'here', 'for', 'display.'] }
-	},
-	guide: {
-		title: ['Religious Life in Venice', 'Navigation Guide'],
-		obj: { text: ['adjust to show images of', 'annotated buttons', 'and other content', 'to aid in navigating display.'] }
-	}
-
-};
 
 var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", src: '/img/intro-01.svg' }, { cn: "nIcon flex center middle", v: "maps", src: "/img/maps-01.svg" }, { cn: "nSpc", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "panel", src: "/img/arrow1-01.svg" }, { cn: "nIcon flex center middle", v: "panel large", src: "/img/arrow2-01.svg" }, { cn: "nSpc", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "all layers", src: "/img/all-layers-01.svg" }, { cn: "nIcon flex center middle", v: "parish churches", src: "/img/parish-01.svg" }, { cn: "nIcon flex center middle", v: "basilica", src: "/img/bascilica-01.svg" }, { cn: "nIcon flex center middle", v: "plague churches", src: "/img/plague-01.svg" }, { cn: "nIcon flex center middle", v: "monastery", src: "/img/culture-01.svg" }, { cn: "nIcon flex center middle", v: "convent", src: "/img/convent-01.svg" }, { cn: "nIcon flex center middle", v: "non-catholic communities", src: "/img/non-catholic-01.svg" }, { cn: "nIcon flex center middle", v: "processions", src: "/img/ritual-01.svg" }, { cn: "nIcon flex center middle", v: "printing", src: "/img/books-01.svg" }, { cn: "nIcon flex center middle", v: "textual consumption", src: "/img/ephemera-01.svg" }, { cn: "nSpcSm", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "bibliography", src: "/img/menu-01.svg" }, { cn: "nIcon flex center middle", v: "credits", src: "/img/menu-01.svg" }];
 
@@ -19053,19 +19036,19 @@ var MapBar = function (_Component) {
 				this.props.panelSmall();
 				this.props.setSpecPanel(val);
 				this.props.updateSite(0);
-				this.props.setTitles(panelsOther[val].title);
-				this.props.updateNarrative(panelsOther[val].obj);
+				this.props.setTitles(_panelsOther.panelsOther[val].title);
+				this.props.updateNarrative(_panelsOther.panelsOther[val].obj);
 			} else if ((val === 'intro' || val === 'bibliography' || val === 'credits') && this.props.options.panelLarge) {
 				this.props.panelSmall();
 				this.props.setSpecPanel(val);
 				this.props.updateSite(0);
-				this.props.setTitles(panelsOther[val].title);
-				this.props.updateNarrative(panelsOther[val].obj);
+				this.props.setTitles(_panelsOther.panelsOther[val].title);
+				this.props.updateNarrative(_panelsOther.panelsOther[val].obj);
 			} else if ((val === 'intro' || val === 'bibliography' || val === 'credits') && this.props.options.panelSmall) {
 				this.props.setSpecPanel(val);
 				this.props.updateSite(0);
-				this.props.setTitles(panelsOther[val].title);
-				this.props.updateNarrative(panelsOther[val].obj);
+				this.props.setTitles(_panelsOther.panelsOther[val].title);
+				this.props.updateNarrative(_panelsOther.panelsOther[val].obj);
 			}
 
 			//map/intro/biblio options
@@ -43465,12 +43448,12 @@ var Header2 = function (_Component) {
             _react2.default.createElement(
               'span',
               { className: 'texta m10 bNav', value: 'credits', onTouchTap: this.changePanel },
-              'About This Site'
+              'Research Credits'
             ),
             _react2.default.createElement(
               'span',
               { className: 'texta m10 bNav', value: 'guide', onTouchTap: this.changePanel },
-              'Navigation Guide'
+              'About This Site'
             )
           )
         )
@@ -45193,8 +45176,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 var panelsOther = exports.panelsOther = {
 	intro: {
-		title: ['Religious Life in Venice', 'An Introduction'],
-		obj: { text: ['various paragraphs of text', 'describing the core issues', 'addressed in the overall map', '100-200 words as necessary.'] }
+		title: ['Religious Life in Venice', 'Cosmopolitan Contexts: Printing & Religious Life in Venice'],
+		obj: {
+			text: ['Within fifteen years of the publication of Gutenberg’s Bible in Mainz, Germany, printers began to spread out across Europe. By the 1460s, print shops had been set up in Venice, all run by craftsmen who had immigrated there in search of work. While these printers were no doubt drawn to the intellectual community of scholars and teachers in Venice, they also would have been attracted to its cosmopolitanism. Venice incorporated residential communities from many cultures, as well as travelers and merchants who regularly visited the city.', 'Paragraph on larger cosmopolitan context.', 'By the mid-16th century, Venice was the powerhouse of printing in Europe. Printers produced all kinds of books, from large, elaborate folios to small, portable books meant for personal study. They also produced a wide variety of ephemera -- inexpensive single sheets that provided news or entertainment and were not intended to be saved. Some booksellers maintained upscale shops while others peddled their wares from a stall or simply stood on Rialto Bridge calling out to potential customers. Essentially, books, and their makers and sellers, were as varied as the inhabitants of and travelers to Venice.', 'The material included here is not a complete survey of the Venetian book trade or religious communities of the period, but works to provide a glimpse of how printers, publishers, and booksellers shaped – and were shaped by – religious, political, intellectual, and social life in Venice.']
+		}
 	},
 	bibliography: {
 		title: ['Religious Life in Venice', 'A Bibliography'],

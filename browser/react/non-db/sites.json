@@ -84,7 +84,7 @@
     "cx": 6696,
     "cy": 3163,
     "r": 250,
-    "name": "German Lutherans.Il Fondaco dei Tedeschi",
+    "name": "German Presence.Il Fondaco dei Tedeschi",
     "type": "non-catholic communities",
     "cluster": true,
     "clusterId": 1
@@ -154,7 +154,7 @@
     "cx": 3839,
     "cy": 3065,
     "r": 350,
-    "name": "Franciscan Basilica.Basilica di Santa Maria Gloriosa dei Frari",
+    "name": "A Franciscan Center.Santa Maria Gloriosa dei Frari",
     "type": "basilica",
     "cluster": false,
     "clusterId": null
@@ -196,8 +196,8 @@
     "r": 250,
     "name": "First Printer in Venice. Santa Maria Formosa",
     "type": "parish churches",
-    "cluster": false,
-    "clusterId": null
+    "cluster": true,
+    "clusterId": 2
 },
 {
     "id": 50,
@@ -256,8 +256,8 @@
     "r": 0,
     "name": "Printing Presses.Merceria",
     "type": "printing",
-    "cluster": false,
-    "clusterId": 0
+    "cluster": true,
+    "clusterId": 5
 },
 {
     "id": 38,
@@ -266,8 +266,8 @@
     "r": 193,
     "name": "The Humanist Printer.Campo Sant' Agostin",
     "type": "printing",
-    "cluster": false,
-    "clusterId": 0
+    "cluster": true,
+    "clusterId": 7
 },
 {
     "id": 44,
@@ -296,8 +296,8 @@
     "r": 212,
     "name": "A Printing Hub.Merceria",
     "type": "printing",
-    "cluster": false,
-    "clusterId": 0
+    "cluster": true,
+    "clusterId": 5
 },
 {
     "id": 41,
@@ -305,6 +305,16 @@
     "cy": 3267,
     "r": 307,
     "name": "Printing Markets. Rialto",
+    "type": "textual consumption",
+    "cluster": true,
+    "clusterId": 6
+},
+{
+    "id": 51,
+    "cx": 12672,
+    "cy": 6516,
+    "r": 432,
+    "name": "Traveling Cartography.The Consumption of Maps",
     "type": "textual consumption",
     "cluster": false,
     "clusterId": 0
