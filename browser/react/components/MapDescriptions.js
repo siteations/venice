@@ -50,22 +50,32 @@ class PanelMap extends Component {
               </h5>
             </div>
           </div>
-
+          {obj.id>2 &&
             <div className="row">
               <div className="col-md-3 center-block text-center">
                 <div className="bIcon text-center inlineBlock" ><img src={obj.src} style={{borderRadius: '5px'}}/></div>
-                <span>{obj.detail}</span>
               </div>
               <div className="col-md-9">
-                {obj.id>2 &&
     				    <p>{obj.narrative}</p>
-                }
-                {obj.id<3 &&
-                <p className="large">{obj.narrative}</p>
-                }
     				    <br/>
               </div>
             </div>
+          }
+          {obj.id<3 &&
+              obj.narrative.map((item, i)=>{
+                return (
+             <div className="row">
+              <div className="col-md-3 center-block text-center">
+                <div className="bIcon text-center inlineBlock" ><img src={obj.src[i]} style={{borderRadius: '5px'}}/></div>
+              </div>
+              <div className="col-md-9">
+                <p>{item}</p>
+                <br/>
+              </div>
+            </div>
+              )
+            })
+          }
 				</div>
 
   	)

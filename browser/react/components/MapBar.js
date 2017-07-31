@@ -17,8 +17,8 @@ import {panelsOther} from '../non-db/panelsOther.js';
 
 let mapButtons=[
 	{cn:"nIcon flex center middle", v:"intro", src:'/img/intro-01.svg' },
+	{cn:"nIcon flex center middle", v:"prints", src:"/img/print-01.svg" },
 	{cn:"nIcon flex center middle", v:"maps", src:"/img/maps-01.svg" },
-	{cn:"nIcon flex center middle", v:"prints", src:"/img/maps-01.svg" },
 	{cn:"nSpc", v:'navigate', src:" " },
 	{cn:"nIcon flex center middle", v:"panel", src:"/img/arrow1-01.svg" },
 	{cn:"nIcon flex center middle", v:"panel large", src:"/img/arrow2-01.svg" },
@@ -35,7 +35,7 @@ let mapButtons=[
 	{cn:"nIcon flex center middle", v:"textual consumption", src:"/img/ephemera-01.svg" },
 	{cn:"nSpcSm", v:'navigate', src:" " },
 	{cn:"nIcon flex center middle", v:"bibliography", src:"/img/menu-01.svg" },
-	{cn:"nIcon flex center middle", v:"credits", src:"/img/menu-01.svg" },
+	{cn:"nIcon flex center middle", v:"credits", src:"/img/credits-01.svg" },
 ];
 
 const toolstyles = {

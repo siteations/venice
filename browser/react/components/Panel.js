@@ -7,6 +7,8 @@ import Imagetrey from './ImageSlider.js';
 import { setPanelSizing } from '../action-creators/panelActions.js';
 import {imageSeries} from '../non-db/cirTest.js';
 
+import About from './About.js';
+
 
 class PanelBase extends Component {
 	constructor(props) {
@@ -82,6 +84,9 @@ class PanelBase extends Component {
             {obj.researcherName &&
               <p><span className="Trenda-Bold">Narrative Credits: </span> {obj.researcherName}, {obj.researcherAffiliation}.</p>
             }
+            {/*this.props.sites.specLayer === 'credits' &&
+              <About />
+            */}
 				</div>
   	)
 

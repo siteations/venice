@@ -125,7 +125,7 @@ class Header2 extends Component {
                           <div className="row flex around" style={{marginBottom:'5px'}}>
                             <span className="texta m10 bNav" value="sites" onTouchTap={this.changePanel}>Sited Practices</span>
                             <span className="texta m10 bNav" value="bibliography" onTouchTap={this.changePanel}>Bibliography</span>
-                            <span className="texta m10 bNav" value="credits" onTouchTap={this.changePanel}>About This Site</span>
+                            <span className="texta m10 bNav" value="credits" onTouchTap={this.changePanel}>Research Credits</span>
                           </div>
                         </div>
 	        	{/*<div className="col-lg-1">

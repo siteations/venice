@@ -414,7 +414,7 @@ class FooterSlides extends Component {
                                 key = {site.id}
                                 onTouchTap={e=>this.setSite(e)} >
                                  <Tooltip content={`click for: ${site.name}`} styles={toolstyles2}>
-                                <img src={site.src}
+                                <img src={(typeof(site.src)==='string')? site.src : site.src[+site.id-1]}
                                 style={{borderRadius: '5px'}}
                                 value={site.id} />
                                 </Tooltip>
