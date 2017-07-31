@@ -18,6 +18,7 @@ import {panelsOther} from '../non-db/panelsOther.js';
 let mapButtons=[
 	{cn:"nIcon flex center middle", v:"intro", src:'/img/intro-01.svg' },
 	{cn:"nIcon flex center middle", v:"maps", src:"/img/maps-01.svg" },
+	{cn:"nIcon flex center middle", v:"prints", src:"/img/maps-01.svg" },
 	{cn:"nSpc", v:'navigate', src:" " },
 	{cn:"nIcon flex center middle", v:"panel", src:"/img/arrow1-01.svg" },
 	{cn:"nIcon flex center middle", v:"panel large", src:"/img/arrow2-01.svg" },
@@ -115,14 +116,14 @@ class MapBar extends Component{
 			this.props.panelNone();
 		}
 
-		else if ((val === 'intro' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelNone)){
+		else if ((val === 'intro' || val === 'prints' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelNone)){
 			this.props.panelSmall();
 			this.props.setSpecPanel(val);
 			this.props.updateSite(0);
 			this.props.setTitles(panelsOther[val].title);
 			this.props.updateNarrative(panelsOther[val].obj);
 		}
-		else if ((val === 'intro' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelLarge)){
+		else if ((val === 'intro' || val === 'prints' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelLarge)){
 			this.props.panelSmall();
 			this.props.setSpecPanel(val);
 			this.props.updateSite(0);
@@ -130,7 +131,7 @@ class MapBar extends Component{
 			this.props.updateNarrative(panelsOther[val].obj);
 		}
 
-		else if ((val === 'intro' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelSmall)){
+		else if ((val === 'intro' || val === 'prints' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelSmall)){
 			this.props.setSpecPanel(val);
 			this.props.updateSite(0);
 			this.props.setTitles(panelsOther[val].title);
@@ -190,7 +191,7 @@ class MapBar extends Component{
 		} else if (val==='all layers' && this.props.sites.currLayers.length > 0){
 			this.props.loadSelectAll('clear');
 			this.props.setSpecPanel('');
-		} else if (val!=='panel' && val!=='panel large' && val!=='intro' && val!=='biblio' && val!=='maps'&& val!=='credits'){ //individual layers
+		} else if (val!=='panel' && val!=='panel large' && val!=='intro' && val !== 'prints' && val!=='biblio' && val!=='maps'&& val!=='credits'){ //individual layers
 			if (this.props.sites.currLayers.indexOf(val)<0){ //not in add
 					this.props.addSelectOne(val);
 					this.props.setSpecPanel('');

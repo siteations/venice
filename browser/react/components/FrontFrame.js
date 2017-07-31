@@ -95,7 +95,7 @@ class Frame extends Component {
 			        		<MapOptions />
 				        	<MapSVG baseClass="mPart mainMaps" />
 				        	<MapBar text={this.state.button} hover={this.hoverName} out={this.nav} />
-				        	<Panel baseClass="panelOpen" />
+				        	<Panel baseClass="panelOpenPart" />
 			        	</div>
 			        }
 			        {this.props.options.panelSmall && !this.props.options.panelMid &&

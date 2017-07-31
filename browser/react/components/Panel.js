@@ -13,6 +13,7 @@ class PanelBase extends Component {
         super(props);
         this.state = {
           site: this.props.sites.currSite,
+          size: [430,703],
         }
   }
 
@@ -27,6 +28,7 @@ class PanelBase extends Component {
   	let width = sele.clientWidth;
   	let height = sele.clientHeight;
   	this.props.updatePanelSize([width, height], width/height);
+    this.setState({size:[width, height]});
   }
 
   refImages(img){
@@ -48,7 +50,7 @@ class PanelBase extends Component {
 				    <h5>{(this.props.panel.subtitle && other)? this.props.panel.subtitle : 'Secondary Elements'}</h5>
 				    <h4 className="BornholmSandvig">{obj.title}</h4>
               {images.length > 0 &&
-                <Imagetrey image={images} onAnimationEnd={e=> this.refSize(e)} width={this.props.panel.imageWidth} height={(this.props.map.windowSize[1]+6)*0.65} />
+                <Imagetrey image={images} onAnimationEnd={e=> this.refSize(e)} width={this.state.size[0]} height={(this.props.map.windowSize[1]+6)*0.65} />
               }
 				    <br/>
             {obj.text && typeof(obj.text)!=='object' &&

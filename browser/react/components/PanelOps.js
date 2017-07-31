@@ -10,7 +10,9 @@ import MapDescriptions from './MapDescriptions.js';
 class PanelB extends Component {
 	constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+
+        };
   }
 
   componentDidMount() {

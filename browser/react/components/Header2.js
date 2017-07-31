@@ -42,9 +42,12 @@ class Header2 extends Component {
     e.preventDefault();
    let val = (e.target.attributes.value.value);
 
-   if ((val === 'intro' || val === 'bibliography'|| val === 'credits' || val === 'guide')){
+   if ((val === 'intro' || val === 'bibliography'|| val === 'credits' || val === 'prints')){
 
       if (!this.props.options.panelSmall){this.props.panelSmall()};
+      this.props.setColor(false);
+      this.props.setAnno(true);
+      this.props.setDetail(true);
 
       this.props.setSpecPanel(val);
       this.props.updateSite(0);
@@ -52,6 +55,12 @@ class Header2 extends Component {
       this.props.updateNarrative(panelsOther[val].obj);
 
     } else if (val === 'sites'){
+      if (!this.props.options.panelSmall){this.props.panelSmall()};
+      this.props.setColor(false);
+      this.props.setAnno(true);
+      this.props.setDetail(true);
+
+      this.props.setSpecPanel('');
       //12 is san marco
 
       let site = this.props.sites.allSites.filter(site=>{
@@ -67,6 +76,7 @@ class Header2 extends Component {
 
     } else if (val === 'maps'){
 
+      if (val !== this.props.sites.specLayer){
       this.props.panelLarge();
       this.props.setSpecPanel(val);
 
@@ -80,7 +90,20 @@ class Header2 extends Component {
           if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
           console.log(offs);
         //
+        }
+      } else {
+        this.props.panelSmall();
+        this.props.setSpecPanel('intro');
+          this.props.setColor(false);
+          this.props.setAnno(true);
+          this.props.setDetail(true);
+
+          var offs=this.props.map.xyOffsets;
+          var y = this.state.y;
+          offs[1]=y ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);
+          console.log(offs);
       }
+
     }
 
   }
@@ -96,13 +119,13 @@ class Header2 extends Component {
                         <div className="col-xs-4">
                           <div className="row flex around" style={{marginTop:'5px'}}>
                             <span className="texta m10 bNav" value="intro" onTouchTap={this.changePanel} >An Introduction</span>
-                            <span className="texta m10 bNav" value="sites" onTouchTap={this.changePanel}>Sited Practices</span>
+                            <span className="texta m10 bNav" value="prints" onTouchTap={this.changePanel}>Printing Context</span>
                             <span className="texta m10 bNav" value="maps" onTouchTap={this.changePanel}>Cartographic Context</span>
                           </div>
                           <div className="row flex around" style={{marginBottom:'5px'}}>
+                            <span className="texta m10 bNav" value="sites" onTouchTap={this.changePanel}>Sited Practices</span>
                             <span className="texta m10 bNav" value="bibliography" onTouchTap={this.changePanel}>Bibliography</span>
-                            <span className="texta m10 bNav" value="credits" onTouchTap={this.changePanel}>Research Credits</span>
-                            <span className="texta m10 bNav" value="guide" onTouchTap={this.changePanel}>About This Site</span>
+                            <span className="texta m10 bNav" value="credits" onTouchTap={this.changePanel}>About This Site</span>
                           </div>
                         </div>
 	        	{/*<div className="col-lg-1">
