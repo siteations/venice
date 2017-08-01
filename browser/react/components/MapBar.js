@@ -15,14 +15,15 @@ import {setNarr, setTitlesCore} from '../action-creators/panelActions.js';
 
 import {panelsOther} from '../non-db/panelsOther.js';
 
-let mapButtons=[
+let mapButtons0=[
 	{cn:"nIcon flex center middle", v:"intro", src:'/img/intro-01.svg' },
 	{cn:"nIcon flex center middle", v:"prints", src:"/img/print-01.svg" },
-	{cn:"nIcon flex center middle", v:"maps", src:"/img/maps-01.svg" },
-	{cn:"nSpc", v:'navigate', src:" " },
-	{cn:"nIcon flex center middle", v:"panel", src:"/img/arrow1-01.svg" },
-	{cn:"nIcon flex center middle", v:"panel large", src:"/img/arrow2-01.svg" },
-	{cn:"nSpc", v:'navigate', src:" " },
+	{cn:"nIcon flex center middle", v:"maps", src:"/img/maps-01.svg" }
+	];
+	// {cn:"nSpc", v:'navigate', src:" " },
+	// {cn:"nIcon flex center middle", v:"panel", src:"/img/arrow1-01.svg" },
+	// {cn:"nIcon flex center middle", v:"panel large", src:"/img/arrow2-01.svg" },
+let mapButtons1=[
 	{cn:"nIcon flex center middle", v:"all layers", src:"/img/all-layers-01.svg" },
 	{cn:"nIcon flex center middle", v:"parish churches", src:"/img/parish-01.svg" },
 	{cn:"nIcon flex center middle", v:"basilica", src:"/img/bascilica-01.svg" },
@@ -32,10 +33,12 @@ let mapButtons=[
 	{cn:"nIcon flex center middle", v:"non-catholic communities", src:"/img/non-catholic-01.svg" },
 	{cn:"nIcon flex center middle", v:"processions", src:"/img/ritual-01.svg" },
 	{cn:"nIcon flex center middle", v:"printing", src:"/img/books-01.svg" },
-	{cn:"nIcon flex center middle", v:"textual consumption", src:"/img/ephemera-01.svg" },
-	{cn:"nSpcSm", v:'navigate', src:" " },
+	{cn:"nIcon flex center middle", v:"textual consumption", src:"/img/ephemera-01.svg" }
+]
+
+let mapButtons2=[
 	{cn:"nIcon flex center middle", v:"bibliography", src:"/img/menu-01.svg" },
-	{cn:"nIcon flex center middle", v:"credits", src:"/img/credits-01.svg" },
+	{cn:"nIcon flex center middle", v:"credits", src:"/img/credits-01.svg" }
 ];
 
 const toolstyles = {
@@ -206,8 +209,59 @@ class MapBar extends Component{
 
 	render() {
 			return (
-		        	<div className="mtypeFull flexcol center">
-		        		{mapButtons.map((each,i)=>{
+		        	<div className="mtypeFull flexcol center center-block text-center">
+		        		<h5 style={{fontWeight: 'bold'}}>intros</h5>
+		        		{mapButtons0.map((each,i)=>{
+
+		        			let imgClass;
+
+		        			if (this.props.options.panelLarge && each.v ==='panel'){
+		        				imgClass='opacity25';
+		        			} else if (each.v !== 'maps' && this.props.sites.specLayer === 'maps'){
+		        				imgClass='opacity25';
+		        			} else if ((each.v ==='panel large' && !this.props.options.panelLarge)||(each.v ==='panel' && this.props.options.panelNone)) {
+		        				imgClass='rotate';
+		        			};
+
+		        			return (
+										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onTouchTap={this.layerPanel} >
+											<Tooltip content={'toggle '+ each.v} styles={toolstyles}>
+											{each.src !== ' ' &&
+												<img src={each.src} className={`bImg ${imgClass}`} value={each.v} />
+											}
+											</Tooltip>
+										</div>
+		        			)
+		        		})
+		        		}
+		        		<br/>
+		        		<h5 style={{fontWeight: 'bold'}}>layers</h5>
+		        		{mapButtons1.map((each,i)=>{
+
+		        			let imgClass;
+
+		        			if (this.props.options.panelLarge && each.v ==='panel'){
+		        				imgClass='opacity25';
+		        			} else if (each.v !== 'maps' && this.props.sites.specLayer === 'maps'){
+		        				imgClass='opacity25';
+		        			} else if ((each.v ==='panel large' && !this.props.options.panelLarge)||(each.v ==='panel' && this.props.options.panelNone)) {
+		        				imgClass='rotate';
+		        			};
+
+		        			return (
+										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onTouchTap={this.layerPanel} >
+											<Tooltip content={'toggle '+ each.v} styles={toolstyles}>
+											{each.src !== ' ' &&
+												<img src={each.src} className={`bImg ${imgClass}`} value={each.v} />
+											}
+											</Tooltip>
+										</div>
+		        			)
+		        		})
+		        		}
+		        		<br/>
+		        		<h5 style={{fontWeight: 'bold'}}>about</h5>
+		        		{mapButtons2.map((each,i)=>{
 
 		        			let imgClass;
 

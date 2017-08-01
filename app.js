@@ -13,44 +13,8 @@ const session = require('express-session');
 
 const db = require('./db');
 
-//------------mysql db in full later as sequelize connections------------------
-// var connection = mysql.createConnection({
-//   host     : 'localhost',
-//   user     : 'root',
-//   password : '',
-//   database : 'venice'
-// });
-
-//  connection.connect(function(err){
-//  if(!err) {
-//      console.log("MySQL Venice Database is connected ... \n\n");
-//  } else {
-//      console.log("Error connecting database ... \n\n");
-//  }
-//  });
-
- //-------super simple query test-------
-
- // app.get("/query",function(req,res,next){
- //   connection.query('SELECT * from veniceTest', function(err, rows, fields) {
- //   //connection.end();
- //     if (!err)
- //       console.log('The solution is: ', rows);
- //     else
- //       console.log('Error while performing Query.');
- //       //next(err);
- //     });
- //    res.send('done searching');
- // });
-
-//
-
-
-//------------PUBLIC/USE/ETC------------------
-//const fsP = Promise.promisify(fs.readFile);
-
-//const port = 3000;
-const port = process.env.PORT;
+const port = 3000;
+//const port = process.env.PORT;
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -78,26 +42,6 @@ app.use(session({
 
 //-----------API ROUTES-------------------
 app.use('/api', require('./routes/index.js'));
-
-// app.get('/storymap', (req,res,next)=> {
-//   var indexPathStory = path.join(__dirname, '/storymap', 'index.html');
-//   res.sendFile(indexPathStory);
-// });
-
-// app.get('/timeline', (req,res,next)=> {
-//   var indexPathStory = path.join(__dirname, '/timeline', 'index.html');
-//   res.sendFile(indexPathStory);
-// });
-
-// app.get('/broadsides', (req,res,next)=> {
-//   var indexPathStory = path.join(__dirname, '/broadsides', 'index.html');
-//   res.sendFile(indexPathStory);
-// });
-
-// app.get('/audio', (req,res,next)=> {
-//   var indexPathStory = path.join(__dirname, '/audio', 'index.html');
-//   res.sendFile(indexPathStory);
-// });
 
 //catch all react-router front-end routes and direct to index
 var validFrontendRoutes = ['/', '/map', '/Venice', '/Venice-Edit'];
@@ -131,13 +75,6 @@ app.use(function (err, req, res, next) {
 });
 
 //-----------DATABASE & CONNECTION SYNC-------------------
-
-// var database = db.sync(); // for queries only...
-//   app.listen(port, ()=>{
-//       console.log('listening at '+port);
-//       console.log(' db synced, top-confirmation');
-//   });
-
 
 app.listen(port, function (err) {
   if (err) throw err;

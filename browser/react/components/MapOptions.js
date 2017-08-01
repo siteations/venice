@@ -174,7 +174,7 @@ class MapOps extends Component {
                     </Tooltip>
                 </button>
                 <h5>fit in<br/>window</h5>
-                <h5><em>reset</em></h5>
+                <h5 style={{fontWeight: 'bold'}}><em>reset<br/>view</em></h5>
                 <br/>
                 <div style={styles.root}>
                     <Toggle onToggle={(e,isInputChecked)=>this.opacityAlt(e,isInputChecked)}/>

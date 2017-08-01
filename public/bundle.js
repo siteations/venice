@@ -11945,11 +11945,13 @@ var MapOps = function (_Component) {
                 ),
                 _react2.default.createElement(
                     'h5',
-                    null,
+                    { style: { fontWeight: 'bold' } },
                     _react2.default.createElement(
                         'em',
                         null,
-                        'reset'
+                        'reset',
+                        _react2.default.createElement('br', null),
+                        'view'
                     )
                 ),
                 _react2.default.createElement('br', null),
@@ -18985,7 +18987,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 //connect later?
 
 
-var mapButtons = [{ cn: "nIcon flex center middle", v: "intro", src: '/img/intro-01.svg' }, { cn: "nIcon flex center middle", v: "prints", src: "/img/print-01.svg" }, { cn: "nIcon flex center middle", v: "maps", src: "/img/maps-01.svg" }, { cn: "nSpc", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "panel", src: "/img/arrow1-01.svg" }, { cn: "nIcon flex center middle", v: "panel large", src: "/img/arrow2-01.svg" }, { cn: "nSpc", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "all layers", src: "/img/all-layers-01.svg" }, { cn: "nIcon flex center middle", v: "parish churches", src: "/img/parish-01.svg" }, { cn: "nIcon flex center middle", v: "basilica", src: "/img/bascilica-01.svg" }, { cn: "nIcon flex center middle", v: "plague churches", src: "/img/plague-01.svg" }, { cn: "nIcon flex center middle", v: "monastery", src: "/img/culture-01.svg" }, { cn: "nIcon flex center middle", v: "convent", src: "/img/convent-01.svg" }, { cn: "nIcon flex center middle", v: "non-catholic communities", src: "/img/non-catholic-01.svg" }, { cn: "nIcon flex center middle", v: "processions", src: "/img/ritual-01.svg" }, { cn: "nIcon flex center middle", v: "printing", src: "/img/books-01.svg" }, { cn: "nIcon flex center middle", v: "textual consumption", src: "/img/ephemera-01.svg" }, { cn: "nSpcSm", v: 'navigate', src: " " }, { cn: "nIcon flex center middle", v: "bibliography", src: "/img/menu-01.svg" }, { cn: "nIcon flex center middle", v: "credits", src: "/img/credits-01.svg" }];
+var mapButtons0 = [{ cn: "nIcon flex center middle", v: "intro", src: '/img/intro-01.svg' }, { cn: "nIcon flex center middle", v: "prints", src: "/img/print-01.svg" }, { cn: "nIcon flex center middle", v: "maps", src: "/img/maps-01.svg" }];
+// {cn:"nSpc", v:'navigate', src:" " },
+// {cn:"nIcon flex center middle", v:"panel", src:"/img/arrow1-01.svg" },
+// {cn:"nIcon flex center middle", v:"panel large", src:"/img/arrow2-01.svg" },
+var mapButtons1 = [{ cn: "nIcon flex center middle", v: "all layers", src: "/img/all-layers-01.svg" }, { cn: "nIcon flex center middle", v: "parish churches", src: "/img/parish-01.svg" }, { cn: "nIcon flex center middle", v: "basilica", src: "/img/bascilica-01.svg" }, { cn: "nIcon flex center middle", v: "plague churches", src: "/img/plague-01.svg" }, { cn: "nIcon flex center middle", v: "monastery", src: "/img/culture-01.svg" }, { cn: "nIcon flex center middle", v: "convent", src: "/img/convent-01.svg" }, { cn: "nIcon flex center middle", v: "non-catholic communities", src: "/img/non-catholic-01.svg" }, { cn: "nIcon flex center middle", v: "processions", src: "/img/ritual-01.svg" }, { cn: "nIcon flex center middle", v: "printing", src: "/img/books-01.svg" }, { cn: "nIcon flex center middle", v: "textual consumption", src: "/img/ephemera-01.svg" }];
+
+var mapButtons2 = [{ cn: "nIcon flex center middle", v: "bibliography", src: "/img/menu-01.svg" }, { cn: "nIcon flex center middle", v: "credits", src: "/img/credits-01.svg" }];
 
 var toolstyles = {
 	wrapper: {
@@ -19165,8 +19173,69 @@ var MapBar = function (_Component) {
 
 			return _react2.default.createElement(
 				'div',
-				{ className: 'mtypeFull flexcol center' },
-				mapButtons.map(function (each, i) {
+				{ className: 'mtypeFull flexcol center center-block text-center' },
+				_react2.default.createElement(
+					'h5',
+					{ style: { fontWeight: 'bold' } },
+					'intros'
+				),
+				mapButtons0.map(function (each, i) {
+
+					var imgClass = void 0;
+
+					if (_this2.props.options.panelLarge && each.v === 'panel') {
+						imgClass = 'opacity25';
+					} else if (each.v !== 'maps' && _this2.props.sites.specLayer === 'maps') {
+						imgClass = 'opacity25';
+					} else if (each.v === 'panel large' && !_this2.props.options.panelLarge || each.v === 'panel' && _this2.props.options.panelNone) {
+						imgClass = 'rotate';
+					};
+
+					return _react2.default.createElement(
+						'div',
+						{ className: each.cn, key: i + 'navbutton', value: each.v, onMouseOver: _this2.layerOver, onMouseOut: _this2.layerOut, onTouchTap: _this2.layerPanel },
+						_react2.default.createElement(
+							_reactLightweightTooltip.Tooltip,
+							{ content: 'toggle ' + each.v, styles: toolstyles },
+							each.src !== ' ' && _react2.default.createElement('img', { src: each.src, className: 'bImg ' + imgClass, value: each.v })
+						)
+					);
+				}),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement(
+					'h5',
+					{ style: { fontWeight: 'bold' } },
+					'layers'
+				),
+				mapButtons1.map(function (each, i) {
+
+					var imgClass = void 0;
+
+					if (_this2.props.options.panelLarge && each.v === 'panel') {
+						imgClass = 'opacity25';
+					} else if (each.v !== 'maps' && _this2.props.sites.specLayer === 'maps') {
+						imgClass = 'opacity25';
+					} else if (each.v === 'panel large' && !_this2.props.options.panelLarge || each.v === 'panel' && _this2.props.options.panelNone) {
+						imgClass = 'rotate';
+					};
+
+					return _react2.default.createElement(
+						'div',
+						{ className: each.cn, key: i + 'navbutton', value: each.v, onMouseOver: _this2.layerOver, onMouseOut: _this2.layerOut, onTouchTap: _this2.layerPanel },
+						_react2.default.createElement(
+							_reactLightweightTooltip.Tooltip,
+							{ content: 'toggle ' + each.v, styles: toolstyles },
+							each.src !== ' ' && _react2.default.createElement('img', { src: each.src, className: 'bImg ' + imgClass, value: each.v })
+						)
+					);
+				}),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement(
+					'h5',
+					{ style: { fontWeight: 'bold' } },
+					'about'
+				),
+				mapButtons2.map(function (each, i) {
 
 					var imgClass = void 0;
 

@@ -257,7 +257,7 @@ a:hover {
 
 @media (max-width: 1440px) {
 	.mainMaps {
-		height: 720px;
+		height: 725px;
 		/*681*/
 	}
 }
@@ -370,7 +370,7 @@ a:hover {
 	background-color: #ffffff;
 	margin-top: 10px;
 	width: 65%;
-	min-height: 720px;
+	min-height: 725px;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
 	animation-name: closingM;
@@ -383,7 +383,7 @@ a:hover {
 	background-color: #ffffff;
 	margin-top: 10px;
 	width: 65%;
-	min-height: 720px;
+	min-height: 725px;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
 	animation-name: openingM;
@@ -396,7 +396,7 @@ a:hover {
 	background-color: #ffffff;
 	margin-top: 10px;
 	width: 65%;
-	min-height: 720px;
+	min-height: 725px;
 	box-shadow: 0 0 3px #808080;
 	overflow: hidden;
 	animation-name: openingMQ;
@@ -410,7 +410,7 @@ a:hover {
 	background-color: #f4f2ec;
 	/*background-color: #ffffff;*/
 	margin-top: 10px;
-	min-height: 720px;
+	min-height: 725px;
 	width: 0%;
 	visibility: hidden;
 }
@@ -421,7 +421,7 @@ a:hover {
 	background-color: #f4f2ec;
 	/*background-color: #ffffff;*/
 	margin-top: 10px;
-	min-height: 720px;
+	min-height: 725px;
 	width: 0%;
 	overflow-y: scroll;
 	overflow-x: hidden;
@@ -437,7 +437,7 @@ a:hover {
 	background-color: #f4f2ec;
 	/*background-color: #ffffff;*/
 	margin-top: 10px;
-	min-height: 720px;
+	min-height: 725px;
 	overflow-x: hidden;
 	width: 60%;
 	overflow-y: scroll;
@@ -456,7 +456,7 @@ a:hover {
 	width: 65%;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	min-height: 720px;
+	min-height: 725px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingPL;
     animation-duration: .25s;
@@ -476,7 +476,7 @@ a:hover {
 	width: 65%;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	min-height: 720px;
+	min-height: 725px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: openingPLPart;
     animation-duration: .25s;
@@ -491,7 +491,7 @@ a:hover {
 	width: 30%;
 	overflow: hidden;
 	visibility: visible;
-	min-height: 720px;
+	min-height: 725px;
 	box-shadow: 0 0 3px #808080;
 	animation-name: closingP;
     animation-duration: .25s;
@@ -501,7 +501,7 @@ a:hover {
 .mtypeFull {
 	border:double 3px #ffffff;
 	padding:5px;
-	min-height: 720px;
+	min-height: 725px;
 	background-color: #e6e1d3;
 	margin-top: 10px;
 	width: 4.5%;
