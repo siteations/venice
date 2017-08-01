@@ -2,25 +2,25 @@
 	{
 		"id":1,
 		"nameH": "Final Publication",
-		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"srcThumb": "/img/Augustine_thumbnail.jpg",
 		"clusterId": 2
 	},
 	{
 		"id":2,
 		"nameH": "Bertacagno Printshop",
-		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"srcThumb": "/img/Le%20Giocose%20Moderne_thumbnail.jpg",
 		"clusterId": 5
 	},
 	{
 		"id":3,
 		"nameH": "Arrivabene Bookshop",
-		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"srcThumb": "/img/Predica%20del%20Reverendo_thumbnail.jpg",
 		"clusterId": 5
 	},
 	{
 		"id":4,
 		"nameH": "Griffio Publishers",
-		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"srcThumb": "/img/L%27arte%20oratoria_thumbnail.jpg",
 		"clusterId": 5
 	},
 	{
@@ -32,36 +32,36 @@
 	{
 		"id":6,
 		"nameH": "Aldine Devices",
-		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"srcThumb": "/img/Inscriptiones%20Antiquae_thumbnail.jpg",
 		"clusterId": 7
 	},
 	{
 		"id":7,
 		"nameH": "Aldine Italics",
-		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"srcThumb": "/img/Juvenal_thumbnail.jpg",
 		"clusterId": 7
 	},
 	{
 		"id":8,
 		"nameH": "Aldus' Eulogy",
-		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"srcThumb": "/img/Lactantius_thumbnail.jpg",
 		"clusterId": 7
 	},
 	{
 		"id":9,
 		"nameH": "Aldus Press Booklists",
-		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"srcThumb": "/img/Epitome%20Orthographiae_thumbnail.jpg",
 		"clusterId": 7
 	},
 	{
 		"id":10,
 		"nameH": "Valgrisi's San Marco Bookshop",
-		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"srcThumb": "/img/Il%20Terentio%20Latino_thumbnail.jpg",
 		"clusterId": 5
 	},
 	{
 		"id":11,
 		"nameH": "The Signs of the Rialto",
-		"srcThumb": "/img/PLACEHOLDER.jpg",
+		"srcThumb": "/img/Sonetti%20Canzoni_thumbnail.jpg",
 		"clusterId": 6
 	}]

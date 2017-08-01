@@ -86,8 +86,8 @@
     "r": 250,
     "name": "German Presence.Il Fondaco dei Tedeschi",
     "type": "non-catholic communities",
-    "cluster": true,
-    "clusterId": 1
+    "cluster": false,
+    "clusterId": null
 },
 {
     "id": 14,
@@ -186,8 +186,8 @@
     "r": 250,
     "name": "The Turks.Il Fondaco dei Turchi",
     "type": "non-catholic communities",
-    "cluster": true,
-    "clusterId": 3
+    "cluster": false,
+    "clusterId": null
 },
 {
     "id": 10,
@@ -207,7 +207,7 @@
     "name": "Tarabotti’s Convent. Sant’Anna in Castello",
     "type": "convent",
     "cluster": false,
-    "clusterId": 0
+    "clusterId": null
 },
 {
     "id": 12,
@@ -246,8 +246,8 @@
     "r": 350,
     "name": "The Jewish Ghetto.Il Ghetto",
     "type": "non-catholic communities",
-    "cluster": true,
-    "clusterId": 4
+    "cluster": false,
+    "clusterId": null
 },
 {
     "id": 34,

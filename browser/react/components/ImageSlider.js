@@ -40,7 +40,9 @@ class Image extends Component {
 
 	render() {
 
-		let imgId = this.props.image[this.state.active].id;
+		var img = this.props.image[this.state.active];
+    var imgId = (img!==undefined)? img.id : this.props.image[0].id;
+    if (img===undefined){this.setState({active: 0});};
 		let biblio = this.props.sites.genBiblio.filter(bib => +bib.imageId === +imgId);
 
 	return (

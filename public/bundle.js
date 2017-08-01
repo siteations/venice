@@ -8646,7 +8646,11 @@ var Image = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var imgId = this.props.image[this.state.active].id;
+      var img = this.props.image[this.state.active];
+      var imgId = img !== undefined ? img.id : this.props.image[0].id;
+      if (img === undefined) {
+        this.setState({ active: 0 });
+      };
       var biblio = this.props.sites.genBiblio.filter(function (bib) {
         return +bib.imageId === +imgId;
       });

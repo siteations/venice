@@ -333,6 +333,8 @@ a:hover {
 	text-anchor: end;
 	fill: #ffffff;
 	font-family: 'Trenda';
+	letter-spacing: 1px;
+	font-weight: bold;
 	text-shadow: 0px 0px 8px #000000;
 }
 

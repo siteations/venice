@@ -86,13 +86,13 @@
 {
     "id": 15,
     "narrativeId": 24,
-    "src": "/img/PLACEHOLDER.jpg",
+    "src": "/img/Pliny_Historia Naturalis_Vault folio Inc_4018_sig_a1r_o2.png",
     "caption": "Historia Naturalis by Pliny"
 },
 {
     "id": 16,
     "narrativeId": 33,
-    "src": "/img/PLACEHOLDER.jpg",
+    "src": "/img/Augustine_De%20civitate%20dei_inc_4019_folio_272r_o2.png",
     "caption": "De Civitate Dei by Augustine"
 },
 {
@@ -104,96 +104,168 @@
 {
     "id": 18,
     "narrativeId": 34,
-    "src": "/img/PLACEHOLDER.jpg",
+    "src": "/img/Le%20Giocose%20Moderne%20et%20Facetissime_case_pq_4617_c15_b59_1553_tp_o2.png",
     "caption": "Le Giocose Moderne et Facetissime by Andrea Calmo"
 },
 {
     "id": 19,
     "narrativeId": 35,
-    "src": "/img/PLACEHOLDER.jpg",
+    "src": "/img/Predica%20del%20Reverendo%20Monsignor%20Cornelio%20Vescovo%20di%20Bitonto_case_4a_1338_tp_o2.png",
     "caption": "Predica del Reverendo Monsignor Cornelio Vescovo di Bitonto by Cornelio Musso"
 },
 {
     "id": 20,
     "narrativeId": 36,
-    "src": "/img/PLACEHOLDER.jpg",
+    "src": "/img/L%27arte%20oratoria_Sansovino_case_y_9871_779_tp%20_o2.png",
     "caption": "L’arte Oratoria by Francesco Sansovino"
 },
 {
     "id": 21,
     "narrativeId": 44,
-    "src": "/img/PLACEHOLDER.jpg",
+    "src": "/img/Le%20Poesie%20de%20Girolamo%20Preti_case_pq_4630_p7_1667_tp_o2.png",
     "caption": "Le Poesie by Girolamo Preti"
 },
 {
     "id": 22,
     "narrativeId": 37,
-    "src": "/img/PLACEHOLDER.jpg",
+    "src": "/img/Sonetti%20Canzoni%20_%20Triomphi%20Di%20M.%20Francesco%20Petrarca_case_y_712_p40544_tp_o2.png",
     "caption": "Sonetti Canzoni & Triomphi by Francesco Petrarca"
 },
 {
     "id": 23,
+    "narrativeId": 37,
+    "src": "/img/Sonetti%20Canzoni%20_%20Triomphi%20Di%20M.%20Francesco%20Petrarca_case_y_712_p40544_sig_a1r_o2.png",
+    "caption": "Sonetti Canzoni & Triomphi by Francesco Petrarca"
+},
+{
+    "id": 24,
+    "narrativeId": 37,
+    "src": "/img/Sonetti%20Canzoni%20_%20Triomphi%20Di%20M.%20Francesco%20Petrarca_case_y_712_p40544_sig_last_pg_o2.png",
+    "caption": "Sonetti Canzoni & Triomphi by Francesco Petrarca"
+},
+{
+    "id": 25,
     "narrativeId": 38,
     "src": "/img/PLACEHOLDER.jpg",
     "caption": "Scotto and Gardano images"
 },
 {
-    "id": 24,
+    "id": 26,
     "narrativeId": 38,
     "src": "/img/PLACEHOLDER.jpg",
     "caption": "Scotto and Gardano images 2 (etc.)"
 },
 {
-    "id": 25,
+    "id": 27,
     "narrativeId": 26,
-    "src": "/img/PLACEHOLDER.jpg",
+    "src": "/img/Angelo%20Poliziano.%20Opera_inc_5567_tp_o2.png",
     "caption": "Opera by Angelo Poliziano"
 },
 {
-    "id": 26,
-    "narrativeId": 39,
-    "src": "/img/PLACEHOLDER.jpg",
-    "caption": "Poetae Christiani veteres"
-},
-{
-    "id": 27,
-    "narrativeId": 40,
-    "src": "/img/PLACEHOLDER.jpg",
-    "caption": "Works by Juvenal"
-},
-{
     "id": 28,
-    "narrativeId": 41,
-    "src": "/img/PLACEHOLDER.jpg",
-    "caption": "Caelii Lactantii Fermiani diuina-rum institutionum Libri septem by Lactantius. L"
+    "narrativeId": 26,
+    "src": "/img/Angelo%20Poliziano.%20Opera_inc_5567_sig_h8r_o2.png",
+    "caption": "Opera by Angelo Poliziano"
 },
 {
     "id": 29,
-    "narrativeId": 42,
-    "src": "/img/PLACEHOLDER.jpg",
-    "caption": "Epitome Orthographiae by Aldo Manuzio"
+    "narrativeId": 39,
+    "src": "/img/Poetae%20Christiani%20veteres_Case_c_5_72_vol_01_pg_110_111_o2.png",
+    "caption": "Poetae Christiani veteres"
 },
 {
     "id": 30,
-    "narrativeId": 42,
-    "src": "/img/PLACEHOLDER.jpg",
-    "caption": "Inscriptiones Antiquae Augustae Vindelicorum"
+    "narrativeId": 39,
+    "src": "/img/Poetae%20Christiani%20veteres_Case_c_5_72_vol_01_pg_01_o2.png",
+    "caption": "Poetae Christiani veteres"
 },
 {
     "id": 31,
-    "narrativeId": 27,
-    "src": "/img/PLACEHOLDER.jpg",
-    "caption": "Leopold of Austria"
+    "narrativeId": 40,
+    "src": "/img/Juvenal.%20Works_Wing_zp_535_a353_tp_o2.png",
+    "caption": "Works by Juvenal"
 },
 {
     "id": 32,
-    "narrativeId": 43,
-    "src": "/img/PLACEHOLDER.jpg",
-    "caption": "Il Terentio Latino by Terence"
+    "narrativeId": 40,
+    "src": "/img/Juvenal.%20Works_Wing_zp_535_a353_folio1v_2r_o2.png",
+    "caption": "Works by Juvenal"
 },
 {
     "id": 33,
+    "narrativeId": 41,
+    "src": "/img/Lactantius_case_c_507_47_tp_o2.png",
+    "caption": "Caelii Lactantii Fermiani diuina-rum institutionum Libri septem by Lactantius. L"
+},
+{
+    "id": 34,
+    "narrativeId": 41,
+    "src": "/img/Lactantius_case_c_507_47_sig_a1v_a2r_o2.png",
+    "caption": "Caelii Lactantii Fermiani diuina-rum institutionum Libri septem by Lactantius. L"
+},
+{
+    "id": 35,
+    "narrativeId": 41,
+    "src": "/img/Lactantius_case_c_507_47_sig_a2v_a3r_o2.png",
+    "caption": "Caelii Lactantii Fermiani diuina-rum institutionum Libri septem by Lactantius. L"
+},
+{
+    "id": 36,
+    "narrativeId": 42,
+    "src": "/img/Epitome%20Orthographiae_Wing_zp_535_a374_tp_o2.png",
+    "caption": "Epitome Orthographiae by Aldo Manuzio"
+},
+{
+    "id": 37,
+    "narrativeId": 42,
+    "src": "/img/Epitome%20Orthographiae_wing_zp_535_a374_pg_269_o2.png",
+    "caption": "Epitome Orthographiae by Aldo Manuzio"
+},
+{
+    "id": 38,
+    "narrativeId": 42,
+    "src": "/img/Epitome%20Orthographiae_wing_zp_535_a374_pg_270_o2.png",
+    "caption": "Epitome Orthographiae by Aldo Manuzio"
+},
+{
+    "id": 39,
+    "narrativeId": 42,
+    "src": "/img/Inscriptiones%20Antiquae%20Augustae%20Vindelicorum_Colophon_wing_zp_535_a372_%2001_o2.png",
+    "caption": "Inscriptiones Antiquae Augustae Vindelicorum"
+},
+{
+    "id": 40,
+    "narrativeId": 42,
+    "src": "/img/Inscriptiones%20Antiquae%20Augustae%20Vindelicorum_wing_zp_535_a372_%2006_o2.png",
+    "caption": "Inscriptiones Antiquae Augustae Vindelicorum"
+},
+{
+    "id": 41,
+    "narrativeId": 42,
+    "src": "/img/Inscriptiones%20Antiquae%20Augustae%20Vindelicorum_wing_zp_535_a372_%2007_o2.png",
+    "caption": "Inscriptiones Antiquae Augustae Vindelicorum"
+},
+{
+    "id": 42,
+    "narrativeId": 27,
+    "src": "/img/Compilatio%20Leupoldi%20ducatus%20Austrie%20filij%20De%20astrorum%20scientia%20decem%20continentis%20tractatus_wing_zp_535_s5_tp_o2.png",
+    "caption": "Leopold of Austria"
+},
+{
+    "id": 43,
+    "narrativeId": 27,
+    "src": "/img/Detail%20of%20Compilatio%20Leupoldi%20ducatus%20Austrie%20filij_wing_zp_535_s5_tp_detail_o2.png",
+    "caption": "Leopold of Austria"
+},
+{
+    "id": 44,
+    "narrativeId": 43,
+    "src": "/img/Il%20Terentio%20Latino_title%20page_Wing%20ZP%20535.V22.png",
+    "caption": "Il Terentio Latino by Terence"
+},
+{
+    "id": 45,
     "narrativeId": 25,
-    "src": "/img/PLACEHOLDER.jpg",
+    "src": "/img/Eusebio_De%20Evangelica%20Praeparatione%2C%20pg.1r_o2_Inc.%204066%20%28folio%2C%20VAULT%29.png",
     "caption": "De Evangelica Praeparatione by Eusebius"
 }]
