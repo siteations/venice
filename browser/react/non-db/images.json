@@ -2,270 +2,378 @@
 {
     "id": 1,
     "narrativeId": 1,
-    "src": "/img/placeholder_06.jpg ",
+    "src": "./img/placeholder_06.jpg ",
     "caption": "lorem ipsum"
 },
 {
     "id": 2,
     "narrativeId": 2,
-    "src": "/img/placeholder_01.jpg",
+    "src": "./img/placeholder_01.jpg",
     "caption": "lorem ipsum"
 },
 {
     "id": 3,
     "narrativeId": 2,
-    "src": "/img/placeholder_04.jpg",
+    "src": "./img/placeholder_04.jpg",
     "caption": "lorem ipsum"
 },
 {
     "id": 4,
     "narrativeId": 3,
-    "src": "/img/placeholder_02.jpg",
+    "src": "./img/placeholder_02.jpg",
     "caption": "lorem ipsum"
 },
 {
     "id": 5,
     "narrativeId": 4,
-    "src": "/img/placeholder_03.jpg",
+    "src": "./img/placeholder_03.jpg",
     "caption": "lorem ipsum"
 },
 {
     "id": 6,
     "narrativeId": 18,
-    "src": "/img/GermansSignore%20titolato%20thedesco_case_w_93_94_pg_298v_o2.png",
+    "src": "./img/GermansSignore%20titolato%20thedesco_case_w_93_94_pg_298v_o2.png",
     "caption": "Germans by Vecellio"
 },
 {
     "id": 7,
     "narrativeId": 17,
-    "src": "/img/GhettoHebrea_Vecellio_case_w_93_94_pg_463v_464r_o2.png",
+    "src": "./img/GhettoHebrea_Vecellio_case_w_93_94_pg_463v_464r_o2.png",
     "caption": "Hebrea by Vecellio"
 },
 {
     "id": 8,
     "narrativeId": 19,
-    "src": "/img/TheGreeksReligiosa%20greca_case_w_93_94_pg_416v_417r_o2.png",
+    "src": "./img/TheGreeksReligiosa%20greca_case_w_93_94_pg_416v_417r_o2.png",
     "caption": "Religiosa Greca by Vecellio"
 },
 {
     "id": 9,
     "narrativeId": 23,
-    "src": "/img/Processione_S.Marco_wing_zp_635_f85_027_o2.png",
+    "src": "./img/Processione_S.Marco_wing_zp_635_f85_027_o2.png",
     "caption": "Processione in Piazza San Marco by Doglioni"
 },
 {
     "id": 10,
     "narrativeId": 8,
-    "src": "/img/Doge_wing_zp_635_f85_025_o2.png",
+    "src": "./img/Doge_wing_zp_635_f85_025_o2.png",
     "caption": "The Venetian Doge with a view to Piazza San Marco"
 },
 {
     "id": 11,
     "narrativeId": 8,
-    "src": "/img/Perspettiva%20della%20piazza%20S.Marco_case_w_93_94_pg_39_detail_o2.png",
+    "src": "./img/Perspettiva%20della%20piazza%20S.Marco_case_w_93_94_pg_39_detail_o2.png",
     "caption": "A Perspective onto Piazza San Marco"
 },
 {
     "id": 12,
     "narrativeId": 8,
-    "src": "/img/Principe%20o%20doge%20di%20Venezia%202_case_w_93_94_pg_77_o2.png",
+    "src": "./img/Principe%20o%20doge%20di%20Venezia%202_case_w_93_94_pg_77_o2.png",
     "caption": "Processione in Piazza San Marco by Doglioni"
 },
 {
     "id": 13,
     "narrativeId": 30,
-    "src": "/img/TurksSultano%20dei%20turchi_case_w_93_94_pg_375v_376r_o2.png",
+    "src": "./img/TurksSultano%20dei%20turchi_case_w_93_94_pg_375v_376r_o2.png",
     "caption": "Turkish Sultan by Vecellio"
 },
 {
     "id": 14,
     "narrativeId": 32,
-    "src": "/img/barbari_novacco_8f_7_crop.jpg",
+    "src": "./img/barbari_novacco_8f_7_crop.jpg",
     "caption": "Venetie (detail) by Barbari"
 },
 {
     "id": 15,
     "narrativeId": 24,
-    "src": "/img/Pliny_Historia Naturalis_Vault folio Inc_4018_sig_a1r_o2.png",
+    "src": "./img/Pliny_Historia Naturalis_Vault folio Inc_4018_sig_a1r_o2.png",
     "caption": "Historia Naturalis by Pliny"
 },
 {
     "id": 16,
     "narrativeId": 33,
-    "src": "/img/Augustine_De%20civitate%20dei_inc_4019_folio_272r_o2.png",
+    "src": "./img/Augustine_De%20civitate%20dei_inc_4019_folio_272r_o2.png",
     "caption": "De Civitate Dei by Augustine"
 },
 {
     "id": 17,
     "narrativeId": 31,
-    "src": "/img/PLACEHOLDER.jpg",
-    "caption": "Image to come."
+    "src": "./img/Tarabottik7_809_tp_o2.png",
+    "caption": "Censvra by Tarabotti"
 },
 {
     "id": 18,
     "narrativeId": 34,
-    "src": "/img/Le%20Giocose%20Moderne%20et%20Facetissime_case_pq_4617_c15_b59_1553_tp_o2.png",
+    "src": "./img/Le%20Giocose%20Moderne%20et%20Facetissime_case_pq_4617_c15_b59_1553_tp_o2.png",
     "caption": "Le Giocose Moderne et Facetissime by Andrea Calmo"
 },
 {
     "id": 19,
     "narrativeId": 35,
-    "src": "/img/Predica%20del%20Reverendo%20Monsignor%20Cornelio%20Vescovo%20di%20Bitonto_case_4a_1338_tp_o2.png",
+    "src": "./img/Predica%20del%20Reverendo%20Monsignor%20Cornelio%20Vescovo%20di%20Bitonto_case_4a_1338_tp_o2.png",
     "caption": "Predica del Reverendo Monsignor Cornelio Vescovo di Bitonto by Cornelio Musso"
 },
 {
     "id": 20,
     "narrativeId": 36,
-    "src": "/img/L%27arte%20oratoria_Sansovino_case_y_9871_779_tp%20_o2.png",
+    "src": "./img/L%27arte%20oratoria_Sansovino_case_y_9871_779_tp%20_o2.png",
     "caption": "L’arte Oratoria by Francesco Sansovino"
 },
 {
     "id": 21,
     "narrativeId": 44,
-    "src": "/img/Le%20Poesie%20de%20Girolamo%20Preti_case_pq_4630_p7_1667_tp_o2.png",
+    "src": "./img/Le%20Poesie%20de%20Girolamo%20Preti_case_pq_4630_p7_1667_tp_o2.png",
     "caption": "Le Poesie by Girolamo Preti"
 },
 {
     "id": 22,
     "narrativeId": 37,
-    "src": "/img/Sonetti%20Canzoni%20_%20Triomphi%20Di%20M.%20Francesco%20Petrarca_case_y_712_p40544_tp_o2.png",
+    "src": "./img/Sonetti%20Canzoni%20_%20Triomphi%20Di%20M.%20Francesco%20Petrarca_case_y_712_p40544_tp_o2.png",
     "caption": "Sonetti Canzoni & Triomphi by Francesco Petrarca"
 },
 {
     "id": 23,
     "narrativeId": 37,
-    "src": "/img/Sonetti%20Canzoni%20_%20Triomphi%20Di%20M.%20Francesco%20Petrarca_case_y_712_p40544_sig_a1r_o2.png",
+    "src": "./img/Sonetti%20Canzoni%20_%20Triomphi%20Di%20M.%20Francesco%20Petrarca_case_y_712_p40544_sig_a1r_o2.png",
     "caption": "Sonetti Canzoni & Triomphi by Francesco Petrarca"
 },
 {
     "id": 24,
     "narrativeId": 37,
-    "src": "/img/Sonetti%20Canzoni%20_%20Triomphi%20Di%20M.%20Francesco%20Petrarca_case_y_712_p40544_sig_last_pg_o2.png",
+    "src": "./img/Sonetti%20Canzoni%20_%20Triomphi%20Di%20M.%20Francesco%20Petrarca_case_y_712_p40544_sig_last_pg_o2.png",
     "caption": "Sonetti Canzoni & Triomphi by Francesco Petrarca"
 },
 {
     "id": 25,
     "narrativeId": 38,
-    "src": "/img/PLACEHOLDER.jpg",
-    "caption": "Scotto and Gardano images"
+    "src": "./img/Gardanocase_m2082_p67_1580_tp_o2.png",
+    "caption": "Cantus - Constantii Portae... by Costanzo Porta"
 },
 {
     "id": 26,
     "narrativeId": 38,
-    "src": "/img/PLACEHOLDER.jpg",
-    "caption": "Scotto and Gardano images 2 (etc.)"
+    "src": "./img/Gardanocase_m2082_p67_1580_sig_a2r_o2-2.png",
+    "caption": "Cantus - Constantii Portae... by Costanzo Porta"
 },
 {
     "id": 27,
     "narrativeId": 26,
-    "src": "/img/Angelo%20Poliziano.%20Opera_inc_5567_tp_o2.png",
+    "src": "./img/Angelo%20Poliziano.%20Opera_inc_5567_tp_o2.png",
     "caption": "Opera by Angelo Poliziano"
 },
 {
     "id": 28,
     "narrativeId": 26,
-    "src": "/img/Angelo%20Poliziano.%20Opera_inc_5567_sig_h8r_o2.png",
+    "src": "./img/Angelo%20Poliziano.%20Opera_inc_5567_sig_h8r_o2.png",
     "caption": "Opera by Angelo Poliziano"
 },
 {
     "id": 29,
     "narrativeId": 39,
-    "src": "/img/Poetae%20Christiani%20veteres_Case_c_5_72_vol_01_pg_110_111_o2.png",
+    "src": "./img/Poetae%20Christiani%20veteres_Case_c_5_72_vol_01_pg_110_111_o2.png",
     "caption": "Poetae Christiani veteres"
 },
 {
     "id": 30,
     "narrativeId": 39,
-    "src": "/img/Poetae%20Christiani%20veteres_Case_c_5_72_vol_01_pg_01_o2.png",
+    "src": "./img/Poetae%20Christiani%20veteres_Case_c_5_72_vol_01_pg_01_o2.png",
     "caption": "Poetae Christiani veteres"
 },
 {
     "id": 31,
     "narrativeId": 40,
-    "src": "/img/Juvenal.%20Works_Wing_zp_535_a353_tp_o2.png",
+    "src": "./img/Juvenal.%20Works_Wing_zp_535_a353_tp_o2.png",
     "caption": "Works by Juvenal"
 },
 {
     "id": 32,
     "narrativeId": 40,
-    "src": "/img/Juvenal.%20Works_Wing_zp_535_a353_folio1v_2r_o2.png",
+    "src": "./img/Juvenal.%20Works_Wing_zp_535_a353_folio1v_2r_o2.png",
     "caption": "Works by Juvenal"
 },
 {
     "id": 33,
     "narrativeId": 41,
-    "src": "/img/Lactantius_case_c_507_47_tp_o2.png",
+    "src": "./img/Lactantius_case_c_507_47_tp_o2.png",
     "caption": "Caelii Lactantii Fermiani diuina-rum institutionum Libri septem by Lactantius. L"
 },
 {
     "id": 34,
     "narrativeId": 41,
-    "src": "/img/Lactantius_case_c_507_47_sig_a1v_a2r_o2.png",
+    "src": "./img/Lactantius_case_c_507_47_sig_a1v_a2r_o2.png",
     "caption": "Caelii Lactantii Fermiani diuina-rum institutionum Libri septem by Lactantius. L"
 },
 {
     "id": 35,
     "narrativeId": 41,
-    "src": "/img/Lactantius_case_c_507_47_sig_a2v_a3r_o2.png",
+    "src": "./img/Lactantius_case_c_507_47_sig_a2v_a3r_o2.png",
     "caption": "Caelii Lactantii Fermiani diuina-rum institutionum Libri septem by Lactantius. L"
 },
 {
     "id": 36,
     "narrativeId": 42,
-    "src": "/img/Epitome%20Orthographiae_Wing_zp_535_a374_tp_o2.png",
+    "src": "./img/Epitome%20Orthographiae_Wing_zp_535_a374_tp_o2.png",
     "caption": "Epitome Orthographiae by Aldo Manuzio"
 },
 {
     "id": 37,
     "narrativeId": 42,
-    "src": "/img/Epitome%20Orthographiae_wing_zp_535_a374_pg_269_o2.png",
+    "src": "./img/Epitome%20Orthographiae_wing_zp_535_a374_pg_269_o2.png",
     "caption": "Epitome Orthographiae by Aldo Manuzio"
 },
 {
     "id": 38,
     "narrativeId": 42,
-    "src": "/img/Epitome%20Orthographiae_wing_zp_535_a374_pg_270_o2.png",
+    "src": "./img/Epitome%20Orthographiae_wing_zp_535_a374_pg_270_o2.png",
     "caption": "Epitome Orthographiae by Aldo Manuzio"
 },
 {
     "id": 39,
     "narrativeId": 42,
-    "src": "/img/Inscriptiones%20Antiquae%20Augustae%20Vindelicorum_Colophon_wing_zp_535_a372_%2001_o2.png",
+    "src": "./img/Inscriptiones%20Antiquae%20Augustae%20Vindelicorum_Colophon_wing_zp_535_a372_%2001_o2.png",
     "caption": "Inscriptiones Antiquae Augustae Vindelicorum"
 },
 {
     "id": 40,
     "narrativeId": 42,
-    "src": "/img/Inscriptiones%20Antiquae%20Augustae%20Vindelicorum_wing_zp_535_a372_%2006_o2.png",
+    "src": "./img/Inscriptiones%20Antiquae%20Augustae%20Vindelicorum_wing_zp_535_a372_%2006_o2.png",
     "caption": "Inscriptiones Antiquae Augustae Vindelicorum"
 },
 {
     "id": 41,
     "narrativeId": 42,
-    "src": "/img/Inscriptiones%20Antiquae%20Augustae%20Vindelicorum_wing_zp_535_a372_%2007_o2.png",
+    "src": "./img/Inscriptiones%20Antiquae%20Augustae%20Vindelicorum_wing_zp_535_a372_%2007_o2.png",
     "caption": "Inscriptiones Antiquae Augustae Vindelicorum"
 },
 {
     "id": 42,
     "narrativeId": 27,
-    "src": "/img/Compilatio%20Leupoldi%20ducatus%20Austrie%20filij%20De%20astrorum%20scientia%20decem%20continentis%20tractatus_wing_zp_535_s5_tp_o2.png",
+    "src": "./img/Compilatio%20Leupoldi%20ducatus%20Austrie%20filij%20De%20astrorum%20scientia%20decem%20continentis%20tractatus_wing_zp_535_s5_tp_o2.png",
     "caption": "Leopold of Austria"
 },
 {
     "id": 43,
     "narrativeId": 27,
-    "src": "/img/Detail%20of%20Compilatio%20Leupoldi%20ducatus%20Austrie%20filij_wing_zp_535_s5_tp_detail_o2.png",
+    "src": "./img/Detail%20of%20Compilatio%20Leupoldi%20ducatus%20Austrie%20filij_wing_zp_535_s5_tp_detail_o2.png",
     "caption": "Leopold of Austria"
 },
 {
     "id": 44,
     "narrativeId": 43,
-    "src": "/img/Il%20Terentio%20Latino_title%20page_Wing%20ZP%20535.V22.png",
+    "src": "./img/Il%20Terentio%20Latino_title%20page_Wing%20ZP%20535.V22.png",
     "caption": "Il Terentio Latino by Terence"
 },
 {
     "id": 45,
     "narrativeId": 25,
-    "src": "/img/Eusebio_De%20Evangelica%20Praeparatione%2C%20pg.1r_o2_Inc.%204066%20%28folio%2C%20VAULT%29.png",
+    "src": "./img/Eusebio_De%20Evangelica%20Praeparatione%2C%20pg.1r_o2_Inc.%204066%20%28folio%2C%20VAULT%29.png",
     "caption": "De Evangelica Praeparatione by Eusebius"
+},
+{
+    "id": 46,
+    "narrativeId": 23,
+    "src": "./img/Processionwing_zp_635_f85_059_o2.png",
+    "caption": "Processione in Piazza San Marco by Doglioni"
+},
+{
+    "id": 47,
+    "narrativeId": 8,
+    "src": "./img/DogePalacewing_zp_635_f85_057_o2.png",
+    "caption": "The Venetian Doge's Palace by Doglioni"
+},
+{
+    "id": 48,
+    "narrativeId": 45,
+    "src": "./img/SanGiorgioMaggiorewing_zp_635_f85_061_o2.png",
+    "caption": "San Giorgio Maggiore by ..."
+},
+{
+    "id": 49,
+    "narrativeId": 45,
+    "src": "./img/Palladio2wing_zp639_m365_pg_98_99_o2.png",
+    "caption": "San Giorgio Maggiore Cloister by Palladio"
+},
+{
+    "id": 50,
+    "narrativeId": 46,
+    "src": "./img/RedentoreDoglioniwing_zp_635_f85_023_o2.png",
+    "caption": "The Venetian Doge with a view to Redentore by Doglioni"
+},
+{
+    "id": 51,
+    "narrativeId": 0,
+    "src": "./img/Fiammacase_y712_f_439_tp_o2.png",
+    "caption": "Rime spirituali by R.D. Gabriel Fiamma"
+},
+{
+    "id": 52,
+    "narrativeId": 45,
+    "src": "./img/Cassinesecase_bx_2049_b4_b7_1606_tp_o2.png",
+    "caption": "Breuiarium monasticum by the Catholic Church"
+},
+{
+    "id": 53,
+    "narrativeId": 47,
+    "src": "./img/Cassinesecase_bx_2049_b4_b7_1606_tp_o2.png",
+    "caption": "Breuiarium monasticum by the Catholic Church"
+},
+{
+    "id": 54,
+    "narrativeId": 45,
+    "src": "./img/Cassinesecase_bx_2049_b4_b7_1606_folio_7v_o2.png",
+    "caption": "Breuiarium monasticum by the Catholic Church"
+},
+{
+    "id": 55,
+    "narrativeId": 47,
+    "src": "./img/Cassinesecase_bx_2049_b4_b7_1606_folio_7v_o2.png",
+    "caption": "Breuiarium monasticum by the Catholic Church"
+},
+{
+    "id": 56,
+    "narrativeId": 45,
+    "src": "./img/Palladio3wing_zp639_m365_pg_100_o2.png",
+    "caption": "San Giorgio Maggiore Cloister by Palladio"
+},
+{
+    "id": 57,
+    "narrativeId": 45,
+    "src": "./img/Palladio1wing_zp639_m365_tp_o2.png",
+    "caption": "The Four Books of Architecture by Palladio"
+},
+{
+    "id": 58,
+    "narrativeId": 12,
+    "src": "./img/MarriageSeawing_w2359_145_part_1_plt_14_o2.jpg",
+    "caption": "Marriage of the Sea by Canaletto"
+},
+{
+    "id": 59,
+    "narrativeId": 48,
+    "src": "./img/Salutewing_w2359_145_part_1_plt_5_o2.jpg",
+    "caption": "Santa Maria della Salute by Canaletto"
+},
+{
+    "id": 60,
+    "narrativeId": 48,
+    "src": "./img/Caritawing_w2359_145_part_1_plt_3_o2.jpg",
+    "caption": "View of the Grand Canal, from Caritas to Santa Maria della Salute by Canaletto"
+},
+{
+    "id": 61,
+    "narrativeId": 29,
+    "src": "./img/SanRoccowing_w2359_145_part_3_plt_5_o2.jpg",
+    "caption": "San Rocco by Canaletto"
+},
+{
+    "id": 62,
+    "narrativeId": 24,
+    "src": "./img/SMariaFormosawing_w2359_145_part_3_plt_8_o2.jpg",
+    "caption": "Santa Maria Formosa by Canaletto"
+},
+{
+    "id": 63,
+    "narrativeId": 49,
+    "src": "./img/SSGiovanniPaolowing_w2359_145_part_3_plt_1_o2.jpg",
+    "caption": "Santi Giovanni e Paolo by Canaletto"
 }]

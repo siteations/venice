@@ -75,7 +75,7 @@
     "cy": 3109,
     "r": 250,
     "name": "Plague Hospital.Santi Giovanni e Paolo",
-    "type": "plague churches",
+    "type": "none plague churches",
     "cluster": false,
     "clusterId": null
 },
@@ -115,7 +115,7 @@
     "cy": 5090,
     "r": 350,
     "name": "Augustinian Convent.Spirito Santo",
-    "type": "convent",
+    "type": "none convent",
     "cluster": false,
     "clusterId": null
 },
@@ -135,7 +135,7 @@
     "cy": 3195,
     "r": 250,
     "name": "Parish Church.San Pantalon",
-    "type": "parish churches",
+    "type": "none parish churches",
     "cluster": false,
     "clusterId": null
 },
@@ -165,7 +165,7 @@
     "cy": 2217,
     "r": 250,
     "name": "Spanish Presence.San Geremia",
-    "type": "non-catholic communities",
+    "type": "none non-catholic communities",
     "cluster": false,
     "clusterId": null
 },
