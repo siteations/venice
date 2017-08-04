@@ -16,8 +16,8 @@
     "r": 450,
     "name": "Benedictine Monastery.San Giorgio Maggiore",
     "type": "monastery",
-    "cluster": false,
-    "clusterId": null
+    "cluster": true,
+    "clusterId": 8
 },
 {
     "id": 3,
@@ -318,4 +318,14 @@
     "type": "textual consumption",
     "cluster": false,
     "clusterId": 0
+},
+{
+    "id": 52,
+    "cx": 3033,
+    "cy": 4027,
+    "r": 350,
+    "name": "Palladian Convent.Santa Maria della Carità",
+    "type": "convent",
+    "cluster": true,
+    "clusterId": 9
 }]

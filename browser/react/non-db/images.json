@@ -285,61 +285,49 @@
     "id": 48,
     "narrativeId": 45,
     "src": "./img/SanGiorgioMaggiorewing_zp_635_f85_061_o2.png",
-    "caption": "San Giorgio Maggiore by ..."
+    "caption": "San Giorgio Maggiore by Doglioni"
 },
 {
     "id": 49,
-    "narrativeId": 45,
-    "src": "./img/Palladio2wing_zp639_m365_pg_98_99_o2.png",
-    "caption": "San Giorgio Maggiore Cloister by Palladio"
+    "narrativeId": 51,
+    "src": "./img/Palladio1wing_zp639_m365_tp_o2.png",
+    "caption": "The Four Books of Architecture by Palladio"
 },
 {
     "id": 50,
+    "narrativeId": 51,
+    "src": "./img/Palladio2wing_zp639_m365_pg_98_99_o2.png",
+    "caption": "“S Maria della Carità” from The Four Books of Architecture by Palladio"
+},
+{
+    "id": 51,
+    "narrativeId": 51,
+    "src": "./img/Palladio3wing_zp639_m365_pg_100_o2.png",
+    "caption": "“S Maria della Carità” from The Four Books of Architecture by Palladio"
+},
+{
+    "id": 52,
     "narrativeId": 46,
     "src": "./img/RedentoreDoglioniwing_zp_635_f85_023_o2.png",
     "caption": "The Venetian Doge with a view to Redentore by Doglioni"
 },
 {
-    "id": 51,
-    "narrativeId": 0,
+    "id": 53,
+    "narrativeId": 52,
     "src": "./img/Fiammacase_y712_f_439_tp_o2.png",
     "caption": "Rime spirituali by R.D. Gabriel Fiamma"
 },
 {
-    "id": 52,
-    "narrativeId": 45,
-    "src": "./img/Cassinesecase_bx_2049_b4_b7_1606_tp_o2.png",
-    "caption": "Breuiarium monasticum by the Catholic Church"
-},
-{
-    "id": 53,
-    "narrativeId": 47,
-    "src": "./img/Cassinesecase_bx_2049_b4_b7_1606_tp_o2.png",
-    "caption": "Breuiarium monasticum by the Catholic Church"
-},
-{
     "id": 54,
-    "narrativeId": 45,
-    "src": "./img/Cassinesecase_bx_2049_b4_b7_1606_folio_7v_o2.png",
+    "narrativeId": 50,
+    "src": "./img/Cassinesecase_bx_2049_b4_b7_1606_tp_o2.png",
     "caption": "Breuiarium monasticum by the Catholic Church"
 },
 {
     "id": 55,
-    "narrativeId": 47,
+    "narrativeId": 50,
     "src": "./img/Cassinesecase_bx_2049_b4_b7_1606_folio_7v_o2.png",
     "caption": "Breuiarium monasticum by the Catholic Church"
-},
-{
-    "id": 56,
-    "narrativeId": 45,
-    "src": "./img/Palladio3wing_zp639_m365_pg_100_o2.png",
-    "caption": "San Giorgio Maggiore Cloister by Palladio"
-},
-{
-    "id": 57,
-    "narrativeId": 45,
-    "src": "./img/Palladio1wing_zp639_m365_tp_o2.png",
-    "caption": "The Four Books of Architecture by Palladio"
 },
 {
     "id": 58,

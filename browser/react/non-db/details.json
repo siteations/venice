@@ -64,4 +64,16 @@
 		"nameH": "The Signs of the Rialto",
 		"srcThumb": "./img/Sonetti%20Canzoni_thumbnail.jpg",
 		"clusterId": 6
+	},
+	{
+		"id":12,
+		"nameH": "Printing and the Reform of Liturgical Texts",
+		"srcThumb": "./img/Cassinese_thumbnail.jpg",
+		"clusterId": 8
+	},
+	{
+		"id":13,
+		"nameH": "A Theater for Preaching",
+		"srcThumb": "./img/Fiamma_thumbnail.jpg",
+		"clusterId": 9
 	}]

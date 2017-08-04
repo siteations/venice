@@ -399,12 +399,12 @@
       "id":45,
       "coreId":2,
       "minorId":0,
-      "clusterId":0,
+      "clusterId":8,
       "title":"",
-      "text":"Placeholder text for San Giorgio Maggiore",
-      "researcherName":"",
+      "text":"Palladio was first commissioned in 1560 by the Benedictines to finish their refectory using Roman thermal windows and vaulting. After its 15th-century religious reform as the Congregation of San Giustina (later Cassinese), the monastery experienced a building renaissance culminating in Palladio’s church incorporating Vitruvian principles in style and Catholic reform in plan. Palladio regularized the high altar for display of the Eucharist, retrochoir for separation of monks from the congregation, and large domed transept for ritual processions. Completed in 1610, Merlo depicts San Girorgio Maggiore as a grand temple-front façade with major and minor orders.",
+      "researcherName":"Tracy E. Cooper",
       "researcherTitle":"",
-      "researcherAffiliation":""
+      "researcherAffiliation":"Temple University"
    },
    {
       "id":46,
@@ -412,10 +412,10 @@
       "minorId":0,
       "clusterId":0,
       "title":"",
-      "text":"Placeholder text for Redentore",
-      "researcherName":"",
+      "text":"Churches were a new genre of architecture for Andrea Palladio (1508-1580), previously known for his palaces and villas on the terraferma. His introduced monumental church façades in the Classical style into the traditional fabric of Venetian architecture at San Giorgio Maggiore and Il Redentore, and his influential legacy in La Salute. As Palladio would say in his world-famous treatise of The Four Books of Architecture published in Venice (1570), religion should be seen as the protector of the city (Bk IV, ch 1) and his churches became sites of major rituals. In 1576, the Doge and Senate vowed to build a church to deliver Venice from a devastating plague and undertake yearly processions. Palladio and supporter Procurator Marc’ Antonio Barbaro preferred a circular temple but a longitudinal plan was chosen for a site on the Giudecca caretaken by Capuchins, the observant branch of Franciscans. Merlo depicts tall minaret-like towers flanking the domed crossing, allusions to the Ottoman architecture Barbaro saw as Venetian envoy in Constantinople. A magnificent Corinthian order unifies interior and exterior, with a composite monumental temple front.",
+      "researcherName":"Tracy E. Cooper",
       "researcherTitle":"",
-      "researcherAffiliation":""
+      "researcherAffiliation":"Temple University"
    },
    {
       "id":47,
@@ -434,10 +434,10 @@
       "minorId":0,
       "clusterId":0,
       "title":"",
-      "text":"Placeholder text for Santa Maria della Salute",
-      "researcherName":"",
+      "text":"In 1630, plague again decimated Venice. Belief in the earlier success granted by Palladio’s Il Redentore led to another government-sponsored church, this one to be dedicated to the Virgin Mary as intercessor for the health of the city. Baldassare Longhena (1598-1632) built the centralized temple-plan of Santa Maria della Salute. Raised on a podium, its majestic dome ornamented by monumental scrolls marks the opening of the Grand Canal by the Customs House (Dogana). Yearly processions were undertaken to venerate the miracle-working Byzantine Madonna icon and continue today. ",
+      "researcherName":"Tracy E. Cooper",
       "researcherTitle":"",
-      "researcherAffiliation":""
+      "researcherAffiliation":"Temple University"
    },
    {
       "id":49,
@@ -445,9 +445,42 @@
       "minorId":0,
       "clusterId":0,
       "title":"",
-      "text":"Placeholder text for Basilica dei Santi Giovanni e Paolo",
-      "researcherName":"",
+      "text":"The Dominican Church of SS. Giovanni e Paolo, built on the northern perimeter of Venice with a huge cloister, has always had a special connection to the state. The first church, built in 1234 on order of Doge Jacopo Tiepolo, was erected on land donated by the government. Tiepolo’s tomb is mounted on the outer façade. The present structure, consecrated in 1430 and embellished throughout the Republic’s long history, dominates a large campo, a popular Venetian gathering space. The vast vaulted interior became the quasi-official burial site of the rulers of Venice, earning the church’s nickname, “Pantheon of the Doges.” The ranking confraternity of Venice, the Scuola Grande di San Marco, established its headquarters at the Dominican church in the 13th century and granted special access to the Cappella Maggiore.  In 1819 parts of the Scuola and cloisters of the church were converted to use as the civic hospital of Venice.",
+      "researcherName":"Debra Pincus",
       "researcherTitle":"",
-      "researcherAffiliation":""
+      "researcherAffiliation":"Independent Scholar"
+   },
+   {
+      "id":50,
+      "coreId":0,
+      "minorId":12,
+      "clusterId":8,
+      "title":"",
+      "text":"Venice became a major center for printing religious texts for the newly reformed monastic orders in the Renaissance and Counter-Reformation. The Breviary is a compendium of the daily Offices that formed the core of religious observance. Printing made these texts more accessible to individual monks and images aided their contemplation.",
+      "researcherName":"Tracy E. Cooper",
+      "researcherTitle":"",
+      "researcherAffiliation":"Temple University"
+   },
+   {
+      "id":51,
+      "coreId":52,
+      "minorId":0,
+      "clusterId":9,
+      "title":"",
+      "text":"The correct interpretation of Vitruvius’ (Roman 1st c BCE) On Architecture was a Renaissance obsession. Palladio assisted humanist Daniele Barbaro’s publication of a commentary, through his drawings of ancient remains. Published in Venice in 1556 and again in 1567, Palladio applied ideas about the “ancient house” to the design of the atrium, cloister, sacristy, and oval stair of the Augustinian Lateran Canons’ monastery at Santa Maria della Carità, begun in 1561. The porticoed cloister elevation demonstrates classical superimposition of the orders. Napoleon turned the complex into an art school, today the site of the Accademia Galleries.",
+      "researcherName":"Tracy E. Cooper",
+      "researcherTitle":"",
+      "researcherAffiliation":"Temple University"
+   },
+   {
+      "id":52,
+      "coreId":0,
+      "minorId":13,
+      "clusterId":9,
+      "title":"",
+      "text":"Gabriele Fiamma (1533-1587) was a famed orator and theologian who became abbot of Santa Maria della Carità where Palladio’s atrium provided a theater for preaching. His writings reflected the increasingly mystical tendencies of Counter-Reformation spirituality. During the 1576 plague, he preached on liberation of the city in the Doge’s presence.",
+      "researcherName":"Tracy E. Cooper",
+      "researcherTitle":"",
+      "researcherAffiliation":"Temple University"
    }
 ]
