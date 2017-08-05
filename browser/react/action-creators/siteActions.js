@@ -11,7 +11,7 @@ import Promise from 'bluebird';
 
 //-------------------CONSTANTS
 
-const	layersFullList = ['parish churches',"basilica", "plague churches", "monastery", "convent", "non-catholic communities", "processions", "printing", "textual consumption" ];
+const	layersFullList = ['churches',"convents & monasteries", "non-catholic communities", "processions", "printing"];
 
 //SITE REDUCER
 

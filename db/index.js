@@ -35,7 +35,7 @@ var Sequelize = require('sequelize');
 
 //var databaseURI = 'postgres://localhost:5432/venice2a'; //latest narrative download
 //var databaseURI = 'postgres://localhost:5432/veniceUpdated'; //update each time the database is updated on heroku
-var databaseURI = process.env.DATABASE_URL; //process for heroku node
+var databaseURI = process.env.DATABASE_URL || 'postgres://localhost:5432/veniceUpdated'; //process for heroku node
 
 var db = new Sequelize(databaseURI, {
   define: {

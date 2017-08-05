@@ -2,8 +2,8 @@
    {
       "id":2,
       "coreId":null,
-      "minorId":1,
-      "clusterId":1,
+      "minorId":null,
+      "clusterId":null,
       "title":"Lutheran Presence & German Trade",
       "text":"In eu semper nibh, blandit euismod massa. Sed ut pulvinar lorem. Praesent sit amet porta leo. Proin luctus enim sit amet risus molestie, ut elementum leo pulvinar. Morbi maximus felis nec arcu malesuada, a venenatis felis consectetur. Nullam in risus sem. Aenean eget luctus nulla.",
       "researcherName":"john doe",
@@ -13,8 +13,8 @@
    {
       "id":3,
       "coreId":null,
-      "minorId":2,
-      "clusterId":1,
+      "minorId":null,
+      "clusterId":null,
       "title":"Protestant Prints & Lutheran Bible Circulation in Venice",
       "text":"Donec diam velit, facilisis vitae pharetra rutrum, sodales et orci. Vestibulum id ultrices justo, at lobortis ligula. Aliquam erat volutpat. Sed molestie malesuada lacinia. Proin ex massa, ultricies nec arcu vitae, malesuada aliquet justo. Sed tincidunt, orci sed euismod ultrices, turpis tellus aliquam purus, a rutrum lacus nisl at eros. Maecenas quis diam nunc. Phasellus ac quam eu urna ultrices sagittis. Nulla facilisi. Donec sodales neque sit amet urna dapibus maximus dapibus lobortis metus. Sed vel nisi id lectus laoreet hendrerit nec quis mi. Suspendisse efficitur nisi sed tincidunt congue.",
       "researcherName":"jane doe",
@@ -24,8 +24,8 @@
    {
       "id":4,
       "coreId":null,
-      "minorId":3,
-      "clusterId":1,
+      "minorId":null,
+      "clusterId":null,
       "title":"Lutheran Religious Practices",
       "text":"Quisque tincidunt blandit ipsum, et consectetur dui vulputate nec. Praesent quis velit consectetur quam pharetra feugiat ut vel nibh. Aliquam porttitor nibh et ullamcorper feugiat. Quisque tempus pretium nunc, eu egestas turpis posuere in. Proin enim nunc, vestibulum at erat at, tempor semper leo. Nunc tincidunt enim sed tempus dapibus. Nullam vel elit vitae velit vulputate lacinia vel non erat. Fusce in feugiat nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur iaculis dictum placerat. Maecenas et risus nec metus blandit laoreet. Donec enim velit, hendrerit eu justo at, mollis elementum risus. In tristique metus at dolor tristique, nec aliquam arcu faucibus. Nullam nec risus tortor.",
       "researcherName":"john doe",
@@ -35,8 +35,8 @@
    {
       "id":5,
       "coreId":null,
-      "minorId":4,
-      "clusterId":1,
+      "minorId":null,
+      "clusterId":null,
       "title":"Germanic Costumes & Cultural Portraits",
       "text":"Quisque in purus faucibus erat iaculis maximus. Maecenas posuere interdum massa, nec tincidunt orci placerat quis. Aenean at tempor lacus, ac malesuada augue. Vestibulum cursus mauris vel nulla pulvinar, quis aliquet orci porttitor. Fusce vel gravida arcu, et tempor nibh. Cras blandit eu urna eu bibendum. Donec id lorem rutrum, imperdiet tellus vel, pulvinar eros. Mauris vulputate odio at metus finibus rhoncus. Fusce ornare risus velit, nec viverra ligula porta ultrices. Donec nunc risus, tincidunt a risus id, commodo feugiat eros. Donec eleifend mauris nec augue rutrum, eu euismod felis blandit. Praesent vel dolor in mi efficitur sollicitudin. Integer molestie varius sapien, a fringilla justo faucibus a. Curabitur maximus feugiat imperdiet. Praesent laoreet, erat nec condimentum tempor, mi elit maximus nunc, at aliquam orci odio in purus. Sed mattis facilisis odio, quis sodales ex efficitur id.",
       "researcherName":"jane doe",
@@ -177,11 +177,11 @@
    },
    {
       "id":24,
-      "coreId":10,
-      "minorId":0,
-      "clusterId":0,
+      "coreId":null,
+      "minorId":1,
+      "clusterId":2,
       "title":"",
-      "text":"In the late 1450s, printers began to leave Mainz for other European cities. In September 1469, John of Speyer was granted a monopoly for printing in Venice.  After he died that same year, however, the monopoly lapsed and the business passed to his brother, Wendelin. One of the two books John printed before his death was Pliny’s /Historia Naturalis/; the Newberry’s copy is decorated with borders, illuminated initials, and a coat of arms for a particular owner.  These embellishments helped bridge the divide between manuscripts and printed books, turning mass-produced printed volumes into one-of-a-kind objects.",
+      "text":"In the late 1450s, printers began to leave Mainz for other European cities. In September 1469, John of Speyer was granted a monopoly for printing in Venice, near Santa Maria Formosa.  After he died that same year, however, the monopoly lapsed and the business passed to his brother, Wendelin. One of the two books John printed before his death was Pliny’s /Historia Naturalis/; the Newberry’s copy is decorated with borders, illuminated initials, and a coat of arms for a particular owner.  These embellishments helped bridge the divide between manuscripts and printed books, turning mass-produced printed volumes into one-of-a-kind objects.",
       "researcherName":"Jill Gage",
       "researcherTitle":"",
       "researcherAffiliation":"Newberry Library"
@@ -266,7 +266,7 @@
    {
       "id":33,
       "coreId":null,
-      "minorId":1,
+      "minorId":14,
       "clusterId":2,
       "title":"",
       "text":"John of Speyer died during the printing of his edition of Augustine’s /De Civitate Dei/ and his brother Wendelin took over the work, noting in the colophon that he was not inferior to his brother in the art of printing and had taken up residence in Venice: '/Vindelinus adest eiusdem frater: & arte/', '/Non minor: hadricacaq; morabitur urbe/'",
@@ -390,7 +390,7 @@
       "minorId":0,
       "clusterId":6,
       "title":"",
-      "text":"Booksellers often included information about the location of their shop on the title page or in the colophon of their books. While sometimes this information was merely textual (e.g. “at the sign of the Diamond”) often it was visual as well, in the form of the printer’s device, which would also have appeared on the sign at the physical shop. These devices not only linked books to specific locations, but also worked to form part of the visual landscape of Venice in the period. Rialto Bridge, and the neighborhoods that surrounded it, would have been filled with all kinds of shops and signs. These signs functioned as advertising, competing for the attention – and the money – of customers both old and new. Here, Giovanni Battista Brigna advertises his editions of Le Poesie di Girolamo Preti at the “Sign of the Diamond”. ",
+      "text":"Rialto Bridge, and the neighborhoods that surrounded it, would have been filled with all kinds of shops and signs - particularily printer's devices. Here, Giovanni Battista Brigna advertises his editions of Le Poesie di Girolamo Preti at the “Sign of the Diamond”. ",
       "researcherName":"Jill Gage",
       "researcherTitle":"",
       "researcherAffiliation":"Newberry Library"
@@ -482,5 +482,16 @@
       "researcherName":"Tracy E. Cooper",
       "researcherTitle":"",
       "researcherAffiliation":"Temple University"
+   },
+   {
+      "id":53,
+      "coreId":10,
+      "minorId":0,
+      "clusterId":2,
+      "title":"",
+      "text":"Placeholder narrative on Santa Maria Formosa",
+      "researcherName":"Liz Horodowich",
+      "researcherTitle":"",
+      "researcherAffiliation":""
    }
 ]

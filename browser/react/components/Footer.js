@@ -150,23 +150,9 @@ class FooterSlides extends Component {
 
 	return (
             <div className="row footer">
-            {this.props.sites.specLayer !== 'maps' &&
-                <div>
-                <div className="row">
-                    <Tour type="bottom" />
-                </div>
-                <div className="row" >
-                    <div className="col-xs-8" style={{borderTop: '0.5px solid rgb(255, 255, 255)', paddingTop: '5px'}}>
-                        <Contact />
-                    </div>
-                </div>
-                </div>
-            }
-            {this.props.sites.specLayer === 'maps' &&
                 <div className="row">
                     <Contact />
                 </div>
-            }
             </div>
 	        )
     }

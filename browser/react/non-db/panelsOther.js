@@ -49,7 +49,8 @@ export const panelsOther = {
 			'Deborah Howard and Laura Moretti (music in the churches)',
 			'Brian Sandberg (galley slaves)',
 			'Mara Wade (more on Germans)',
-			'Lia Markey (Dürer)'
+			'Lia Markey (Dürer)',
+			'Tracy Cooper (Zitelle)'
 			],
 		},
 	},

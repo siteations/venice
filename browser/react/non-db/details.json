@@ -1,8 +1,8 @@
 [
 	{
 		"id":1,
-		"nameH": "Final Publication",
-		"srcThumb": "./img/Augustine_thumbnail.jpg",
+		"nameH": "Speyer's Pliny Editions",
+		"srcThumb": "./img/Pliny_thumbnail.jpg",
 		"clusterId": 2
 	},
 	{
@@ -61,7 +61,7 @@
 	},
 	{
 		"id":11,
-		"nameH": "The Signs of the Rialto",
+		"nameH": "Perderzano Bookshop",
 		"srcThumb": "./img/Sonetti%20Canzoni_thumbnail.jpg",
 		"clusterId": 6
 	},
@@ -76,4 +76,10 @@
 		"nameH": "A Theater for Preaching",
 		"srcThumb": "./img/Fiamma_thumbnail.jpg",
 		"clusterId": 9
+	},
+	{
+		"id":14,
+		"nameH": "Speyer's Final Publication",
+		"srcThumb": "./img/Augustine_thumbnail.jpg",
+		"clusterId": 2
 	}]

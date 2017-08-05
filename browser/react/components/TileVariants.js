@@ -92,7 +92,7 @@ export const BackgroundMask = (props) => {
             x = { 0 }
             y = { 0}
             fill="#21160b"
-            opacity={(props.color===false)? .65 : .35 }
+            opacity={(props.color===false)? .5 : .35 }
         />
            )
 };

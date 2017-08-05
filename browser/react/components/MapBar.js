@@ -25,15 +25,11 @@ let mapButtons0=[
 	// {cn:"nIcon flex center middle", v:"panel large", src:"/img/arrow2-01.svg" },
 let mapButtons1=[
 	{cn:"nIcon flex center middle", v:"all layers", src:"/img/all-layers-01.svg" },
-	{cn:"nIcon flex center middle", v:"parish churches", src:"/img/parish-01.svg" },
-	{cn:"nIcon flex center middle", v:"basilica", src:"/img/bascilica-01.svg" },
-	{cn:"nIcon flex center middle", v:"plague churches", src:"/img/plague-01.svg" },
-	{cn:"nIcon flex center middle", v:"monastery", src:"/img/culture-01.svg" },
-	{cn:"nIcon flex center middle", v:"convent", src:"/img/convent-01.svg" },
+	{cn:"nIcon flex center middle", v:"churches", src:"/img/bascilica-01.svg" },
+	{cn:"nIcon flex center middle", v:"convents & monasteries", src:"/img/convent-01.svg" },
 	{cn:"nIcon flex center middle", v:"non-catholic communities", src:"/img/non-catholic-01.svg" },
 	{cn:"nIcon flex center middle", v:"processions", src:"/img/ritual-01.svg" },
-	{cn:"nIcon flex center middle", v:"printing", src:"/img/books-01.svg" },
-	{cn:"nIcon flex center middle", v:"textual consumption", src:"/img/ephemera-01.svg" }
+	{cn:"nIcon flex center middle", v:"printing", src:"/img/ephemera-01.svg" },
 ]
 
 let mapButtons2=[
@@ -119,14 +115,14 @@ class MapBar extends Component{
 			this.props.panelNone();
 		}
 
-		else if ((val === 'intro' || val === 'prints' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelNone)){
+		else if ((val === 'intro' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelNone)){
 			this.props.panelSmall();
 			this.props.setSpecPanel(val);
 			this.props.updateSite(0);
 			this.props.setTitles(panelsOther[val].title);
 			this.props.updateNarrative(panelsOther[val].obj);
 		}
-		else if ((val === 'intro' || val === 'prints' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelLarge)){
+		else if ((val === 'intro' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelLarge)){
 			this.props.panelSmall();
 			this.props.setSpecPanel(val);
 			this.props.updateSite(0);
@@ -134,7 +130,7 @@ class MapBar extends Component{
 			this.props.updateNarrative(panelsOther[val].obj);
 		}
 
-		else if ((val === 'intro' || val === 'prints' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelSmall)){
+		else if ((val === 'intro' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelSmall)){
 			this.props.setSpecPanel(val);
 			this.props.updateSite(0);
 			this.props.setTitles(panelsOther[val].title);
@@ -142,7 +138,7 @@ class MapBar extends Component{
 		}
 
 		//map/intro/biblio options
-		else if ((val === 'maps') && (this.props.options.panelNone || this.props.options.panelSmall)){
+		else if ((val === 'maps' || val === 'prints' ) && (this.props.options.panelNone || this.props.options.panelSmall)){
 			this.props.panelLarge();
 			this.props.setSpecPanel(val);
 			if (val === 'maps' ) {
@@ -155,9 +151,15 @@ class MapBar extends Component{
 					if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
 					console.log(offs);
 				//
+			} else if (val === 'prints' ) {
+
+					var offs=this.props.map.xyOffsets;
+					this.setState({y:offs[1]});
+					if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
+					console.log(offs);
 			}
 
-		} else if ((val === 'maps') && this.props.options.panelLarge){
+		} else if ((val === 'maps' || val === 'prints' ) && this.props.options.panelLarge){
 			if (val !== this.props.sites.specLayer){
 				this.props.setSpecPanel(val);
 				if (val === 'maps' ) {
@@ -169,9 +171,13 @@ class MapBar extends Component{
 					this.setState({y:offs[1]});
 					if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
 					console.log(offs);
-
-					//
+				} else if (val === 'prints' ) {
+					var offs=this.props.map.xyOffsets;
+					this.setState({y:offs[1]});
+					if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
+					console.log(offs);
 				}
+
 			} else {
 				this.props.panelSmall();
 				this.props.setSpecPanel('');
@@ -219,6 +225,8 @@ class MapBar extends Component{
 		        				imgClass='opacity25';
 		        			} else if (each.v !== 'maps' && this.props.sites.specLayer === 'maps'){
 		        				imgClass='opacity25';
+		        			} else if (each.v !== 'prints' && this.props.sites.specLayer === 'prints'){
+		        				imgClass='opacity25';
 		        			} else if ((each.v ==='panel large' && !this.props.options.panelLarge)||(each.v ==='panel' && this.props.options.panelNone)) {
 		        				imgClass='rotate';
 		        			};
@@ -244,6 +252,8 @@ class MapBar extends Component{
 		        				imgClass='opacity25';
 		        			} else if (each.v !== 'maps' && this.props.sites.specLayer === 'maps'){
 		        				imgClass='opacity25';
+		        			} else if (each.v !== 'prints' && this.props.sites.specLayer === 'prints'){
+		        				imgClass='opacity25';
 		        			} else if ((each.v ==='panel large' && !this.props.options.panelLarge)||(each.v ==='panel' && this.props.options.panelNone)) {
 		        				imgClass='rotate';
 		        			};
@@ -268,6 +278,8 @@ class MapBar extends Component{
 		        			if (this.props.options.panelLarge && each.v ==='panel'){
 		        				imgClass='opacity25';
 		        			} else if (each.v !== 'maps' && this.props.sites.specLayer === 'maps'){
+		        				imgClass='opacity25';
+		        			} else if (each.v !== 'prints' && this.props.sites.specLayer === 'prints'){
 		        				imgClass='opacity25';
 		        			} else if ((each.v ==='panel large' && !this.props.options.panelLarge)||(each.v ==='panel' && this.props.options.panelNone)) {
 		        				imgClass='rotate';

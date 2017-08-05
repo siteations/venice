@@ -114,13 +114,18 @@ class FooterSlides extends Component {
     }
 
     componentDidMount(){ //don't over-ride position on main map
-        if (this.props.type === "maps") {
-        this.resetStart();
-        }
+        // if (this.props.type === "maps") {
+        // this.resetStart();
+        // }
     }
 
+    // anim(){
+    //     this.resetStart();
+    // }
+
     resetStart(){
-        if (this.props.type === "maps") {
+        console.log('got here on load');
+        if (this.props.type === "maps" || this.props.type === "prints") {
             var site=this.props.map.mapTourAll[0];
             var siteCent = [site.x, site.y];
             var siteZoom = site.scale;
@@ -142,7 +147,20 @@ class FooterSlides extends Component {
 
         this.props.setMapSite(site);
         this.flyToSingle(siteZoom, siteCent, siteTile);
-        this.setState({tourSeries: 1});
+
+        if (this.props.type !== 'maps'){
+            var core = site.core,  minor = site.minor;
+            var site = this.props.sites.allSites.filter(site=> +site.id === +core)[0];
+            this.props.setTitles(site.name.split('.'));
+
+            if (+minor === 0){
+                var obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+core);
+            } else if (minor){
+                var obj = this.props.sites.genNarratives.filter(narr => +narr.minorId===+minor);
+            }
+            this.props.updateNarrative(obj[0]);
+
+        };
 
     }
 
@@ -190,6 +208,20 @@ class FooterSlides extends Component {
 
         this.props.setMapSite(site);
         this.flyToSingle(site.scale, [site.x, site.y], site.tile);
+
+        if (this.props.type !== 'maps'){
+            var core = site.core,  minor = site.minor;
+            var site = this.props.sites.allSites.filter(site=> +site.id === +core)[0];
+            this.props.setTitles(site.name.split('.'));
+
+            if (+minor === 0){
+                var obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+core);
+            } else if (minor){
+                var obj = this.props.sites.genNarratives.filter(narr => +narr.minorId===+minor);
+            }
+            this.props.updateNarrative(obj[0]);
+
+        };
     }
 
     setNext(e){
@@ -215,30 +247,49 @@ class FooterSlides extends Component {
 
         this.props.setMapSite(site);
         this.flyToSingle(site.scale, [site.x, site.y], site.tile);
+
+        if (this.props.type !== 'maps'){
+            var core = site.core,  minor = site.minor;
+            var site = this.props.sites.allSites.filter(site=> +site.id === +core)[0];
+            this.props.setTitles(site.name.split('.'));
+
+            if (+minor === 0){
+                var obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+core);
+            } else if (minor){
+                var obj = this.props.sites.genNarratives.filter(narr => +narr.minorId===+minor);
+            }
+            this.props.updateNarrative(obj[0]);
+
+        };
     }
 
     setSite(e){
         e.preventDefault();
         var siteId = e.target.attributes.value.value;
-        console.log(siteId, e.target);
 
         if (this.props.type !== 'maps'){
             this.props.updateSite(siteId);
+            var minor = e.target.attributes.data.value;
 
             var site = this.props.sites.allSites.filter(site=> +site.id === +siteId)[0];
-            var siteZoom = this.props.options.allTours[this.props.options.currTour].filter(item=>+item.siteId===+siteId)[0].zoom;
-            var siteTile =128;
-            var siteCent = [site.cx, site.cy];
             this.props.setTitles(site.name.split('.'));
 
+            var siteSpace = this.props.map.mapTourAll.filter(site=> +site.core === +siteId)[0];
+            var siteCent = [siteSpace.x, siteSpace.y];
+            var siteZoom = siteSpace.scale;
+            var siteTile = siteSpace.tile;
+
+            if (+minor === 0){
             var obj = this.props.sites.genNarratives.filter(narr => +narr.coreId===+siteId);
+            } else if (minor){
+            var obj = this.props.sites.genNarratives.filter(narr => +narr.minorId===+minor);
+            }
             this.props.updateNarrative(obj[0]);
-        } else { // if maps
+        } else if (this.props.type === 'maps'){
             var site = this.props.map.mapTourAll.filter(site=> +site.id === +siteId)[0];
             var siteCent = [site.x, site.y];
             var siteZoom = site.scale;
             var siteTile = site.tile;
-
         }
 
         this.props.setMapSite(site);
@@ -356,15 +407,9 @@ class FooterSlides extends Component {
 
     render(){
 
-    if (this.props.type !== 'maps'){
-    var basetour = this.props.options.allTours[this.props.options.currTour];
-    //var tour = basetour.slice(0,7);
-    } else {
     var basetour = this.props.map.mapTourAll;
-    //var tour = basetour.slice(0,7);
-    }
 
-    if ((basetour && basetour.length<=7) || (basetour && this.props.type !== 'maps')){
+    if ((basetour && basetour.length<=7)){
         var tour = basetour;
     } else if (basetour && basetour.length>7 && this.state.tourSeries===1){
         var tour = basetour.slice(0,7);
@@ -374,73 +419,62 @@ class FooterSlides extends Component {
         var tour = basetour.slice(14,21);
     }
 
-    console.log(tour, basetour);
+    //console.log(tour, basetour);
 
 
     //need to set up alternate/hardcoded tour...
 
 	return (
-                  <div className="flex center">
+                  <div className="flex center" >
 
                        <div className="nIcon flex center middle" >
-                        <Tooltip content='return to start' styles={(this.props.type === "maps")? toolstyles : toolstyles4 }>
+                        <Tooltip content='return to start' styles={toolstyles}>
                         <span value="reset" className="glyphicon glyphicon glyphicon-step-backward" onTouchTap={(e)=>this.resetStart(e)} ></span>
                         </Tooltip>
                         </div>
-                        {this.props.type === "maps" &&
+
+
                         <div className="nIcon flex center middle" >
-                        <Tooltip content='load last series' styles={(this.props.type === "maps")? toolstyles : toolstyles4 }>
+                        <Tooltip content='load last series' styles={toolstyles}>
                         <span value="back" className="glyphicon glyphicon glyphicon-chevron-left" style={{opacity:(this.state.tourSeries===1)? '.25' : '1'}} onTouchTap={(e)=>this.setPrior(e)} ></span>
                         </Tooltip>
                         </div>
-                        }
 
-                        {tour && this.props.type === "bottom" &&
+                        {tour &&
                             tour.map(site=>{
+
                             return <div className={(site.siteId===this.props.sites.currSite)? 'bIconSelected text-center' : 'bIcon  text-center'}
-                                value={site.siteId}
-                                key = {site.siteId}
-                                onTouchTap={e=>this.setSite(e)}
-                                onClick={e=>this.setSite(e)}>
-                                <Tooltip content='click to view' styles={toolstyles3}>
-                                {site.siteId}
-                                </Tooltip>
-                                </div>
-                        })}
-                        {tour && this.props.type === "maps" &&
-                            tour.map(site=>{
-                            return <div className={(site.siteId===this.props.sites.currSite)? 'bIconSelected text-center' : 'bIcon  text-center'}
-                                value={site.id}
+                                value={(this.props.type === 'maps')? site.id : site.core}
+                                data={site.minor}
                                 key = {site.id}
                                 onTouchTap={e=>this.setSite(e)} >
                                  <Tooltip content={`click for: ${site.name}`} styles={toolstyles2}>
                                 <img src={(typeof(site.src)==='string')? site.src : site.src[+site.id-1]}
                                 style={{borderRadius: '5px'}}
-                                value={site.id} />
+                                value={(this.props.type === 'maps')? site.id : site.core}
+                                data={site.minor} />
                                 </Tooltip>
                                 </div>
                         })}
-                        {this.props.type === "maps" &&
                         <div className="nIcon flex center middle" >
                         <Tooltip content='load more sites' styles={(this.props.type === "maps")? toolstyles : toolstyles4 }>
                         <span value="forward" className="glyphicon glyphicon-chevron-right" style={{opacity:(this.state.tourSeries===3)? '.25' : '1'}} onTouchTap={(e)=>this.setNext(e)} ></span>
                         </Tooltip>
                         </div>
-                        }
-                        {this.props.type === "bottom" &&
+                        {/*this.props.type === "bottom" &&
                         <div className="nIcon flex center middle" >
                         <Tooltip content='play/pause' styles={ toolstyles4 }>
                         <span value={(this.props.options.playTour)? "pause" : "play" } className={(this.props.options.playTour)? "glyphicon glyphicon-pause" : "glyphicon glyphicon-play" } onTouchTap={(e)=>this.animate(e)} ></span>
                         </Tooltip>
                         </div>
-                        }
-                        {this.props.type === "bottom" &&
+                        */}
+                        {/*this.props.type === "bottom" &&
                         <div className="l20">
                                 <h4 className="BornholmSandvig closerT">{(tour)? 'Tour of '+tour[0].tourName : 'Select Above, Left for Tours' }</h4>
                                 <p className="closerB">click thumbnails or play for guided sites & narratives</p>
                                 <p className="small">(play shifts sites every 5 seconds, timing/order/zoom tbd.)</p>
                         </div>
-                        }
+                        */}
                         {/*this.props.type === "bottom" &&
                         <Contact />
                         */}

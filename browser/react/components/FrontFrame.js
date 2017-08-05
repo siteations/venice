@@ -114,7 +114,10 @@ class Frame extends Component {
 				        	{this.props.sites.specLayer === '' &&
 				        		<Panel baseClass="panelLargePart" />
 				        	}
-				        	{this.props.sites.specLayer !== '' &&
+				        	{this.props.sites.specLayer === 'maps' &&
+				        		<PanelOps baseClass="panelLargePart noPad" />
+				        	}
+				        	{this.props.sites.specLayer === 'prints' &&
 				        		<PanelOps baseClass="panelLargePart noPad" />
 				        	}
 			        	</div>
@@ -127,8 +130,11 @@ class Frame extends Component {
 				        	{this.props.sites.specLayer === '' &&
 				        		<Panel baseClass="panelLarge" />
 				        	}
-				        	{this.props.sites.specLayer !== '' &&
+				        	{this.props.sites.specLayer === 'maps' &&
 				        		<PanelOps baseClass="panelLarge noPad" />
+				        	}
+				        	{this.props.sites.specLayer === 'prints' &&
+				        		<PanelOps baseClass="panelLargePart noPad" />
 				        	}
 			        	</div>
 			        }

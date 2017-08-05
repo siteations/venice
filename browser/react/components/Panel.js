@@ -47,7 +47,7 @@ class PanelBase extends Component {
     let biblio = this.props.sites.genBiblio.filter(bib => +bib.narrativeId === +obj.id);
 
   	return (
-  	     <div className={this.props.baseClass} ref="sizeP" id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`}}>
+  	     <div className={this.props.baseClass} ref="sizeP" id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${(!this.props.sites.specLayer==='prints')? this.props.map.windowSize[1]+6: this.props.map.windowSize[1]-40}px` }}>
 				    <h3 className="BornholmSandvig" >{(this.props.panel.title && other)? this.props.panel.title : 'Introduction, Biblio, or Credits'}</h3>
 				    <h5>{(this.props.panel.subtitle && other)? this.props.panel.subtitle : 'Secondary Elements'}</h5>
 				    <h4 className="BornholmSandvig">{obj.title}</h4>

@@ -1,4 +1,5 @@
 import mapSites from '../non-db/mapSites.js';
+import printSites from '../non-db/printSites.js';
 
 //DATABASE AND NON-DATABASE VERSION ARE THE SAME
 
@@ -94,10 +95,13 @@ export const setCenterScreen = (centerScr) => {
 	};
 };
 
-export const setMapTourAll = () => {
+export const setMapTourAll = (type) => {
+	var sites;
+	(type==='maps')? sites = mapSites.slice() : sites = printSites.slice() ;
+
 	return {
 		type: SET_MAPTOUR_ALL,
-		mapSites
+		sites
 	};
 };
 
@@ -125,6 +129,7 @@ const initMap = {
 
 	mapTourAll: mapSites.slice(),
 	mapSite: mapSites.slice()[0],
+
 
 };
 
@@ -177,7 +182,8 @@ export const mapReducer = (prevState = initMap, action) => {
 		break;
 
 	case SET_MAPTOUR_ALL:
-		newState.mapTourAll = action.mapSites;
+		console.log(action.sites);
+		newState.mapTourAll = action.sites;
 		break;
 
 	default:
@@ -228,8 +234,8 @@ export const updateWindowOffsets = offsets => dispatch => {
   dispatch(setWindowOffsets(offsets));
 };
 
-export const setMapTours = () => dispatch => {
-	dispatch(setMapTourAll());
+export const setMapTours = (type) => dispatch => {
+	dispatch(setMapTourAll(type));
 };
 
 export const setMapSiteOne = (site) => dispatch => {

@@ -376,6 +376,8 @@ class MapSVG extends Component {
 
         //console.log('results?', this.props.map.windowSize, currentSite, clipDetails, details);
         //console.log('results?', currentSite);
+        var height=this.props.map.windowSize[1];
+        if (this.props.sites.specLayer==='maps' || this.props.sites.specLayer==='prints'){var height = height*.7};
 
     	return (
 
@@ -383,6 +385,11 @@ class MapSVG extends Component {
         {this.props.sites.specLayer==='maps' &&
               <div style={{height: `${this.props.map.windowSize[1]*.06}px`}}>
               <h3 className="BornholmSandvig pad10" > Cartographic Elements: Merlo Map (1676)</h3>
+              </div>
+        }
+        {this.props.sites.specLayer==='prints' &&
+              <div style={{height: `${this.props.map.windowSize[1]*.06}px`}}>
+              <h3 className="BornholmSandvig pad10" > Printing in Venice: A Tour</h3>
               </div>
         }
     	   <div className="offset border3"
@@ -405,7 +412,7 @@ class MapSVG extends Component {
            onClick={(this.props.sites.newCx)? e => this.addCenter(e, 'radius') : (e)=>e.preventDefault()}
            >
 
-	    	   <svg width={this.props.map.windowSize[0]} height={(this.props.sites.specLayer==='maps')? this.props.map.windowSize[1]*.7 : this.props.map.windowSize[1]} xmlnsXlink='http://www.w3.org/1999/xlink' >
+	    	   <svg width={this.props.map.windowSize[0]} height={height} xmlnsXlink='http://www.w3.org/1999/xlink' >
 	    	   		<defs>
                         <filter id="greyscale">
                             <feColorMatrix type="saturate" values="0" />
@@ -503,6 +510,12 @@ class MapSVG extends Component {
               <div className="">
               <h5 className="BornholmSandvig pad10" > Cartographic Tour: <span className="Trenda-Regular">Site {this.props.map.mapSite.id} of {this.props.map.mapTourAll.length}, {this.props.map.mapSite.author}</span></h5>
               <Tour type="maps" />
+              </div>
+            }
+            {this.props.sites.specLayer==='prints' &&
+              <div className="">
+              <h5 className="BornholmSandvig pad10" > Print Tour: <span className="Trenda-Regular">Site {this.props.map.mapSite.id} of {this.props.map.mapTourAll.length}, {this.props.map.mapSite.author}</span></h5>
+              <Tour type="prints" />
               </div>
             }
     	 </div>

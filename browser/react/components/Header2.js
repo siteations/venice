@@ -141,6 +141,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     sites: state.sites,
     options: state.options,
+    map: state.map,
   }
 }
 
