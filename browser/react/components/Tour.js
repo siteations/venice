@@ -207,6 +207,7 @@ class FooterSlides extends Component {
         }
 
         this.props.setMapSite(site);
+        console.log(site);
         this.flyToSingle(site.scale, [site.x, site.y], site.tile);
 
         if (this.props.type !== 'maps'){

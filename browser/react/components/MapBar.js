@@ -220,20 +220,19 @@ class MapBar extends Component{
 		        		{mapButtons0.map((each,i)=>{
 
 		        			let imgClass;
+		        			let disabled = false;
 
-		        			if (this.props.options.panelLarge && each.v ==='panel'){
+		        			if ((this.props.options.panelLarge && each.v ==='panel')||(each.v !== 'maps' && this.props.sites.specLayer === 'maps')||(each.v !== 'prints' && this.props.sites.specLayer === 'prints')){
 		        				imgClass='opacity25';
-		        			} else if (each.v !== 'maps' && this.props.sites.specLayer === 'maps'){
-		        				imgClass='opacity25';
-		        			} else if (each.v !== 'prints' && this.props.sites.specLayer === 'prints'){
-		        				imgClass='opacity25';
-		        			} else if ((each.v ==='panel large' && !this.props.options.panelLarge)||(each.v ==='panel' && this.props.options.panelNone)) {
+		        				disabled = true;
+		        			}
+		        			else if ((each.v ==='panel large' && !this.props.options.panelLarge)||(each.v ==='panel' && this.props.options.panelNone)) {
 		        				imgClass='rotate';
 		        			};
 
 		        			return (
-										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onTouchTap={this.layerPanel} >
-											<Tooltip content={'toggle '+ each.v} styles={toolstyles}>
+										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver="" onMouseOut="" onTouchTap={(disabled)? null :this.layerPanel}>
+											<Tooltip content={(disabled)? each.v+' disabled': 'toggle '+ each.v} styles={toolstyles}>
 											{each.src !== ' ' &&
 												<img src={each.src} className={`bImg ${imgClass}`} value={each.v} />
 											}
@@ -247,20 +246,19 @@ class MapBar extends Component{
 		        		{mapButtons1.map((each,i)=>{
 
 		        			let imgClass;
+		        			let disabled = false;
 
-		        			if (this.props.options.panelLarge && each.v ==='panel'){
+		        			if ((this.props.options.panelLarge && each.v ==='panel')||(each.v !== 'maps' && this.props.sites.specLayer === 'maps')||(each.v !== 'prints' && this.props.sites.specLayer === 'prints')){
 		        				imgClass='opacity25';
-		        			} else if (each.v !== 'maps' && this.props.sites.specLayer === 'maps'){
-		        				imgClass='opacity25';
-		        			} else if (each.v !== 'prints' && this.props.sites.specLayer === 'prints'){
-		        				imgClass='opacity25';
-		        			} else if ((each.v ==='panel large' && !this.props.options.panelLarge)||(each.v ==='panel' && this.props.options.panelNone)) {
+		        				disabled = true;
+		        			}
+		        			else if ((each.v ==='panel large' && !this.props.options.panelLarge)||(each.v ==='panel' && this.props.options.panelNone)) {
 		        				imgClass='rotate';
 		        			};
 
 		        			return (
-										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onTouchTap={this.layerPanel} >
-											<Tooltip content={'toggle '+ each.v} styles={toolstyles}>
+										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver="" onMouseOut="" onTouchTap={(disabled)? null :this.layerPanel} >
+											<Tooltip content={(disabled)? each.v+' disabled': 'toggle '+ each.v} styles={toolstyles}>
 											{each.src !== ' ' &&
 												<img src={each.src} className={`bImg ${imgClass}`} value={each.v} />
 											}
@@ -274,20 +272,19 @@ class MapBar extends Component{
 		        		{mapButtons2.map((each,i)=>{
 
 		        			let imgClass;
+		        			let disabled = false;
 
-		        			if (this.props.options.panelLarge && each.v ==='panel'){
+		        			if ((this.props.options.panelLarge && each.v ==='panel')||(each.v !== 'maps' && this.props.sites.specLayer === 'maps')||(each.v !== 'prints' && this.props.sites.specLayer === 'prints')){
 		        				imgClass='opacity25';
-		        			} else if (each.v !== 'maps' && this.props.sites.specLayer === 'maps'){
-		        				imgClass='opacity25';
-		        			} else if (each.v !== 'prints' && this.props.sites.specLayer === 'prints'){
-		        				imgClass='opacity25';
-		        			} else if ((each.v ==='panel large' && !this.props.options.panelLarge)||(each.v ==='panel' && this.props.options.panelNone)) {
+		        				disabled = true;
+		        			}
+		        			else if ((each.v ==='panel large' && !this.props.options.panelLarge)||(each.v ==='panel' && this.props.options.panelNone)) {
 		        				imgClass='rotate';
 		        			};
 
 		        			return (
-										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver={this.layerOver} onMouseOut={this.layerOut} onTouchTap={this.layerPanel} >
-											<Tooltip content={'toggle '+ each.v} styles={toolstyles}>
+										<div className={each.cn} key={i+'navbutton'} value={each.v} onMouseOver="" onMouseOut="" onTouchTap={(disabled)? null :this.layerPanel} >
+											<Tooltip content={(disabled)? each.v+' disabled': 'toggle '+ each.v} styles={toolstyles}>
 											{each.src !== ' ' &&
 												<img src={each.src} className={`bImg ${imgClass}`} value={each.v} />
 											}

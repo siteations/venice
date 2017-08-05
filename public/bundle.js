@@ -12365,6 +12365,7 @@ var FooterSlides = function (_Component) {
             }
 
             this.props.setMapSite(site);
+            console.log(site);
             this.flyToSingle(site.scale, [site.x, site.y], site.tile);
 
             if (this.props.type !== 'maps') {
@@ -19582,23 +19583,21 @@ var MapBar = function (_Component) {
 				mapButtons0.map(function (each, i) {
 
 					var imgClass = void 0;
+					var disabled = false;
 
-					if (_this2.props.options.panelLarge && each.v === 'panel') {
+					if (_this2.props.options.panelLarge && each.v === 'panel' || each.v !== 'maps' && _this2.props.sites.specLayer === 'maps' || each.v !== 'prints' && _this2.props.sites.specLayer === 'prints') {
 						imgClass = 'opacity25';
-					} else if (each.v !== 'maps' && _this2.props.sites.specLayer === 'maps') {
-						imgClass = 'opacity25';
-					} else if (each.v !== 'prints' && _this2.props.sites.specLayer === 'prints') {
-						imgClass = 'opacity25';
+						disabled = true;
 					} else if (each.v === 'panel large' && !_this2.props.options.panelLarge || each.v === 'panel' && _this2.props.options.panelNone) {
 						imgClass = 'rotate';
 					};
 
 					return _react2.default.createElement(
 						'div',
-						{ className: each.cn, key: i + 'navbutton', value: each.v, onMouseOver: _this2.layerOver, onMouseOut: _this2.layerOut, onTouchTap: _this2.layerPanel },
+						{ className: each.cn, key: i + 'navbutton', value: each.v, onMouseOver: '', onMouseOut: '', onTouchTap: disabled ? null : _this2.layerPanel },
 						_react2.default.createElement(
 							_reactLightweightTooltip.Tooltip,
-							{ content: 'toggle ' + each.v, styles: toolstyles },
+							{ content: disabled ? each.v + ' disabled' : 'toggle ' + each.v, styles: toolstyles },
 							each.src !== ' ' && _react2.default.createElement('img', { src: each.src, className: 'bImg ' + imgClass, value: each.v })
 						)
 					);
@@ -19612,23 +19611,21 @@ var MapBar = function (_Component) {
 				mapButtons1.map(function (each, i) {
 
 					var imgClass = void 0;
+					var disabled = false;
 
-					if (_this2.props.options.panelLarge && each.v === 'panel') {
+					if (_this2.props.options.panelLarge && each.v === 'panel' || each.v !== 'maps' && _this2.props.sites.specLayer === 'maps' || each.v !== 'prints' && _this2.props.sites.specLayer === 'prints') {
 						imgClass = 'opacity25';
-					} else if (each.v !== 'maps' && _this2.props.sites.specLayer === 'maps') {
-						imgClass = 'opacity25';
-					} else if (each.v !== 'prints' && _this2.props.sites.specLayer === 'prints') {
-						imgClass = 'opacity25';
+						disabled = true;
 					} else if (each.v === 'panel large' && !_this2.props.options.panelLarge || each.v === 'panel' && _this2.props.options.panelNone) {
 						imgClass = 'rotate';
 					};
 
 					return _react2.default.createElement(
 						'div',
-						{ className: each.cn, key: i + 'navbutton', value: each.v, onMouseOver: _this2.layerOver, onMouseOut: _this2.layerOut, onTouchTap: _this2.layerPanel },
+						{ className: each.cn, key: i + 'navbutton', value: each.v, onMouseOver: '', onMouseOut: '', onTouchTap: disabled ? null : _this2.layerPanel },
 						_react2.default.createElement(
 							_reactLightweightTooltip.Tooltip,
-							{ content: 'toggle ' + each.v, styles: toolstyles },
+							{ content: disabled ? each.v + ' disabled' : 'toggle ' + each.v, styles: toolstyles },
 							each.src !== ' ' && _react2.default.createElement('img', { src: each.src, className: 'bImg ' + imgClass, value: each.v })
 						)
 					);
@@ -19642,23 +19639,21 @@ var MapBar = function (_Component) {
 				mapButtons2.map(function (each, i) {
 
 					var imgClass = void 0;
+					var disabled = false;
 
-					if (_this2.props.options.panelLarge && each.v === 'panel') {
+					if (_this2.props.options.panelLarge && each.v === 'panel' || each.v !== 'maps' && _this2.props.sites.specLayer === 'maps' || each.v !== 'prints' && _this2.props.sites.specLayer === 'prints') {
 						imgClass = 'opacity25';
-					} else if (each.v !== 'maps' && _this2.props.sites.specLayer === 'maps') {
-						imgClass = 'opacity25';
-					} else if (each.v !== 'prints' && _this2.props.sites.specLayer === 'prints') {
-						imgClass = 'opacity25';
+						disabled = true;
 					} else if (each.v === 'panel large' && !_this2.props.options.panelLarge || each.v === 'panel' && _this2.props.options.panelNone) {
 						imgClass = 'rotate';
 					};
 
 					return _react2.default.createElement(
 						'div',
-						{ className: each.cn, key: i + 'navbutton', value: each.v, onMouseOver: _this2.layerOver, onMouseOut: _this2.layerOut, onTouchTap: _this2.layerPanel },
+						{ className: each.cn, key: i + 'navbutton', value: each.v, onMouseOver: '', onMouseOut: '', onTouchTap: disabled ? null : _this2.layerPanel },
 						_react2.default.createElement(
 							_reactLightweightTooltip.Tooltip,
-							{ content: 'toggle ' + each.v, styles: toolstyles },
+							{ content: disabled ? each.v + ' disabled' : 'toggle ' + each.v, styles: toolstyles },
 							each.src !== ' ' && _react2.default.createElement('img', { src: each.src, className: 'bImg ' + imgClass, value: each.v })
 						)
 					);
@@ -21045,6 +21040,8 @@ var printSites = [(_ref = {
 	id: 7,
 	core: 41, //rialto music
 	minor: 5,
+	x: 7373, //mercury far
+	y: 2099,
 	r: 0, //
 	scale: 4,
 	tile: 172,

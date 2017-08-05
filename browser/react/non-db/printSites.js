@@ -134,6 +134,8 @@ const printSites = [
 		id: 7,
 		core: 41, //rialto music
 		minor: 5,
+		x: 7373, //mercury far
+		y: 2099,
 		r: 0, //
 		scale: 4,
 		tile:172,
