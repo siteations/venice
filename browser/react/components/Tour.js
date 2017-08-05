@@ -211,6 +211,7 @@ class FooterSlides extends Component {
         this.flyToSingle(site.scale, [site.x, site.y], site.tile);
 
         if (this.props.type !== 'maps'){
+            this.props.updateSite(site.core);
             var core = site.core,  minor = site.minor;
             var site = this.props.sites.allSites.filter(site=> +site.id === +core)[0];
             this.props.setTitles(site.name.split('.'));
@@ -250,6 +251,7 @@ class FooterSlides extends Component {
         this.flyToSingle(site.scale, [site.x, site.y], site.tile);
 
         if (this.props.type !== 'maps'){
+            this.props.updateSite(site.core);
             var core = site.core,  minor = site.minor;
             var site = this.props.sites.allSites.filter(site=> +site.id === +core)[0];
             this.props.setTitles(site.name.split('.'));

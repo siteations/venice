@@ -50,8 +50,8 @@ class PanelB extends Component {
          <div className={`whiteBackground ${this.props.baseClass}`} id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${this.props.map.windowSize[1]+6}px`, overflow: 'hidden' }}>
             {this.props.sites.specLayer==='maps' &&
             <div>
-              <div style={{height: `${this.props.map.windowSize[1]*.06}px`}}>
-              <h3 className="BornholmSandvig pad10" >{this.props.map.mapSite.name}</h3>
+              <div style={{height: `${this.props.map.windowSize[1]*.05}px`}}>
+              <h3 className="BornholmSandvig pad10" style={{marginTop:'15px'}}>{this.props.map.mapSite.name}</h3>
               </div>
               {this.props.map.mapSite.id > 2 && this.props.sites.specLayer==='maps' &&
               <div className="whiteBackground">

@@ -31,7 +31,7 @@ class PanelMap extends Component {
   render(){
 
     let obj = this.props.map.mapSite;
-    var height = this.props.map.windowSize[1]*.205;
+    var height = this.props.map.windowSize[1]*.21;
     if (this.props.size==='full') { height = this.props.map.windowSize[1]*.805};
 
   	return (

@@ -383,13 +383,13 @@ class MapSVG extends Component {
 
     	<div className={this.props.baseClass} ref="size" id="mapWin" onAnimationEnd = {e=> this.refSize(e) } >
         {this.props.sites.specLayer==='maps' &&
-              <div style={{height: `${this.props.map.windowSize[1]*.06}px`}}>
-              <h3 className="BornholmSandvig pad10" > Cartographic Elements: Merlo Map (1676)</h3>
+              <div style={{height: `${this.props.map.windowSize[1]*.05}px`}}>
+              <h3 className="BornholmSandvig pad10" style={{marginTop:'15px'}} > Cartographic Elements: Merlo Map (1676)</h3>
               </div>
         }
         {this.props.sites.specLayer==='prints' &&
-              <div style={{height: `${this.props.map.windowSize[1]*.06}px`}}>
-              <h3 className="BornholmSandvig pad10" > Printing in Venice: A Tour</h3>
+              <div style={{height: `${this.props.map.windowSize[1]*.05}px`}}>
+              <h3 className="BornholmSandvig pad10" style={{marginTop:'15px'}} > Printing in Venice: A Tour</h3>
               </div>
         }
     	   <div className="offset border3"

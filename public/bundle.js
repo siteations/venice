@@ -12005,47 +12005,7 @@ var MapOps = function (_Component) {
                     _react2.default.createElement('br', null),
                     'details'
                 ),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                    'h5',
-                    { style: { fontWeight: 'bold' } },
-                    'tours'
-                ),
-                _react2.default.createElement(
-                    'button',
-                    { className: 'btn btn-default btn-sm bIconSm' },
-                    _react2.default.createElement(
-                        _reactLightweightTooltip.Tooltip,
-                        { content: 'tour all processions', styles: toolstyles },
-                        _react2.default.createElement('img', { src: '/img/ritual-01.svg', className: 'bImg', value: '1', onTouchTap: function onTouchTap(e) {
-                                return _this2.setTour(e);
-                            } })
-                    )
-                ),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                    'button',
-                    { className: 'btn btn-default btn-sm bIconSm', onTouchTap: '' },
-                    _react2.default.createElement(
-                        _reactLightweightTooltip.Tooltip,
-                        { content: 'tour all printing sites', styles: toolstyles },
-                        _react2.default.createElement('img', { src: '/img/books-01.svg', className: 'bImg', value: '2', onTouchTap: function onTouchTap(e) {
-                                return _this2.setTour(e);
-                            } })
-                    )
-                ),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                    'button',
-                    { className: 'btn btn-default btn-sm bIconSm', onTouchTap: '' },
-                    _react2.default.createElement(
-                        _reactLightweightTooltip.Tooltip,
-                        { content: 'tour all basilica', styles: toolstyles },
-                        _react2.default.createElement('img', { src: '/img/bascilica-01.svg', className: 'bImg', value: '3', onTouchTap: function onTouchTap(e) {
-                                return _this2.setTour(e);
-                            } })
-                    )
-                )
+                _react2.default.createElement('br', null)
             );
         }
     }]);
@@ -12369,6 +12329,7 @@ var FooterSlides = function (_Component) {
             this.flyToSingle(site.scale, [site.x, site.y], site.tile);
 
             if (this.props.type !== 'maps') {
+                this.props.updateSite(site.core);
                 var core = site.core,
                     minor = site.minor;
                 var site = this.props.sites.allSites.filter(function (site) {
@@ -12415,6 +12376,7 @@ var FooterSlides = function (_Component) {
             this.flyToSingle(site.scale, [site.x, site.y], site.tile);
 
             if (this.props.type !== 'maps') {
+                this.props.updateSite(site.core);
                 var core = site.core,
                     minor = site.minor;
                 var site = this.props.sites.allSites.filter(function (site) {
@@ -19504,6 +19466,9 @@ var MapBar = function (_Component) {
 						//
 					} else if (val === 'prints') {
 
+						this.props.loadSelectAll('clear');
+						this.props.addSelectOne('printing');
+
 						var offs = this.props.map.xyOffsets;
 						this.setState({ y: offs[1] });
 						if (offs[1] < 0) {
@@ -19526,6 +19491,10 @@ var MapBar = function (_Component) {
 							}
 							console.log(offs);
 						} else if (val === 'prints') {
+
+							this.props.loadSelectAll('clear');
+							this.props.addSelectOne('printing');
+
 							var offs = this.props.map.xyOffsets;
 							this.setState({ y: offs[1] });
 							if (offs[1] < 0) {
@@ -19539,6 +19508,8 @@ var MapBar = function (_Component) {
 						this.props.setColor(false);
 						this.props.setAnno(true);
 						this.props.setDetail(true);
+
+						this.props.loadSelectAll('add');
 
 						var offs = this.props.map.xyOffsets;
 						var y = this.state.y;
@@ -20268,19 +20239,19 @@ var MapSVG = function (_Component) {
                     } },
                 this.props.sites.specLayer === 'maps' && _react2.default.createElement(
                     'div',
-                    { style: { height: this.props.map.windowSize[1] * .06 + 'px' } },
+                    { style: { height: this.props.map.windowSize[1] * .05 + 'px' } },
                     _react2.default.createElement(
                         'h3',
-                        { className: 'BornholmSandvig pad10' },
+                        { className: 'BornholmSandvig pad10', style: { marginTop: '15px' } },
                         ' Cartographic Elements: Merlo Map (1676)'
                     )
                 ),
                 this.props.sites.specLayer === 'prints' && _react2.default.createElement(
                     'div',
-                    { style: { height: this.props.map.windowSize[1] * .06 + 'px' } },
+                    { style: { height: this.props.map.windowSize[1] * .05 + 'px' } },
                     _react2.default.createElement(
                         'h3',
-                        { className: 'BornholmSandvig pad10' },
+                        { className: 'BornholmSandvig pad10', style: { marginTop: '15px' } },
                         ' Printing in Venice: A Tour'
                     )
                 ),
@@ -20660,7 +20631,7 @@ var PanelBase = function (_Component) {
         'div',
         { className: this.props.baseClass, ref: 'sizeP', id: 'panelWin', onAnimationEnd: function onAnimationEnd(e) {
             return _this2.refSize(e);
-          }, style: { height: (!this.props.sites.specLayer === 'prints' ? this.props.map.windowSize[1] + 6 : this.props.map.windowSize[1] - 40) + 'px' } },
+          }, style: { height: (this.props.sites.specLayer !== 'prints' ? this.props.map.windowSize[1] + 6 : this.props.map.windowSize[1] - 40) + 'px' } },
         _react2.default.createElement(
           'h3',
           { className: 'BornholmSandvig' },
@@ -20924,27 +20895,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var printSites = [(_ref = {
 	id: 1,
-	core: 0,
+	core: 46, //merc as placeholder
 	minor: 0,
-	x: 8192, //set to center on full scale version - no map just
-	y: 4096,
-	// x: 8192, //set to center on full scale version - no map just
-	// y: 4096,
+	"x": 6655,
+	"y": 4476,
 	r: 0,
-	scale: 3,
-	tile: 128,
+	scale: 4,
+	tile: 212,
 	mapName: 'none',
 	name: "Printing in Venice, An Introduction",
 	type: 'map'
-}, _defineProperty(_ref, 'minor', 0), _defineProperty(_ref, 'author', 'Giovanni Merlo'), _defineProperty(_ref, 'title', 'Vero e real disegno della inclita cita di Venetia'), _defineProperty(_ref, 'publisher', '[Venice] : Stefano Scolari forma in Venetia a S. Zulian'), _defineProperty(_ref, 'date', '1676'), _defineProperty(_ref, 'physical', '1 view : hand col. ; 780 x 1,594 mm. (neat line) on 3 composite sheets.'), _defineProperty(_ref, 'detail', ''), _defineProperty(_ref, 'src', ['./merlo-1.jpg', './merlo-2.jpg']), _defineProperty(_ref, 'narrative', ['Giovanni Merlo’s 1676 view of Venice is one of ten large plans and views of Venice the Newberry possesses in its Franco Novacco map collection, acquired in 1967, several of which are featured in the resource. Merlo’s map is the only one among them that is colored. Maps were rarely printed in color before the nineteenth century. Sixteenth-century Italian publishers seemed to have preferred to sell their maps uncolored, but by the late seventeenth century maps and views were commonly (though not universally) hand colored throughout Europe to enhance their attractiveness and to help clarify many of their details. Here, for example, important buildings such as the Doge’s Palace, major churches and the famous campanile in the Piazza San Marco have blue colored roofs to distinguish them from a sea of red. The green color of gardens and other open spaces helps them stand out within an otherwise densely built-up urban landscape.', 'Merlo’s view emerged from ancient form of urban representation, the bird’s-eye or perspective view, which depicts a city as if seen from a height that neither the artist nor the viewer could have achieved bodily, but could only imagine. In contrast to an orthographic plan, which imagines a city as seen from directly overhead, the perspective view allows readers to see structures and other topographic features in simulated three dimensions. One sees the facades of buildings as someone walking Venice’s streets or floating on its canals would see them <*>. Simultaneously, the heightened perspective allows the viewer grasp the city in its entirety, and so to understand its geography and layout. All is achieved through the art of perspectival representation, which lends realism to the image. But close examination and comparison with earlier views of Venice shows that the image has been manipulated to promote specific ideas about the city and highlight specific detail.']), _ref), {
+}, _defineProperty(_ref, "minor", 0), _defineProperty(_ref, "author", 'Giovanni Merlo'), _defineProperty(_ref, "title", 'Vero e real disegno della inclita cita di Venetia'), _defineProperty(_ref, "publisher", '[Venice] : Stefano Scolari forma in Venetia a S. Zulian'), _defineProperty(_ref, "date", '1676'), _defineProperty(_ref, "physical", '1 view : hand col. ; 780 x 1,594 mm. (neat line) on 3 composite sheets.'), _defineProperty(_ref, "detail", ''), _defineProperty(_ref, "src", ['./merlo-1.jpg', './merlo-2.jpg']), _defineProperty(_ref, "narrative", ['Giovanni Merlo’s 1676 view of Venice is one of ten large plans and views of Venice the Newberry possesses in its Franco Novacco map collection, acquired in 1967, several of which are featured in the resource. Merlo’s map is the only one among them that is colored. Maps were rarely printed in color before the nineteenth century. Sixteenth-century Italian publishers seemed to have preferred to sell their maps uncolored, but by the late seventeenth century maps and views were commonly (though not universally) hand colored throughout Europe to enhance their attractiveness and to help clarify many of their details. Here, for example, important buildings such as the Doge’s Palace, major churches and the famous campanile in the Piazza San Marco have blue colored roofs to distinguish them from a sea of red. The green color of gardens and other open spaces helps them stand out within an otherwise densely built-up urban landscape.', 'Merlo’s view emerged from ancient form of urban representation, the bird’s-eye or perspective view, which depicts a city as if seen from a height that neither the artist nor the viewer could have achieved bodily, but could only imagine. In contrast to an orthographic plan, which imagines a city as seen from directly overhead, the perspective view allows readers to see structures and other topographic features in simulated three dimensions. One sees the facades of buildings as someone walking Venice’s streets or floating on its canals would see them <*>. Simultaneously, the heightened perspective allows the viewer grasp the city in its entirety, and so to understand its geography and layout. All is achieved through the art of perspectival representation, which lends realism to the image. But close examination and comparison with earlier views of Venice shows that the image has been manipulated to promote specific ideas about the city and highlight specific detail.']), _ref), {
 	id: 2,
-	core: 0,
+	core: 41, //rialto as placeholder
 	minor: 0,
-	x: 4184, //facade view
-	y: 2336, //near ghetto at nw
+	"x": 6386,
+	"y": 3467,
 	r: 0,
-	scale: 5,
-	tile: 200,
+	scale: 4,
+	tile: 212,
 	mapName: 'none',
 	name: "Giovanni Merlo's 1676 View, An Introduction",
 	type: 'map',
@@ -20960,11 +20929,11 @@ var printSites = [(_ref = {
 	id: 3,
 	core: 10, //speyer
 	minor: 1,
-	x: 8192, //set to center on full scale version - barbari
-	y: 4096,
+	"x": 7674,
+	"y": 4142,
 	r: 0,
-	scale: 3,
-	tile: 132,
+	scale: 4,
+	tile: 212,
 	mapName: 'barbari',
 	name: "Barbari's Woodcut of 1500",
 	type: 'map',
@@ -20980,11 +20949,11 @@ var printSites = [(_ref = {
 	id: 4,
 	core: 10, //speyer
 	minor: 14,
-	x: 7073, //mercury close
-	y: 1599,
+	"x": 7674,
+	"y": 4142,
 	r: 0,
 	scale: 4,
-	tile: 228,
+	tile: 212,
 	mapName: 'barbari',
 	name: "Barbari's Symbols of Wealth & Power",
 	type: 'map',
@@ -21000,11 +20969,11 @@ var printSites = [(_ref = {
 	id: 5,
 	core: 41, //rialto
 	minor: 0,
-	x: 6773, //neptune close
-	y: 5605, //
+	"x": 6386,
+	"y": 3467,
 	r: 0,
-	scale: 5,
-	tile: 154,
+	scale: 4,
+	tile: 212,
 	mapName: 'barbari',
 	name: "Barbari's Symbols of the Naval Strength",
 	type: 'map',
@@ -21020,11 +20989,11 @@ var printSites = [(_ref = {
 	id: 6,
 	core: 41, //rialto sign of
 	minor: 11,
-	x: 6592, //san marco, close
-	y: 4580, //
+	"x": 6386,
+	"y": 3467,
 	r: 0, //
-	scale: 5,
-	tile: 166,
+	scale: 4,
+	tile: 212,
 	mapName: 'barbari',
 	name: 'Common Perspectives: approach from San Marco',
 	type: 'map',
@@ -21040,11 +21009,11 @@ var printSites = [(_ref = {
 	id: 7,
 	core: 41, //rialto music
 	minor: 5,
-	x: 7373, //mercury far
-	y: 2099,
+	"x": 6386,
+	"y": 3467,
 	r: 0, //
 	scale: 4,
-	tile: 172,
+	tile: 212,
 	mapName: 'barbari',
 	name: 'Views Tracing the Grand Canal',
 	type: 'map',
@@ -21062,11 +21031,11 @@ var printSites = [(_ref = {
 	id: 8,
 	core: 46, //merc
 	minor: 0,
-	x: 7373, //mercury far
-	y: 2099,
+	"x": 6655,
+	"y": 4476,
 	r: 0,
 	scale: 4,
-	tile: 154,
+	tile: 212,
 	mapName: 'barbari',
 	name: 'Showing Earlier Extents of Venetian Territory',
 	type: 'map',
@@ -21084,11 +21053,11 @@ var printSites = [(_ref = {
 	id: 9,
 	core: 46, //merc
 	minor: 2,
-	x: 3219, //Giudecca / Redentore... check this
-	y: 5887,
+	"x": 6655,
+	"y": 4476,
 	r: 0,
 	scale: 4,
-	tile: 154,
+	tile: 212,
 	mapName: 'barbari',
 	name: 'Shifting Foreground Focus',
 	type: 'map',
@@ -21106,11 +21075,11 @@ var printSites = [(_ref = {
 	id: 10,
 	core: 46, //merc
 	minor: 3,
-	x: 6347, //rialto barbari
-	y: 3248,
+	"x": 6655,
+	"y": 4476,
 	r: 0,
-	scale: 6,
-	tile: 128,
+	scale: 4,
+	tile: 212,
 	mapName: 'barbari',
 	name: 'Evolving Urban Texture & Printing Technique',
 	type: 'map',
@@ -21128,11 +21097,11 @@ var printSites = [(_ref = {
 	id: 11,
 	core: 46, //merc
 	minor: 4,
-	x: 8192, //bordone general
-	y: 4096,
+	"x": 6655,
+	"y": 4476,
 	r: 0,
-	scale: 3,
-	tile: 128,
+	scale: 4,
+	tile: 212,
 	mapName: 'bordone',
 	name: "Bordone's Island Views of 1534",
 	type: 'map',
@@ -21150,11 +21119,11 @@ var printSites = [(_ref = {
 	id: 12,
 	core: 46, //merc
 	minor: 10,
-	x: 8192, //forlani general
-	y: 4096,
+	"x": 6655,
+	"y": 4476,
 	r: 0,
-	scale: 3,
-	tile: 128,
+	scale: 4,
+	tile: 212,
 	mapName: 'forlani',
 	name: "Forlani and Venice's Prolific Atlas Production",
 	type: 'map',
@@ -21172,8 +21141,8 @@ var printSites = [(_ref = {
 	id: 13,
 	core: 38, //humanist
 	minor: 0,
-	x: 6347, //forlani rialto (alt on san marco)
-	y: 3648,
+	"x": 4735,
+	"y": 3442,
 	r: 0,
 	scale: 5,
 	tile: 128,
@@ -21216,11 +21185,11 @@ var printSites = [(_ref = {
 	id: 14,
 	core: 38, //humanist
 	minor: 6,
-	x: 8408, //bertelli focus on lido
-	y: 5284,
+	"x": 4735,
+	"y": 3442,
 	r: 0,
-	scale: 3, //maybe 4
-	tile: 208,
+	scale: 5,
+	tile: 128,
 	mapName: 'bertilliAligned',
 	name: "Bertilli's Lists and Lagoon Islands",
 	type: 'map',
@@ -21238,10 +21207,10 @@ var printSites = [(_ref = {
 	id: 15,
 	core: 38, //humanist
 	minor: 7,
-	x: 8192, //florimi gene
-	y: 4096,
+	"x": 4735,
+	"y": 3442,
 	r: 0,
-	scale: 3,
+	scale: 5,
 	tile: 128,
 	mapName: 'florimi',
 	name: "Florimi's Procession Scenes",
@@ -21260,11 +21229,11 @@ var printSites = [(_ref = {
 	id: 16,
 	core: 38, //humanist
 	minor: 8,
-	x: 6400, //florimi plaza detail
-	y: 4096,
+	"x": 4735,
+	"y": 3442,
 	r: 0,
-	scale: 4,
-	tile: 238,
+	scale: 5,
+	tile: 128,
 	mapName: 'florimiAligned',
 	name: "Florimi's Urban Simplifications",
 	type: 'map',
@@ -21282,8 +21251,52 @@ var printSites = [(_ref = {
 	id: 17,
 	core: 38, //humanist
 	minor: 9,
-	x: 6400, //florimi plaza detail
-	y: 4096,
+	"x": 4735,
+	"y": 3442,
+	r: 0,
+	scale: 5,
+	tile: 128,
+	mapName: 'florimiAligned',
+	name: "Florimi's Urban Simplifications",
+	type: 'map',
+	cluster: null,
+	clusterId: null,
+	author: "Matteo Florimi.",
+	title: 'Venetia',
+	publisher: '[Siena?] : Matteo Florimi formis,',
+	date: '1597',
+	physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
+	detail: '',
+	src: './florimi-2.jpg',
+	narrative: 'Despite the passage of time and the changes to the city they document, the Merlo and Barbari views seem more similar to each other than to any of the intermediate renderings of the city. The simplification present on the later sixteenth century plans, while making the city and its surroundings more legible, also made the city seem more open than it actually was (and is), diminishing the sense of density, vibrancy, and activity that impresses the reader of the Barbari and Merlo plans.'
+}, {
+	id: 18,
+	core: 44, //sessa
+	minor: 0,
+	"x": 7066,
+	"y": 3988,
+	r: 0,
+	scale: 4,
+	tile: 238,
+	mapName: 'florimiAligned',
+	name: "Florimi's Urban Simplifications",
+	type: 'map',
+	cluster: null,
+	clusterId: null,
+	author: "Matteo Florimi.",
+	title: 'Venetia',
+	publisher: '[Siena?] : Matteo Florimi formis,',
+	date: '1597',
+	physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
+	detail: '',
+	src: './florimi-2.jpg',
+	narrative: 'Despite the passage of time and the changes to the city they document, the Merlo and Barbari views seem more similar to each other than to any of the intermediate renderings of the city. The simplification present on the later sixteenth century plans, while making the city and its surroundings more legible, also made the city seem more open than it actually was (and is), diminishing the sense of density, vibrancy, and activity that impresses the reader of the Barbari and Merlo plans.'
+}, {
+	id: 19,
+	core: 51, //exports
+	minor: 0,
+	"x": 13072,
+	"y": 6916,
 	r: 0,
 	scale: 4,
 	tile: 238,
@@ -44234,7 +44247,7 @@ var Header2 = function (_Component) {
       e.preventDefault();
       var val = e.target.attributes.value.value;
 
-      if (val === 'intro' || val === 'bibliography' || val === 'credits' || val === 'prints') {
+      if (val === 'intro' || val === 'bibliography' || val === 'credits') {
 
         if (!this.props.options.panelSmall) {
           this.props.panelSmall();
@@ -44268,7 +44281,7 @@ var Header2 = function (_Component) {
         this.props.updateSite(12);
         this.props.setTitles(site.name.split('.'));
         this.props.updateNarrative(narrative);
-      } else if (val === 'maps') {
+      } else if (val === 'maps' || val === 'prints') {
 
         if (val !== this.props.sites.specLayer) {
           this.props.panelLarge();
@@ -44278,14 +44291,19 @@ var Header2 = function (_Component) {
             this.props.setColor(true);
             this.props.setAnno(false);
             this.props.setDetail(false);
-            //really?
+
             var offs = this.props.map.xyOffsets;
             this.setState({ y: offs[1] });
             if (offs[1] < 0) {
               offs[1] = 0;this.props.setOffsetsR(offs);this.props.setCurrOffsets(offs);
             }
-            console.log(offs);
-            //
+          } else if (val === 'prints') {
+
+            var offs = this.props.map.xyOffsets;
+            this.setState({ y: offs[1] });
+            if (offs[1] < 0) {
+              offs[1] = 0;this.props.setOffsetsR(offs);this.props.setCurrOffsets(offs);
+            }
           }
         } else {
           this.props.panelSmall();
@@ -44297,7 +44315,6 @@ var Header2 = function (_Component) {
           var offs = this.props.map.xyOffsets;
           var y = this.state.y;
           offs[1] = y;this.props.setOffsetsR(offs);this.props.setCurrOffsets(offs);
-          console.log(offs);
         }
       }
     }
@@ -44517,7 +44534,7 @@ var PanelMap = function (_Component) {
     value: function render() {
 
       var obj = this.props.map.mapSite;
-      var height = this.props.map.windowSize[1] * .205;
+      var height = this.props.map.windowSize[1] * .21;
       if (this.props.size === 'full') {
         height = this.props.map.windowSize[1] * .805;
       };
@@ -45427,10 +45444,10 @@ var PanelB = function (_Component) {
           null,
           _react2.default.createElement(
             'div',
-            { style: { height: this.props.map.windowSize[1] * .06 + 'px' } },
+            { style: { height: this.props.map.windowSize[1] * .05 + 'px' } },
             _react2.default.createElement(
               'h3',
-              { className: 'BornholmSandvig pad10' },
+              { className: 'BornholmSandvig pad10', style: { marginTop: '15px' } },
               this.props.map.mapSite.name
             )
           ),

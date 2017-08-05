@@ -192,6 +192,7 @@ class MapOps extends Component {
                 </div>
                 <h5>local<br/>details</h5>
                 <br/>
+                {/*
                 <h5 style={{fontWeight: 'bold'}}>tours</h5>
                 <button className="btn btn-default btn-sm bIconSm" >
                     <Tooltip content={'tour all processions'} styles={toolstyles}>
@@ -210,6 +211,7 @@ class MapOps extends Component {
                         <img src='/img/bascilica-01.svg' className='bImg' value='3' onTouchTap={e=>this.setTour(e)} />
                     </Tooltip>
                 </button>
+                */}
 
 
                 {/*

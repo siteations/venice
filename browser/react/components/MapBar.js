@@ -153,6 +153,9 @@ class MapBar extends Component{
 				//
 			} else if (val === 'prints' ) {
 
+					this.props.loadSelectAll('clear');
+					this.props.addSelectOne('printing');
+
 					var offs=this.props.map.xyOffsets;
 					this.setState({y:offs[1]});
 					if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
@@ -172,6 +175,10 @@ class MapBar extends Component{
 					if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
 					console.log(offs);
 				} else if (val === 'prints' ) {
+
+					this.props.loadSelectAll('clear');
+					this.props.addSelectOne('printing');
+
 					var offs=this.props.map.xyOffsets;
 					this.setState({y:offs[1]});
 					if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
@@ -184,6 +191,8 @@ class MapBar extends Component{
 					this.props.setColor(false);
 					this.props.setAnno(true);
 					this.props.setDetail(true);
+
+					this.props.loadSelectAll('add');
 
 					var offs=this.props.map.xyOffsets;
 					var y = this.state.y;

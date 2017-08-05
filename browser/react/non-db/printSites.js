@@ -3,15 +3,13 @@ const printSites = [
 // presuming auto start, just click to advance, update tour
 	{
 		id: 1,
-		core: 0,
+		core: 46, //merc as placeholder
 		minor: 0,
-		x: 8192, //set to center on full scale version - no map just
-		y: 4096,
-		// x: 8192, //set to center on full scale version - no map just
-		// y: 4096,
+    "x": 6655,
+    "y": 4476,
 		r: 0,
-		scale: 3,
-		tile: 128,
+		scale: 4,
+		tile:212,
 		mapName: 'none',
 		name: "Printing in Venice, An Introduction",
 		type: 'map',
@@ -27,13 +25,13 @@ const printSites = [
 	},
 	{
 		id: 2,
-		core: 0,
+		core: 41, //rialto as placeholder
 		minor: 0,
-		x: 4184, //facade view
-		y: 2336,	//near ghetto at nw
+    "x": 6386,
+    "y": 3467,
 		r: 0,
-		scale: 5,
-		tile:200,
+		scale: 4,
+		tile:212,
 		mapName: 'none',
 		name: "Giovanni Merlo's 1676 View, An Introduction",
 		type: 'map',
@@ -50,11 +48,11 @@ const printSites = [
 		id: 3,
 		core: 10, //speyer
 		minor: 1,
-		x: 8192, //set to center on full scale version - barbari
-		y: 4096,
+    "x": 7674,
+    "y": 4142,
 		r: 0,
-		scale: 3,
-		tile:132,
+		scale: 4,
+		tile:212,
 		mapName: 'barbari',
 		name: "Barbari's Woodcut of 1500",
 		type: 'map',
@@ -71,11 +69,11 @@ const printSites = [
 		id: 4,
 		core: 10, //speyer
 		minor: 14,
-		x: 7073, //mercury close
-		y: 1599,
+    "x": 7674,
+    "y": 4142,
 		r: 0,
 		scale: 4,
-		tile:228,
+		tile:212,
 		mapName: 'barbari',
 		name: "Barbari's Symbols of Wealth & Power",
 		type: 'map',
@@ -92,11 +90,11 @@ const printSites = [
 		id: 5,
 		core: 41, //rialto
 		minor: 0,
-		x: 6773, //neptune close
-		y: 5605,	//
+    "x": 6386,
+    "y": 3467,
 		r: 0,
-		scale: 5,
-		tile:154,
+		scale: 4,
+		tile:212,
 		mapName: 'barbari',
 		name: "Barbari's Symbols of the Naval Strength",
 		type: 'map',
@@ -113,11 +111,11 @@ const printSites = [
 		id: 6,
 		core: 41, //rialto sign of
 		minor: 11,
-		x: 6592, //san marco, close
-		y: 4580,	//
+    "x": 6386,
+    "y": 3467,
 		r: 0, //
-		scale: 5,
-		tile:166,
+		scale: 4,
+		tile:212,
 		mapName: 'barbari',
 		name: 'Common Perspectives: approach from San Marco',
 		type: 'map',
@@ -134,11 +132,11 @@ const printSites = [
 		id: 7,
 		core: 41, //rialto music
 		minor: 5,
-		x: 7373, //mercury far
-		y: 2099,
+    "x": 6386,
+    "y": 3467,
 		r: 0, //
 		scale: 4,
-		tile:172,
+		tile:212,
 		mapName: 'barbari',
 		name: 'Views Tracing the Grand Canal',
 		type: 'map',
@@ -157,11 +155,11 @@ const printSites = [
 		id: 8,
 		core: 46, //merc
 		minor: 0,
-		x: 7373, //mercury far
-		y: 2099,
+    "x": 6655,
+    "y": 4476,
 		r: 0,
 		scale: 4,
-		tile:154,
+		tile:212,
 		mapName: 'barbari',
 		name: 'Showing Earlier Extents of Venetian Territory',
 		type: 'map',
@@ -180,11 +178,11 @@ const printSites = [
 		id: 9,
 		core: 46, //merc
 		minor: 2,
-		x: 3219, //Giudecca / Redentore... check this
-		y: 5887,
+    "x": 6655,
+    "y": 4476,
 		r: 0,
 		scale: 4,
-		tile:154,
+		tile:212,
 		mapName: 'barbari',
 		name: 'Shifting Foreground Focus',
 		type: 'map',
@@ -203,11 +201,11 @@ const printSites = [
 		id: 10,
 		core: 46, //merc
 		minor: 3,
-		x: 6347, //rialto barbari
-		y: 3248,
+    "x": 6655,
+    "y": 4476,
 		r: 0,
-		scale: 6,
-		tile:128,
+		scale: 4,
+		tile:212,
 		mapName: 'barbari',
 		name: 'Evolving Urban Texture & Printing Technique',
 		type: 'map',
@@ -226,11 +224,11 @@ const printSites = [
 		id: 11,
 		core: 46, //merc
 		minor: 4,
-		x: 8192, //bordone general
-		y: 4096,
+    "x": 6655,
+    "y": 4476,
 		r: 0,
-		scale: 3,
-		tile:128,
+		scale: 4,
+		tile:212,
 		mapName: 'bordone',
 		name: "Bordone's Island Views of 1534",
 		type: 'map',
@@ -249,11 +247,11 @@ const printSites = [
 		id: 12,
 		core: 46, //merc
 		minor: 10,
-		x: 8192, //forlani general
-		y: 4096,
+    "x": 6655,
+    "y": 4476,
 		r: 0,
-		scale: 3,
-		tile:128,
+		scale: 4,
+		tile:212,
 		mapName: 'forlani',
 		name: "Forlani and Venice's Prolific Atlas Production",
 		type: 'map',
@@ -272,8 +270,8 @@ const printSites = [
 		id: 13,
 		core: 38, //humanist
 		minor: 0,
-		x: 6347, //forlani rialto (alt on san marco)
-		y: 3648,
+    "x": 4735,
+    "y": 3442,
 		r: 0,
 		scale: 5,
 		tile:128,
@@ -316,11 +314,11 @@ const printSites = [
 		id: 14,
 		core: 38, //humanist
 		minor: 6,
-		x: 8408, //bertelli focus on lido
-		y: 5284,
+    "x": 4735,
+    "y": 3442,
 		r: 0,
-		scale: 3, //maybe 4
-		tile:208,
+		scale: 5,
+		tile:128,
 		mapName: 'bertilliAligned',
 		name: "Bertilli's Lists and Lagoon Islands",
 		type: 'map',
@@ -339,10 +337,10 @@ const printSites = [
 		id: 15,
 		core: 38, //humanist
 		minor: 7,
-		x: 8192, //florimi gene
-		y: 4096,
+    "x": 4735,
+    "y": 3442,
 		r: 0,
-		scale: 3,
+		scale: 5,
 		tile:128,
 		mapName: 'florimi',
 		name: "Florimi's Procession Scenes",
@@ -362,11 +360,11 @@ const printSites = [
 		id: 16,
 		core: 38, //humanist
 		minor: 8,
-		x: 6400, //florimi plaza detail
-		y: 4096,
+    "x": 4735,
+    "y": 3442,
 		r: 0,
-		scale: 4,
-		tile:238,
+		scale: 5,
+		tile:128,
 		mapName: 'florimiAligned',
 		name: "Florimi's Urban Simplifications",
 		type: 'map',
@@ -385,8 +383,54 @@ const printSites = [
 		id: 17,
 		core: 38, //humanist
 		minor: 9,
-		x: 6400, //florimi plaza detail
-		y: 4096,
+    "x": 4735,
+    "y": 3442,
+		r: 0,
+		scale: 5,
+		tile:128,
+		mapName: 'florimiAligned',
+		name: "Florimi's Urban Simplifications",
+		type: 'map',
+		cluster: null,
+		clusterId: null,
+		author: "Matteo Florimi.",
+		title: 'Venetia',
+		publisher: '[Siena?] : Matteo Florimi formis,',
+		date: '1597',
+		physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
+		detail: '',
+		src: './florimi-2.jpg',
+		narrative: 'Despite the passage of time and the changes to the city they document, the Merlo and Barbari views seem more similar to each other than to any of the intermediate renderings of the city. The simplification present on the later sixteenth century plans, while making the city and its surroundings more legible, also made the city seem more open than it actually was (and is), diminishing the sense of density, vibrancy, and activity that impresses the reader of the Barbari and Merlo plans.'
+	},
+	{
+		id: 18,
+		core: 44, //sessa
+		minor: 0,
+		"x": 7066,
+    "y": 3988,
+		r: 0,
+		scale: 4,
+		tile:238,
+		mapName: 'florimiAligned',
+		name: "Florimi's Urban Simplifications",
+		type: 'map',
+		cluster: null,
+		clusterId: null,
+		author: "Matteo Florimi.",
+		title: 'Venetia',
+		publisher: '[Siena?] : Matteo Florimi formis,',
+		date: '1597',
+		physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
+		detail: '',
+		src: './florimi-2.jpg',
+		narrative: 'Despite the passage of time and the changes to the city they document, the Merlo and Barbari views seem more similar to each other than to any of the intermediate renderings of the city. The simplification present on the later sixteenth century plans, while making the city and its surroundings more legible, also made the city seem more open than it actually was (and is), diminishing the sense of density, vibrancy, and activity that impresses the reader of the Barbari and Merlo plans.'
+	},
+	{
+		id: 19,
+		core: 51, //exports
+		minor: 0,
+    "x": 13072,
+    "y": 6916,
 		r: 0,
 		scale: 4,
 		tile:238,

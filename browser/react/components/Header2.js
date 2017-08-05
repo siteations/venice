@@ -42,7 +42,7 @@ class Header2 extends Component {
     e.preventDefault();
    let val = (e.target.attributes.value.value);
 
-   if ((val === 'intro' || val === 'bibliography'|| val === 'credits' || val === 'prints')){
+   if ((val === 'intro' || val === 'bibliography'|| val === 'credits')){
 
       if (!this.props.options.panelSmall){this.props.panelSmall()};
       this.props.setColor(false);
@@ -74,7 +74,7 @@ class Header2 extends Component {
       this.props.setTitles(site.name.split('.'));
       this.props.updateNarrative(narrative);
 
-    } else if (val === 'maps'){
+    } else if (val === 'maps' || val === 'prints'){
 
       if (val !== this.props.sites.specLayer){
       this.props.panelLarge();
@@ -84,13 +84,20 @@ class Header2 extends Component {
         this.props.setColor(true);
         this.props.setAnno(false);
         this.props.setDetail(false);
-        //really?
+
           var offs=this.props.map.xyOffsets;
           this.setState({y:offs[1]});
           if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
-          console.log(offs);
-        //
+
+        } else if (val === 'prints' ) {
+
+          var offs=this.props.map.xyOffsets;
+          this.setState({y:offs[1]});
+          if (offs[1]<0){ offs[1]=0 ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);}
+
         }
+
+
       } else {
         this.props.panelSmall();
         this.props.setSpecPanel('intro');
@@ -101,7 +108,7 @@ class Header2 extends Component {
           var offs=this.props.map.xyOffsets;
           var y = this.state.y;
           offs[1]=y ; this.props.setOffsetsR(offs); this.props.setCurrOffsets(offs);
-          console.log(offs);
+
       }
 
     }
