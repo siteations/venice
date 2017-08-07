@@ -130,6 +130,8 @@ class FooterSlides extends Component {
             var siteCent = [site.x, site.y];
             var siteZoom = site.scale;
             var siteTile = site.tile;
+            this.props.updateSite(null);
+            this.setState({tourSeries:1})
 
         } else {
             var siteId=this.props.options.allTours[this.props.options.currTour][0].siteId;
@@ -270,7 +272,25 @@ class FooterSlides extends Component {
         e.preventDefault();
         var siteId = e.target.attributes.value.value;
 
-        if (this.props.type !== 'maps'){
+        // if (siteId === null){
+        //     var site=this.props.map.mapTourAll[0];
+        //     var siteCent = [site.x, site.y];
+        //     var siteZoom = site.scale;
+        //     var siteTile = site.tile;
+
+        // } else
+        if (this.props.type === 'maps'){
+            var site = this.props.map.mapTourAll.filter(site=> +site.id === +siteId)[0];
+            var siteCent = [site.x, site.y];
+            var siteZoom = site.scale;
+            var siteTile = site.tile;
+        } else if (this.props.type !== 'maps' && siteId<3){
+            var site = this.props.map.mapTourAll.filter(site=> +site.id === +siteId)[0];
+            var siteCent = [site.x, site.y];
+            var siteZoom = site.scale;
+            var siteTile = site.tile;
+            this.props.updateSite(null);
+        } else if (this.props.type !== 'maps'){
             this.props.updateSite(siteId);
             var minor = e.target.attributes.data.value;
 
@@ -288,11 +308,6 @@ class FooterSlides extends Component {
             var obj = this.props.sites.genNarratives.filter(narr => +narr.minorId===+minor);
             }
             this.props.updateNarrative(obj[0]);
-        } else if (this.props.type === 'maps'){
-            var site = this.props.map.mapTourAll.filter(site=> +site.id === +siteId)[0];
-            var siteCent = [site.x, site.y];
-            var siteZoom = site.scale;
-            var siteTile = site.tile;
         }
 
         this.props.setMapSite(site);
@@ -447,7 +462,7 @@ class FooterSlides extends Component {
                             tour.map(site=>{
 
                             return <div className={(site.siteId===this.props.sites.currSite)? 'bIconSelected text-center' : 'bIcon  text-center'}
-                                value={(this.props.type === 'maps')? site.id : site.core}
+                                value={(this.props.type === 'maps' || site.id<3 )? site.id : site.core}
                                 data={site.minor}
                                 key = {site.id}
                                 onTouchTap={e=>this.setSite(e)} >

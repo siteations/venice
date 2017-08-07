@@ -514,7 +514,7 @@ class MapSVG extends Component {
             }
             {this.props.sites.specLayer==='prints' &&
               <div className="">
-              <h5 className="BornholmSandvig pad10" > Print Tour: <span className="Trenda-Regular">Site {this.props.map.mapSite.id} of {this.props.map.mapTourAll.length}, {this.props.map.mapSite.author}</span></h5>
+              <h5 className="BornholmSandvig pad10" > Print Tour: </h5>
               <Tour type="prints" />
               </div>
             }

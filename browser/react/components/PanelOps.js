@@ -68,13 +68,29 @@ class PanelB extends Component {
           }
           {this.props.sites.specLayer==='prints' &&
             <div>
-              <div style={{padding: '10px', overflowY: 'auto'}}>
+              <div style={{padding: '10px', overflowY: 'auto', overflowX: 'hidden'}}>
               {this.props.map.mapSite.id > 2 &&
                 <Panel />
               }
               {this.props.map.mapSite.id < 3 &&
-                <p>intro here.</p>
+                <h3 className="BornholmSandvig" >Printing Books in Venice</h3>
               }
+                {this.props.map.mapSite.id < 3 &&
+                  this.props.map.mapSite.narrative.map((narr,i)=>{
+                      return (
+                   <div className="row">
+                    <div className="col-md-3 center-block text-center">
+                      <div className="bIcon text-center inlineBlock" ><img src={this.props.map.mapSite.src[i]} style={{borderRadius: '5px'}}/></div>
+                    </div>
+                    <div className="col-md-9">
+                      <h4 className="BornholmSandvig">{(this.props.map.mapSite.subtitles)? this.props.map.mapSite.subtitles[i] : ''}</h4>
+                      <p>{narr}</p>
+                      <br/>
+                    </div>
+                  </div>
+                    )
+                  })
+                }
               </div>
             </div>
           }

@@ -12236,6 +12236,8 @@ var FooterSlides = function (_Component) {
                 var siteCent = [site.x, site.y];
                 var siteZoom = site.scale;
                 var siteTile = site.tile;
+                this.props.updateSite(null);
+                this.setState({ tourSeries: 1 });
             } else {
                 var siteId = this.props.options.allTours[this.props.options.currTour][0].siteId;
                 this.props.updateSite(siteId);
@@ -12402,7 +12404,29 @@ var FooterSlides = function (_Component) {
             e.preventDefault();
             var siteId = e.target.attributes.value.value;
 
-            if (this.props.type !== 'maps') {
+            // if (siteId === null){
+            //     var site=this.props.map.mapTourAll[0];
+            //     var siteCent = [site.x, site.y];
+            //     var siteZoom = site.scale;
+            //     var siteTile = site.tile;
+
+            // } else
+            if (this.props.type === 'maps') {
+                var site = this.props.map.mapTourAll.filter(function (site) {
+                    return +site.id === +siteId;
+                })[0];
+                var siteCent = [site.x, site.y];
+                var siteZoom = site.scale;
+                var siteTile = site.tile;
+            } else if (this.props.type !== 'maps' && siteId < 3) {
+                var site = this.props.map.mapTourAll.filter(function (site) {
+                    return +site.id === +siteId;
+                })[0];
+                var siteCent = [site.x, site.y];
+                var siteZoom = site.scale;
+                var siteTile = site.tile;
+                this.props.updateSite(null);
+            } else if (this.props.type !== 'maps') {
                 this.props.updateSite(siteId);
                 var minor = e.target.attributes.data.value;
 
@@ -12428,13 +12452,6 @@ var FooterSlides = function (_Component) {
                     });
                 }
                 this.props.updateNarrative(obj[0]);
-            } else if (this.props.type === 'maps') {
-                var site = this.props.map.mapTourAll.filter(function (site) {
-                    return +site.id === +siteId;
-                })[0];
-                var siteCent = [site.x, site.y];
-                var siteZoom = site.scale;
-                var siteTile = site.tile;
             }
 
             this.props.setMapSite(site);
@@ -12615,7 +12632,7 @@ var FooterSlides = function (_Component) {
                     return _react2.default.createElement(
                         'div',
                         { className: site.siteId === _this2.props.sites.currSite ? 'bIconSelected text-center' : 'bIcon  text-center',
-                            value: _this2.props.type === 'maps' ? site.id : site.core,
+                            value: _this2.props.type === 'maps' || site.id < 3 ? site.id : site.core,
                             data: site.minor,
                             key: site.id,
                             onTouchTap: function onTouchTap(e) {
@@ -20423,17 +20440,7 @@ var MapSVG = function (_Component) {
                     _react2.default.createElement(
                         'h5',
                         { className: 'BornholmSandvig pad10' },
-                        ' Print Tour: ',
-                        _react2.default.createElement(
-                            'span',
-                            { className: 'Trenda-Regular' },
-                            'Site ',
-                            this.props.map.mapSite.id,
-                            ' of ',
-                            this.props.map.mapTourAll.length,
-                            ', ',
-                            this.props.map.mapSite.author
-                        )
+                        ' Print Tour: '
                     ),
                     _react2.default.createElement(_Tour2.default, { type: 'prints' })
                 )
@@ -20889,42 +20896,50 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _ref;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var printSites = [(_ref = {
+var printSites = [
+// presuming auto start, just click to advance, update tour
+{
 	id: 1,
-	core: 46, //merc as placeholder
+	core: 1, //merc as placeholder
 	minor: 0,
 	"x": 6655,
 	"y": 4476,
 	r: 0,
 	scale: 4,
 	tile: 212,
-	mapName: 'none',
+	// mapName: 'none',
 	name: "Printing in Venice, An Introduction",
-	type: 'map'
-}, _defineProperty(_ref, "minor", 0), _defineProperty(_ref, "author", 'Giovanni Merlo'), _defineProperty(_ref, "title", 'Vero e real disegno della inclita cita di Venetia'), _defineProperty(_ref, "publisher", '[Venice] : Stefano Scolari forma in Venetia a S. Zulian'), _defineProperty(_ref, "date", '1676'), _defineProperty(_ref, "physical", '1 view : hand col. ; 780 x 1,594 mm. (neat line) on 3 composite sheets.'), _defineProperty(_ref, "detail", ''), _defineProperty(_ref, "src", ['./merlo-1.jpg', './merlo-2.jpg']), _defineProperty(_ref, "narrative", ['Giovanni Merlo’s 1676 view of Venice is one of ten large plans and views of Venice the Newberry possesses in its Franco Novacco map collection, acquired in 1967, several of which are featured in the resource. Merlo’s map is the only one among them that is colored. Maps were rarely printed in color before the nineteenth century. Sixteenth-century Italian publishers seemed to have preferred to sell their maps uncolored, but by the late seventeenth century maps and views were commonly (though not universally) hand colored throughout Europe to enhance their attractiveness and to help clarify many of their details. Here, for example, important buildings such as the Doge’s Palace, major churches and the famous campanile in the Piazza San Marco have blue colored roofs to distinguish them from a sea of red. The green color of gardens and other open spaces helps them stand out within an otherwise densely built-up urban landscape.', 'Merlo’s view emerged from ancient form of urban representation, the bird’s-eye or perspective view, which depicts a city as if seen from a height that neither the artist nor the viewer could have achieved bodily, but could only imagine. In contrast to an orthographic plan, which imagines a city as seen from directly overhead, the perspective view allows readers to see structures and other topographic features in simulated three dimensions. One sees the facades of buildings as someone walking Venice’s streets or floating on its canals would see them <*>. Simultaneously, the heightened perspective allows the viewer grasp the city in its entirety, and so to understand its geography and layout. All is achieved through the art of perspectival representation, which lends realism to the image. But close examination and comparison with earlier views of Venice shows that the image has been manipulated to promote specific ideas about the city and highlight specific detail.']), _ref), {
+	// type: 'map',
+	// minor: 0,
+	// author: 'Giovanni Merlo',
+	// title: 'Vero e real disegno della inclita cita di Venetia',
+	// publisher: '[Venice] : Stefano Scolari forma in Venetia a S. Zulian',
+	// date: '1676',
+	// physical: '1 view : hand col. ; 780 x 1,594 mm. (neat line) on 3 composite sheets.',
+	// detail: '',
+	src: ['./img/Pliny_thumbnail.jpg', './img/Le%20Poesie_thumbnail.jpg', './img/Eusebio_De%20Evangelica_thumbnail.jpg'],
+	narrative: ['Within fifteen years of the publication of Gutenberg’s Bible in Mainz, Germany, printers began to spread out across Europe. By the 1460s, print shops had been set up in Venice, all run by craftsmen who had immigrated there in search of work. While these printers were no doubt drawn to the intellectual community of scholars and teachers in Venice, they also would have been attracted to its cosmopolitanism. Venice incorporated residential communities from many cultures, as well as travelers and merchants who regularly visited the city.', 'By the mid-16th century, Venice was the powerhouse of printing in Europe. Printers produced all kinds of books, from large, elaborate folios to small, portable books meant for personal study. They also produced a wide variety of ephemera -- inexpensive single sheets that provided news or entertainment and were not intended to be saved. Some booksellers maintained upscale shops while others peddled their wares from a stall or simply stood on Rialto Bridge calling out to potential customers. Essentially, books, and their makers and sellers, were as varied as the inhabitants of and travelers to Venice.', 'The material included here is not a complete survey of the Venetian book trade or religious communities of the period, but works to provide a glimpse of how printers, publishers, and booksellers shaped – and were shaped by – religious, political, intellectual, and social life in Venice.']
+}, {
 	id: 2,
-	core: 41, //rialto as placeholder
+	core: 2, //merc as placeholder
 	minor: 0,
-	"x": 6386,
-	"y": 3467,
+	"x": 6655,
+	"y": 4476,
 	r: 0,
 	scale: 4,
 	tile: 212,
-	mapName: 'none',
-	name: "Giovanni Merlo's 1676 View, An Introduction",
-	type: 'map',
-	author: 'Giovanni Merlo',
-	title: 'Vero e real disegno della inclita cita di Venetia',
-	publisher: '[Venice] : Stefano Scolari forma in Venetia a S. Zulian',
-	date: '1676',
-	physical: '1 view : hand col. ; 780 x 1,594 mm. (neat line) on 3 composite sheets.',
-	detail: '',
-	src: ['./merlo-1.jpg', './merlo-2.jpg'],
-	narrative: ['Giovanni Merlo’s 1676 view of Venice is one of ten large plans and views of Venice the Newberry possesses in its Franco Novacco map collection, acquired in 1967, several of which are featured in the resource. Merlo’s map is the only one among them that is colored. Maps were rarely printed in color before the nineteenth century. Sixteenth-century Italian publishers seemed to have preferred to sell their maps uncolored, but by the late seventeenth century maps and views were commonly (though not universally) hand colored throughout Europe to enhance their attractiveness and to help clarify many of their details. Here, for example, important buildings such as the Doge’s Palace, major churches and the famous campanile in the Piazza San Marco have blue colored roofs to distinguish them from a sea of red. The green color of gardens and other open spaces helps them stand out within an otherwise densely built-up urban landscape.', 'Merlo’s view emerged from ancient form of urban representation, the bird’s-eye or perspective view, which depicts a city as if seen from a height that neither the artist nor the viewer could have achieved bodily, but could only imagine. In contrast to an orthographic plan, which imagines a city as seen from directly overhead, the perspective view allows readers to see structures and other topographic features in simulated three dimensions. One sees the facades of buildings as someone walking Venice’s streets or floating on its canals would see them <*>. Simultaneously, the heightened perspective allows the viewer grasp the city in its entirety, and so to understand its geography and layout. All is achieved through the art of perspectival representation, which lends realism to the image. But close examination and comparison with earlier views of Venice shows that the image has been manipulated to promote specific ideas about the city and highlight specific detail.']
+	// mapName: 'none',
+	name: "Printing in Venice, At the Sign of...",
+	// type: 'map',
+	// author: 'Giovanni Merlo',
+	// title: 'Vero e real disegno della inclita cita di Venetia',
+	// publisher: '[Venice] : Stefano Scolari forma in Venetia a S. Zulian',
+	// date: '1676',
+	// physical: '1 view : hand col. ; 780 x 1,594 mm. (neat line) on 3 composite sheets.',
+	// detail: '',
+	src: ['./img/Predica del Reverendo_thumbnail.jpg', './img/Detail%20of%20Compilatio_thumbnail.jpg'],
+	subtitles: ['At the Sign of… ', 'The Inquisition and the Venetian Book Trade'],
+	narrative: ['Booksellers often included information about the location of their shop on the title page or in the colophon of their books. While sometimes this information was merely textual (e.g. “at the sign of the Diamond”) often it was visual as well, in the form of the printer’s device, which would also have appeared on the sign at the physical shop. These devices not only linked books to specific locations, but also worked to form part of the visual landscape of Venice in the period. Rialto Bridge, and the neighborhoods that surrounded it, would have been filled with all kinds of shops and signs. These signs functioned as advertising, competing for the attention – and the money – of customers both old and new.', 'In 1559 Pope Paul IV issued a new Index of Prohibited Books, enlarging the previous index of 1554-55. In Venice, booksellers were required to present inventories of books they had in stock. Many booksellers resolved to disobey these instructions and would neither print the index or supply inventories. Melchiorre Sessa was particularly hopeful that the book trade might put up a united front; he censored booksellers (including Vincenzo Valgrisi) who gave in to pressure and submitted inventories. Due to the prohibition on printing certain books as a result of the Counter-Reformation, printers were required to secure the necessary permissions from Italian authorities before conducting their work. In the early 1550s, despite failing to secure such permissions, Giovanni Griffio continued printing, resulting in a fine of 25 ducats and a sentence of one month in prison.']
 }, {
 	id: 3,
 	core: 10, //speyer
@@ -20934,17 +20949,16 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 4,
 	tile: 212,
-	mapName: 'barbari',
-	name: "Barbari's Woodcut of 1500",
-	type: 'map',
-	author: "Jacopo de' Barbari",
-	title: 'La Pianta di Venezia di Jacopo de’ Barbari',
-	publisher: '[Venice : Anton Kolb?]',
-	date: '1500',
-	physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
-	detail: '',
-	src: './barbari-1.jpg',
-	narrative: 'The genealogy of Merlo’s view can be traced in a direct line from Jacopo de Barbari’s magnificent woodcut view of 1500. Barbari’s /Venetie/ [at Venice] was in its time the largest printed plan of any European city yet printed, and is arguably among the most important urban images published in any century. It was printed on six large sheets, which when assembled made an image 52.3 × 109.3 in. The image recalls the Renaissance architectural fashion of fixing large plans of cities and maps of parts of the world into dedicated rooms and courtyards in palaces and public buildings, embodying the worldly and religious power and reach of their occupants.'
+	// mapName: 'barbari',
+	name: "Speyer, the First Printer in Venice",
+	// type: 'map',
+	// author: "Jacopo de' Barbari",
+	// title: 'La Pianta di Venezia di Jacopo de’ Barbari',
+	// publisher: '[Venice : Anton Kolb?]',
+	// date: '1500',
+	// physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
+	// detail: '',
+	src: './img/Pliny_thumbnail.jpg'
 }, {
 	id: 4,
 	core: 10, //speyer
@@ -20954,17 +20968,16 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 4,
 	tile: 212,
-	mapName: 'barbari',
-	name: "Barbari's Symbols of Wealth & Power",
-	type: 'map',
-	author: "Jacopo de' Barbari",
-	title: 'La Pianta di Venezia di Jacopo de’ Barbari',
-	publisher: '[Venice : Anton Kolb?]',
-	date: '1500 ',
-	physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
-	detail: '',
-	src: './barbari-2.jpg',
-	narrative: "One theory holds that the publisher Anton Kolb may have intended the view to be distributed to outlying Venetian territories as a reminder of Venice’s wealth and power, though any observer is certain to have gotten this message. An image of the Pagan god of commerce, Mercury <*>, looks down upon the city with an inscription declaring his favor upon the great emporium."
+	// mapName: 'barbari',
+	name: "Speyer's Final Publication",
+	// type: 'map',
+	// author: "Jacopo de' Barbari",
+	// title: 'La Pianta di Venezia di Jacopo de’ Barbari',
+	// publisher: '[Venice : Anton Kolb?]',
+	// date: '1500 ',
+	// physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
+	// detail: '',
+	src: './img/Augustine_thumbnail.jpg'
 }, {
 	id: 5,
 	core: 41, //rialto
@@ -20974,17 +20987,16 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 4,
 	tile: 212,
-	mapName: 'barbari',
-	name: "Barbari's Symbols of the Naval Strength",
-	type: 'map',
-	author: "Jacopo de' Barbari",
-	title: 'La Pianta di Venezia di Jacopo de’ Barbari',
-	publisher: '[Venice : Anton Kolb?]',
-	date: '1500 ',
-	physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
-	detail: '',
-	src: './barbari-3.jpg',
-	narrative: "At bottom center, Neptune <*> rises from the waters of the harbor in testimony to its naval strength. The eight anthropomorphized winds blustering about the edge of the image underscore that Venice’s trade extends in all directions. "
+	// mapName: 'barbari',
+	name: "The Rialto's Printing Markets",
+	// type: 'map',
+	// author: "Jacopo de' Barbari",
+	// title: 'La Pianta di Venezia di Jacopo de’ Barbari',
+	// publisher: '[Venice : Anton Kolb?]',
+	// date: '1500 ',
+	// physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
+	// detail: '',
+	src: './img/Le%20Poesie_thumbnail.jpg'
 }, {
 	id: 6,
 	core: 41, //rialto sign of
@@ -20994,17 +21006,16 @@ var printSites = [(_ref = {
 	r: 0, //
 	scale: 4,
 	tile: 212,
-	mapName: 'barbari',
-	name: 'Common Perspectives: approach from San Marco',
-	type: 'map',
-	author: "Jacopo de' Barbari",
-	title: 'La Pianta di Venezia di Jacopo de’ Barbari',
-	publisher: '[Venice : Anton Kolb?]',
-	date: '1500 ',
-	physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
-	detail: '',
-	src: './barbari-4.jpg',
-	narrative: 'The Barbari and Merlo views share a common perspective typical of early modern images of Venice. The viewer approaches the city as most seafaring travelers would, from slightly east of south. The iconic Piazza San Marco, its campanile, the Doge’s palace, and the Basilica San Marco are the focal point of the image <*>. '
+	// mapName: 'barbari',
+	name: "The Rialto: Perderzano's Bookshop",
+	// type: 'map',
+	// author: "Jacopo de' Barbari",
+	// title: 'La Pianta di Venezia di Jacopo de’ Barbari',
+	// publisher: '[Venice : Anton Kolb?]',
+	// date: '1500 ',
+	// physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
+	// detail: '',
+	src: './img/Sonetti%20Canzoni_thumbnail.jpg'
 }, {
 	id: 7,
 	core: 41, //rialto music
@@ -21014,19 +21025,18 @@ var printSites = [(_ref = {
 	r: 0, //
 	scale: 4,
 	tile: 212,
-	mapName: 'barbari',
-	name: 'Views Tracing the Grand Canal',
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Jacopo de' Barbari",
-	title: 'La Pianta di Venezia di Jacopo de’ Barbari',
-	publisher: '[Venice : Anton Kolb?]',
-	date: '1500 ',
-	physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
-	detail: '',
-	src: './barbari-5.jpg',
-	narrative: 'The ancient commercial center of the Rialto (with its famous bridge) is slightly to the left of center. The harbor is the most prominent feature of the foregroundharbor, chock-a-block with oversized trading vessels and forming the entrance to the Grand Canal.<*> '
+	// mapName: 'barbari',
+	name: "The Rialto: Scotto and Gardano's Music Printing",
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Jacopo de' Barbari",
+	// title: 'La Pianta di Venezia di Jacopo de’ Barbari',
+	// publisher: '[Venice : Anton Kolb?]',
+	// date: '1500 ',
+	// physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
+	// detail: '',
+	src: './img/Gardano_thumbnail.jpg'
 }, {
 	id: 8,
 	core: 46, //merc
@@ -21036,19 +21046,18 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 4,
 	tile: 212,
-	mapName: 'barbari',
-	name: 'Showing Earlier Extents of Venetian Territory',
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Jacopo de' Barbari",
-	title: 'La Pianta di Venezia di Jacopo de’ Barbari',
-	publisher: '[Venice : Anton Kolb?]',
-	date: '1500 ',
-	physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
-	detail: '',
-	src: './barbari-6.jpg',
-	narrative: 'This perspective allows the viewer to scan northward across the Venetian Lagoon to the outlying Venetian islands of Murano, Burano, and Torcello, as well as the Venetian controlled mainland, or Terraferma <*>. Barbari’s vision stretches as far as the crest of the Julian Alps, the northern limit of the Republic’s territory.'
+	// mapName: 'barbari',
+	name: 'Merceria: A Printing Hub',
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Jacopo de' Barbari",
+	// title: 'La Pianta di Venezia di Jacopo de’ Barbari',
+	// publisher: '[Venice : Anton Kolb?]',
+	// date: '1500 ',
+	// physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
+	// detail: '',
+	src: './img/Eusebio_De%20Evangelica_thumbnail.jpg'
 }, {
 	id: 9,
 	core: 46, //merc
@@ -21058,19 +21067,18 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 4,
 	tile: 212,
-	mapName: 'barbari',
-	name: 'Shifting Foreground Focus',
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Jacopo de' Barbari",
-	title: 'La Pianta di Venezia di Jacopo de’ Barbari',
-	publisher: '[Venice : Anton Kolb?]',
-	date: '1500 ',
-	physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
-	detail: '',
-	src: './barbari-7.jpg',
-	narrative: 'Subsequent images, including Merlo’s, however, narrow the focus to the shoreline. This shift enables Merlo’s view to bring into sharper focus the islands in the foreground: San Giorgio Maggiore, home of the powerful Benedictine Monastery of San Giorgio, and to its left, the connected islands of Giudecca. In contrast to Barbari, Merlo shows the full extent of Giudecca and in greater detail, reflecting the importance of the religious institutions and churches built there between 1500 and 1676, such as Palladio’s Il Redentore church. <*> '
+	// mapName: 'barbari',
+	name: "Merceria: Bertacagno's Printshop",
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Jacopo de' Barbari",
+	// title: 'La Pianta di Venezia di Jacopo de’ Barbari',
+	// publisher: '[Venice : Anton Kolb?]',
+	// date: '1500 ',
+	// physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
+	// detail: '',
+	src: './img/Le%20Giocose%20Moderne_thumbnail.jpg'
 }, {
 	id: 10,
 	core: 46, //merc
@@ -21080,19 +21088,18 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 4,
 	tile: 212,
-	mapName: 'barbari',
-	name: 'Evolving Urban Texture & Printing Technique',
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Jacopo de' Barbari",
-	title: 'La Pianta di Venezia di Jacopo de’ Barbari',
-	publisher: '[Venice : Anton Kolb?]',
-	date: '1500 ',
-	physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
-	detail: '',
-	src: './barbari-5.jpg',
-	narrative: 'Zooming in on both images in the vicinity of the Rialto brings the virtuosity and attention to detail of both authors into sharp focus. The arrangement of windows, rooftop details, wharfside activity, and the exertions of individual gondoliers may be discerned in both images. Though his image was smaller than Barbari’s, Merlo was able to match detail to detail, thanks to his use of copper engraving, rather than woodcut. At this level of focus, the realism of Merlo’s image is also somewhat superior, thanks to presence of color and Merlo’s greater mastery of the rules of perspectival drawing.'
+	// mapName: 'barbari',
+	name: "Merceria: Arrivabene's Bookshop",
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Jacopo de' Barbari",
+	// title: 'La Pianta di Venezia di Jacopo de’ Barbari',
+	// publisher: '[Venice : Anton Kolb?]',
+	// date: '1500 ',
+	// physical: '1 view on 6 sheets : woodcut ; 1,345 x 2,818 mm.',
+	// detail: '',
+	src: './img/Predica del Reverendo_thumbnail.jpg'
 }, {
 	id: 11,
 	core: 46, //merc
@@ -21102,19 +21109,18 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 4,
 	tile: 212,
-	mapName: 'bordone',
-	name: "Bordone's Island Views of 1534",
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Benedetto Bordone",
-	title: 'Isolario di Benedetto Bordone',
-	publisher: 'Venice, N. Zoppoino',
-	date: '1534',
-	physical: '(fol.). 10 p.l., lxxiiii numb. l : ill. (maps, some double)',
-	detail: '',
-	src: './bordone-1.jpg',
-	narrative: 'Part of the fascination of early modern publishers and readers with Venice—no less in the sixteenth and seventeenth centuries than now—lay in its both miraculous and precarious site on a complex of low-lying islands. Islands held a particular fascination to early modern travel writing and fiction, as exotic little worlds. Thomas More’s Utopia (1516) for example, created a fictitious island to set the scene for its social and political commentary. Books describing the islands of the Aegean Sea had been popular in Italy since the early fifteenth century. In 1528 the Venetian Benedetto Bordon expanded the concept to embrace islands to the east and west newly encountered by Europeans. The concept was capacious enough to include several maps of Venice and its outlying islands, as well as the island city of Tenochtitlan (modern Mexico City), which contemporaries compared to Venice. Though Bordon’s image of Venice was based on Barbari, it differs significantly from it. Structures on the main islands are greatly generalized, but Bordon offers a more expansive view of the entire lagoon. He depicts many small islands by Barbari, identifying them with their most prominent structures, usually churches.'
+	// mapName: 'bordone',
+	name: "Merceria: Griffio Publishers",
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Benedetto Bordone",
+	// title: 'Isolario di Benedetto Bordone',
+	// publisher: 'Venice, N. Zoppoino',
+	// date: '1534',
+	// physical: '(fol.). 10 p.l., lxxiiii numb. l : ill. (maps, some double)',
+	// detail: '',
+	src: './img/L%27arte%20oratoria_thumbnail.jpg'
 }, {
 	id: 12,
 	core: 46, //merc
@@ -21124,19 +21130,18 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 4,
 	tile: 212,
-	mapName: 'forlani',
-	name: "Forlani and Venice's Prolific Atlas Production",
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Paolo Forlani",
-	title: 'Venetia',
-	publisher: '[Venice] : ex aeneis formis Bolognini Zalterii, M. D. XVI',
-	date: '1566',
-	physical: '	1 view ; 360 x 731 mm. (neat line), on sheet 444 x 744 mm.',
-	detail: '',
-	src: './forlani-1.jpg',
-	narrative: 'In the middle decades of the sixteenth Italy, publishers and cartographers based in Rome and Venice were the preeminent producers of maps and views in Europe. Paolo Forlani was among the most prolific of the Roman publishers. Forlani’s 1566 plan is one of several derived from a large wall-sized plan published in Venice by Matteo Pagan in 1559. Forlani’s plan, first published in 1565, was sized to fit in a bound folio of maps (what we now call an atlas). Forlani’s version was widely copied by other publishers, including Donato Bertelli, whose version is the next in our sequence. Both plans adopted the practice initiated by Bordon of enclosing Venice within its barrier islands and the coast of Terraferma. The oval shape of this enclosure, however, is more concerned with closing the circle within the space of the page than with actual topography. '
+	// mapName: 'forlani',
+	name: "San Marco: Valgrisi's Bookshop",
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Paolo Forlani",
+	// title: 'Venetia',
+	// publisher: '[Venice] : ex aeneis formis Bolognini Zalterii, M. D. XVI',
+	// date: '1566',
+	// physical: '	1 view ; 360 x 731 mm. (neat line), on sheet 444 x 744 mm.',
+	// detail: '',
+	src: './img/Il%20Terentio%20Latino_thumbnail.jpg'
 }, {
 	id: 13,
 	core: 38, //humanist
@@ -21146,42 +21151,18 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 5,
 	tile: 128,
-	mapName: 'forlaniAligned',
-	name: "Forlani's Formal and Topographic Simplifications",
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Paolo Forlani",
-	title: 'Venetia',
-	publisher: '[Venice] : ex aeneis formis Bolognini Zalterii, M. D. XVI',
-	date: '1566',
-	physical: '	1 view ; 360 x 731 mm. (neat line), on sheet 444 x 744 mm.',
-	detail: '',
-	src: './forlani-2.jpg',
-	narrative: 'The overall image is more geographically expansive, but at the cost of greatly simplifying topographic details. Compare, for example the representation of the Rialto <*> and the Piazza San Marco <*> on either of these maps with those by Barbari and Merlo. As a consequence, the image of Venice that emerges is one dominated by its tallest towers, greatest churches and palaces, its largest piazzas, and its harbors.'
-},
-// {
-// 	id: 14,
-// 	x: 8192, //bertelli lists - gen
-// 	y: 4096,
-// 	r: 0,
-// 	scale: 3,
-// 	tile:128,
-// 	mapName: 'bertilli',
-// 	name: "Bertilli's Numbered Sites",
-// 	type: 'map',
-// 	cluster: null,
-// 	clusterId: null,
-// 	author: "Donato Bertelli",
-// 	title: 'Venetia',
-// 	publisher: '[Venice] : alla libraria del segno de S. Marco in merzaria Donato Bertelli',
-// 	date: '1570',
-// 	physical: '1 view ; 284 x 584 mm. (neat line), 376 x 585 mm.',
-// 	detail: '',
-// 	src: './bertilli-1.jpg',
-// 	narrative: 'Forlani’s and Bertelli’s views both included extensive numbered lists of major sites and structures to be compared with the image, much like city plans in modern guidebooks. Many important places are also labeled on the plan.'
-// },
-{
+	// mapName: 'forlaniAligned',
+	name: "The Humanist Printer: Aldus Manutius",
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Paolo Forlani",
+	// title: 'Venetia',
+	// publisher: '[Venice] : ex aeneis formis Bolognini Zalterii, M. D. XVI',
+	// date: '1566',
+	// physical: '	1 view ; 360 x 731 mm. (neat line), on sheet 444 x 744 mm.',
+	// detail: '',
+	src: './img/Angelo%20Poliziano.%20Opera_thumbnail.jpg' }, {
 	id: 14,
 	core: 38, //humanist
 	minor: 6,
@@ -21190,19 +21171,18 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 5,
 	tile: 128,
-	mapName: 'bertilliAligned',
-	name: "Bertilli's Lists and Lagoon Islands",
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Donato Bertelli",
-	title: 'Venetia',
-	publisher: '[Venice] : alla libraria del segno de S. Marco in merzaria Donato Bertelli',
-	date: '1570',
-	physical: '1 view ; 284 x 584 mm. (neat line), 376 x 585 mm.',
-	detail: '',
-	src: './bertilli-2.jpg',
-	narrative: 'Forlani’s and Bertelli’s views both included extensive numbered lists of major sites and structures to be compared with the image, much like city plans in modern guidebooks. Many important places are also labeled on the plan. Here, as in Bordon, the minor islands in the lagoon are exaggerated in size. This is especially true of the small islands in the foreground between San Giorgio Maggiore and the Lido <*>. These islands were ideal locations for religious orders, which valued isolation, and the hospital of Lazaretto Vecchio, a hospital for plague victims and lepers.'
+	// mapName: 'bertilliAligned',
+	name: "Aldine Device",
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Donato Bertelli",
+	// title: 'Venetia',
+	// publisher: '[Venice] : alla libraria del segno de S. Marco in merzaria Donato Bertelli',
+	// date: '1570',
+	// physical: '1 view ; 284 x 584 mm. (neat line), 376 x 585 mm.',
+	// detail: '',
+	src: './img/Inscriptiones%20Antiquae_thumbnail.jpg'
 }, {
 	id: 15,
 	core: 38, //humanist
@@ -21212,19 +21192,18 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 5,
 	tile: 128,
-	mapName: 'florimi',
-	name: "Florimi's Procession Scenes",
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Matteo Florimi.",
-	title: 'Venetia',
-	publisher: '[Siena?] : Matteo Florimi formis,',
-	date: '1597',
-	physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
-	detail: '',
-	src: './florimi-1.jpg',
-	narrative: 'Matteo Florimi’s view of Venice from the end of the sixteenth century is similar in composition to the Forlani and Bertelli plans, from which it derived. The most significant difference is its inclusion of three small images at the base of the map. At bottom left is the Piazza San Marco; at right, the Rialto Bridge; in the center a procession of dignitaries. <*> '
+	// mapName: 'florimi',
+	name: "Aldine Italic",
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Matteo Florimi.",
+	// title: 'Venetia',
+	// publisher: '[Siena?] : Matteo Florimi formis,',
+	// date: '1597',
+	// physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
+	// detail: '',
+	src: './img/Juvenal_thumbnail.jpg'
 }, {
 	id: 16,
 	core: 38, //humanist
@@ -21234,19 +21213,18 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 5,
 	tile: 128,
-	mapName: 'florimiAligned',
-	name: "Florimi's Urban Simplifications",
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Matteo Florimi.",
-	title: 'Venetia',
-	publisher: '[Siena?] : Matteo Florimi formis,',
-	date: '1597',
-	physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
-	detail: '',
-	src: './florimi-2.jpg',
-	narrative: 'Despite the passage of time and the changes to the city they document, the Merlo and Barbari views seem more similar to each other than to any of the intermediate renderings of the city. The simplification present on the later sixteenth century plans, while making the city and its surroundings more legible, also made the city seem more open than it actually was (and is), diminishing the sense of density, vibrancy, and activity that impresses the reader of the Barbari and Merlo plans.'
+	// mapName: 'florimiAligned',
+	name: "Aldus' Eulogy",
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Matteo Florimi.",
+	// title: 'Venetia',
+	// publisher: '[Siena?] : Matteo Florimi formis,',
+	// date: '1597',
+	// physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
+	// detail: '',
+	src: './img/Lactantius_thumbnail.jpg'
 }, {
 	id: 17,
 	core: 38, //humanist
@@ -21256,19 +21234,18 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 5,
 	tile: 128,
-	mapName: 'florimiAligned',
-	name: "Florimi's Urban Simplifications",
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Matteo Florimi.",
-	title: 'Venetia',
-	publisher: '[Siena?] : Matteo Florimi formis,',
-	date: '1597',
-	physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
-	detail: '',
-	src: './florimi-2.jpg',
-	narrative: 'Despite the passage of time and the changes to the city they document, the Merlo and Barbari views seem more similar to each other than to any of the intermediate renderings of the city. The simplification present on the later sixteenth century plans, while making the city and its surroundings more legible, also made the city seem more open than it actually was (and is), diminishing the sense of density, vibrancy, and activity that impresses the reader of the Barbari and Merlo plans.'
+	// mapName: 'florimiAligned',
+	name: "Aldine Press Booklist",
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Matteo Florimi.",
+	// title: 'Venetia',
+	// publisher: '[Siena?] : Matteo Florimi formis,',
+	// date: '1597',
+	// physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
+	// detail: '',
+	src: './img/Epitome%20Orthographiae_thumbnail.jpg'
 }, {
 	id: 18,
 	core: 44, //sessa
@@ -21278,19 +21255,18 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 4,
 	tile: 238,
-	mapName: 'florimiAligned',
-	name: "Florimi's Urban Simplifications",
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Matteo Florimi.",
-	title: 'Venetia',
-	publisher: '[Siena?] : Matteo Florimi formis,',
-	date: '1597',
-	physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
-	detail: '',
-	src: './florimi-2.jpg',
-	narrative: 'Despite the passage of time and the changes to the city they document, the Merlo and Barbari views seem more similar to each other than to any of the intermediate renderings of the city. The simplification present on the later sixteenth century plans, while making the city and its surroundings more legible, also made the city seem more open than it actually was (and is), diminishing the sense of density, vibrancy, and activity that impresses the reader of the Barbari and Merlo plans.'
+	// mapName: 'florimiAligned',
+	name: "Sessa Family Publishing",
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Matteo Florimi.",
+	// title: 'Venetia',
+	// publisher: '[Siena?] : Matteo Florimi formis,',
+	// date: '1597',
+	// physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
+	// detail: '',
+	src: './img/Detail%20of%20Compilatio_thumbnail.jpg'
 }, {
 	id: 19,
 	core: 51, //exports
@@ -21300,19 +21276,18 @@ var printSites = [(_ref = {
 	r: 0,
 	scale: 4,
 	tile: 238,
-	mapName: 'florimiAligned',
-	name: "Florimi's Urban Simplifications",
-	type: 'map',
-	cluster: null,
-	clusterId: null,
-	author: "Matteo Florimi.",
-	title: 'Venetia',
-	publisher: '[Siena?] : Matteo Florimi formis,',
-	date: '1597',
-	physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
-	detail: '',
-	src: './florimi-2.jpg',
-	narrative: 'Despite the passage of time and the changes to the city they document, the Merlo and Barbari views seem more similar to each other than to any of the intermediate renderings of the city. The simplification present on the later sixteenth century plans, while making the city and its surroundings more legible, also made the city seem more open than it actually was (and is), diminishing the sense of density, vibrancy, and activity that impresses the reader of the Barbari and Merlo plans.'
+	// mapName: 'florimiAligned',
+	name: "Printing for Export",
+	// type: 'map',
+	// cluster: null,
+	// clusterId: null,
+	// author: "Matteo Florimi.",
+	// title: 'Venetia',
+	// publisher: '[Siena?] : Matteo Florimi formis,',
+	// date: '1597',
+	// physical: '1 view ; 291 x 508 mm. (neat line), on sheet remargined to 451 x 591 mm.',
+	// detail: '',
+	src: './barbari-1.jpg'
 }];
 
 exports.default = printSites;
@@ -45464,13 +45439,43 @@ var PanelB = function (_Component) {
           null,
           _react2.default.createElement(
             'div',
-            { style: { padding: '10px', overflowY: 'auto' } },
+            { style: { padding: '10px', overflowY: 'auto', overflowX: 'hidden' } },
             this.props.map.mapSite.id > 2 && _react2.default.createElement(_Panel2.default, null),
             this.props.map.mapSite.id < 3 && _react2.default.createElement(
-              'p',
-              null,
-              'intro here.'
-            )
+              'h3',
+              { className: 'BornholmSandvig' },
+              'Printing Books in Venice'
+            ),
+            this.props.map.mapSite.id < 3 && this.props.map.mapSite.narrative.map(function (narr, i) {
+              return _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-md-3 center-block text-center' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'bIcon text-center inlineBlock' },
+                    _react2.default.createElement('img', { src: _this2.props.map.mapSite.src[i], style: { borderRadius: '5px' } })
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-md-9' },
+                  _react2.default.createElement(
+                    'h4',
+                    { className: 'BornholmSandvig' },
+                    _this2.props.map.mapSite.subtitles ? _this2.props.map.mapSite.subtitles[i] : ''
+                  ),
+                  _react2.default.createElement(
+                    'p',
+                    null,
+                    narr
+                  ),
+                  _react2.default.createElement('br', null)
+                )
+              );
+            })
           )
         )
       );
