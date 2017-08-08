@@ -8706,30 +8706,29 @@ var Image = function (_Component) {
             { className: 'Trenda-Bold' },
             'Image: '
           ),
-          this.props.image[this.state.active].caption,
-          '.',
-          biblio.length > 0 && _react2.default.createElement(
+          this.props.image[this.state.active].caption
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          _react2.default.createElement(
             'span',
-            { className: 'small' },
-            ' ',
-            biblio[0].author,
-            ' ',
-            _react2.default.createElement(
-              'a',
-              { href: biblio[0].link },
-              _react2.default.createElement(
-                'em',
-                null,
-                biblio[0].title
-              )
-            ),
-            ' ',
-            biblio[0].published,
-            ' ',
-            biblio[0].physical,
-            ' ',
-            biblio[0].page
-          )
+            { className: 'Trenda-Bold' },
+            'View Online: '
+          ),
+          _react2.default.createElement(
+            'a',
+            { href: this.props.image[this.state.active].link, target: '_blank', style: { fontWeight: 'normal' } },
+            'Newberry Catalog'
+          ),
+          ' . ',
+          _react2.default.createElement(
+            'a',
+            { href: this.props.image[this.state.active].onlineArchive, target: '_blank', style: { fontWeight: 'normal' } },
+            'CARLI digital collections'
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null)
         )
       );
     }
@@ -13101,29 +13100,55 @@ Object.defineProperty(exports, "__esModule", {
 });
 var panelsOther = exports.panelsOther = {
 	intro: {
-		title: ['Religious Life in Venice', 'An Introduction'],
+		title: ['The Religious Geography of Venice', 'An Introduction'],
 		obj: {
-			text: ['Paragraph on larger cosmopolitan context. trade? multiple cultures?', 'Paragraph on larger cosmopolitan context. religious communities? adjacencies', 'Paragraph on larger cosmopolitan context. dynamics, etc.', 'The material included here is not a complete survey of the Venetian book trade or religious communities of the period, but works to provide a glimpse of how religious, political, intellectual, and social life in Venice was shaped by and shaped printers, publishers, booksellers, and print itself in the 16th and 17th centuries.']
-		}
-	},
-	prints: {
-		title: ['Religious Life in Venice', 'Printing Books in Venice'],
-		obj: {
-			text: ['Within fifteen years of the publication of Gutenberg’s Bible in Mainz, Germany, printers began to spread out across Europe. By the 1460s, print shops had been set up in Venice, all run by craftsmen who had immigrated there in search of work. While these printers were no doubt drawn to the intellectual community of scholars and teachers in Venice, they also would have been attracted to its cosmopolitanism. Venice incorporated residential communities from many cultures, as well as travelers and merchants who regularly visited the city.', 'By the mid-16th century, Venice was the powerhouse of printing in Europe. Printers produced all kinds of books, from large, elaborate folios to small, portable books meant for personal study. They also produced a wide variety of ephemera -- inexpensive single sheets that provided news or entertainment and were not intended to be saved. Some booksellers maintained upscale shops while others peddled their wares from a stall or simply stood on Rialto Bridge calling out to potential customers. Essentially, books, and their makers and sellers, were as varied as the inhabitants of and travelers to Venice.', 'The material included here is not a complete survey of the Venetian book trade of the period, but works to provide a glimpse of how printers, publishers, and booksellers shaped – and were shaped by – religious, political, intellectual, and social life in Venice.', 'At the Sign of… (alternate location, see Rialto)', ' Booksellers often included information about the location of their shop on the title page or in the colophon of their books. While sometimes this information was merely textual (e.g. “at the sign of the Diamond”) often it was visual as well, in the form of the printer’s device, which would also have appeared on the sign at the physical shop. These devices not only linked books to specific locations, but also worked to form part of the visual landscape of Venice in the period. Rialto Bridge, and the neighborhoods that surrounded it, would have been filled with all kinds of shops and signs. These signs functioned as advertising, competing for the attention – and the money – of customers both old and new.', 'The Inquisition and the Venetian Book Trade (alternate location?)', 'In 1559 Pope Paul IV issued a new Index of Prohibited Books, enlarging the previous index of 1554-55. In Venice, booksellers were required to present inventories of books they had in stock. Many booksellers resolved to disobey these instructions and would neither print the index or supply inventories. Melchiorre Sessa was particularly hopeful that the book trade might put up a united front; he censored booksellers (including Vincenzo Valgrisi) who gave in to pressure and submitted inventories. Due to the prohibition on printing certain books as a result of the Counter-Reformation, printers were required to secure the necessary permissions from Italian authorities before conducting their work. In the early 1550s, despite failing to secure such permissions, Giovanni Griffio continued printing, resulting in a fine of 25 ducats and a sentence of one month in prison.']
+			type: 'intro',
+			subtitles: ["Venice's religious geography", "Venice's cosmopolitan contexts", "Venice's print production", "Venice's cartographic contexts"],
+			text: ['Quisque in purus faucibus erat /iaculis/ maximus. Maecenas posuere interdum massa, nec tincidunt orci placerat quis. Aenean at tempor lacus, ac malesuada augue. Vestibulum cursus mauris vel nulla pulvinar, quis aliquet orci porttitor. Fusce vel gravida arcu, et tempor nibh. Cras blandit eu urna eu bibendum. Donec id lorem rutrum, imperdiet tellus vel, pulvinar eros. Mauris vulputate odio at metus finibus rhoncus. Fusce ornare risus velit, nec viverra ligula porta ultrices. Donec nunc risus, tincidunt a risus id, commodo feugiat eros. Donec eleifend mauris nec augue rutrum, eu euismod felis blandit. Praesent vel dolor in mi efficitur sollicitudin. Integer molestie varius sapien, a fringilla justo faucibus a. Curabitur maximus feugiat imperdiet. Praesent laoreet, erat nec condimentum tempor, mi elit maximus nunc, at aliquam orci odio in purus. Sed mattis facilisis odio, quis sodales ex efficitur id.', 'Quisque in purus faucibus erat iaculis maximus. Maecenas posuere interdum massa, nec tincidunt orci placerat quis. Aenean at tempor lacus, ac malesuada augue. Vestibulum cursus mauris vel nulla pulvinar, quis aliquet orci porttitor. Fusce vel gravida arcu, et tempor nibh. Cras blandit eu urna eu bibendum. Donec id lorem rutrum, imperdiet tellus vel, pulvinar eros. Mauris vulputate odio at metus finibus rhoncus. Fusce ornare risus velit, nec viverra ligula porta ultrices. Donec nunc risus, tincidunt a risus id, commodo feugiat eros. Donec eleifend mauris nec augue rutrum, eu euismod felis blandit. Praesent vel dolor in mi efficitur sollicitudin. Integer molestie varius sapien, a fringilla justo faucibus a. Curabitur maximus feugiat imperdiet. Praesent laoreet, erat nec condimentum tempor, mi elit maximus nunc, at aliquam orci odio in purus. Sed mattis facilisis odio, quis sodales ex efficitur id.', 'Quisque in purus faucibus erat iaculis maximus. Maecenas posuere interdum massa, nec tincidunt orci placerat quis. Aenean at tempor lacus, ac malesuada augue. Vestibulum cursus mauris vel nulla pulvinar, quis aliquet orci porttitor. Fusce vel gravida arcu, et tempor nibh. Cras blandit eu urna eu bibendum. Donec id lorem rutrum, imperdiet tellus vel, pulvinar eros. Mauris vulputate odio at metus finibus rhoncus. Fusce ornare risus velit, nec viverra ligula porta ultrices. Donec nunc risus, tincidunt a risus id, commodo feugiat eros. Donec eleifend mauris nec augue rutrum, eu euismod felis blandit. Praesent vel dolor in mi efficitur sollicitudin. /Integer molestie varius sapien, a fringilla justo faucibus a/. Curabitur maximus feugiat imperdiet. Praesent laoreet, erat nec condimentum tempor, mi elit maximus nunc, at aliquam orci odio in purus. Sed mattis facilisis odio, quis sodales ex efficitur id.', 'Quisque in purus faucibus erat iaculis maximus. Maecenas posuere interdum massa, nec tincidunt orci placerat quis. Aenean at tempor lacus, ac malesuada augue. Vestibulum cursus mauris vel nulla pulvinar, quis aliquet orci porttitor. Fusce vel gravida arcu, et tempor nibh. Cras blandit eu urna eu bibendum. Donec id lorem rutrum, imperdiet tellus vel, pulvinar eros. Mauris vulputate odio at metus finibus rhoncus. Fusce ornare risus velit, nec viverra ligula porta ultrices. Donec nunc risus, tincidunt a risus id, commodo feugiat eros. Donec eleifend mauris nec augue rutrum, eu euismod felis blandit. Praesent vel dolor in mi efficitur sollicitudin. Integer molestie varius sapien, a fringilla justo faucibus a. Curabitur maximus feugiat imperdiet. Praesent laoreet, erat nec condimentum tempor, mi elit maximus nunc, at aliquam orci odio in purus. Sed mattis facilisis odio, quis sodales ex efficitur id.']
 		}
 	},
 	bibliography: {
-		title: ['Religious Life in Venice', 'A Bibliography'],
-		obj: { text: ['adjust to pull in bibliography entries', 'here', 'for', 'display.'] }
-	},
-	credits: {
-		title: ['Religious Life in Venice', 'Research Credits & About This Site'],
-		obj: { text: ['introduction paragraph on researcher contributions', 'formalized list to come, shorthand placeholder below', 'Edward Muir (various)', 'Dana E. Katz (Ghetto and Fondaco dei Tedeschi)', 'Jill E. Gage (various)', 'Genevieve Carlton (printing maps)', 'Bronwen Wilson (Fondaco dei Turchi)', 'Eufemia Baldassarre (Frari)', 'Christopher Nygren (San Rocco)', 'Jason Rosenholtz-Witt (printing music)', 'Debra Pincus (Santi Giovanni e Paolo)', 'Tracy Cooper (Palladian churches)', 'Meredith Ray (Tarabotti)', 'Jim Akerman (cartography)', 'Liz Horodowich (various churches)', 'Deborah Howard and Laura Moretti (music in the churches)', 'Brian Sandberg (galley slaves)', 'Mara Wade (more on Germans)', 'Lia Markey (Dürer)', 'Tracy Cooper (Zitelle)']
+		title: ['The Religious Geography of Venice', 'A Bibliography'],
+		obj: {
+			type: 'biblio',
+			subtitles: ['secondary sources', 'primary sources'],
+			text: ['intro paragraph if desired on secondary sources', 'intro paragraph if desired on primary Newberry sources'],
+			entriesSecondary: [{
+				bibliography: 'author 1. /secondary title/ (publisher:date). page',
+				link: 'https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448',
+				onlineArchive: 'http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371'
+			}, {
+				bibliography: 'author 2. /secondary title/ (publisher:date). page',
+				link: 'https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448',
+				onlineArchive: 'http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371'
+			}, {
+				bibliography: 'author 3. /secondary title/ (publisher:date). page',
+				link: 'https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448',
+				onlineArchive: 'http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371'
+			}],
+			entriesPrimary: [{
+				bibliography: 'author 4. /secondary title/ (publisher:date). page',
+				link: 'https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448',
+				onlineArchive: 'http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371'
+			}, {
+				bibliography: 'author 5. /secondary title/ (publisher:date). page',
+				link: 'https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448',
+				onlineArchive: 'http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371'
+			}, {
+				bibliography: 'author 6. /secondary title/ (publisher:date). page',
+				link: 'https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448',
+				onlineArchive: 'http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371'
+			}]
 		}
 	},
-	guide: {
-		title: ['Religious Life in Venice', 'Navigation Guide'],
-		obj: { text: ['adjust to show images of', 'annotated buttons', 'and other content', 'to aid in navigating display.'] }
+	credits: {
+		title: ['The Religious Geography of Venice', 'Research Credits & Contributions'],
+		obj: {
+			type: 'credits',
+			subtitles: "Research contributors & contributions",
+			text: 'introduction paragraph on /researcher contributions/. Quisque in purus faucibus erat iaculis maximus. Maecenas posuere interdum massa, nec tincidunt orci placerat quis. Aenean at tempor lacus, ac malesuada augue. Vestibulum cursus mauris vel nulla pulvinar, quis aliquet orci porttitor. Fusce vel gravida arcu, et tempor nibh. Cras blandit eu urna eu bibendum. Donec id lorem rutrum, imperdiet tellus vel, pulvinar eros. Mauris vulputate odio at metus finibus rhoncus. Fusce ornare risus velit, nec viverra ligula porta ultrices. /Donec nunc risus/, tincidunt a risus id, commodo feugiat eros. Donec eleifend mauris nec augue rutrum, eu euismod felis blandit. Praesent vel dolor in mi efficitur sollicitudin. Integer molestie varius sapien, a fringilla justo faucibus a. Curabitur maximus feugiat imperdiet. Praesent laoreet, erat nec condimentum tempor, mi elit maximus nunc, at aliquam orci odio in purus. Sed mattis facilisis odio, quis sodales ex efficitur id.',
+			researchers: ['Edward Muir (Various)', 'Dana E. Katz (Ghetto and Fondaco dei Tedeschi)', 'Jill E. Gage (Various Printing)', 'Genevieve Carlton (Printing Maps)', 'Bronwen Wilson (Fondaco dei Turchi)', 'Eufemia Baldassarre (Santa Maria Gloriosa dei Frari)', 'Christopher Nygren (San Rocco)', 'Jason Rosenholtz-Witt (Printing Music)', 'Debra Pincus (Santi Giovanni e Paolo)', 'Tracy Cooper (Palladian churches)', 'Meredith Ray (Tarabotti)', 'Jim Akerman (Cartography)', 'Liz Horodowich (Various Churches)', 'Deborah Howard and Laura Moretti (Music in the Churches)', 'Brian Sandberg (Galley Slaves)', 'Mara Wade (More on Germans)', 'Lia Markey (Dürer)', 'Tracy Cooper (Zitelle)']
+		}
 	}
 
 };
@@ -20565,9 +20590,7 @@ var _panelActions = __webpack_require__(26);
 
 var _cirTest = __webpack_require__(89);
 
-var _About = __webpack_require__(316);
-
-var _About2 = _interopRequireDefault(_About);
+var _Intro = __webpack_require__(713);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20634,6 +20657,8 @@ var PanelBase = function (_Component) {
         return +bib.narrativeId === +obj.id;
       });
 
+      console.log(obj.type);
+
       return _react2.default.createElement(
         'div',
         { className: this.props.baseClass, ref: 'sizeP', id: 'panelWin', onAnimationEnd: function onAnimationEnd(e) {
@@ -20657,8 +20682,7 @@ var PanelBase = function (_Component) {
         images.length > 0 && _react2.default.createElement(_ImageSlider2.default, { image: images, onAnimationEnd: function onAnimationEnd(e) {
             return _this2.refSize(e);
           }, width: this.state.size[0], height: (this.props.map.windowSize[1] + 6) * 0.65 }),
-        _react2.default.createElement('br', null),
-        obj.text && _typeof(obj.text) !== 'object' && obj.text.split('/').map(function (item, i) {
+        obj.text && _typeof(obj.text) !== 'object' && obj.type !== 'credits' && obj.type !== 'biblio' && obj.type !== 'intro' && obj.text.split('/').map(function (item, i) {
           if (i % 2 === 0) {
             return _react2.default.createElement(
               'span',
@@ -20677,7 +20701,7 @@ var PanelBase = function (_Component) {
             );
           }
         }),
-        obj.text && _typeof(obj.text) === 'object' && obj.text.map(function (lines) {
+        obj.text && _typeof(obj.text) === 'object' && obj.type !== 'credits' && obj.type !== 'biblio' && obj.type !== 'intro' && obj.text.map(function (lines) {
           return _react2.default.createElement(
             'p',
             null,
@@ -20685,38 +20709,7 @@ var PanelBase = function (_Component) {
           );
         }),
         _react2.default.createElement('br', null),
-        biblio.length > 0 && _react2.default.createElement(
-          'p',
-          { className: 'Trenda-Bold' },
-          'Sources: '
-        ),
-        _react2.default.createElement(
-          'ul',
-          null,
-          biblio.length > 0 && biblio.map(function (bib) {
-            return _react2.default.createElement(
-              'li',
-              null,
-              bib.author,
-              ' ',
-              _react2.default.createElement(
-                'a',
-                { href: bib.link },
-                _react2.default.createElement(
-                  'em',
-                  null,
-                  bib.title
-                )
-              ),
-              ' ',
-              bib.published,
-              ' ',
-              bib.physical,
-              ' ',
-              bib.page
-            );
-          })
-        ),
+        _react2.default.createElement('br', null),
         obj.researcherName && _react2.default.createElement(
           'p',
           null,
@@ -20730,6 +20723,14 @@ var PanelBase = function (_Component) {
           ', ',
           obj.researcherAffiliation,
           '.'
+        ),
+        obj.type === 'intro' && _react2.default.createElement(_Intro.Intro, { obj: obj }),
+        obj.type === 'biblio' && _react2.default.createElement(_Intro.Biblio, { obj: obj }),
+        obj.type === 'credits' && _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_Intro.Credits, { obj: obj }),
+          _react2.default.createElement(_Intro.About, null)
         )
       );
     }
@@ -39441,93 +39442,7 @@ exports.default = (0, _redux.combineReducers)({
 });
 
 /***/ }),
-/* 316 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(11);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var About = function About(props) {
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h4',
-      null,
-      'About This Site'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      '\'Merlo\'s Map: The Religious Geography of Venice\' is part of ',
-      _react2.default.createElement(
-        'em',
-        null,
-        'Religious Change, 1450-1700'
-      ),
-      ', the Newberry Library\'s year-long, multidisciplinary project exploring how religion and print challenged authority, upended society, and made the medieval world modern.'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'The site was built by ',
-      _react2.default.createElement(
-        'a',
-        { href: 'https://www.siteations.com', target: '_blank' },
-        'Siteations Studio'
-      ),
-      '.'
-    ),
-    _react2.default.createElement(
-      'h4',
-      null,
-      'About Merlo\'s Map: The Religious Geography of Venice'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'Religion and print were hinges on which the medieval world opened into the modern. Before and after Martin Luther challenged the Roman Church 500 years ago, quests for spiritual renewal or ecclesiastical reform shook traditional sources of authority across Europe and the Americas. Competing ideas about religious beliefs and practices spread far and wide-especially by the printed word-at a pace power structures had difficulty controlling. These ideas awakened new vistas on life, while provoking hope and fear, anxiety and certainty, protest and violence. The winds of religious change profoundly affected people in all walks of life. They also transformed print in ways that continue to influence how we form and share our beliefs.'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'During 2017-18, the Newberry is exploring religious change through a gallery exhibition, Religious Change and Print, 1450-1700 (on view September 14-December 30, 2017), an array of digital resources, and a series of programs for scholars, students, and the general public.'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'Religious Change, 1450-1700 is generously supported by a grant from The Andrew W. Mellon Foundation.'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'For more information, please visit our project page: ',
-      _react2.default.createElement(
-        'a',
-        { href: 'https://www.newberry.org/religious-change', target: '_blank' },
-        'Religious Change, 1450-1700'
-      ),
-      '.'
-    )
-  );
-};
-
-exports.default = About;
-
-/***/ }),
+/* 316 */,
 /* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -44274,6 +44189,9 @@ var Header2 = function (_Component) {
             }
           } else if (val === 'prints') {
 
+            this.props.loadSelectAll('clear');
+            this.props.addSelectOne('printing');
+
             var offs = this.props.map.xyOffsets;
             this.setState({ y: offs[1] });
             if (offs[1] < 0) {
@@ -44286,6 +44204,8 @@ var Header2 = function (_Component) {
           this.props.setColor(false);
           this.props.setAnno(true);
           this.props.setDetail(true);
+
+          this.props.loadSelectAll('add');
 
           var offs = this.props.map.xyOffsets;
           var y = this.state.y;
@@ -90229,6 +90149,318 @@ module.exports = function() {
 	throw new Error("define cannot be used indirect");
 };
 
+
+/***/ }),
+/* 713 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.About = exports.Credits = exports.Biblio = exports.Intro = undefined;
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(11);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Intro = exports.Intro = function Intro(props) {
+  var obj = props.obj;
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    obj.text && obj.text.map(function (item, i) {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h4',
+          { className: 'BornholmSandvig' },
+          obj.subtitles[i]
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          item && item.split('/').map(function (item, i) {
+            if (i % 2 === 0) {
+              return _react2.default.createElement(
+                'span',
+                null,
+                item
+              );
+            } else {
+              return _react2.default.createElement(
+                'span',
+                null,
+                _react2.default.createElement(
+                  'em',
+                  null,
+                  item
+                )
+              );
+            }
+          })
+        ),
+        _react2.default.createElement('br', null)
+      );
+    })
+  );
+};
+
+var Biblio = exports.Biblio = function Biblio(props) {
+  var obj = props.obj;
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h4',
+      { className: 'BornholmSandvig' },
+      obj.subtitles[0]
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      obj.text[0]
+    ),
+    _react2.default.createElement(
+      'ul',
+      null,
+      obj.entriesSecondary.map(function (item) {
+        return _react2.default.createElement(
+          'li',
+          null,
+          item.bibliography && item.bibliography.split('/').map(function (text, i) {
+            if (i % 2 === 0) {
+              return _react2.default.createElement(
+                'span',
+                null,
+                text
+              );
+            } else {
+              return _react2.default.createElement(
+                'span',
+                null,
+                _react2.default.createElement(
+                  'em',
+                  null,
+                  text
+                )
+              );
+            }
+          }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null)
+        );
+      })
+    ),
+    _react2.default.createElement('br', null),
+    _react2.default.createElement(
+      'h4',
+      { className: 'BornholmSandvig' },
+      obj.subtitles[1]
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      obj.text[1]
+    ),
+    _react2.default.createElement(
+      'ul',
+      null,
+      obj.entriesPrimary.map(function (item) {
+        return _react2.default.createElement(
+          'li',
+          null,
+          item.bibliography && item.bibliography.split('/').map(function (text, i) {
+            if (i % 2 === 0) {
+              return _react2.default.createElement(
+                'span',
+                null,
+                text
+              );
+            } else {
+              return _react2.default.createElement(
+                'span',
+                null,
+                _react2.default.createElement(
+                  'em',
+                  null,
+                  text
+                )
+              );
+            }
+          }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'a',
+            { href: item.link, target: '_blank', style: { fontWeight: 'normal' } },
+            'Newberry Catalog'
+          ),
+          ' .',
+          _react2.default.createElement(
+            'a',
+            { href: item.onlineArchive, target: '_blank', style: { fontWeight: 'normal' } },
+            ' CARLI digital collections'
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null)
+        );
+      })
+    )
+  );
+};
+
+var Credits = exports.Credits = function Credits(props) {
+  var obj = props.obj;
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h4',
+      { className: 'BornholmSandvig' },
+      obj.subtitles
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      obj.text && obj.text.split('/').map(function (item, i) {
+        if (i % 2 === 0) {
+          return _react2.default.createElement(
+            'span',
+            null,
+            item
+          );
+        } else {
+          return _react2.default.createElement(
+            'span',
+            null,
+            _react2.default.createElement(
+              'em',
+              null,
+              item
+            )
+          );
+        }
+      })
+    ),
+    _react2.default.createElement(
+      'ul',
+      null,
+      obj.researchers && obj.researchers.map(function (researcher) {
+        var item = researcher.split('(');
+        return _react2.default.createElement(
+          'li',
+          null,
+          _react2.default.createElement(
+            'span',
+            { className: 'BornholmSandvig' },
+            item[0]
+          ),
+          ' ',
+          _react2.default.createElement(
+            'em',
+            null,
+            '(',
+            item[1]
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null)
+        );
+      })
+    )
+  );
+};
+
+var About = exports.About = function About(props) {
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h4',
+      { className: 'BornholmSandvig' },
+      'About This Site'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      _react2.default.createElement(
+        'em',
+        null,
+        'Merlo\'s Map: The Religious Geography of Venice'
+      ),
+      ' is part of ',
+      _react2.default.createElement(
+        'em',
+        null,
+        'Religious Change, 1450-1700'
+      ),
+      ', the Newberry Library\'s year-long, multidisciplinary project exploring how religion and print challenged authority, upended society, and made the medieval world modern.'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'The site was built by ',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://www.siteations.com', target: '_blank', style: { fontWeight: 'normal' } },
+        'Siteations Studio'
+      ),
+      '.'
+    ),
+    _react2.default.createElement(
+      'h4',
+      { className: 'BornholmSandvig' },
+      'About Religious Change and Print, 1450-1700'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'Religion and print were hinges on which the medieval world opened into the modern. Before and after Martin Luther challenged the Roman Church 500 years ago, quests for spiritual renewal or ecclesiastical reform shook traditional sources of authority across Europe and the Americas. Competing ideas about religious beliefs and practices spread far and wide-especially by the printed word-at a pace power structures had difficulty controlling. These ideas awakened new vistas on life, while provoking hope and fear, anxiety and certainty, protest and violence. The winds of religious change profoundly affected people in all walks of life. They also transformed print in ways that continue to influence how we form and share our beliefs.'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'During 2017-18, the Newberry is exploring religious change through a gallery exhibition, ',
+      _react2.default.createElement(
+        'em',
+        null,
+        'Religious Change and Print, 1450-1700'
+      ),
+      ' (on view September 14-December 30, 2017), an array of digital resources, and a series of programs for scholars, students, and the general public.'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      _react2.default.createElement(
+        'em',
+        null,
+        'Religious Change, 1450-1700'
+      ),
+      ' is generously supported by a grant from The Andrew W. Mellon Foundation.'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'For more information, please visit our project page: ',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://www.newberry.org/religious-change', target: '_blank' },
+        'Religious Change, 1450-1700'
+      ),
+      '.'
+    )
+  );
+};
 
 /***/ })
 /******/ ]);

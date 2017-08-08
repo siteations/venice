@@ -7,8 +7,7 @@ import Imagetrey from './ImageSlider.js';
 import { setPanelSizing } from '../action-creators/panelActions.js';
 import {imageSeries} from '../non-db/cirTest.js';
 
-import About from './About.js';
-
+import { Intro, Credits, Biblio, About } from './Intro.js';
 
 class PanelBase extends Component {
 	constructor(props) {
@@ -46,6 +45,8 @@ class PanelBase extends Component {
     let images = this.props.sites.genImages.filter(images => +images.narrativeId === +obj.id);
     let biblio = this.props.sites.genBiblio.filter(bib => +bib.narrativeId === +obj.id);
 
+    console.log(obj.type);
+
   	return (
   	     <div className={this.props.baseClass} ref="sizeP" id="panelWin" onAnimationEnd={e=> this.refSize(e)} style={{height:`${(this.props.sites.specLayer!=='prints')? this.props.map.windowSize[1]+6: this.props.map.windowSize[1]-40}px` }}>
 				    <h3 className="BornholmSandvig" >{(this.props.panel.title && other)? this.props.panel.title : 'Introduction, Biblio, or Credits'}</h3>
@@ -54,8 +55,8 @@ class PanelBase extends Component {
               {images.length > 0 &&
                 <Imagetrey image={images} onAnimationEnd={e=> this.refSize(e)} width={this.state.size[0]} height={(this.props.map.windowSize[1]+6)*0.65} />
               }
-				    <br/>
-            {obj.text && typeof(obj.text)!=='object' &&
+
+            {obj.text && typeof(obj.text)!=='object' && obj.type !== 'credits' && obj.type !== 'biblio' && obj.type !== 'intro' &&
               obj.text.split('/').map((item,i) =>{
                 if (i%2===0){
                   return <span>{item}</span>
@@ -64,29 +65,28 @@ class PanelBase extends Component {
                 }
               })
             }
-            {obj.text && typeof(obj.text)==='object' &&
+            {obj.text && typeof(obj.text)==='object' && obj.type !== 'credits' && obj.type !== 'biblio' && obj.type !== 'intro' &&
               obj.text.map(lines=>{
                 return <p>{lines}</p>
               })
             }
 				    <br/>
-            {biblio.length > 0  &&
-				      <p className="Trenda-Bold">Sources: </p>
-            }
-            <ul>
-            {biblio.length > 0 &&
-              biblio.map(bib=>{
-                return <li>{bib.author} <a href={bib.link}><em>{bib.title}</em></a> {bib.published} {bib.physical} {bib.page}</li>
-              })
-
-            }
-            </ul>
+            <br/>
             {obj.researcherName &&
               <p><span className="Trenda-Bold">Narrative Credits: </span> {obj.researcherName}, {obj.researcherAffiliation}.</p>
             }
-            {/*this.props.sites.specLayer === 'credits' &&
-              <About />
-            */}
+            {obj.type === 'intro' &&
+              <Intro obj={obj} />
+            }
+            {obj.type === 'biblio' &&
+              <Biblio obj={obj} />
+            }
+            {obj.type === 'credits' &&
+              <div>
+                <Credits obj={obj} />
+                <About />
+              </div>
+            }
 				</div>
   	)
 

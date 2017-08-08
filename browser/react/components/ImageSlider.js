@@ -63,12 +63,20 @@ class Image extends Component {
 					}
 				</div>
 			</div>
-			<h5><span className="Trenda-Bold">Image: </span>{this.props.image[this.state.active].caption}.
-
-			{biblio.length>0 &&
-						<span className="small"> {biblio[0].author} <a href={biblio[0].link}><em>{biblio[0].title}</em></a> {biblio[0].published} {biblio[0].physical} {biblio[0].page}</span>
-			}
-			</h5>
+			<h5><span className="Trenda-Bold">Image: </span>{this.props.image[this.state.active].caption}</h5>
+          {/* this.props.image[this.state.active].bibliography &&
+            this.props.image[this.state.active]bibliography.split('/').map((text,i) =>{
+                                  if (i%2===0){
+                                    return <span>{text}</span>
+                                  } else {
+                                    return <span><em>{text}</em></span>
+                                  }
+                                })
+                              }<br/>
+          */}
+      <p><span className="Trenda-Bold">View Online: </span>
+                        <a href={this.props.image[this.state.active].link} target="_blank" style={{fontWeight: 'normal'}}>Newberry Catalog</a> . <a href={this.props.image[this.state.active].onlineArchive} target="_blank" style={{fontWeight: 'normal'}}>CARLI digital collections</a><br/><br/>
+                       </p>
 		</div>
 		);
 	}
