@@ -391,7 +391,7 @@
     "narrativeId": 43,
     "src": "./img/Il%20Terentio%20Latino_title%20page_Wing%20ZP%20535.V22.png",
     "caption": "Il Terentio Latino by Terence",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
+    "bibliography":"author 4. /secondary title/ (publisher:date). page",
     "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
     "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
 },
@@ -545,6 +545,15 @@
     "src": "./img/SSGiovanniPaolowing_w2359_145_part_3_plt_1_o2.jpg",
     "caption": "Santi Giovanni e Paolo by Canaletto",
     "bibliography":"author 4. /secondary title/ (publisher:date). page",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
+    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+},
+{
+    "id": 64,
+    "narrativeId": 54,
+    "src": "./img/Perspettiva%20della%20piazza%20S.Marco_case_w_93_94_pg_39_detail_o2.png",
+    "caption": "A Perspective onto Piazza San Marco",
+    "bibliography":"Deborah Howard and Laura Moretti. /Sound and Space in Renaissance Venice: Architecture, Music, Acoustics./ New Haven and London: Yale University Press, 2009.",
     "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
     "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
 }]

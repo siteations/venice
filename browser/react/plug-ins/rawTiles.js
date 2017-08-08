@@ -60,7 +60,7 @@ export const sitesFiltered = (off, sites, currLayers, percent) => {
           newCir.r = circle.r*percent;
                 return newCir;
             })
-        .filter(circle => (currLayers.indexOf(circle.type)>-1));
+        .filter(circle => (currLayers.indexOf(circle.type)>-1 || currLayers.indexOf(circle.type2)>-1));
 
       return cirNew;
 

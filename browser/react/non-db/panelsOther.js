@@ -55,7 +55,7 @@ export const panelsOther = {
 			],
 		},
 	},
-	credits: {
+	contributors: {
 		title: ['The Religious Geography of Venice','Research Credits & Contributions'],
 		obj: {
 			type: 'credits',

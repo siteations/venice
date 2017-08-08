@@ -34,7 +34,7 @@ let mapButtons1=[
 
 let mapButtons2=[
 	{cn:"nIcon flex center middle", v:"bibliography", src:"/img/menu-01.svg" },
-	{cn:"nIcon flex center middle", v:"credits", src:"/img/credits-01.svg" }
+	{cn:"nIcon flex center middle", v:"contributors", src:"/img/credits-01.svg" }
 ];
 
 const toolstyles = {
@@ -115,14 +115,14 @@ class MapBar extends Component{
 			this.props.panelNone();
 		}
 
-		else if ((val === 'intro' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelNone)){
+		else if ((val === 'intro' || val === 'bibliography'|| val === 'contributors') && (this.props.options.panelNone)){
 			this.props.panelSmall();
 			this.props.setSpecPanel(val);
 			this.props.updateSite(0);
 			this.props.setTitles(panelsOther[val].title);
 			this.props.updateNarrative(panelsOther[val].obj);
 		}
-		else if ((val === 'intro' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelLarge)){
+		else if ((val === 'intro' || val === 'bibliography'|| val === 'contributors') && (this.props.options.panelLarge)){
 			this.props.panelSmall();
 			this.props.setSpecPanel(val);
 			this.props.updateSite(0);
@@ -130,7 +130,7 @@ class MapBar extends Component{
 			this.props.updateNarrative(panelsOther[val].obj);
 		}
 
-		else if ((val === 'intro' || val === 'bibliography'|| val === 'credits') && (this.props.options.panelSmall)){
+		else if ((val === 'intro' || val === 'bibliography'|| val === 'contributors') && (this.props.options.panelSmall)){
 			this.props.setSpecPanel(val);
 			this.props.updateSite(0);
 			this.props.setTitles(panelsOther[val].title);
@@ -209,7 +209,7 @@ class MapBar extends Component{
 		} else if (val==='all layers' && this.props.sites.currLayers.length > 0){
 			this.props.loadSelectAll('clear');
 			this.props.setSpecPanel('');
-		} else if (val!=='panel' && val!=='panel large' && val!=='intro' && val !== 'prints' && val!=='biblio' && val!=='maps'&& val!=='credits'){ //individual layers
+		} else if (val!=='panel' && val!=='panel large' && val!=='intro' && val !== 'prints' && val!=='biblio' && val!=='maps'&& val!=='contributors'){ //individual layers
 			if (this.props.sites.currLayers.indexOf(val)<0){ //not in add
 					this.props.addSelectOne(val);
 					this.props.setSpecPanel('');

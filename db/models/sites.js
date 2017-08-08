@@ -10,6 +10,7 @@ const sites = db.define('Sites', {
     r: {type: Sequelize.INTEGER, notNull: true },
     name: {type: Sequelize.STRING, notNull: true },
     type: {type: Sequelize.STRING, notNull: true },
+    type2: {type: Sequelize.STRING, notNull: true },
     cluster: {type: Sequelize.BOOLEAN, notNull: true },
     clusterId: {type: Sequelize.INTEGER, notNull: true },
 });

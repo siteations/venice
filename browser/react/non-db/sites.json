@@ -46,6 +46,7 @@
     "r": 350,
     "name": "Franciscan Church and Monastery.San Francesco della Vigna",
     "type": "convents & monasteries",
+    "type2": "churches",
     "cluster": false,
     "clusterId": null
 },
@@ -105,7 +106,7 @@
     "cy": 3900,
     "r": 250,
     "name": "Augustinian Church and Monastery.Santo Stefano",
-    "type": "convents & monasteries",
+    "type": " none",
     "cluster": false,
     "clusterId": null
 },
@@ -115,7 +116,7 @@
     "cy": 5090,
     "r": 350,
     "name": "Augustinian Convent.Spirito Santo",
-    "type": "none convent",
+    "type": "none",
     "cluster": false,
     "clusterId": null
 },
@@ -135,7 +136,7 @@
     "cy": 3195,
     "r": 250,
     "name": "Parish Church.San Pantalon",
-    "type": "none parish churches",
+    "type": "none",
     "cluster": false,
     "clusterId": null
 },
@@ -165,7 +166,7 @@
     "cy": 2217,
     "r": 250,
     "name": "Spanish Presence.San Geremia",
-    "type": "none non-catholic communities",
+    "type": "none",
     "cluster": false,
     "clusterId": null
 },
@@ -195,7 +196,8 @@
     "cy": 3842,
     "r": 250,
     "name": "First Printer in Venice. Santa Maria Formosa",
-    "type": "printing",
+    "type": "churches",
+    "type2": "printing",
     "cluster": true,
     "clusterId": 2
 },
@@ -235,7 +237,8 @@
     "cy": 2043,
     "r": 250,
     "name": "Camaldolese. San Michele in Isola",
-    "type": "convents & monasteries",
+    "type": "churches",
+    "type2": "convents & monasteries",
     "cluster": false,
     "clusterId": null
 },
@@ -286,8 +289,9 @@
     "r": 552,
     "name": "Holy Week Processions.Piazza San Marco",
     "type": "processions",
-    "cluster": false,
-    "clusterId": 0
+    "type2": "printing",
+    "cluster": true,
+    "clusterId": 10
 },
 {
     "id": 46,

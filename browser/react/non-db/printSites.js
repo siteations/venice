@@ -237,13 +237,13 @@ const printSites = [
 	},
 	{
 		id: 12,
-		core: 46, //merc
+		core: 45, //san marco
 		minor: 10,
-    "x": 6655,
-    "y": 4476,
+    "x": 5655,
+    "y": 5476,
 		r: 0,
 		scale: 4,
-		tile:212,
+		tile:158,
 		// mapName: 'forlani',
 		 name: "San Marco: Valgrisi's Bookshop",
 		// type: 'map',

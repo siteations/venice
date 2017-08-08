@@ -58,7 +58,7 @@
       "id":10,
       "coreId":13,
       "minorId":0,
-      "clusterId":0,
+      "clusterId":10,
       "title":"",
       "text":"During the days of the Venetian Republic the piazza in front of Basilica di San Marco became a grand stage for public processions celebrating Venice’s religious and political history. The current piazza derives from a grant of land from Doge Sebastiano Ziani. It is defined by the Basilica di San Marco at the eastern end and, on the sides, the Marciana Library (the oldest public library in the world) and the palaces of the procurators. The nine procurators managed the vast endowments of the Basilica di San Marco, which made them among the most influential financial experts in Europe.",
       "researcherName":"Edward Muir",
@@ -157,7 +157,7 @@
       "id":23,
       "coreId":45,
       "minorId":0,
-      "clusterId":0,
+      "clusterId":10,
       "title":"",
       "text":"During the days of the Venetian Republic the piazza in front of Basilica di San Marco became a grand stage for public processions celebrating Venice’s religious and political history. The current piazza derives from a grant of land from Doge Sebastiano Ziani. It is defined by the Basilica di San Marco at the eastern end and, on the sides, the Marciana Library (the oldest public library in the world) and the palaces of the procurators. The nine procurators managed the vast endowments of the Basilica di San Marco, which made them among the most influential financial experts in Europe.",
       "researcherName":"Edward Muir",
@@ -377,7 +377,7 @@
       "id":43,
       "coreId":null,
       "minorId":10,
-      "clusterId":5,
+      "clusterId":10,
       "title":"",
       "text":"Vincenzo Valgrisi was a printer and publisher with workshops in Rome, Bologna, Venice, and Prague. In Venice he had a shop near the San Marco clock tower. While his shop was originally described as being at the “Sign of Erasmus,” by 1559, in the midst of the Inquisition, he changed to the “Sign of Tau.”",
       "researcherName":"Jill Gage",
@@ -467,7 +467,7 @@
       "minorId":0,
       "clusterId":9,
       "title":"",
-      "text":"The correct interpretation of Vitruvius’ (Roman 1st c BCE) On Architecture was a Renaissance obsession. Palladio assisted humanist Daniele Barbaro’s publication of a commentary, through his drawings of ancient remains. Published in Venice in 1556 and again in 1567, Palladio applied ideas about the “ancient house” to the design of the atrium, cloister, sacristy, and oval stair of the Augustinian Lateran Canons’ monastery at Santa Maria della Carità, begun in 1561. The porticoed cloister elevation demonstrates classical superimposition of the orders. Napoleon turned the complex into an art school, today the site of the Accademia Galleries.",
+      "text":"The correct interpretation of Vitruvius’ (Roman 1st c BCE) /On Architecture/ was a Renaissance obsession. Palladio assisted humanist Daniele Barbaro’s publication of a commentary, through his drawings of ancient remains. Published in Venice in 1556 and again in 1567, Palladio applied ideas about the “ancient house” to the design of the atrium, cloister, sacristy, and oval stair of the Augustinian Lateran Canons’ monastery at Santa Maria della Carità, begun in 1561. The porticoed cloister elevation demonstrates classical superimposition of the orders. Napoleon turned the complex into an art school, today the site of the Accademia Galleries.",
       "researcherName":"Tracy E. Cooper",
       "researcherTitle":"",
       "researcherAffiliation":"Temple University"
@@ -493,5 +493,16 @@
       "researcherName":"Liz Horodowich",
       "researcherTitle":"",
       "researcherAffiliation":""
+   },
+   {
+      "id":54,
+      "coreId":null,
+      "minorId":15,
+      "clusterId":10,
+      "title":"",
+      "text":"The center of musical innovation was the ducal chapel of San Marco, where resident composers, such as Adrian Willaert, Andrea and Giovanni Gabrieli, and Claudio Monteverdi, produced increasingly ambitious polyphonic works in split-choir (‘coro spezzato’) formation for performance at the great religious ceremonies.  Organs, and later brass instruments, often accompanied the chapel choir.  At the same time, plain chant (sung in unison with the rhythm following the words) continued to play its part in the liturgy.  The choir accompanied the Doge and his entourage on the annual ducal andate (ceremonial visits) to a selection of other churches in the city.",
+      "researcherName":"Deborah Howard",
+      "researcherTitle":"",
+      "researcherAffiliation":"Cambridge University"
    }
 ]

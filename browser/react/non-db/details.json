@@ -57,7 +57,7 @@
 		"id":10,
 		"nameH": "Valgrisi's San Marco Bookshop",
 		"srcThumb": "./img/Il%20Terentio%20Latino_thumbnail.jpg",
-		"clusterId": 5
+		"clusterId": 10
 	},
 	{
 		"id":11,
@@ -82,4 +82,10 @@
 		"nameH": "Speyer's Final Publication",
 		"srcThumb": "./img/Augustine_thumbnail.jpg",
 		"clusterId": 2
+	},
+	{
+		"id":15,
+		"nameH": "Music in Venetian churches",
+		"srcThumb": "./img/Gardano_thumbnail.jpg",
+		"clusterId": 10
 	}]

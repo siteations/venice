@@ -1217,17 +1217,13 @@ var siteReducer = exports.siteReducer = function siteReducer() {
 			break;
 
 		case ADD_CURR_LAYERS:
-			var add = action.layer.split(', ');
-			var array = newState.currLayers.concat(add);
+			var array = newState.currLayers.concat(action.layer);
 			newState.currLayers = array;
 			break;
 
 		case RESET_CURR_LAYERS:
 			var arr = newState.currLayers;
-			var layers = action.layer.split(', ');
-			layers.forEach(function (layer) {
-				arr.splice(arr.indexOf(layer), 1);
-			});
+			arr.splice(arr.indexOf(action.layer), 1);
 			newState.currLayers = arr;
 			break;
 
@@ -1275,7 +1271,7 @@ var loadFilteredSites = exports.loadFilteredSites = function loadFilteredSites(l
 			//front-end filter vs. back
 
 			var selectSites = sites.filter(function (circle) {
-				return layerArr.indexOf(circle.type) > -1;
+				return layerArr.indexOf(circle.type) > -1 || layerArr.indexOf(circle.type2) > -1;
 			});
 
 			dispatch(getFilteredSites(selectSites));
@@ -1350,6 +1346,9 @@ var loadLayers = exports.loadLayers = function loadLayers() {
 			sites.forEach(function (circle) {
 				if (cirLayers.indexOf(circle.type) === -1) {
 					cirLayers.push(circle.type);
+				};
+				if (cirLayers.indexOf(circle.type2) === -1) {
+					cirLayers.push(circle.type2);
 				};
 			});
 			dispatch(getAllLayers(cirLayers));
@@ -5653,7 +5652,7 @@ var sitesFiltered = exports.sitesFiltered = function sitesFiltered(off, sites, c
     newCir.r = circle.r * percent;
     return newCir;
   }).filter(function (circle) {
-    return currLayers.indexOf(circle.type) > -1;
+    return currLayers.indexOf(circle.type) > -1 || currLayers.indexOf(circle.type2) > -1;
   });
 
   return cirNew;
@@ -13141,7 +13140,7 @@ var panelsOther = exports.panelsOther = {
 			}]
 		}
 	},
-	credits: {
+	contributors: {
 		title: ['The Religious Geography of Venice', 'Research Credits & Contributions'],
 		obj: {
 			type: 'credits',
@@ -19385,7 +19384,7 @@ var mapButtons0 = [{ cn: "nIcon flex center middle", v: "intro", src: '/img/intr
 // {cn:"nIcon flex center middle", v:"panel large", src:"/img/arrow2-01.svg" },
 var mapButtons1 = [{ cn: "nIcon flex center middle", v: "all layers", src: "/img/all-layers-01.svg" }, { cn: "nIcon flex center middle", v: "churches", src: "/img/bascilica-01.svg" }, { cn: "nIcon flex center middle", v: "convents & monasteries", src: "/img/convent-01.svg" }, { cn: "nIcon flex center middle", v: "non-catholic communities", src: "/img/non-catholic-01.svg" }, { cn: "nIcon flex center middle", v: "processions", src: "/img/ritual-01.svg" }, { cn: "nIcon flex center middle", v: "printing", src: "/img/ephemera-01.svg" }];
 
-var mapButtons2 = [{ cn: "nIcon flex center middle", v: "bibliography", src: "/img/menu-01.svg" }, { cn: "nIcon flex center middle", v: "credits", src: "/img/credits-01.svg" }];
+var mapButtons2 = [{ cn: "nIcon flex center middle", v: "bibliography", src: "/img/menu-01.svg" }, { cn: "nIcon flex center middle", v: "contributors", src: "/img/credits-01.svg" }];
 
 var toolstyles = {
 	wrapper: {
@@ -19471,19 +19470,19 @@ var MapBar = function (_Component) {
 				this.props.panelLarge();
 			} else if (val === 'panel large' && this.props.options.panelLarge) {
 				this.props.panelNone();
-			} else if ((val === 'intro' || val === 'bibliography' || val === 'credits') && this.props.options.panelNone) {
+			} else if ((val === 'intro' || val === 'bibliography' || val === 'contributors') && this.props.options.panelNone) {
 				this.props.panelSmall();
 				this.props.setSpecPanel(val);
 				this.props.updateSite(0);
 				this.props.setTitles(_panelsOther.panelsOther[val].title);
 				this.props.updateNarrative(_panelsOther.panelsOther[val].obj);
-			} else if ((val === 'intro' || val === 'bibliography' || val === 'credits') && this.props.options.panelLarge) {
+			} else if ((val === 'intro' || val === 'bibliography' || val === 'contributors') && this.props.options.panelLarge) {
 				this.props.panelSmall();
 				this.props.setSpecPanel(val);
 				this.props.updateSite(0);
 				this.props.setTitles(_panelsOther.panelsOther[val].title);
 				this.props.updateNarrative(_panelsOther.panelsOther[val].obj);
-			} else if ((val === 'intro' || val === 'bibliography' || val === 'credits') && this.props.options.panelSmall) {
+			} else if ((val === 'intro' || val === 'bibliography' || val === 'contributors') && this.props.options.panelSmall) {
 				this.props.setSpecPanel(val);
 				this.props.updateSite(0);
 				this.props.setTitles(_panelsOther.panelsOther[val].title);
@@ -19567,7 +19566,7 @@ var MapBar = function (_Component) {
 					} else if (val === 'all layers' && this.props.sites.currLayers.length > 0) {
 						this.props.loadSelectAll('clear');
 						this.props.setSpecPanel('');
-					} else if (val !== 'panel' && val !== 'panel large' && val !== 'intro' && val !== 'prints' && val !== 'biblio' && val !== 'maps' && val !== 'credits') {
+					} else if (val !== 'panel' && val !== 'panel large' && val !== 'intro' && val !== 'prints' && val !== 'biblio' && val !== 'maps' && val !== 'contributors') {
 						//individual layers
 						if (this.props.sites.currLayers.indexOf(val) < 0) {
 							//not in add
@@ -19781,7 +19780,7 @@ var _rawDetails = __webpack_require__(186);
 
 var _TileVariants = __webpack_require__(184);
 
-var _AnnoVariants = __webpack_require__(317);
+var _AnnoVariants = __webpack_require__(316);
 
 var _AnnoVariants2 = _interopRequireDefault(_AnnoVariants);
 
@@ -20590,7 +20589,7 @@ var _panelActions = __webpack_require__(26);
 
 var _cirTest = __webpack_require__(89);
 
-var _Intro = __webpack_require__(713);
+var _Intro = __webpack_require__(329);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21124,13 +21123,13 @@ var printSites = [
 	src: './img/L%27arte%20oratoria_thumbnail.jpg'
 }, {
 	id: 12,
-	core: 46, //merc
+	core: 45, //san marco
 	minor: 10,
-	"x": 6655,
-	"y": 4476,
+	"x": 5655,
+	"y": 5476,
 	r: 0,
 	scale: 4,
-	tile: 212,
+	tile: 158,
 	// mapName: 'forlani',
 	name: "San Marco: Valgrisi's Bookshop",
 	// type: 'map',
@@ -38387,11 +38386,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(16);
 
-var _FrontFrame = __webpack_require__(328);
+var _FrontFrame = __webpack_require__(327);
 
 var _FrontFrame2 = _interopRequireDefault(_FrontFrame);
 
-var _FrameEdit = __webpack_require__(327);
+var _FrameEdit = __webpack_require__(326);
 
 var _FrameEdit2 = _interopRequireDefault(_FrameEdit);
 
@@ -39442,8 +39441,7 @@ exports.default = (0, _redux.combineReducers)({
 });
 
 /***/ }),
-/* 316 */,
-/* 317 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39535,7 +39533,7 @@ var DetailOver = (0, _reactRedux.connect)(mapStateToProps, null)(Detail);
 exports.default = DetailOver;
 
 /***/ }),
-/* 318 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40023,7 +40021,7 @@ var FormBiblio = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(F
 exports.default = FormBiblio;
 
 /***/ }),
-/* 319 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40611,7 +40609,7 @@ var FormDelete = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(F
 exports.default = FormDelete;
 
 /***/ }),
-/* 320 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41044,7 +41042,7 @@ var FormDetail = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(F
 exports.default = FormDetail;
 
 /***/ }),
-/* 321 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41573,7 +41571,7 @@ var FormEdit = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(For
 exports.default = FormEdit;
 
 /***/ }),
-/* 322 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41996,7 +41994,7 @@ var FormImage = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Fo
 exports.default = FormImage;
 
 /***/ }),
-/* 323 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42130,7 +42128,7 @@ var mapDispatch = function mapDispatch(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Login);
 
 /***/ }),
-/* 324 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42619,7 +42617,7 @@ var FormNarrative = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps
 exports.default = FormNarrative;
 
 /***/ }),
-/* 325 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43003,7 +43001,7 @@ var FormSite = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(For
 exports.default = FormSite;
 
 /***/ }),
-/* 326 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43649,7 +43647,7 @@ var FormTour = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(For
 exports.default = FormTour;
 
 /***/ }),
-/* 327 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43819,7 +43817,7 @@ var FrontEdit = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Fr
 exports.default = FrontEdit;
 
 /***/ }),
-/* 328 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43871,7 +43869,7 @@ var _Nav = __webpack_require__(332);
 
 var _Nav2 = _interopRequireDefault(_Nav);
 
-var _Header3 = __webpack_require__(329);
+var _Header3 = __webpack_require__(328);
 
 var _Header4 = _interopRequireDefault(_Header3);
 
@@ -44044,7 +44042,7 @@ var FrontFrame = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(F
 exports.default = FrontFrame;
 
 /***/ }),
-/* 329 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44137,7 +44135,7 @@ var Header2 = function (_Component) {
       e.preventDefault();
       var val = e.target.attributes.value.value;
 
-      if (val === 'intro' || val === 'bibliography' || val === 'credits') {
+      if (val === 'intro' || val === 'bibliography' || val === 'contributors') {
 
         if (!this.props.options.panelSmall) {
           this.props.panelSmall();
@@ -44157,6 +44155,7 @@ var Header2 = function (_Component) {
         this.props.setColor(false);
         this.props.setAnno(true);
         this.props.setDetail(true);
+        this.props.loadSelectAll('add');
 
         this.props.setSpecPanel('');
         //12 is san marco
@@ -44276,8 +44275,8 @@ var Header2 = function (_Component) {
             ),
             _react2.default.createElement(
               'span',
-              { className: 'texta m10 bNav', value: 'credits', onTouchTap: this.changePanel },
-              'Research Credits'
+              { className: 'texta m10 bNav', value: 'contributors', onTouchTap: this.changePanel },
+              'Contributors'
             )
           )
         )
@@ -44358,6 +44357,318 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 var HeaderOpt = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Header2);
 
 exports.default = HeaderOpt;
+
+/***/ }),
+/* 329 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.About = exports.Credits = exports.Biblio = exports.Intro = undefined;
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(11);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Intro = exports.Intro = function Intro(props) {
+  var obj = props.obj;
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    obj.text && obj.text.map(function (item, i) {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h4',
+          { className: 'BornholmSandvig' },
+          obj.subtitles[i]
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          item && item.split('/').map(function (item, i) {
+            if (i % 2 === 0) {
+              return _react2.default.createElement(
+                'span',
+                null,
+                item
+              );
+            } else {
+              return _react2.default.createElement(
+                'span',
+                null,
+                _react2.default.createElement(
+                  'em',
+                  null,
+                  item
+                )
+              );
+            }
+          })
+        ),
+        _react2.default.createElement('br', null)
+      );
+    })
+  );
+};
+
+var Biblio = exports.Biblio = function Biblio(props) {
+  var obj = props.obj;
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h4',
+      { className: 'BornholmSandvig' },
+      obj.subtitles[0]
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      obj.text[0]
+    ),
+    _react2.default.createElement(
+      'ul',
+      null,
+      obj.entriesSecondary.map(function (item) {
+        return _react2.default.createElement(
+          'li',
+          null,
+          item.bibliography && item.bibliography.split('/').map(function (text, i) {
+            if (i % 2 === 0) {
+              return _react2.default.createElement(
+                'span',
+                null,
+                text
+              );
+            } else {
+              return _react2.default.createElement(
+                'span',
+                null,
+                _react2.default.createElement(
+                  'em',
+                  null,
+                  text
+                )
+              );
+            }
+          }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null)
+        );
+      })
+    ),
+    _react2.default.createElement('br', null),
+    _react2.default.createElement(
+      'h4',
+      { className: 'BornholmSandvig' },
+      obj.subtitles[1]
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      obj.text[1]
+    ),
+    _react2.default.createElement(
+      'ul',
+      null,
+      obj.entriesPrimary.map(function (item) {
+        return _react2.default.createElement(
+          'li',
+          null,
+          item.bibliography && item.bibliography.split('/').map(function (text, i) {
+            if (i % 2 === 0) {
+              return _react2.default.createElement(
+                'span',
+                null,
+                text
+              );
+            } else {
+              return _react2.default.createElement(
+                'span',
+                null,
+                _react2.default.createElement(
+                  'em',
+                  null,
+                  text
+                )
+              );
+            }
+          }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'a',
+            { href: item.link, target: '_blank', style: { fontWeight: 'normal' } },
+            'Newberry Catalog'
+          ),
+          ' .',
+          _react2.default.createElement(
+            'a',
+            { href: item.onlineArchive, target: '_blank', style: { fontWeight: 'normal' } },
+            ' CARLI digital collections'
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null)
+        );
+      })
+    )
+  );
+};
+
+var Credits = exports.Credits = function Credits(props) {
+  var obj = props.obj;
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h4',
+      { className: 'BornholmSandvig' },
+      obj.subtitles
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      obj.text && obj.text.split('/').map(function (item, i) {
+        if (i % 2 === 0) {
+          return _react2.default.createElement(
+            'span',
+            null,
+            item
+          );
+        } else {
+          return _react2.default.createElement(
+            'span',
+            null,
+            _react2.default.createElement(
+              'em',
+              null,
+              item
+            )
+          );
+        }
+      })
+    ),
+    _react2.default.createElement(
+      'ul',
+      null,
+      obj.researchers && obj.researchers.map(function (researcher) {
+        var item = researcher.split('(');
+        return _react2.default.createElement(
+          'li',
+          null,
+          _react2.default.createElement(
+            'span',
+            { className: 'BornholmSandvig' },
+            item[0]
+          ),
+          ' ',
+          _react2.default.createElement(
+            'em',
+            null,
+            '(',
+            item[1]
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null)
+        );
+      })
+    )
+  );
+};
+
+var About = exports.About = function About(props) {
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h4',
+      { className: 'BornholmSandvig' },
+      'About This Site'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      _react2.default.createElement(
+        'em',
+        null,
+        'Merlo\'s Map: The Religious Geography of Venice'
+      ),
+      ' is part of ',
+      _react2.default.createElement(
+        'em',
+        null,
+        'Religious Change, 1450-1700'
+      ),
+      ', the Newberry Library\'s year-long, multidisciplinary project exploring how religion and print challenged authority, upended society, and made the medieval world modern.'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'The site was built by ',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://www.siteations.com', target: '_blank', style: { fontWeight: 'normal' } },
+        'Siteations Studio'
+      ),
+      '.'
+    ),
+    _react2.default.createElement(
+      'h4',
+      { className: 'BornholmSandvig' },
+      'About Religious Change and Print, 1450-1700'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'Religion and print were hinges on which the medieval world opened into the modern. Before and after Martin Luther challenged the Roman Church 500 years ago, quests for spiritual renewal or ecclesiastical reform shook traditional sources of authority across Europe and the Americas. Competing ideas about religious beliefs and practices spread far and wide-especially by the printed word-at a pace power structures had difficulty controlling. These ideas awakened new vistas on life, while provoking hope and fear, anxiety and certainty, protest and violence. The winds of religious change profoundly affected people in all walks of life. They also transformed print in ways that continue to influence how we form and share our beliefs.'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'During 2017-18, the Newberry is exploring religious change through a gallery exhibition, ',
+      _react2.default.createElement(
+        'em',
+        null,
+        'Religious Change and Print, 1450-1700'
+      ),
+      ' (on view September 14-December 30, 2017), an array of digital resources, and a series of programs for scholars, students, and the general public.'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      _react2.default.createElement(
+        'em',
+        null,
+        'Religious Change, 1450-1700'
+      ),
+      ' is generously supported by a grant from The Andrew W. Mellon Foundation.'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'For more information, please visit our project page: ',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://www.newberry.org/religious-change', target: '_blank' },
+        'Religious Change, 1450-1700'
+      ),
+      '.'
+    )
+  );
+};
 
 /***/ }),
 /* 330 */
@@ -45464,39 +45775,39 @@ var _panelActions = __webpack_require__(26);
 
 var _cirTest = __webpack_require__(89);
 
-var _FormNarrative = __webpack_require__(324);
+var _FormNarrative = __webpack_require__(323);
 
 var _FormNarrative2 = _interopRequireDefault(_FormNarrative);
 
-var _FormDetail = __webpack_require__(320);
+var _FormDetail = __webpack_require__(319);
 
 var _FormDetail2 = _interopRequireDefault(_FormDetail);
 
-var _FormImage = __webpack_require__(322);
+var _FormImage = __webpack_require__(321);
 
 var _FormImage2 = _interopRequireDefault(_FormImage);
 
-var _FormSite = __webpack_require__(325);
+var _FormSite = __webpack_require__(324);
 
 var _FormSite2 = _interopRequireDefault(_FormSite);
 
-var _FormTour = __webpack_require__(326);
+var _FormTour = __webpack_require__(325);
 
 var _FormTour2 = _interopRequireDefault(_FormTour);
 
-var _FormLogin = __webpack_require__(323);
+var _FormLogin = __webpack_require__(322);
 
 var _FormLogin2 = _interopRequireDefault(_FormLogin);
 
-var _FormBiblio = __webpack_require__(318);
+var _FormBiblio = __webpack_require__(317);
 
 var _FormBiblio2 = _interopRequireDefault(_FormBiblio);
 
-var _FormEdit = __webpack_require__(321);
+var _FormEdit = __webpack_require__(320);
 
 var _FormEdit2 = _interopRequireDefault(_FormEdit);
 
-var _FormDelete = __webpack_require__(319);
+var _FormDelete = __webpack_require__(318);
 
 var _FormDelete2 = _interopRequireDefault(_FormDelete);
 
@@ -90149,318 +90460,6 @@ module.exports = function() {
 	throw new Error("define cannot be used indirect");
 };
 
-
-/***/ }),
-/* 713 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.About = exports.Credits = exports.Biblio = exports.Intro = undefined;
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(11);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Intro = exports.Intro = function Intro(props) {
-  var obj = props.obj;
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    obj.text && obj.text.map(function (item, i) {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'h4',
-          { className: 'BornholmSandvig' },
-          obj.subtitles[i]
-        ),
-        _react2.default.createElement(
-          'p',
-          null,
-          item && item.split('/').map(function (item, i) {
-            if (i % 2 === 0) {
-              return _react2.default.createElement(
-                'span',
-                null,
-                item
-              );
-            } else {
-              return _react2.default.createElement(
-                'span',
-                null,
-                _react2.default.createElement(
-                  'em',
-                  null,
-                  item
-                )
-              );
-            }
-          })
-        ),
-        _react2.default.createElement('br', null)
-      );
-    })
-  );
-};
-
-var Biblio = exports.Biblio = function Biblio(props) {
-  var obj = props.obj;
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h4',
-      { className: 'BornholmSandvig' },
-      obj.subtitles[0]
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      obj.text[0]
-    ),
-    _react2.default.createElement(
-      'ul',
-      null,
-      obj.entriesSecondary.map(function (item) {
-        return _react2.default.createElement(
-          'li',
-          null,
-          item.bibliography && item.bibliography.split('/').map(function (text, i) {
-            if (i % 2 === 0) {
-              return _react2.default.createElement(
-                'span',
-                null,
-                text
-              );
-            } else {
-              return _react2.default.createElement(
-                'span',
-                null,
-                _react2.default.createElement(
-                  'em',
-                  null,
-                  text
-                )
-              );
-            }
-          }),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('br', null)
-        );
-      })
-    ),
-    _react2.default.createElement('br', null),
-    _react2.default.createElement(
-      'h4',
-      { className: 'BornholmSandvig' },
-      obj.subtitles[1]
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      obj.text[1]
-    ),
-    _react2.default.createElement(
-      'ul',
-      null,
-      obj.entriesPrimary.map(function (item) {
-        return _react2.default.createElement(
-          'li',
-          null,
-          item.bibliography && item.bibliography.split('/').map(function (text, i) {
-            if (i % 2 === 0) {
-              return _react2.default.createElement(
-                'span',
-                null,
-                text
-              );
-            } else {
-              return _react2.default.createElement(
-                'span',
-                null,
-                _react2.default.createElement(
-                  'em',
-                  null,
-                  text
-                )
-              );
-            }
-          }),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'a',
-            { href: item.link, target: '_blank', style: { fontWeight: 'normal' } },
-            'Newberry Catalog'
-          ),
-          ' .',
-          _react2.default.createElement(
-            'a',
-            { href: item.onlineArchive, target: '_blank', style: { fontWeight: 'normal' } },
-            ' CARLI digital collections'
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('br', null)
-        );
-      })
-    )
-  );
-};
-
-var Credits = exports.Credits = function Credits(props) {
-  var obj = props.obj;
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h4',
-      { className: 'BornholmSandvig' },
-      obj.subtitles
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      obj.text && obj.text.split('/').map(function (item, i) {
-        if (i % 2 === 0) {
-          return _react2.default.createElement(
-            'span',
-            null,
-            item
-          );
-        } else {
-          return _react2.default.createElement(
-            'span',
-            null,
-            _react2.default.createElement(
-              'em',
-              null,
-              item
-            )
-          );
-        }
-      })
-    ),
-    _react2.default.createElement(
-      'ul',
-      null,
-      obj.researchers && obj.researchers.map(function (researcher) {
-        var item = researcher.split('(');
-        return _react2.default.createElement(
-          'li',
-          null,
-          _react2.default.createElement(
-            'span',
-            { className: 'BornholmSandvig' },
-            item[0]
-          ),
-          ' ',
-          _react2.default.createElement(
-            'em',
-            null,
-            '(',
-            item[1]
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('br', null)
-        );
-      })
-    )
-  );
-};
-
-var About = exports.About = function About(props) {
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h4',
-      { className: 'BornholmSandvig' },
-      'About This Site'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      _react2.default.createElement(
-        'em',
-        null,
-        'Merlo\'s Map: The Religious Geography of Venice'
-      ),
-      ' is part of ',
-      _react2.default.createElement(
-        'em',
-        null,
-        'Religious Change, 1450-1700'
-      ),
-      ', the Newberry Library\'s year-long, multidisciplinary project exploring how religion and print challenged authority, upended society, and made the medieval world modern.'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'The site was built by ',
-      _react2.default.createElement(
-        'a',
-        { href: 'https://www.siteations.com', target: '_blank', style: { fontWeight: 'normal' } },
-        'Siteations Studio'
-      ),
-      '.'
-    ),
-    _react2.default.createElement(
-      'h4',
-      { className: 'BornholmSandvig' },
-      'About Religious Change and Print, 1450-1700'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'Religion and print were hinges on which the medieval world opened into the modern. Before and after Martin Luther challenged the Roman Church 500 years ago, quests for spiritual renewal or ecclesiastical reform shook traditional sources of authority across Europe and the Americas. Competing ideas about religious beliefs and practices spread far and wide-especially by the printed word-at a pace power structures had difficulty controlling. These ideas awakened new vistas on life, while provoking hope and fear, anxiety and certainty, protest and violence. The winds of religious change profoundly affected people in all walks of life. They also transformed print in ways that continue to influence how we form and share our beliefs.'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'During 2017-18, the Newberry is exploring religious change through a gallery exhibition, ',
-      _react2.default.createElement(
-        'em',
-        null,
-        'Religious Change and Print, 1450-1700'
-      ),
-      ' (on view September 14-December 30, 2017), an array of digital resources, and a series of programs for scholars, students, and the general public.'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      _react2.default.createElement(
-        'em',
-        null,
-        'Religious Change, 1450-1700'
-      ),
-      ' is generously supported by a grant from The Andrew W. Mellon Foundation.'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'For more information, please visit our project page: ',
-      _react2.default.createElement(
-        'a',
-        { href: 'https://www.newberry.org/religious-change', target: '_blank' },
-        'Religious Change, 1450-1700'
-      ),
-      '.'
-    )
-  );
-};
 
 /***/ })
 /******/ ]);
