@@ -8708,7 +8708,7 @@ var Image = function (_Component) {
           this.props.image[this.state.active].caption
         ),
         _react2.default.createElement(
-          'p',
+          'h5',
           null,
           _react2.default.createElement(
             'span',
@@ -8717,13 +8717,13 @@ var Image = function (_Component) {
           ),
           _react2.default.createElement(
             'a',
-            { href: this.props.image[this.state.active].link, target: '_blank', style: { fontWeight: 'normal' } },
+            { href: this.props.image[this.state.active].link, className: 'bNav', target: '_blank', style: { fontWeight: 'normal' } },
             'Newberry Catalog'
           ),
           ' . ',
           _react2.default.createElement(
             'a',
-            { href: this.props.image[this.state.active].onlineArchive, target: '_blank', style: { fontWeight: 'normal' } },
+            { href: this.props.image[this.state.active].onlineArchive, className: 'bNav', target: '_blank', style: { fontWeight: 'normal' } },
             'CARLI digital collections'
           ),
           _react2.default.createElement('br', null),
@@ -20541,32 +20541,36 @@ var PanelBase = function (_Component) {
         images.length > 0 && _react2.default.createElement(_ImageSlider2.default, { image: images, onAnimationEnd: function onAnimationEnd(e) {
             return _this2.refSize(e);
           }, width: this.state.size[0], height: (this.props.map.windowSize[1] + 6) * 0.65 }),
-        obj.text && _typeof(obj.text) !== 'object' && obj.type !== 'credits' && obj.type !== 'biblio' && obj.type !== 'intro' && obj.text.split('/').map(function (item, i) {
-          if (i % 2 === 0) {
-            return _react2.default.createElement(
-              'span',
-              null,
-              item
-            );
-          } else {
-            return _react2.default.createElement(
-              'span',
-              null,
-              _react2.default.createElement(
-                'em',
+        _react2.default.createElement(
+          'p',
+          null,
+          obj.text && _typeof(obj.text) !== 'object' && obj.type !== 'credits' && obj.type !== 'biblio' && obj.type !== 'intro' && obj.text.split('/').map(function (item, i) {
+            if (i % 2 === 0) {
+              return _react2.default.createElement(
+                'span',
                 null,
                 item
-              )
+              );
+            } else {
+              return _react2.default.createElement(
+                'span',
+                null,
+                _react2.default.createElement(
+                  'em',
+                  null,
+                  item
+                )
+              );
+            }
+          }),
+          obj.text && _typeof(obj.text) === 'object' && obj.type !== 'credits' && obj.type !== 'biblio' && obj.type !== 'intro' && obj.text.map(function (lines) {
+            return _react2.default.createElement(
+              'p',
+              null,
+              lines
             );
-          }
-        }),
-        obj.text && _typeof(obj.text) === 'object' && obj.type !== 'credits' && obj.type !== 'biblio' && obj.type !== 'intro' && obj.text.map(function (lines) {
-          return _react2.default.createElement(
-            'p',
-            null,
-            lines
-          );
-        }),
+          })
+        ),
         _react2.default.createElement('br', null),
         _react2.default.createElement('br', null),
         obj.researcherName && _react2.default.createElement(
@@ -44123,11 +44127,6 @@ var Header2 = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'row flex around', style: { marginBottom: '5px' } },
-            _react2.default.createElement(
-              'span',
-              { className: 'texta m10 bNav', value: 'sites', onTouchTap: this.changePanel },
-              'Sited Practices'
-            ),
             _react2.default.createElement(
               'span',
               { className: 'texta m10 bNav', value: 'bibliography', onTouchTap: this.changePanel },

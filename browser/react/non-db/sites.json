@@ -218,8 +218,8 @@
     "r": 450,
     "name": "Basilica of patron saint of Venice. Basilica di San Marco (connected to doge's palace)",
     "type": "churches",
-    "cluster": false,
-    "clusterId": null
+    "cluster": true,
+    "clusterId": 11
 },
 {
     "id": 18,
@@ -276,7 +276,7 @@
     "id": 44,
     "cx": 7066,
     "cy": 3588,
-    "r": 104,
+    "r": 212,
     "name": "The Sessa Family.Campo San Lio",
     "type": "printing",
     "cluster": false,

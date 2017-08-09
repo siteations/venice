@@ -136,7 +136,6 @@ class Header2 extends Component {
                             <span className="texta m10 bNav" value="maps" onTouchTap={this.changePanel}>Cartographic Context</span>
                           </div>
                           <div className="row flex around" style={{marginBottom:'5px'}}>
-                            <span className="texta m10 bNav" value="sites" onTouchTap={this.changePanel}>Sited Practices</span>
                             <span className="texta m10 bNav" value="bibliography" onTouchTap={this.changePanel}>Bibliography</span>
                             <span className="texta m10 bNav" value="contributors" onTouchTap={this.changePanel}>Contributors</span>
                           </div>
