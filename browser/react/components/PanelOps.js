@@ -75,7 +75,7 @@ class PanelB extends Component {
               {this.props.map.mapSite.id < 3 &&
                 <h3 className="BornholmSandvig" >Printing Books in Venice</h3>
               }
-                {this.props.map.mapSite.id < 3 &&
+              {this.props.map.mapSite.id < 3 &&
                   this.props.map.mapSite.narrative.map((narr,i)=>{
                       return (
                    <div className="row">
@@ -91,6 +91,15 @@ class PanelB extends Component {
                     )
                   })
                 }
+            {this.props.map.mapSite.id < 3 &&
+            <div className="row">
+              <div className="col-md-9 col-md-offset-3">
+                <p><span className="Trenda-Bold">Narrative Credits: </span> Jill E. Gage, Newberry Library.
+                </p>
+              </div>
+            </div>
+
+          }
               </div>
             </div>
           }

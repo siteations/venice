@@ -11,6 +11,9 @@ const images = db.define('Images', {
     narrativeId: {type: Sequelize.INTEGER, notNull: true },
     src: {type: Sequelize.TEXT, notNull: true },
     caption: {type: Sequelize.STRING, notNull: true },
+    capShort: {type: Sequelize.STRING, notNull: true },
+    bibliography: {type: Sequelize.STRING, notNull: true },
+    link: {type: Sequelize.STRING, notNull: true },
     // biblioSeries: {type: Sequelize.INTEGER, notNull: true },
 });
 

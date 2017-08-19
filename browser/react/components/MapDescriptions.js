@@ -32,7 +32,7 @@ class PanelMap extends Component {
 
     let obj = this.props.map.mapSite;
     var height = this.props.map.windowSize[1]*.21;
-    if (this.props.size==='full') { height = this.props.map.windowSize[1]*.805};
+    if (this.props.size==='full') { height = this.props.map.windowSize[1]*.905};
 
   	return (
   	     <div className="pad10" style={{overflowY:'scroll', overflowX:'hidden', height: `${height}px`}}>
@@ -44,10 +44,11 @@ class PanelMap extends Component {
             </div>
             <div className="col-md-9">
               <h5 className="small">
-                <span className="Trenda-Bold">{obj.title}</span>,
-                <span className=""> {obj.publisher} {obj.physical}
-                </span>
+                <span className="Trenda-Bold">Image: </span>
+                <span> {obj.author}. <em>{obj.title}</em>. </span>
+                <span className=""> {obj.date}. {obj.publisher}. </span>
               </h5>
+              <h5 className="small"><span className="Trenda-Bold">View Online: </span><a href={obj.cat} target="_blank" style={{fontWeight: 'normal'}}>Newberry Catalog</a></h5>
             </div>
           </div>
           {obj.id>2 &&
@@ -56,7 +57,16 @@ class PanelMap extends Component {
                 <div className="bIcon text-center inlineBlock" ><img src={obj.src} style={{borderRadius: '5px'}}/></div>
               </div>
               <div className="col-md-9">
-    				    <p>{obj.narrative}</p>
+    				    <p>{obj.narrative &&
+                    obj.narrative.split('/').map((text,i) =>{
+                      if (i%2===0){
+                        return <span>{text}</span>
+                      } else {
+                        return <span><em>{text}</em></span>
+                      }
+
+                    })
+                }</p>
     				    <br/>
               </div>
             </div>
@@ -76,6 +86,27 @@ class PanelMap extends Component {
               )
             })
           }
+          {/*obj.id<3 &&
+            <div className="row">
+              <div className="col-md-9 col-md-offset-3">
+              <h5>
+                <span className="Trenda-Bold">Image: </span>
+                <span> {obj.author}. <em>{obj.title}</em>. </span>
+                <span className=""> {obj.date}. {obj.publisher}. </span>
+              </h5>
+              <h5><span className="Trenda-Bold">View Online: </span><a href={obj.src} target="_blank" style={{fontWeight: 'normal'}}>Newberry Catalog Link</a></h5>
+              </div>
+            </div>
+          */}
+
+
+            <div className="row">
+              <div className="col-md-9 col-md-offset-3">
+                <p><span className="Trenda-Bold">Narrative Credits: </span> James R. Akerman, Newberry Library.
+                </p>
+              </div>
+            </div>
+
 				</div>
 
   	)

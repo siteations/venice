@@ -67,8 +67,8 @@ const initPanel = {
 	panelSize: [0,0], //width, height
 	panelRatio: 1, // width/height
 
-	title: 'Religious Life in Venice',
-	subtitle: 'An Introduction',
+	title: "Merlo's Map",
+	subtitle: 'The Religious Geography of Venice',
 
 	imageWidth: 0,
 	narrObj: panelsOther['intro']['obj'],

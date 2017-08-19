@@ -27,6 +27,7 @@ export const Intro = (props)=>{
                 )
             })
             }
+          <p><span className="Trenda-Bold"></span> {obj.credits}.</p>
           </div>
 	        )
 };
@@ -52,6 +53,9 @@ export const Biblio = (props)=>{
                               return <span><em>{text}</em></span>
                             }
                           })
+                        }
+                        {item.link &&
+                          <a href={item.link} target="_blank" style={{fontWeight: 'normal'}}> {item.link}</a>
                         }<br/><br/>
                        </li>
                        )
@@ -110,9 +114,9 @@ export const Credits = (props)=>{
             <ul>
             {obj.researchers &&
                 obj.researchers.map(researcher=>{
-                    var item=researcher.split('(');
+                    var item=researcher.split(',');
                     return (
-                        <li><span className="BornholmSandvig">{item[0]}</span> <em>({item[1]}</em><br/><br/></li>
+                        <li><span className="BornholmSandvig">{item[0]}</span>, {item[1]}<br/><br/></li>
                             )
                 })
 
@@ -129,23 +133,8 @@ export const About = (props)=>{
 
           <div>
           <h4 className="BornholmSandvig">About This Site</h4>
-            <p><em>Merlo's Map: The Religious Geography of Venice</em> is part of <em>Religious Change, 1450-1700</em>, the Newberry Library's year-long, multidisciplinary project exploring how religion and print challenged authority, upended society, and made the medieval world modern.
-            </p>
-            <p>
-            The site was built by <a href="https://www.siteations.com" target="_blank" style={{fontWeight: 'normal'}} >Siteations Studio</a>.
-            </p>
-            <h4 className="BornholmSandvig">About Religious Change and Print, 1450-1700</h4>
-            <p>
-            Religion and print were hinges on which the medieval world opened into the modern. Before and after Martin Luther challenged the Roman Church 500 years ago, quests for spiritual renewal or ecclesiastical reform shook traditional sources of authority across Europe and the Americas. Competing ideas about religious beliefs and practices spread far and wide-especially by the printed word-at a pace power structures had difficulty controlling. These ideas awakened new vistas on life, while provoking hope and fear, anxiety and certainty, protest and violence. The winds of religious change profoundly affected people in all walks of life. They also transformed print in ways that continue to influence how we form and share our beliefs.
-            </p>
-            <p>
-            During 2017-18, the Newberry is exploring religious change through a gallery exhibition, <em>Religious Change and Print, 1450-1700</em> (on view September 14-December 30, 2017), an array of digital resources, and a series of programs for scholars, students, and the general public.</p>
-            <p>
-            <em>Religious Change, 1450-1700</em> is generously supported by a grant from The Andrew W. Mellon Foundation.
-            </p>
-            <p>
-            For more information, please visit our project page: <a href="https://www.newberry.org/religious-change" target="_blank" >Religious Change, 1450-1700</a>.
-            </p>
+            <p>This map was created to complement the display of Merlo’s map in the exhibition <em>Religious Change in Print, 1450-1700</em>.</p>
+            <p>Designed by <a href="https://www.siteations.com" target="_blank" style={{fontWeight: 'normal'}}>Siteations Studio</a>, the site was conceived by Diane Dillon and Christopher Fletcher (Newberry Library). Edward Muir (Northwestern University) provided invaluable guidance on the project. Lia Markey and Andrew Epps (Newberry Library) and Eufemia Baldassarre (University of Chicago) compiled and edited the content for the site from the scholars listed above.</p>
           </div>
             )
 };

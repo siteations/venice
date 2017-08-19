@@ -49,511 +49,520 @@
     "narrativeId": 18,
     "src": "./img/GermansSignore%20titolato%20thedesco_case_w_93_94_pg_298v_o2.png",
     "caption": "Germans by Vecellio",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Germans",
+    "bibliography":"Cesare Vecellio. /De gli habiti antichi, et moderni di diverse parti del mondo libri due/. 1590. Case W 93 .94",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=760688"
 },
 {
     "id": 7,
     "narrativeId": 17,
     "src": "./img/GhettoHebrea_Vecellio_case_w_93_94_pg_463v_464r_o2.png",
     "caption": "Hebrea by Vecellio",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Hebrea",
+    "bibliography":"Cesare Vecellio. /De gli habiti antichi, et moderni di diverse parti del mondo libri due/. 1590. Case W 93 .94",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=760688"
 },
 {
     "id": 8,
     "narrativeId": 19,
     "src": "./img/TheGreeksReligiosa%20greca_case_w_93_94_pg_416v_417r_o2.png",
     "caption": "Religiosa Greca by Vecellio",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Religiosa Greca",
+    "bibliography":"Cesare Vecellio. /De gli habiti antichi, et moderni di diverse parti del mondo libri due/. 1590. Case W 93 .94",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=760688"
 },
 {
     "id": 9,
     "narrativeId": 23,
     "src": "./img/Processione_S.Marco_wing_zp_635_f85_027_o2.png",
     "caption": "Processione in Piazza San Marco by Doglioni",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "San Marco",
+    "bibliography":"Giovanni Nicolò Doglioni. /La città di Venetia con l’origine e governo di quella/. 1614. Wing folio ZP 635 .F85",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912447"
 },
 {
     "id": 10,
     "narrativeId": 8,
     "src": "./img/Doge_wing_zp_635_f85_025_o2.png",
     "caption": "The Venetian Doge with a view to Piazza San Marco",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "San Marco",
+    "bibliography":"Giovanni Nicolò Doglioni. /La città di Venetia con l’origine e governo di quella/. 1614. Wing folio ZP 635 .F85",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912447"
 },
 {
     "id": 11,
     "narrativeId": 8,
     "src": "./img/Perspettiva%20della%20piazza%20S.Marco_case_w_93_94_pg_39_detail_o2.png",
     "caption": "A Perspective onto Piazza San Marco",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "San Marco",
+    "bibliography":"Cesare Vecellio. /De gli habiti antichi, et moderni di diverse parti del mondo libri due/. 1590. Case W 93 .94",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=760688"
 },
 {
     "id": 12,
     "narrativeId": 8,
     "src": "./img/Principe%20o%20doge%20di%20Venezia%202_case_w_93_94_pg_77_o2.png",
-    "caption": "Processione in Piazza San Marco by Doglioni",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "caption": "Processione in Piazza San Marco by Vecellio",
+    "capShort": "San Marco",
+    "bibliography":"Cesare Vecellio. /De gli habiti antichi, et moderni di diverse parti del mondo libri due/. 1590. Case W 93 .94",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=760688"
 },
 {
     "id": 13,
     "narrativeId": 30,
     "src": "./img/TurksSultano%20dei%20turchi_case_w_93_94_pg_375v_376r_o2.png",
     "caption": "Turkish Sultan by Vecellio",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Turkish Sultan",
+    "bibliography":"Cesare Vecellio. /De gli habiti antichi, et moderni di diverse parti del mondo libri due/. 1590. Case W 93 .94",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=760688"
 },
 {
     "id": 14,
     "narrativeId": 32,
     "src": "./img/barbari_novacco_8f_7_crop.jpg",
     "caption": "Venetie (detail) by Barbari",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Venice (detail)",
+    "bibliography":"Jacopo de’ Barbari. /Venetie/. 1500. Novacco 8F 7",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912441"
 },
 {
     "id": 15,
     "narrativeId": 24,
     "src": "./img/Pliny_Historia Naturalis_Vault folio Inc_4018_sig_a1r_o2.png",
     "caption": "Historia Naturalis by Pliny",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort" : "Santa Maria Formosa",
+    "bibliography":"Pliny. /Historia naturalis/. 1469. oversize Inc. 4018",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=612724"
 },
 {
     "id": 16,
     "narrativeId": 33,
     "src": "./img/Augustine_De%20civitate%20dei_inc_4019_folio_272r_o2.png",
     "caption": "De Civitate Dei by Augustine",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort" : "Santa Maria Formosa",
+    "bibliography":"Augustine. /De civitate Dei/. 1470. oversize Inc. 4019",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=216410"
 },
 {
     "id": 17,
     "narrativeId": 28,
     "src": "./img/Tarabottik7_809_tp_o2.png",
     "caption": "Censvra by Tarabotti",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Sant’Anna in Castello",
+    "bibliography":"Angelica Tarabotti. /Censura dell’Antisatira della signora Angelica Tarabotti fatta in risposta alla Satira Menippea contro il lusso donnesco/. 1656. K 7 .809",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=669985"
 },
 {
     "id": 18,
     "narrativeId": 34,
     "src": "./img/Le%20Giocose%20Moderne%20et%20Facetissime_case_pq_4617_c15_b59_1553_tp_o2.png",
     "caption": "Le Giocose Moderne et Facetissime by Andrea Calmo",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort" : "Merceria",
+    "bibliography":"Andrea Calmo. /Le giocose moderne et facetissime egloghe pastorali/. 1553. Case PQ4617.C15 B59 1553.",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=274681"
 },
 {
     "id": 19,
     "narrativeId": 35,
     "src": "./img/Predica%20del%20Reverendo%20Monsignor%20Cornelio%20Vescovo%20di%20Bitonto_case_4a_1338_tp_o2.png",
     "caption": "Predica del Reverendo Monsignor Cornelio Vescovo di Bitonto by Cornelio Musso",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort" : "Merceria",
+    "bibliography":"Cornelio Musso. /Predica del Reverendo Monsignor Cornelio Vescovo di Bitonto/. 1553. Case 4A 1338",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=615094"
 },
 {
     "id": 20,
     "narrativeId": 36,
     "src": "./img/L%27arte%20oratoria_Sansovino_case_y_9871_779_tp%20_o2.png",
     "caption": "L’arte Oratoria by Francesco Sansovino",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort" : "Merceria",
+    "bibliography":"Francesco Sansovino. /L’arte oratoria: secondo i modi della lingua volgare/. 1546. Case Y 9871 .779",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=678696"
 },
 {
     "id": 21,
     "narrativeId": 44,
     "src": "./img/Le%20Poesie%20de%20Girolamo%20Preti_case_pq_4630_p7_1667_tp_o2.png",
     "caption": "Le Poesie by Girolamo Preti",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Rialto",
+    "bibliography":"Girolamo Preti. /Le poesie di Girolamo Preti/. 1667. Case PQ4630 .P7 1667.",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=866860"
 },
 {
     "id": 22,
     "narrativeId": 37,
     "src": "./img/Sonetti%20Canzoni%20_%20Triomphi%20Di%20M.%20Francesco%20Petrarca_case_y_712_p40544_tp_o2.png",
     "caption": "Sonetti Canzoni & Triomphi by Francesco Petrarca",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Rialto",
+    "bibliography":"Francesco Petrarca. /Sonetti Canzoni & Triomphi Di M. Francesco Petrarca, con La Spositione Di Bernardino Daniello da Lucca/. 1549. Case Y 712 .P40544.",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=621858"
 },
 {
     "id": 23,
     "narrativeId": 37,
     "src": "./img/Sonetti%20Canzoni%20_%20Triomphi%20Di%20M.%20Francesco%20Petrarca_case_y_712_p40544_sig_a1r_o2.png",
     "caption": "Sonetti Canzoni & Triomphi by Francesco Petrarca",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Rialto",
+    "bibliography":"Francesco Petrarca. /Sonetti Canzoni & Triomphi Di M. Francesco Petrarca, con La Spositione Di Bernardino Daniello da Lucca/. 1549. Case Y 712 .P40544.",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=621858"
 },
 {
     "id": 24,
     "narrativeId": 37,
     "src": "./img/Sonetti%20Canzoni%20_%20Triomphi%20Di%20M.%20Francesco%20Petrarca_case_y_712_p40544_sig_last_pg_o2.png",
     "caption": "Sonetti Canzoni & Triomphi by Francesco Petrarca",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Rialto",
+    "bibliography":"Francesco Petrarca. /Sonetti Canzoni & Triomphi Di M. Francesco Petrarca, con La Spositione Di Bernardino Daniello da Lucca/. 1549. Case Y 712 .P40544.",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=621858"
 },
 {
     "id": 25,
     "narrativeId": 38,
     "src": "./img/Gardanocase_m2082_p67_1580_tp_o2.png",
     "caption": "Cantus - Constantii Portae... by Costanzo Porta",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Rialto",
+    "bibliography":"Costanzo Porta. /Cantus/. 1580. Case M2082.P67 M67 1580",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=162524"
 },
 {
     "id": 26,
     "narrativeId": 38,
     "src": "./img/Gardanocase_m2082_p67_1580_sig_a2r_o2-2.png",
     "caption": "Cantus - Constantii Portae... by Costanzo Porta",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Rialto",
+    "bibliography":"Costanzo Porta. /Cantus/. 1580. Case M2082.P67 M67 1580",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=162524"
 },
 {
     "id": 27,
     "narrativeId": 26,
     "src": "./img/Angelo%20Poliziano.%20Opera_inc_5567_tp_o2.png",
     "caption": "Opera by Angelo Poliziano",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "none",
+    "bibliography":"author 4. /secondary title/ (publisher:date). page",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448"
 },
 {
     "id": 28,
     "narrativeId": 26,
     "src": "./img/Angelo%20Poliziano.%20Opera_inc_5567_sig_h8r_o2.png",
     "caption": "Opera by Angelo Poliziano",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "none",
+    "bibliography":"author 4. /secondary title/ (publisher:date). page",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448"
 },
 {
     "id": 29,
     "narrativeId": 39,
     "src": "./img/Poetae%20Christiani%20veteres_Case_c_5_72_vol_01_pg_110_111_o2.png",
     "caption": "Poetae Christiani veteres",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"---. /Poetae Christiani veteres/. 1501-1504. Case C 5 .72",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=609204"
 },
 {
     "id": 30,
     "narrativeId": 39,
     "src": "./img/Poetae%20Christiani%20veteres_Case_c_5_72_vol_01_pg_01_o2.png",
     "caption": "Poetae Christiani veteres",
-    "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"---. /Poetae Christiani veteres/. 1501-1504. Case C 5 .72",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=609204"
 },
 {
     "id": 31,
     "narrativeId": 40,
     "src": "./img/Juvenal.%20Works_Wing_zp_535_a353_tp_o2.png",
     "caption": "Works by Juvenal",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"Juvenal. /Ivvenalis. Persivs/. 1501. Wing ZP 535 .A353",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=475289"
 },
 {
     "id": 32,
     "narrativeId": 40,
     "src": "./img/Juvenal.%20Works_Wing_zp_535_a353_folio1v_2r_o2.png",
     "caption": "Works by Juvenal",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"Juvenal. /Ivvenalis. Persivs/. 1501. Wing ZP 535 .A353",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=475289"
 },
 {
     "id": 33,
     "narrativeId": 41,
     "src": "./img/Lactantius_case_c_507_47_tp_o2.png",
     "caption": "Caelii Lactantii Fermiani diuina-rum institutionum Libri septem by Lactantius. L",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"Lactantius. L. /Caelii Lactantii Fermiani diuina/. 1515. Case C 507 .47",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=490304"
 },
 {
     "id": 34,
     "narrativeId": 41,
     "src": "./img/Lactantius_case_c_507_47_sig_a1v_a2r_o2.png",
     "caption": "Caelii Lactantii Fermiani diuina-rum institutionum Libri septem by Lactantius. L",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"Lactantius. L. /Caelii Lactantii Fermiani diuina/. 1515. Case C 507 .47",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=490304"
 },
 {
     "id": 35,
     "narrativeId": 41,
     "src": "./img/Lactantius_case_c_507_47_sig_a2v_a3r_o2.png",
     "caption": "Caelii Lactantii Fermiani diuina-rum institutionum Libri septem by Lactantius. L",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"Lactantius. L. /Caelii Lactantii Fermiani diuina/. 1515. Case C 507 .47",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=490304"
 },
 {
     "id": 36,
     "narrativeId": 42,
     "src": "./img/Epitome%20Orthographiae_Wing_zp_535_a374_tp_o2.png",
     "caption": "Epitome Orthographiae by Aldo Manuzio",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"Aldo Manuzio. /Epitome orthographiae Aldi Manutii Paulli F. Aldi. N/. 1590. Wing ZP 535 .A374",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=962140"
 },
 {
     "id": 37,
     "narrativeId": 42,
     "src": "./img/Epitome%20Orthographiae_wing_zp_535_a374_pg_269_o2.png",
     "caption": "Epitome Orthographiae by Aldo Manuzio",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"Aldo Manuzio. /Epitome orthographiae Aldi Manutii Paulli F. Aldi. N/. 1590. Wing ZP 535 .A374",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=962140"
 },
 {
     "id": 38,
     "narrativeId": 42,
     "src": "./img/Epitome%20Orthographiae_wing_zp_535_a374_pg_270_o2.png",
     "caption": "Epitome Orthographiae by Aldo Manuzio",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"Aldo Manuzio. /Epitome orthographiae Aldi Manutii Paulli F. Aldi. N/. 1590. Wing ZP 535 .A374",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=962140"
 },
 {
     "id": 39,
     "narrativeId": 42,
     "src": "./img/Inscriptiones%20Antiquae%20Augustae%20Vindelicorum_Colophon_wing_zp_535_a372_%2001_o2.png",
     "caption": "Inscriptiones Antiquae Augustae Vindelicorum",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"---. /Inscriptiones antiquae Augustae Vindelicorum/. 1590. Wing ZP 535 .A372",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=772796"
 },
 {
     "id": 40,
     "narrativeId": 42,
     "src": "./img/Inscriptiones%20Antiquae%20Augustae%20Vindelicorum_wing_zp_535_a372_%2006_o2.png",
     "caption": "Inscriptiones Antiquae Augustae Vindelicorum",
-    "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"---. /Inscriptiones antiquae Augustae Vindelicorum/. 1590. Wing ZP 535 .A372",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=772796"
 },
 {
     "id": 41,
     "narrativeId": 42,
     "src": "./img/Inscriptiones%20Antiquae%20Augustae%20Vindelicorum_wing_zp_535_a372_%2007_o2.png",
     "caption": "Inscriptiones Antiquae Augustae Vindelicorum",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Campo Sant’Agostin",
+    "bibliography":"---. /Inscriptiones antiquae Augustae Vindelicorum/. 1590. Wing ZP 535 .A372",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=772796"
 },
 {
     "id": 42,
     "narrativeId": 27,
     "src": "./img/Compilatio%20Leupoldi%20ducatus%20Austrie%20filij%20De%20astrorum%20scientia%20decem%20continentis%20tractatus_wing_zp_535_s5_tp_o2.png",
     "caption": "Leopold of Austria",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Sessa Family",
+    "bibliography":"Leopold. /Compilatio Leupoldi ducatus Austrie filij, De astrorum scientia decem continentis tractatus/. 1520. Wing ZP 535 .S5",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=506269"
 },
 {
     "id": 43,
     "narrativeId": 27,
     "src": "./img/Detail%20of%20Compilatio%20Leupoldi%20ducatus%20Austrie%20filij_wing_zp_535_s5_tp_detail_o2.png",
     "caption": "Leopold of Austria",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Sessa Family",
+    "bibliography":"Leopold. /Compilatio Leupoldi ducatus Austrie filij, De astrorum scientia decem continentis tractatus/. 1520. Wing ZP 535 .S5",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=506269"
 },
 {
     "id": 44,
     "narrativeId": 43,
     "src": "./img/Il%20Terentio%20Latino_title%20page_Wing%20ZP%20535.V22.png",
     "caption": "Il Terentio Latino by Terence",
-    "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "San Marco Procession",
+    "bibliography":"Terence. /Il Terentio latino: comentato in lingua Toscana/. 1558. Wing ZP 535 .V22",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=278945"
 },
 {
     "id": 45,
     "narrativeId": 25,
     "src": "./img/Eusebio_De%20Evangelica%20Praeparatione%2C%20pg.1r_o2_Inc.%204066%20%28folio%2C%20VAULT%29.png",
     "caption": "De Evangelica Praeparatione by Eusebius",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort" : "Merceria",
+    "bibliography":"Eusebius. /De evangelica praeparatione/. 1470. folio Inc. 4066",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=398910"
 },
 {
     "id": 46,
     "narrativeId": 23,
     "src": "./img/Processionwing_zp_635_f85_059_o2.png",
     "caption": "Processione in Piazza San Marco by Doglioni",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "San Marco Procession",
+    "bibliography":"Giovanni Nicolò Doglioni. /La città di Venetia con l’origine e governo di quella/. 1614. Wing folio ZP 635 .F85",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912447"
 },
 {
     "id": 47,
     "narrativeId": 8,
     "src": "./img/DogePalacewing_zp_635_f85_057_o2.png",
     "caption": "The Venetian Doge's Palace by Doglioni",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "San Marco Doge's Palace",
+    "bibliography":"Giovanni Nicolò Doglioni. /La città di Venetia con l’origine e governo di quella/. 1614. Wing folio ZP 635 .F85",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912447"
 },
 {
     "id": 48,
     "narrativeId": 45,
     "src": "./img/SanGiorgioMaggiorewing_zp_635_f85_061_o2.png",
     "caption": "San Giorgio Maggiore by Doglioni",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "San Giorgio Maggiore",
+    "bibliography":"Giovanni Nicolò Doglioni. /La città di Venetia con l’origine e governo di quella/. 1614. Wing folio ZP 635 .F85",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912447"
 },
 {
     "id": 49,
     "narrativeId": 51,
     "src": "./img/Palladio1wing_zp639_m365_tp_o2.png",
     "caption": "The Four Books of Architecture by Palladio",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort" : "Santa Maria della Carità",
+    "bibliography":"Andrea Palladio. /Les quatres livres de l’architecture/. 1650. Wing folio ZP 639 .M365",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=599539"
 },
 {
     "id": 50,
     "narrativeId": 51,
     "src": "./img/Palladio2wing_zp639_m365_pg_98_99_o2.png",
     "caption": "“S Maria della Carità” from The Four Books of Architecture by Palladio",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort" : "Santa Maria della Carità",
+    "bibliography":"Andrea Palladio. /Les quatres livres de l’architecture/. 1650. Wing folio ZP 639 .M365",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=599539"
 },
 {
     "id": 51,
     "narrativeId": 51,
     "src": "./img/Palladio3wing_zp639_m365_pg_100_o2.png",
     "caption": "“S Maria della Carità” from The Four Books of Architecture by Palladio",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort" : "Santa Maria della Carità",
+    "bibliography":"Andrea Palladio. /Les quatres livres de l’architecture/. 1650. Wing folio ZP 639 .M365",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=599539"
 },
 {
     "id": 52,
     "narrativeId": 46,
     "src": "./img/RedentoreDoglioniwing_zp_635_f85_023_o2.png",
     "caption": "The Venetian Doge with a view to Redentore by Doglioni",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Redentore",
+    "bibliography":"Giovanni Nicolò Doglioni. /La città di Venetia con l’origine e governo di quella/. 1614. Wing folio ZP 635 .F85",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912447"
 },
 {
     "id": 53,
     "narrativeId": 52,
     "src": "./img/Fiammacase_y712_f_439_tp_o2.png",
     "caption": "Rime spirituali by R.D. Gabriel Fiamma",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Redentore",
+    "bibliography":"Gabriel Fiamma. /Rime spirituali del R.D. Gabriel Fiamma, Canonico Regolare Lateranense/. 1570. Case Y 712 .F439",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=379417"
 },
 {
     "id": 54,
     "narrativeId": 50,
     "src": "./img/Cassinesecase_bx_2049_b4_b7_1606_tp_o2.png",
     "caption": "Breuiarium monasticum by the Catholic Church",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort" : "San Giorgio Maggiore",
+    "bibliography":"Catholic Church. /Breuiarium monasticum secundum ritum monachorum Ordinis S. Benedicti de obseruantia, Congregationis Casinensis/. 1660. Case BX2049.B4 B7 1606",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=869086"
 },
 {
     "id": 55,
     "narrativeId": 50,
     "src": "./img/Cassinesecase_bx_2049_b4_b7_1606_folio_7v_o2.png",
     "caption": "Breuiarium monasticum by the Catholic Church",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort" : "San Giorgio Maggiore",
+    "bibliography":"Catholic Church. /Breuiarium monasticum secundum ritum monachorum Ordinis S. Benedicti de obseruantia, Congregationis Casinensis/. 1660. Case BX2049.B4 B7 1606",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=869086"
 },
 {
     "id": 58,
     "narrativeId": 12,
     "src": "./img/MarriageSeawing_w2359_145_part_1_plt_14_o2.jpg",
     "caption": "Marriage of the Sea by Canaletto",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Marriage of the Sea",
+    "bibliography":"Antonio Canaletto. /Urbis venetiarum prospectus/. 1751. Wing W 2359 .145",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=278945"
 },
 {
     "id": 59,
     "narrativeId": 48,
     "src": "./img/Salutewing_w2359_145_part_1_plt_5_o2.jpg",
     "caption": "Santa Maria della Salute by Canaletto",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Santa Maria della Salute",
+    "bibliography":"Antonio Canaletto. /Urbis venetiarum prospectus/. 1751. Wing W 2359 .145",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=278945"
 },
 {
     "id": 60,
     "narrativeId": 51,
     "src": "./img/Caritawing_w2359_145_part_1_plt_3_o2.jpg",
     "caption": "View from Caritas to Santa Maria della Salute by Canaletto",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort": "Santa Maria della Carità",
+    "bibliography":"Antonio Canaletto. /Urbis venetiarum prospectus/. 1751. Wing W 2359 .145",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=278945"
 },
 {
     "id": 61,
     "narrativeId": 29,
     "src": "./img/SanRoccowing_w2359_145_part_3_plt_5_o2.jpg",
     "caption": "San Rocco by Canaletto",
-        "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort":"San Rocco",
+    "bibliography":"Antonio Canaletto. /Urbis venetiarum prospectus/. 1751. Wing W 2359 .145",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=278945"
 },
 {
     "id": 62,
     "narrativeId": 53,
     "src": "./img/SMariaFormosawing_w2359_145_part_3_plt_8_o2.jpg",
     "caption": "Santa Maria Formosa by Canaletto",
-    "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort":"Santa Maria Formosa",
+    "bibliography":"Antonio Canaletto. /Urbis venetiarum prospectus/. 1751. Wing W 2359 .145",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=278945"
 },
 {
     "id": 63,
     "narrativeId": 49,
     "src": "./img/SSGiovanniPaolowing_w2359_145_part_3_plt_1_o2.jpg",
     "caption": "Santi Giovanni e Paolo by Canaletto",
-    "bibliography":"author 4. /secondary title/ (publisher:date). page",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "capShort":"Santi Giovanni e Paolo",
+    "bibliography":"Antonio Canaletto. /Urbis venetiarum prospectus/. 1751. Wing W 2359 .145",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=278945"
 },
 {
     "id": 64,
     "narrativeId": 54,
     "src": "./img/Perspettiva%20della%20piazza%20S.Marco_case_w_93_94_pg_39_detail_o2.png",
-    "caption": "A Perspective onto Piazza San Marco",
-    "bibliography":"Deborah Howard and Laura Moretti. /Sound and Space in Renaissance Venice: Architecture, Music, Acoustics./ New Haven and London: Yale University Press, 2009.",
-    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448",
-    "onlineArchive": "http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371"
+    "caption": "San Marco Procession by Vecellio",
+    "capShort": "San Marco",
+    "bibliography":"Cesare Vecellio. /De gli habiti antichi, et moderni di diverse parti del mondo libri due/. 1590. Case W 93 .94",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=760688"
+},
+{
+    "id": 65,
+    "narrativeId": 47,
+    "src": "./img/novacco_4f_289_sheet_05.png",
+    "caption": "San Zaccaria",
+    "capShort": "San Zaccaria",
+    "bibliography":"Vincenzo Coronelli. /Veduta di Venetia/. 1708-1709. Novacco 4F 289 (PrCt)",
+    "link":"https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912449"
 }]
