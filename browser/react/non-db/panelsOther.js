@@ -13,7 +13,7 @@ export const panelsOther = {
 		title: ['The Religious Geography of Venice','A Bibliography'],
 		obj: {
 			type: 'biblio',
-			subtitles: ['secondary sources','primary sources'],
+			subtitles: ['secondary sources'],
 			text: [],
 			entriesSecondary: [
 			{
@@ -183,23 +183,7 @@ export const panelsOther = {
 				bibliography:'Zava Boccazzi, Franca. /La Basilica dei Santi Giovanni e Paolo in Venezia./ Ongania, 1965',
 			}
 			],
-			entriesPrimary: [
-			{
-				bibliography:'author 4. /secondary title/ (publisher:date). page',
-				link:'https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448',
-				onlineArchive: 'http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371'
-			},
-			{
-				bibliography:'author 5. /secondary title/ (publisher:date). page',
-				link:'https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448',
-				onlineArchive: 'http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371'
-			},
-			{
-				bibliography:'author 6. /secondary title/ (publisher:date). page',
-				link:'https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448',
-				onlineArchive: 'http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371'
-			}
-			],
+			entriesPrimary: [],
 		},
 	},
 	contributors: {

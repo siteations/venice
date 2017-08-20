@@ -13127,7 +13127,7 @@ var panelsOther = exports.panelsOther = {
 		title: ['The Religious Geography of Venice', 'A Bibliography'],
 		obj: {
 			type: 'biblio',
-			subtitles: ['secondary sources', 'primary sources'],
+			subtitles: ['secondary sources'],
 			text: [],
 			entriesSecondary: [{
 				bibliography: 'Agee, Richard J. “Venetian Privilege and Venetian Music-Printing in the Sixteenth Century,” /Early Music History 3/ (1983): 1-42.'
@@ -13241,19 +13241,7 @@ var panelsOther = exports.panelsOther = {
 			}, {
 				bibliography: 'Zava Boccazzi, Franca. /La Basilica dei Santi Giovanni e Paolo in Venezia./ Ongania, 1965'
 			}],
-			entriesPrimary: [{
-				bibliography: 'author 4. /secondary title/ (publisher:date). page',
-				link: 'https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448',
-				onlineArchive: 'http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371'
-			}, {
-				bibliography: 'author 5. /secondary title/ (publisher:date). page',
-				link: 'https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448',
-				onlineArchive: 'http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371'
-			}, {
-				bibliography: 'author 6. /secondary title/ (publisher:date). page',
-				link: 'https://i-share.carli.illinois.edu/nby/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=912448',
-				onlineArchive: 'http://collections.carli.illinois.edu/cdm/compoundobject/collection/nby_music/id/3371'
-			}]
+			entriesPrimary: []
 		}
 	},
 	contributors: {
@@ -46095,89 +46083,34 @@ var _App = __webpack_require__(295);
 
 var _App2 = _interopRequireDefault(_App);
 
+var _Alternate = __webpack_require__(713);
+
+var _Alternate2 = _interopRequireDefault(_Alternate);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/*import Templates from './components/Templates';
-import About from './components/About';
-import User from './components/User';
-import Preview from './components/Preview';*/
+//----------------components to come---------------
 
-//----------------actions for onLoad/onEnter to come----------
-/*
-const onIndexEnter = () => {
-
-	const pVoyages = axios.get('/api/vessels')
-					.then(responses => {
-						return responses.data;
-					})
-				    .then((voyages) => {
-				      	store.dispatch(loadVoyages(voyages));
-				    });
-};
-
-const onVesselEnter = (nextRouterState) => {
-	const voyageId = nextRouterState.params.id;
-
-	const sVoyage = axios.get(`/api/vessels/${voyageId}`)
-		.then(response => response.data)
-	    .then((voyage) => {
-	    	const duration =[voyage.Start, voyage.End];
-	    	voyage.LogId= voyage.LogId.replace(' ', '_');
-	      	store.dispatch(detailVoyage(voyage));
-
-			const pVoyage = axios.get('/api/vessels');
-			const sCrew = axios.get(`/api/crew/${voyage.LogId}`);
-			const sContacts = axios.get(`/api/contact/${voyage.LogId}`);
-			const sPlaces = axios.get(`/api/places/${voyage.LogId}`);
-			const sAnimals = axios.get(`/api/animals/${voyage.LogId}`);
-			const sAllAnimals = axios.get(`/api/allanimals/${voyage.LogId}`);
-			const geography = axios.get('/geojson/110m_land.json');
-
-
-			return Promise
-			.all([pVoyage, sCrew, sContacts, sPlaces, sAnimals, sAllAnimals, geography])
-			.then(responses => responses.map(r => r.data))
-			.then(([voyages, crew, contacts, places, animals, allanimals, geography]) => {
-
-				store.dispatch(filterCrew(crew));
-				store.dispatch(selectContacts(contacts));
-				store.dispatch(selectPlaces(places));
-				store.dispatch(filterPlaces(places, duration));
-				store.dispatch(selectAnimals(animals));
-				store.dispatch(filterAnimals(allanimals, duration));
-				store.dispatch(selectAllAnimals(allanimals));
-				store.dispatch(setbaseGeo(geography));
-				store.dispatch(loadVoyages(voyages));
-			});
-	});
-
-};
-*/
+console.log(window, window.innerWidth);
+//		  		<Route exact path="/Venice-Edit" component={App} />
+//<p className="text-center" style={{margin: '20px'}}>create a page to show when device with is less than 1200 (rotate or enlarge to view)</p>
 
 //--------------------AXIOS & d3 & other libraries--------------------
 
 (0, _reactDom.render)(_react2.default.createElement(
-	_reactRedux.Provider,
-	{ store: _store2.default },
-	_react2.default.createElement(
-		_reactRouterDom.BrowserRouter,
-		null,
-		_react2.default.createElement(
-			'div',
-			null,
-			_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice', component: _App2.default }),
-			_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice-Edit', component: _App2.default })
-		)
-	)
+  _reactRedux.Provider,
+  { store: _store2.default },
+  _react2.default.createElement(
+    _reactRouterDom.BrowserRouter,
+    null,
+    _react2.default.createElement(
+      'div',
+      null,
+      window.innerWidth > 1199 && _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice', component: _App2.default }),
+      window.innerWidth < 1199 && _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Alternate2.default })
+    )
+  )
 ), document.getElementById('app'));
-
-//-------------------styles------------------------
-
-// import '../../public/stylesheets/bootstrap.min.css';
-// import '../../public/stylesheets/normalize.css';
-// import '../../public/stylesheets/style.css';
-
-//----------------components to come---------------
 
 /***/ }),
 /* 336 */
@@ -90478,6 +90411,264 @@ module.exports = function() {
 	throw new Error("define cannot be used indirect");
 };
 
+
+/***/ }),
+/* 713 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(16);
+
+var _colors = __webpack_require__(96);
+
+var _MuiThemeProvider = __webpack_require__(247);
+
+var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
+
+var _getMuiTheme = __webpack_require__(248);
+
+var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
+
+var _Footer = __webpack_require__(178);
+
+var _Footer2 = _interopRequireDefault(_Footer);
+
+var _Nav = __webpack_require__(332);
+
+var _Nav2 = _interopRequireDefault(_Nav);
+
+var _Header = __webpack_require__(714);
+
+var _Header2 = _interopRequireDefault(_Header);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//import Immutable from 'immutable';
+
+
+var muiTheme = (0, _getMuiTheme2.default)({
+	palette: {
+		primary1Color: '#352c1a',
+		primary2Color: _colors.grey900,
+		primary3Color: '#d8d0ba',
+		accent1Color: '#d8d0ba',
+		accent2Color: '#f4f2ec',
+		accent3Color: '#d8d0ba'
+	}
+});
+
+var Alternate = function (_Component) {
+	_inherits(Alternate, _Component);
+
+	function Alternate(props) {
+		_classCallCheck(this, Alternate);
+
+		var _this = _possibleConstructorReturn(this, (Alternate.__proto__ || Object.getPrototypeOf(Alternate)).call(this, props));
+
+		_this.state = {};
+		_this.localAction = _this.localAction.bind(_this);
+		return _this;
+	}
+
+	_createClass(Alternate, [{
+		key: 'localAction',
+		value: function localAction(e) {
+			var thing = e.target.attributes.value.value;
+			this.props.setThing(thing);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+
+			console.log('app props', this.props.location.pathname);
+
+			return _react2.default.createElement(
+				_MuiThemeProvider2.default,
+				{ muiTheme: muiTheme },
+				_react2.default.createElement(
+					'div',
+					{ className: 'container-fluid ' },
+					_react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(_Nav2.default, null),
+						_react2.default.createElement(_Header2.default, null),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ id: 'container' },
+								_react2.default.createElement(
+									'h4',
+									{ className: 'text-center', style: { margin: '20px' } },
+									'Given the rich detail of Merlo\'s map, this application has been optimized for screens of resolution 1200px wide or larger ',
+									_react2.default.createElement('br', null),
+									'(laptop & desktop viewing).'
+								),
+								_react2.default.createElement(
+									'p',
+									{ style: { margin: '20px 100px' } },
+									'To view, either:',
+									_react2.default.createElement(
+										'ul',
+										null,
+										_react2.default.createElement(
+											'li',
+											null,
+											'rotate your device into landscape, or '
+										),
+										_react2.default.createElement(
+											'li',
+											null,
+											'use \'cmd -\' (mac) or \'cntl -\' (pc) to reduce your browser scaling to 90% or 80% ',
+											_react2.default.createElement('br', null),
+											'(adjusting the browser\'s inner width), or '
+										),
+										_react2.default.createElement(
+											'li',
+											null,
+											'visit again on a full scale desktop or laptop screen.'
+										)
+									),
+									'Then reload the page to detect altered resolution and explore Merlo\'s Map.'
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ style: { position: 'absolute', bottom: '0px', width: '95.825vw' } },
+							_react2.default.createElement(_Footer2.default, null)
+						)
+					)
+				)
+			);
+		}
+	}]);
+
+	return Alternate;
+}(_react.Component);
+
+//export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+exports.default = Alternate;
+
+/***/ }),
+/* 714 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(11);
+
+var _reactRedux = __webpack_require__(16);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var styles = {
+  chip: {
+    margin: 2
+
+  }
+};
+//connect later?
+
+var Header3 = function (_Component) {
+  _inherits(Header3, _Component);
+
+  function Header3(props) {
+    _classCallCheck(this, Header3);
+
+    var _this = _possibleConstructorReturn(this, (Header3.__proto__ || Object.getPrototypeOf(Header3)).call(this, props));
+
+    _this.state = {
+      y: 0
+    };
+    return _this;
+  }
+
+  _createClass(Header3, [{
+    key: 'render',
+    value: function render() {
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'row flex bottom header' },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-xs-8' },
+          _react2.default.createElement(
+            'h2',
+            { className: 'closerT' },
+            _react2.default.createElement(
+              'span',
+              { className: 'BornholmSandvig' },
+              'Merlo\'s Map '
+            ),
+            _react2.default.createElement(
+              'span',
+              { className: 'small texta', style: { color: '#352c1a' } },
+              ' The Religious Geography of Venice'
+            )
+          )
+        ),
+        _react2.default.createElement('div', { className: 'col-xs-4' })
+      );
+    }
+  }]);
+
+  return Header3;
+}(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    sites: state.sites,
+    options: state.options,
+    map: state.map
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+  return {};
+};
+
+var Header3a = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Header3);
+
+exports.default = Header3a;
 
 /***/ })
 /******/ ]);
