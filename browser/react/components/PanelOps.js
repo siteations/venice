@@ -79,10 +79,10 @@ class PanelB extends Component {
                   this.props.map.mapSite.narrative.map((narr,i)=>{
                       return (
                    <div className="row">
-                    <div className="col-md-3 center-block text-center">
+                    <div className="col-xs-3 center-block text-center">
                       <div className="bIcon text-center inlineBlock" ><img src={this.props.map.mapSite.src[i]} style={{borderRadius: '5px'}}/></div>
                     </div>
-                    <div className="col-md-9">
+                    <div className="col-xs-9">
                       <h4 className="BornholmSandvig">{(this.props.map.mapSite.subtitles)? this.props.map.mapSite.subtitles[i] : ''}</h4>
                       <p>{narr}</p>
                       <br/>
@@ -93,7 +93,7 @@ class PanelB extends Component {
                 }
             {this.props.map.mapSite.id < 3 &&
             <div className="row">
-              <div className="col-md-9 col-md-offset-3">
+              <div className="col-xs-9 col-xs-offset-3">
                 <p><span className="Trenda-Bold">Narrative Credits: </span> Jill E. Gage, Newberry Library.
                 </p>
               </div>

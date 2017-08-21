@@ -27,9 +27,7 @@ console.log(window, window.innerWidth);
 render(
    <Provider store={store}>
      <Router>
-       <div>
        <Route exact path="/Venice" component={App} />
-	   </div>
      </Router>
    </Provider>,
     document.getElementById('app'),

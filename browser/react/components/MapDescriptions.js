@@ -37,12 +37,12 @@ class PanelMap extends Component {
   	return (
   	     <div className="pad10" style={{overflowY:'scroll', overflowX:'hidden', height: `${height}px`}}>
           <div className="row ">
-            <div className="col-md-3">
+            <div className="col-xs-3">
 				    <h5 className="BornholmSandvig pad10">
               {obj.author}, {obj.date}
               </h5>
             </div>
-            <div className="col-md-9">
+            <div className="col-xs-9">
               <h5 className="small">
                 <span className="Trenda-Bold">Image: </span>
                 <span> {obj.author}. <em>{obj.title}</em>. </span>
@@ -53,10 +53,10 @@ class PanelMap extends Component {
           </div>
           {obj.id>2 &&
             <div className="row">
-              <div className="col-md-3 center-block text-center">
+              <div className="col-xs-3 center-block text-center">
                 <div className="bIcon text-center inlineBlock" ><img src={obj.src} style={{borderRadius: '5px'}}/></div>
               </div>
-              <div className="col-md-9">
+              <div className="col-xs-9">
     				    <p>{obj.narrative &&
                     obj.narrative.split('/').map((text,i) =>{
                       if (i%2===0){
@@ -75,10 +75,10 @@ class PanelMap extends Component {
               obj.narrative.map((item, i)=>{
                 return (
              <div className="row">
-              <div className="col-md-3 center-block text-center">
+              <div className="col-xs-3 center-block text-center">
                 <div className="bIcon text-center inlineBlock" ><img src={obj.src[i]} style={{borderRadius: '5px'}}/></div>
               </div>
-              <div className="col-md-9">
+              <div className="col-xs-9">
                 <p>{item}</p>
                 <br/>
               </div>
@@ -88,7 +88,7 @@ class PanelMap extends Component {
           }
           {/*obj.id<3 &&
             <div className="row">
-              <div className="col-md-9 col-md-offset-3">
+              <div className="col-xs-9 col-xs-offset-3">
               <h5>
                 <span className="Trenda-Bold">Image: </span>
                 <span> {obj.author}. <em>{obj.title}</em>. </span>
@@ -101,7 +101,7 @@ class PanelMap extends Component {
 
 
             <div className="row">
-              <div className="col-md-9 col-md-offset-3">
+              <div className="col-xs-9 col-xs-offset-3">
                 <p><span className="Trenda-Bold">Narrative Credits: </span> James R. Akerman, Newberry Library.
                 </p>
               </div>

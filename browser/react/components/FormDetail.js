@@ -10,7 +10,7 @@ import { editSite, addDetail, resetSaved } from '../action-creators/siteActions.
 
 
 
-class FormDe extends Component { // so this will be an update to site table, addition to detail table
+class Forxse extends Component { // so this will be an update to site table, addition to detail table
 	constructor(props) {
         super(props);
         this.state = {
@@ -225,6 +225,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-const FormDetail = connect(mapStateToProps, mapDispatchToProps)(FormDe);
+const Forxsetail = connect(mapStateToProps, mapDispatchToProps)(Forxse);
 
-export default FormDetail;
+export default Forxsetail;

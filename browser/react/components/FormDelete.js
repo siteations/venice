@@ -9,7 +9,7 @@ import {getAllToursThemes, deleteTour } from '../action-creators/optionActions.j
 
 
 
-class FormD extends Component {
+class Forxs extends Component {
 	constructor(props) {
         super(props);
         this.state = {
@@ -340,6 +340,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 //import {getAllToursThemes} from '../action-creators/optionActions.js';
 
-const FormDelete = connect(mapStateToProps, mapDispatchToProps)(FormD);
+const Forxselete = connect(mapStateToProps, mapDispatchToProps)(Forxs);
 
-export default FormDelete;
+export default Forxselete;

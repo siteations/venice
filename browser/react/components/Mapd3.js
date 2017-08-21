@@ -194,7 +194,7 @@ class MapSVG extends Component {
 
     }
 
-    zoomDC(e, type){
+    zoomdC(e, type){
         e.preventDefault();
         let multiplier;
         if (type==='in'){
@@ -256,7 +256,7 @@ class MapSVG extends Component {
         this.props.setCurrTilesize(128);
 
         } else {
-            this.zoomDC(e, 'in');
+            this.zoomdC(e, 'in');
             //let siteCent = [0, 0]; //rework this to accept current center
         }
     }
