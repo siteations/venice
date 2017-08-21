@@ -73,7 +73,7 @@ class PanelBase extends Component {
 				    <br/>
             <br/>
             {obj.researcherName &&
-              <p><span className="Trenda-Bold">Narrative Credits: </span> {obj.researcherName}, {obj.researcherAffiliation}.</p>
+              <p><span className="Trenda-Bold"></span> {obj.researcherName}, {obj.researcherAffiliation}.</p>
             }
             {obj.type === 'intro' &&
               <Intro obj={obj} />
@@ -84,7 +84,9 @@ class PanelBase extends Component {
             {obj.type === 'credits' &&
               <div>
                 <Credits obj={obj} />
-                <About />
+                <ul>
+                <li><span className="BornholmSandvig">Meg Studer</span>, <a href="https://www.siteations.com" target="_blank" style={{fontWeight: 'normal'}}>Siteations Studio</a>(web development)<br/><br/></li>
+                </ul>
               </div>
             }
 				</div>

@@ -94,7 +94,7 @@ class PanelB extends Component {
             {this.props.map.mapSite.id < 3 &&
             <div className="row">
               <div className="col-xs-9 col-xs-offset-3">
-                <p><span className="Trenda-Bold">Narrative Credits: </span> Jill E. Gage, Newberry Library.
+                <p><span className="Trenda-Bold"></span> Jill E. Gage, Newberry Library.
                 </p>
               </div>
             </div>

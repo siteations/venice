@@ -32,6 +32,15 @@ export const panelsOther = {
 				bibliography:'Boorman, Stanley. /Ottaviano Petrucci: Catalogue Raisonne./ Oxford: Oxford University Press, 2006.',
 			},
 			{
+				bibliography:'Brown, Patricia Fortini. /Venice and Antiquity: The Venetian Sense of the Past/. New Haven: Yale University Press, 1996.',
+			},
+			{
+				bibliography:'———————. /Art and Life in Renaissance Venice/. London: Harry N. Abrams, 1997.',
+			},
+			{
+				bibliography:'———————. /Private Lives in Renaissance Venice: Art, Architecture and the Family/. New Haven: Yale University Press, 2004.',
+			},
+			{
 				bibliography:'Calabi, Donatella. "Foreigners and the City: An Historiographical Exploration for the Early Modern Period," /Fondazione Eni Enrico Mattei Working Papers./',
 				link: 'http://www.bepress.com/feem/paper15',
 			},

@@ -9027,7 +9027,7 @@ var Image = function (_Component) {
           _react2.default.createElement(
             'span',
             { className: 'Trenda-Bold' },
-            'View Online: '
+            'Resource location: '
           ),
           _react2.default.createElement(
             'a',
@@ -13267,6 +13267,12 @@ var panelsOther = exports.panelsOther = {
 				bibliography: '———————. /Print Culture and Music in Sixteenth-Century Venice./ Oxford: Oxford University Press, 2001.'
 			}, {
 				bibliography: 'Boorman, Stanley. /Ottaviano Petrucci: Catalogue Raisonne./ Oxford: Oxford University Press, 2006.'
+			}, {
+				bibliography: 'Brown, Patricia Fortini. /Venice and Antiquity: The Venetian Sense of the Past/. New Haven: Yale University Press, 1996.'
+			}, {
+				bibliography: '———————. /Art and Life in Renaissance Venice/. London: Harry N. Abrams, 1997.'
+			}, {
+				bibliography: '———————. /Private Lives in Renaissance Venice: Art, Architecture and the Family/. New Haven: Yale University Press, 2004.'
 			}, {
 				bibliography: 'Calabi, Donatella. "Foreigners and the City: An Historiographical Exploration for the Early Modern Period," /Fondazione Eni Enrico Mattei Working Papers./',
 				link: 'http://www.bepress.com/feem/paper15'
@@ -21252,11 +21258,7 @@ var PanelBase = function (_Component) {
         obj.researcherName && _react2.default.createElement(
           'p',
           null,
-          _react2.default.createElement(
-            'span',
-            { className: 'Trenda-Bold' },
-            'Narrative Credits: '
-          ),
+          _react2.default.createElement('span', { className: 'Trenda-Bold' }),
           ' ',
           obj.researcherName,
           ', ',
@@ -21269,7 +21271,28 @@ var PanelBase = function (_Component) {
           'div',
           null,
           _react2.default.createElement(_Intro.Credits, { obj: obj }),
-          _react2.default.createElement(_Intro.About, null)
+          _react2.default.createElement(
+            'ul',
+            null,
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                'span',
+                { className: 'BornholmSandvig' },
+                'Meg Studer'
+              ),
+              ', ',
+              _react2.default.createElement(
+                'a',
+                { href: 'https://www.siteations.com', target: '_blank', style: { fontWeight: 'normal' } },
+                'Siteations Studio'
+              ),
+              '(web development)',
+              _react2.default.createElement('br', null),
+              _react2.default.createElement('br', null)
+            )
+          )
         )
       );
     }
@@ -45095,7 +45118,7 @@ var PanelMap = function (_Component) {
               _react2.default.createElement(
                 'span',
                 { className: 'Trenda-Bold' },
-                'View Online: '
+                'Resource location: '
               ),
               _react2.default.createElement(
                 'a',
@@ -45180,11 +45203,7 @@ var PanelMap = function (_Component) {
             _react2.default.createElement(
               'p',
               null,
-              _react2.default.createElement(
-                'span',
-                { className: 'Trenda-Bold' },
-                'Narrative Credits: '
-              ),
+              _react2.default.createElement('span', { className: 'Trenda-Bold' }),
               ' James R. Akerman, Newberry Library.'
             )
           )
@@ -45962,11 +45981,7 @@ var PanelB = function (_Component) {
                 _react2.default.createElement(
                   'p',
                   null,
-                  _react2.default.createElement(
-                    'span',
-                    { className: 'Trenda-Bold' },
-                    'Narrative Credits: '
-                  ),
+                  _react2.default.createElement('span', { className: 'Trenda-Bold' }),
                   ' Jill E. Gage, Newberry Library.'
                 )
               )
@@ -46368,7 +46383,12 @@ console.log(window, window.innerWidth);
   _react2.default.createElement(
     _reactRouterDom.BrowserRouter,
     null,
-    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice', component: _App2.default })
+    _react2.default.createElement(
+      'div',
+      null,
+      window.innerWidth > 1024 && _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice', component: _App2.default }),
+      window.innerWidth < 1024 && _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Alternate2.default })
+    )
   )
 ), document.getElementById('app'));
 

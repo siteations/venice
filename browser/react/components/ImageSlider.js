@@ -75,7 +75,7 @@ class Image extends Component {
 
           }
       </h5>
-      <h5><span className="Trenda-Bold">View Online: </span>
+      <h5><span className="Trenda-Bold">Resource location: </span>
                         <a href={this.props.image[this.state.active].link} className="bNav"  target="_blank" style={{fontWeight: 'normal'}}>Newberry Catalog</a><br/><br/>
                        </h5>
 		</div>

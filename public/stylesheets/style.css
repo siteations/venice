@@ -204,6 +204,7 @@ a:hover {
 
 .flex {
 	display: flex;
+	flex-direction: row;
 }
 
 .flexcol {

@@ -48,7 +48,7 @@ class PanelMap extends Component {
                 <span> {obj.author}. <em>{obj.title}</em>. </span>
                 <span className=""> {obj.date}. {obj.publisher}. </span>
               </h5>
-              <h5 className="small"><span className="Trenda-Bold">View Online: </span><a href={obj.cat} target="_blank" style={{fontWeight: 'normal'}}>Newberry Catalog</a></h5>
+              <h5 className="small"><span className="Trenda-Bold">Resource location: </span><a href={obj.cat} target="_blank" style={{fontWeight: 'normal'}}>Newberry Catalog</a></h5>
             </div>
           </div>
           {obj.id>2 &&
@@ -102,7 +102,7 @@ class PanelMap extends Component {
 
             <div className="row">
               <div className="col-xs-9 col-xs-offset-3">
-                <p><span className="Trenda-Bold">Narrative Credits: </span> James R. Akerman, Newberry Library.
+                <p><span className="Trenda-Bold"></span> James R. Akerman, Newberry Library.
                 </p>
               </div>
             </div>

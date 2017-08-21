@@ -27,7 +27,14 @@ console.log(window, window.innerWidth);
 render(
    <Provider store={store}>
      <Router>
-       <Route exact path="/Venice" component={App} />
+       <div>
+       {window.innerWidth > 1024 &&
+		  		<Route exact path="/Venice" component={App} />
+  			}
+  			{window.innerWidth < 1024 &&
+  				<Route path="/" component={Alternate} />
+  			}
+       </div>
      </Router>
    </Provider>,
     document.getElementById('app'),
