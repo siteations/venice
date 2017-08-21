@@ -49,13 +49,13 @@ class Alternate extends Component {
 			      <Header3 />
 			      <div className="row">
 			        <div id="container">
-			        <h4 className="text-center" style={{margin: '20px'}}>Given the rich detail of Merlo's map, this application has been optimized for screens of resolution 1024px wide or greater <br/>(laptop & desktop viewing).</h4>
+			        <h4 className="text-center" style={{margin: '20px'}}>Given the rich detail of Merlo's map, this application has been optimized for laptop & desktop viewing.</h4>
 			        <p style={{margin: '20px 100px'}}>
 			        To view, either:
 			        <ul>
 			        <li>rotate your device into landscape, or </li>
 			        <li>use 'cxs -' (mac) or 'cntl -' (pc) to reduce your browser scaling to 90% or 80% <br/>(adjusting the browser's inner width), or </li>
-			        <li>visit again on a full scale desktop or laptop screen.</li>
+			        <li>visit again on a full scale desktop or laptop screen (> 1024px wide).</li>
 			        </ul>
 			        Then reload the page to detect altered resolution and explore Merlo's Map.
 			        </p>
