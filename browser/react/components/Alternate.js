@@ -49,7 +49,7 @@ class Alternate extends Component {
 			      <Header3 />
 			      <div className="row">
 			        <div id="container">
-			        <h4 className="text-center" style={{margin: '20px'}}>Given the rich detail of Merlo's map, this application has been optimized for screens of resolution 1200px wide or larger <br/>(laptop & desktop viewing).</h4>
+			        <h4 className="text-center" style={{margin: '20px'}}>Given the rich detail of Merlo's map, this application has been optimized for screens of resolution 780px wide or larger <br/>(laptop & desktop viewing is recommended).</h4>
 			        <p style={{margin: '20px 100px'}}>
 			        To view, either:
 			        <ul>

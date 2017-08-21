@@ -38575,7 +38575,7 @@ var Alternate = function (_Component) {
 								_react2.default.createElement(
 									'h4',
 									{ className: 'text-center', style: { margin: '20px' } },
-									'Given the rich detail of Merlo\'s map, this application has been optimized for screens of resolution 1200px wide or larger ',
+									'Given the rich detail of Merlo\'s map, this application has been optimized for screens of resolution 1024px wide or larger ',
 									_react2.default.createElement('br', null),
 									'(laptop & desktop viewing).'
 								),
