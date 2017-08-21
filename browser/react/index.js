@@ -17,17 +17,19 @@ console.log(window, window.innerWidth);
 //		  		<Route exact path="/Venice-Edit" component={App} />
 //<p className="text-center" style={{margin: '20px'}}>create a page to show when device with is less than 1200 (rotate or enlarge to view)</p>
 
+// {/*window.innerWidth > 1199 &&
+// 		  		<Route exact path="/Venice" component={App} />
+//   			*/}
+//   			{/*window.innerWidth < 1199 &&
+//   				<Route path="/" component={Alternate} />
+//   			*/}
+
 render(
    <Provider store={store}>
      <Router>
        <div>
-       {window.innerWidth > 1199 &&
-		  		<Route exact path="/Venice" component={App} />
-  			}
-  			{window.innerWidth < 1199 &&
-  				<Route path="/" component={Alternate} />
-  			}
-	     </div>
+       <Route exact path="/Venice" component={App} />
+	   </div>
      </Router>
    </Provider>,
     document.getElementById('app'),
