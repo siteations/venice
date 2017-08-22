@@ -19810,13 +19810,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 //connect later?
 
 
-var mapButtons0 = [{ cn: "nIcon flex center middle", v: "intro", src: '/img/intro-01.svg' }, { cn: "nIcon flex center middle", v: "prints", src: "/img/print-01.svg" }, { cn: "nIcon flex center middle", v: "maps", src: "/img/maps-01.svg" }];
+var mapButtons0 = [{ cn: "nIcon center-block", v: "intro", src: '/img/intro-01.svg' }, { cn: "nIcon center-block", v: "prints", src: "/img/print-01.svg" }, { cn: "nIcon center-block", v: "maps", src: "/img/maps-01.svg" }];
 // {cn:"nSpc", v:'navigate', src:" " },
 // {cn:"nIcon flex center middle", v:"panel", src:"/img/arrow1-01.svg" },
 // {cn:"nIcon flex center middle", v:"panel large", src:"/img/arrow2-01.svg" },
-var mapButtons1 = [{ cn: "nIcon flex center middle", v: "all layers", src: "/img/all-layers-01.svg" }, { cn: "nIcon flex center middle", v: "churches", src: "/img/bascilica-01.svg" }, { cn: "nIcon flex center middle", v: "convents & monasteries", src: "/img/convent-01.svg" }, { cn: "nIcon flex center middle", v: "non-catholic communities", src: "/img/non-catholic-01.svg" }, { cn: "nIcon flex center middle", v: "processions", src: "/img/ritual-01.svg" }, { cn: "nIcon flex center middle", v: "printing", src: "/img/ephemera-01.svg" }];
+var mapButtons1 = [{ cn: "nIcon center-block", v: "all layers", src: "/img/all-layers-01.svg" }, { cn: "nIcon center-block", v: "churches", src: "/img/bascilica-01.svg" }, { cn: "nIcon center-block", v: "convents & monasteries", src: "/img/convent-01.svg" }, { cn: "nIcon center-block", v: "non-catholic communities", src: "/img/non-catholic-01.svg" }, { cn: "nIcon center-block", v: "processions", src: "/img/ritual-01.svg" }, { cn: "nIcon center-block", v: "printing", src: "/img/ephemera-01.svg" }];
 
-var mapButtons2 = [{ cn: "nIcon flex center middle", v: "bibliography", src: "/img/menu-01.svg" }, { cn: "nIcon flex center middle", v: "contributors", src: "/img/credits-01.svg" }];
+var mapButtons2 = [{ cn: "nIcon center-block", v: "bibliography", src: "/img/menu-01.svg" }, { cn: "nIcon center-block", v: "contributors", src: "/img/credits-01.svg" }];
 
 var toolstyles = {
 	wrapper: {
