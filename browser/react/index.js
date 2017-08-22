@@ -28,10 +28,10 @@ render(
    <Provider store={store}>
      <Router>
        <div>
-       {window.innerWidth >= 780 &&
+       {window.innerWidth >= 1024 &&
 		  		<Route exact path="/Venice" component={App} />
   			}
-  			{window.innerWidth < 780 &&
+  			{window.innerWidth < 1024 &&
   				<Route path="/" component={Alternate} />
   			}
        </div>
