@@ -55,7 +55,7 @@ class Alternate extends Component {
 			        <ul>
 			        <li>rotate your device into landscape, or </li>
 			        <li>use 'cxs -' (mac) or 'cntl -' (pc) to reduce your browser scaling to 90% or 80% <br/>(adjusting the browser's inner width), or </li>
-			        <li>visit again on a full scale desktop or laptop screen (> 1024px wide).</li>
+			        <li>visit again on a full scale desktop or laptop screen (> 780px wide).</li>
 			        </ul>
 			        Then reload the page to detect altered resolution and explore Merlo's Map.
 			        </p>
