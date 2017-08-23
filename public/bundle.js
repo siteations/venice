@@ -38590,7 +38590,7 @@ var Alternate = function (_Component) {
 								_react2.default.createElement(
 									'h4',
 									{ className: 'text-center', style: { margin: '20px' } },
-									'Given the rich detail of Merlo\'s map, this application has been optimized for screens of resolution 780px wide or larger ',
+									'Given the rich detail of Merlo\'s map, this application has been optimized for screens of resolution 1024px wide or larger ',
 									_react2.default.createElement('br', null),
 									'(laptop or desktop viewing is recommended).'
 								),
@@ -38616,7 +38616,7 @@ var Alternate = function (_Component) {
 										_react2.default.createElement(
 											'li',
 											null,
-											'visit again on a full scale desktop or laptop screen.'
+											'visit again on a full scale desktop or laptop screen (> 1024px wide).'
 										)
 									),
 									'Then reload the page to detect altered resolution and explore Merlo\'s Map.'
@@ -46427,8 +46427,8 @@ console.log(window, window.innerWidth);
     _react2.default.createElement(
       'div',
       null,
-      window.innerWidth > 780 && _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice', component: _App2.default }),
-      window.innerWidth < 780 && _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Alternate2.default })
+      window.innerWidth >= 1024 && _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/Venice', component: _App2.default }),
+      window.innerWidth < 1024 && _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Alternate2.default })
     )
   )
 ), document.getElementById('app'));
