@@ -84,9 +84,6 @@ class PanelBase extends Component {
             {obj.type === 'credits' &&
               <div>
                 <Credits obj={obj} />
-                <ul>
-                <li><span className="BornholmSandvig">Meg Studer</span>, <a href="https://www.siteations.com" target="_blank" style={{fontWeight: 'normal'}}>Siteations Studio</a> (web development)<br/><br/></li>
-                </ul>
               </div>
             }
 				</div>

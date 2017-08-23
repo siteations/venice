@@ -98,9 +98,12 @@ export const Credits = (props)=>{
 
     return (
           <div>
-            <h4 className="BornholmSandvig">{obj.subtitles}</h4>
+            <h4 className="BornholmSandvig">{obj.subtitles[0]}</h4>
+            <ul>
+            <li><span className="BornholmSandvig">{obj.lead.split(',')[0]}</span>, {obj.lead.split(',')[1]}<br/><br/></li>
+            </ul>
             <p>
-            {obj.text &&
+            {/*obj.text &&
                 obj.text.split('/').map((item,i) =>{
                         if (i%2===0){
                           return <span>{item}</span>
@@ -109,8 +112,9 @@ export const Credits = (props)=>{
                         }
                       })
 
-            }
+            */}
             </p>
+            <h4 className="BornholmSandvig">{obj.subtitles[1]}</h4>
             <ul>
             {obj.researchers &&
                 obj.researchers.map(researcher=>{
@@ -122,6 +126,12 @@ export const Credits = (props)=>{
 
             }
             </ul>
+
+            <h4 className="BornholmSandvig">{obj.subtitles[2]}</h4>
+            <ul>
+            <li><span className="BornholmSandvig">{obj.web.split(',')[0]}</span>, <a href="https://www.siteations.com" target="_blank" style={{fontWeight: 'normal'}}>{obj.web.split(',')[1]}</a><br/><br/></li>
+            </ul>
+
 
           </div>
             )

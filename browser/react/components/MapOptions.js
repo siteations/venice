@@ -117,12 +117,21 @@ class MapOps extends Component {
         let [xOff, yOff] = [0,0];
         let [xOffR, yOffR] = [0,0];
 
-         var w=128*(scaleOps[3][0]+1), h =128*(scaleOps[3][1]+1);
+        var type = this.props.sites.specLayer;
+        if (type != "maps" || type != "prints"){
+            var w=128*(scaleOps[3][0]+1), h=128*(scaleOps[3][1]+1);
+            this.props.setCurrZoom(3);
+            this.props.setCurrTilesize(128);
+        } else {
+            var w=194*(scaleOps[2][0]+1), h=194*(scaleOps[2][1]+1);
+            this.props.setCurrZoom(2);
+            this.props.setCurrTilesize(194);
+
+        }
+
 
         this.props.setCurrOffsets([(width-w)/-2,(height-h)/-2]);
         this.props.setOffsetsR([(width-w)/-2,(height-h)/-2]);
-        this.props.setCurrZoom(3);
-        this.props.setCurrTilesize(128);
 
     }
 

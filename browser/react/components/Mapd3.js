@@ -55,6 +55,7 @@ class MapSVG extends Component {
         this.refSize();
         this.props.getLayers(this.props.sites.currLayers);
         this.props.getAllDetailsNarratives();
+
     }
 
     refSize(){

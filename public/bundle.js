@@ -4059,8 +4059,8 @@ var initMap = {
 	windowOffsets: [0, 0], //x, y
 	panelOffset: 0,
 
-	currZoom: 3, //map zoom value
-	tileSize: 128, //px size
+	currZoom: 2, //map zoom value
+	tileSize: 194, //px size
 	xyOffsets: [0, 0], //x, y
 	xyOffsetsR: [0, 0], //x, y
 	xyCenter: [0, 0], //x, y
@@ -11979,13 +11979,21 @@ var MapOps = function (_Component) {
                 yOffR = 0;
 
 
-            var w = 128 * (_rawTiles.scaleOps[3][0] + 1),
-                h = 128 * (_rawTiles.scaleOps[3][1] + 1);
+            var type = this.props.sites.specLayer;
+            if (type != "maps" || type != "prints") {
+                var w = 128 * (_rawTiles.scaleOps[3][0] + 1),
+                    h = 128 * (_rawTiles.scaleOps[3][1] + 1);
+                this.props.setCurrZoom(3);
+                this.props.setCurrTilesize(128);
+            } else {
+                var w = 194 * (_rawTiles.scaleOps[2][0] + 1),
+                    h = 194 * (_rawTiles.scaleOps[2][1] + 1);
+                this.props.setCurrZoom(2);
+                this.props.setCurrTilesize(194);
+            }
 
             this.props.setCurrOffsets([(width - w) / -2, (height - h) / -2]);
             this.props.setOffsetsR([(width - w) / -2, (height - h) / -2]);
-            this.props.setCurrZoom(3);
-            this.props.setCurrTilesize(128);
         }
     }, {
         key: 'setTour',
@@ -12355,11 +12363,24 @@ var FooterSlides = function (_Component) {
 
     _createClass(FooterSlides, [{
         key: 'componentDidMount',
-        value: function componentDidMount() {} //don't over-ride position on main map
-        // if (this.props.type === "maps") {
-        // this.resetStart();
-        // }
+        value: function componentDidMount() {
+            //don't over-ride position on main map
+            // if (this.props.type === "maps") {
+            // this.resetStart();
+            // }
 
+            if (this.props.type === "maps") {
+                var site = this.props.map.mapTourAll[0];
+                var siteCent = [site.x, site.y];
+                var siteZoom = site.scale;
+                var siteTile = site.tile;
+
+                this.props.setMapSite(site);
+                this.flyToSingle(siteZoom, siteCent, siteTile);
+
+                //console.log('in mount', site);
+            }
+        }
 
         // anim(){
         //     this.resetStart();
@@ -12368,7 +12389,7 @@ var FooterSlides = function (_Component) {
     }, {
         key: 'resetStart',
         value: function resetStart() {
-            console.log('got here on load');
+            //console.log('got here on load');
             if (this.props.type === "maps" || this.props.type === "prints") {
                 var site = this.props.map.mapTourAll[0];
                 var siteCent = [site.x, site.y];
@@ -12599,6 +12620,7 @@ var FooterSlides = function (_Component) {
         key: 'flyToSingle',
         value: function flyToSingle(zoom, newCenter) {
             var tile = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 128;
+            var start = arguments[3];
 
             var win = this.props.map.windowSize;
             var panel = this.props.panel.panelSize;
@@ -12607,7 +12629,11 @@ var FooterSlides = function (_Component) {
             //     //var win = wind;
             // };
 
+            //if (start){
             var offset = (0, _rawTiles.centerRescaled)(zoom, newCenter, win, tile);
+            // } else {
+
+            // }
             //console.log('zooms: ', this.props.map.currZoom, zoom, 'pixels: ', this.props.map.tileSize, 128, 'offsets: ', this.props.map.xyOffsets, offset);
             if (this.props.type !== 'maps') {
                 var sele = window.document.getElementById("mapWin").attributes[0].ownerElement.childNodes[0].clientHeight;
@@ -12616,8 +12642,17 @@ var FooterSlides = function (_Component) {
             }
             var number = sele * .2;
 
-            this.props.setOffsetsR([offset.x, offset.y + number]);
-            this.props.setCurrOffsets([offset.x, offset.y + number]);
+            console.log('what', offset, start);
+
+            var xOff = offset.x;
+            if (!start) {
+                this.props.setOffsetsR([offset.x, offset.y + number]);
+                this.props.setCurrOffsets([offset.x, offset.y + number]);
+            } else {
+                this.props.setOffsetsR([30, offset.y + number]);
+                this.props.setCurrOffsets([30, offset.y + number]);
+                console.log('got here offset 30');
+            }
             this.props.setCurrZoom(+zoom);
             this.props.setCurrTilesize(tile);
             //current zoom and tile size... allows for conversion
@@ -12745,7 +12780,7 @@ var FooterSlides = function (_Component) {
                 { className: 'flex center' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'nIcon flex center middle' },
+                    { className: 'nIcon flex center middle', style: { marginRight: '10px', marginLeft: '10px' } },
                     _react2.default.createElement(
                         _reactLightweightTooltip.Tooltip,
                         { content: 'return to start', styles: toolstyles },
@@ -12887,9 +12922,9 @@ var mapSites = [
 	// y: 4096,
 	r: 0,
 	scale: 2, //3,
-	tile: 158, //128, //ZOOM OUT
+	tile: 194, //128, //ZOOM OUT
 	mapName: 'none',
-	name: "Giovanni Merlo's 1676 View, An Introduction",
+	name: "Cartographic Context",
 	type: 'map',
 	cluster: null,
 	clusterId: null,
@@ -12909,7 +12944,7 @@ var mapSites = [
 	scale: 5,
 	tile: 200,
 	mapName: 'none',
-	name: "Giovanni Merlo's 1676 View, An Introduction",
+	name: "Cartographic Context",
 	type: 'map',
 	cluster: null,
 	clusterId: null,
@@ -12927,7 +12962,7 @@ var mapSites = [
 	y: 4096,
 	r: 0,
 	scale: 2, //3,
-	tile: 158, //132, //ZOOM OUT
+	tile: 194, //132, //ZOOM OUT
 	mapName: 'barbari',
 	name: "Barbari's Woodcut of 1500",
 	type: 'map',
@@ -13029,7 +13064,7 @@ var mapSites = [
 	y: 4096,
 	r: 0,
 	scale: 2, //4, // pull out for full image
-	tile: 162, //154,
+	tile: 194, //154,
 	mapName: 'barbari',
 	name: 'Representing the Lagoon and Terraferma',
 	type: 'map',
@@ -13091,7 +13126,7 @@ var mapSites = [
 	y: 4096,
 	r: 0,
 	scale: 2, //3, //ZOOM OUT
-	tile: 162, //128,
+	tile: 194, //128,
 	mapName: 'bordone',
 	name: "Bordon's Island Views of 1534",
 	type: 'map',
@@ -13111,7 +13146,7 @@ var mapSites = [
 	y: 4096,
 	r: 0,
 	scale: 2, //3, //ZOOM OUT
-	tile: 162, //128,
+	tile: 194, //128,
 	mapName: 'forlani',
 	name: "Later Sixteenth Century Views of Venice",
 	type: 'map',
@@ -13193,7 +13228,7 @@ var mapSites = [
 	y: 4096,
 	r: 0,
 	scale: 2, //3, //ZOOM OUT
-	tile: 162, // 128,
+	tile: 194, // 128,
 	mapName: 'florimi',
 	name: "Florimi's Procession Scenes",
 	type: 'map',
@@ -13382,9 +13417,11 @@ var panelsOther = exports.panelsOther = {
 		title: ['The Religious Geography of Venice', 'Research Contributors'],
 		obj: {
 			type: 'credits',
-			subtitles: "Contributors",
+			subtitles: ["Lead Scholar", "Contributing Scholars", "Web Development"],
 			text: '',
-			researchers: ['James R. Akerman, Newberry Library', 'Eufemia Baldassarre, University of Chicago', 'Genevieve Carlton, Independent Scholar', 'Tracy E. Cooper, Temple University', 'Jill E. Gage, Newberry Library', 'Elizabeth Horodowich, New Mexico State University', 'Deborah Howard, Cambridge University', 'Dana E. Katz, Reed College', 'Lia Markey, Newberry Library', 'Edward Muir, Northwestern University', 'Christopher Nygren, University of Pittsburgh', 'Debra Pincus, Independent Scholar', 'Meredith Ray, University of Delaware', 'Jason Rosenholtz-Witt, Northwestern University', 'Bronwen Wilson, UCLA']
+			lead: 'Edward Muir, Northwestern University',
+			web: 'Meg Studer, Siteations Studio',
+			researchers: ['James R. Akerman, Newberry Library', 'Eufemia Baldassarre, University of Chicago', 'Genevieve Carlton, Independent Scholar', 'Tracy E. Cooper, Temple University', 'Jill E. Gage, Newberry Library', 'Elizabeth Horodowich, New Mexico State University', 'Deborah Howard, Cambridge University', 'Dana E. Katz, Reed College', 'Lia Markey, Newberry Library', 'Christopher Nygren, University of Pittsburgh', 'Debra Pincus, Independent Scholar', 'Meredith Ray, University of Delaware', 'Jason Rosenholtz-Witt, Northwestern University', 'Bronwen Wilson, UCLA']
 		}
 	}
 
@@ -21270,29 +21307,7 @@ var PanelBase = function (_Component) {
         obj.type === 'credits' && _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement(_Intro.Credits, { obj: obj }),
-          _react2.default.createElement(
-            'ul',
-            null,
-            _react2.default.createElement(
-              'li',
-              null,
-              _react2.default.createElement(
-                'span',
-                { className: 'BornholmSandvig' },
-                'Meg Studer'
-              ),
-              ', ',
-              _react2.default.createElement(
-                'a',
-                { href: 'https://www.siteations.com', target: '_blank', style: { fontWeight: 'normal' } },
-                'Siteations Studio'
-              ),
-              ' (web development)',
-              _react2.default.createElement('br', null),
-              _react2.default.createElement('br', null)
-            )
-          )
+          _react2.default.createElement(_Intro.Credits, { obj: obj })
         )
       );
     }
@@ -44903,30 +44918,30 @@ var Credits = exports.Credits = function Credits(props) {
     _react2.default.createElement(
       'h4',
       { className: 'BornholmSandvig' },
-      obj.subtitles
+      obj.subtitles[0]
     ),
     _react2.default.createElement(
-      'p',
+      'ul',
       null,
-      obj.text && obj.text.split('/').map(function (item, i) {
-        if (i % 2 === 0) {
-          return _react2.default.createElement(
-            'span',
-            null,
-            item
-          );
-        } else {
-          return _react2.default.createElement(
-            'span',
-            null,
-            _react2.default.createElement(
-              'em',
-              null,
-              item
-            )
-          );
-        }
-      })
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          'span',
+          { className: 'BornholmSandvig' },
+          obj.lead.split(',')[0]
+        ),
+        ', ',
+        obj.lead.split(',')[1],
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('br', null)
+      )
+    ),
+    _react2.default.createElement('p', null),
+    _react2.default.createElement(
+      'h4',
+      { className: 'BornholmSandvig' },
+      obj.subtitles[1]
     ),
     _react2.default.createElement(
       'ul',
@@ -44947,6 +44962,32 @@ var Credits = exports.Credits = function Credits(props) {
           _react2.default.createElement('br', null)
         );
       })
+    ),
+    _react2.default.createElement(
+      'h4',
+      { className: 'BornholmSandvig' },
+      obj.subtitles[2]
+    ),
+    _react2.default.createElement(
+      'ul',
+      null,
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          'span',
+          { className: 'BornholmSandvig' },
+          obj.web.split(',')[0]
+        ),
+        ', ',
+        _react2.default.createElement(
+          'a',
+          { href: 'https://www.siteations.com', target: '_blank', style: { fontWeight: 'normal' } },
+          obj.web.split(',')[1]
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('br', null)
+      )
     )
   );
 };
