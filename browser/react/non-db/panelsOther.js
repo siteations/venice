@@ -199,8 +199,10 @@ export const panelsOther = {
 		title: ['The Religious Geography of Venice','Research Contributors'],
 		obj: {
 			type: 'credits',
-			subtitles: "Contributors",
+			subtitles: ["Lead Scholar","Contributing Scholars", "Web Development"],
 			text: '',
+			lead: 'Edward Muir, Northwestern University',
+			web: 'Meg Studer, Siteations Studio',
 			researchers: [
 			'James R. Akerman, Newberry Library',
 'Eufemia Baldassarre, University of Chicago',
@@ -211,7 +213,6 @@ export const panelsOther = {
 'Deborah Howard, Cambridge University',
 'Dana E. Katz, Reed College',
 'Lia Markey, Newberry Library',
-'Edward Muir, Northwestern University',
 'Christopher Nygren, University of Pittsburgh',
 'Debra Pincus, Independent Scholar',
 'Meredith Ray, University of Delaware',

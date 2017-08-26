@@ -117,6 +117,20 @@ class FooterSlides extends Component {
         // if (this.props.type === "maps") {
         // this.resetStart();
         // }
+
+        if (this.props.type === "maps") {
+            var site=this.props.map.mapTourAll[0];
+            var siteCent = [site.x, site.y];
+            var siteZoom = site.scale;
+            var siteTile = site.tile;
+
+            this.props.setMapSite(site);
+            this.flyToSingle(siteZoom, siteCent, siteTile);
+
+            //console.log('in mount', site);
+
+        }
+
     }
 
     // anim(){
@@ -124,7 +138,7 @@ class FooterSlides extends Component {
     // }
 
     resetStart(){
-        console.log('got here on load');
+        //console.log('got here on load');
         if (this.props.type === "maps" || this.props.type === "prints") {
             var site=this.props.map.mapTourAll[0];
             var siteCent = [site.x, site.y];
@@ -315,7 +329,7 @@ class FooterSlides extends Component {
 
     }
 
-    flyToSingle(zoom, newCenter, tile = 128){
+    flyToSingle(zoom, newCenter, tile = 128, start){
         var win = this.props.map.windowSize;
         let panel = this.props.panel.panelSize;
         // if (!this.props.options.panelNone){
@@ -323,7 +337,11 @@ class FooterSlides extends Component {
         //     //var win = wind;
         // };
 
-        let offset = centerRescaled(zoom, newCenter, win, tile);
+        //if (start){
+        var offset = centerRescaled(zoom, newCenter, win, tile);
+        // } else {
+
+        // }
         //console.log('zooms: ', this.props.map.currZoom, zoom, 'pixels: ', this.props.map.tileSize, 128, 'offsets: ', this.props.map.xyOffsets, offset);
         if (this.props.type !== 'maps'){
         var sele = window.document.getElementById("mapWin").attributes[0].ownerElement.childNodes[0].clientHeight;
@@ -332,8 +350,17 @@ class FooterSlides extends Component {
         }
         var number=sele*.2;
 
+        console.log('what', offset, start);
+
+        var xOff=offset.x;
+        if (!start){
         this.props.setOffsetsR([offset.x, offset.y+number]);
         this.props.setCurrOffsets([offset.x, offset.y+number]);
+        } else {
+        this.props.setOffsetsR([30, offset.y+number]);
+        this.props.setCurrOffsets([30, offset.y+number]);
+        console.log('got here offset 30');
+        }
         this.props.setCurrZoom(+zoom);
         this.props.setCurrTilesize(tile);
         //current zoom and tile size... allows for conversion
@@ -445,7 +472,7 @@ class FooterSlides extends Component {
 	return (
                   <div className="flex center" >
 
-                       <div className="nIcon flex center middle" >
+                       <div className="nIcon flex center middle" style={{marginRight:'10px', marginLeft: '10px'}}>
                         <Tooltip content='return to start' styles={toolstyles}>
                         <span value="reset" className="glyphicon glyphicon glyphicon-step-backward" onTouchTap={(e)=>this.resetStart(e)} ></span>
                         </Tooltip>

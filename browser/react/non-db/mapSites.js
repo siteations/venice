@@ -21,9 +21,9 @@ const mapSites = [
 		// y: 4096,
 		r: 0,
 		scale: 2, //3,
-		tile: 158, //128, //ZOOM OUT
+		tile: 194, //128, //ZOOM OUT
 		mapName: 'none',
-		name: "Giovanni Merlo's 1676 View, An Introduction",
+		name: "Cartographic Context",
 		type: 'map',
 		cluster: null,
 		clusterId: null,
@@ -44,7 +44,7 @@ const mapSites = [
 		scale: 5,
 		tile:200,
 		mapName: 'none',
-		name: "Giovanni Merlo's 1676 View, An Introduction",
+		name: "Cartographic Context",
 		type: 'map',
 		cluster: null,
 		clusterId: null,
@@ -63,7 +63,7 @@ const mapSites = [
 		y: 4096,
 		r: 0,
 		scale: 2, //3,
-		tile: 158, //132, //ZOOM OUT
+		tile: 194, //132, //ZOOM OUT
 		mapName: 'barbari',
 		name: "Barbari's Woodcut of 1500",
 		type: 'map',
@@ -168,7 +168,7 @@ const mapSites = [
 		y: 4096,
 		r: 0,
 		scale: 2, //4, // pull out for full image
-		tile: 162, //154,
+		tile: 194, //154,
 		mapName: 'barbari',
 		name: 'Representing the Lagoon and Terraferma',
 		type: 'map',
@@ -231,7 +231,7 @@ const mapSites = [
 		y: 4096,
 		r: 0,
 		scale: 2, //3, //ZOOM OUT
-		tile: 162, //128,
+		tile: 194, //128,
 		mapName: 'bordone',
 		name: "Bordon's Island Views of 1534",
 		type: 'map',
@@ -252,7 +252,7 @@ const mapSites = [
 		y: 4096,
 		r: 0,
 		scale: 2, //3, //ZOOM OUT
-		tile: 162,//128,
+		tile: 194,//128,
 		mapName: 'forlani',
 		name: "Later Sixteenth Century Views of Venice",
 		type: 'map',
@@ -336,7 +336,7 @@ const mapSites = [
 		y: 4096,
 		r: 0,
 		scale: 2, //3, //ZOOM OUT
-		tile: 162, // 128,
+		tile: 194, // 128,
 		mapName: 'florimi',
 		name: "Florimi's Procession Scenes",
 		type: 'map',
